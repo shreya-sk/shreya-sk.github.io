@@ -123,7 +123,7 @@ html {
 }
 
 ::-webkit-scrollbar-thumb {
-    background-color: #8000ff
+    background-color: #9adbf2
 }
 
 .cursor-inner {
@@ -1025,11 +1025,11 @@ noscript {
 }
 
 .dp::before {
-    box-shadow: 2px 2px 0 inset #8000ff, -2px -2px 0 inset transparent
+    box-shadow: 2px 2px 0 inset #9adbf2, -2px -2px 0 inset transparent
 }
 
 .dp::after {
-    box-shadow: 2px 2px 0 inset transparent, -2px -2px 0 inset #8000ff
+    box-shadow: 2px 2px 0 inset transparent, -2px -2px 0 inset #40b4de
 }
 
 .dp:hover::after {
