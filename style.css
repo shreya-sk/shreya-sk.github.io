@@ -1505,7 +1505,7 @@ footer {
 .footer-avatar-eye {
     width: 31px;
     height: 22px;
-    background-color: #dfd2d2; 
+    background-color: #ffffff; 
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -1524,13 +1524,13 @@ footer {
 .footer-right-eye {
     box-shadow: 15px 15px 5px rgba(0, 0, 0, .233) inset, 10px 10px 5px rgba(41, 33, 33, .644) inset;
     position: relative;
-    transform: translateX(13px) translateY(-115px); /* this line to move the eye */
+    transform: translateX(15px) translateY(-115px); /* this line to move the eye */
 }
 
 .footer-left-eye {
     box-shadow: -10px -15px 5px rgba(0, 0, 0, .349) inset;
     position: relative;
-    transform:  translateX(-22px) translateY(-110px); /* this line to move the eye */
+    transform:  translateX(-18px) translateY(-110px); /* this line to move the eye */
 }
 
 .footer-avatar-eye::before {
