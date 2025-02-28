@@ -123,7 +123,7 @@ html {
 }
 
 ::-webkit-scrollbar-thumb {
-    background-color: #8000ff
+    background-color: #9adbf2
 }
 
 .cursor-inner {
@@ -1025,11 +1025,11 @@ noscript {
 }
 
 .dp::before {
-    box-shadow: 2px 2px 0 inset #8000ff, -2px -2px 0 inset transparent
+    box-shadow: 2px 2px 0 inset #9adbf2, -2px -2px 0 inset transparent
 }
 
 .dp::after {
-    box-shadow: 2px 2px 0 inset transparent, -2px -2px 0 inset #8000ff
+    box-shadow: 2px 2px 0 inset transparent, -2px -2px 0 inset #40b4de
 }
 
 .dp:hover::after {
@@ -1477,8 +1477,8 @@ footer {
 }
 
 .footer-avatar-container {
-    width: 300px;
-    margin-top: 20px;
+    width: 350px; /* changed */
+    margin-top: 25px;
     position: relative;
     display: flex;
     align-items: flex-end;
@@ -1498,14 +1498,14 @@ footer {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 18px;
+    gap: 9px; /* changed */
     padding-left: 5px
 }
 
 .footer-avatar-eye {
-    width: 50px;
-    height: 50px;
-    background-color: #dfd2d2;
+    width: 31px;
+    height: 18px;
+    background-color: #ffffff; 
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -1513,8 +1513,8 @@ footer {
 }
 
 .footer-pupil {
-    width: 20px;
-    height: 20px;
+    width: 18px;
+    height: 18px;
     background-color: #000;
     border-radius: 50%;
     border: 5px solid #413333;
@@ -1523,12 +1523,14 @@ footer {
 
 .footer-right-eye {
     box-shadow: 15px 15px 5px rgba(0, 0, 0, .233) inset, 10px 10px 5px rgba(41, 33, 33, .644) inset;
-    position: relative
+    position: relative;
+    transform: translateX(11px) translateY(-90px); /* this line to move the eye */
 }
 
 .footer-left-eye {
     box-shadow: -10px -15px 5px rgba(0, 0, 0, .349) inset;
-    position: relative
+    position: relative;
+    transform:  translateX(-22px) translateY(-85px); /* this line to move the eye */
 }
 
 .footer-avatar-eye::before {
