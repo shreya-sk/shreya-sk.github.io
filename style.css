@@ -1477,7 +1477,7 @@ footer {
 }
 
 .footer-avatar-container {
-    width: 500px; /* changed */
+    width: 350px; /* changed */
     margin-top: 25px;
     position: relative;
     display: flex;
@@ -1498,7 +1498,7 @@ footer {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 18px;
+    gap: 9px; /* changed */
     padding-left: 5px
 }
 
@@ -1525,12 +1525,14 @@ footer {
 
 .footer-right-eye {
     box-shadow: 15px 15px 5px rgba(0, 0, 0, .233) inset, 10px 10px 5px rgba(41, 33, 33, .644) inset;
-    position: relative
+    position: relative;
+    transform: translateX(30px) translateY(-80px); /* this line to move the eye */
 }
 
 .footer-left-eye {
     box-shadow: -10px -15px 5px rgba(0, 0, 0, .349) inset;
-    position: relative
+    position: relative;
+    transform: translateX(-30px) translateY(-80px); /* this line to move the eye */
 }
 
 .footer-avatar-eye::before {
