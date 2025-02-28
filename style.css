@@ -1517,7 +1517,7 @@ footer {
 .footer-pupil {
     width: 20px;
     height: 20px;
-    background-color: #000;
+    background-color: #dfd2d2;
     border-radius: 50%;
     border: 5px solid #413333;
     filter: blur(.6px)
@@ -1526,7 +1526,7 @@ footer {
 .footer-right-eye {
     box-shadow: 15px 15px 5px rgba(0, 0, 0, .233) inset, 10px 10px 5px rgba(41, 33, 33, .644) inset;
     position: relative;
-    transform: translateX(-5px) translateY(-110px); /* this line to move the eye */
+    transform: translateX(13px) translateY(-115px); /* this line to move the eye */
 }
 
 .footer-left-eye {
