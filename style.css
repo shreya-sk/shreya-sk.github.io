@@ -1505,9 +1505,7 @@ footer {
 .footer-avatar-eye {
     width: 31px;
     height: 22px;
-    background-color:red; 
-    border: 2px solid yellow !important;
-    opacity: 0.7;
+    background-color: #dfd2d2; 
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -1517,7 +1515,7 @@ footer {
 .footer-pupil {
     width: 20px;
     height: 20px;
-    background-color: #dfd2d2;
+    background-color: #000;
     border-radius: 50%;
     border: 5px solid #413333;
     filter: blur(.6px)
