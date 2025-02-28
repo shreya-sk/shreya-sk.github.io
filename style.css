@@ -2019,3 +2019,126 @@ footer {
         margin-top: 100px;  
     }
 }
+
+/* neural-network.css */
+#neural-network-container {
+    width: 100%;
+    height: 600px;
+    position: relative;
+    margin: 50px 0;
+    background-image: linear-gradient(to bottom right, var(--tech-stack-box-first-color), var(--tech-stack-box-second-color));
+    border: 1px solid var(--tech-stack-box-border-color);
+    border-radius: 30px;
+    overflow: hidden;
+  }
+  
+  .neural-network-svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .node {
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .node circle {
+    transition: opacity 0.3s ease, stroke-width 0.3s ease;
+  }
+  
+  .node-text {
+    font-family: 'fira code', monospace;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+  
+  .text-background {
+    transition: opacity 0.3s ease;
+  }
+  
+  .link {
+    transition: stroke-opacity 0.3s ease, stroke-width 0.3s ease;
+  }
+  
+  .skill-info-panel {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    background-color: rgba(17, 17, 27, 0.9);
+    border: 1px solid var(--color-navbarBorder-dark);
+    border-radius: 10px;
+    padding: 15px;
+    width: 250px;
+    color: var(--color-white);
+    font-family: 'fira code', monospace;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    z-index: 100;
+    animation: fadeIn 0.3s ease;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  .skill-info-panel h3 {
+    margin: 0 0 10px;
+    font-size: 1.8rem;
+    background: -webkit-linear-gradient(135deg, var(--color-light-blue), var(--color-light-purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  .skill-level {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .level-bar {
+    flex-grow: 1;
+    height: 8px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    margin-right: 10px;
+    overflow: hidden;
+  }
+  
+  .level-fill {
+    height: 100%;
+    background-image: linear-gradient(90deg, var(--color-light-blue), var(--color-light-purple));
+    border-radius: 4px;
+  }
+  
+  .skill-category {
+    margin: 5px 0 0;
+    font-size: 1.4rem;
+    color: var(--color-ddd-color);
+  }
+  
+  /* Responsive styles */
+  @media screen and (max-width: 768px) {
+    #neural-network-container {
+      height: 500px;
+    }
+    
+    .skill-info-panel {
+      width: 200px;
+      bottom: 10px;
+      right: 10px;
+    }
+  }
+  
+  @media screen and (max-width: 500px) {
+    #neural-network-container {
+      height: 400px;
+    }
+    
+    .skill-info-panel {
+      width: 80%;
+      left: 10%;
+      right: 10%;
+    }
+  }
