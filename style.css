@@ -1477,8 +1477,8 @@ footer {
 }
 
 .footer-avatar-container {
-    width: 300px;
-    margin-top: 20px;
+    width: 500px; /* changed */
+    margin-top: 25px;
     position: relative;
     display: flex;
     align-items: flex-end;
