@@ -2021,262 +2021,34 @@ footer {
 }
 
 /* neural-network.css */
-/* neural-network.css */
-/* neural-network.css */
-#neural-network-container {
-    width: 100%;
-    height: 600px;
-    position: relative;
+/* simplified-neural-network.css */
+.neural-network-wrapper {
     margin: 50px 0;
-    background-image: linear-gradient(to bottom right, var(--tech-stack-box-first-color), var(--tech-stack-box-second-color));
-    border: 1px solid var(--tech-stack-box-border-color);
-    border-radius: 30px;
-    overflow: hidden;
+    padding: 20px;
   }
   
-  .zoom-container {
+  #neural-network-container {
     width: 100%;
-    height: 100%;
-    overflow: hidden;
+    height: 500px;
     position: relative;
-    cursor: grab;
+    margin: 30px 0;
+    background-color: rgba(20, 20, 30, 0.3); /* Semi-transparent background */
+    border: 1px solid #2b2f4e;
+    border-radius: 20px;
+    overflow: hidden;
   }
   
-  .zoom-container:active {
-    cursor: grabbing;
-  }
-  
-  .neural-network-svg {
-    display: block;
-    width: 100%;
-    height: 100%;
-  }
-  
-  .node {
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-  
-  .node circle {
-    transition: all 0.3s ease;
-  }
-  
-  .node-text {
-    font-family: 'fira code', monospace;
-    font-size: 12px;
-    pointer-events: none;
-    user-select: none;
-  }
-  
-  .link {
-    transition: all 0.3s ease;
-    pointer-events: none;
-  }
-  
-  .expand-indicator {
-    cursor: pointer;
-    transition: all 0.2s ease;
-  }
-  
-  .expand-symbol {
-    pointer-events: none;
-    user-select: none;
-    font-family: Arial, sans-serif;
-  }
-  
-  .node:hover .expand-indicator {
-    transform: scale(1.2);
-  }
-  
-  .network-loading {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: rgba(17, 17, 27, 0.9);
-    color: var(--color-white);
-    font-family: 'fira code', monospace;
-    padding: 15px 25px;
-    border-radius: 10px;
-    font-size: 1.6rem;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-    border: 1px solid var(--color-navbarBorder-dark);
-    animation: pulse 1.5s infinite alternate;
-    z-index: 100;
-  }
-  
-  @keyframes pulse {
-    from { opacity: 0.8; }
-    to { opacity: 1; }
+  .light-mode #neural-network-container {
+    background-color: rgba(220, 220, 230, 0.3);
+    border-color: #d1d6eb;
   }
   
   .network-description {
     text-align: center;
-    margin: 20px auto 30px;
+    margin: 20px auto;
     max-width: 800px;
     color: var(--color-ddd-color);
     font-size: 1.8rem;
     line-height: 1.5;
     font-family: 'fira code', monospace;
-  }
-  
-  .neural-network-wrapper {
-    margin-top: 50px;
-  }
-  
-  .skill-tooltip {
-    position: absolute;
-    background-color: rgba(17, 17, 27, 0.95);
-    border: 1px solid var(--color-navbarBorder-dark);
-    border-radius: 10px;
-    padding: 15px;
-    max-width: 320px;
-    width: 320px;
-    color: var(--color-white);
-    font-family: 'fira code', monospace;
-    backdrop-filter: blur(10px);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-    z-index: 100;
-    animation: fadeIn 0.3s ease;
-    transition: all 0.3s ease;
-    pointer-events: none;
-  }
-  
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  
-  .skill-tooltip h3 {
-    margin: 0 0 10px;
-    font-size: 1.8rem;
-    background: -webkit-linear-gradient(135deg, var(--color-light-blue), var(--color-light-purple));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-  
-  .skill-tooltip h4 {
-    margin: 15px 0 5px;
-    font-size: 1.4rem;
-    color: var(--color-white);
-  }
-  
-  .skill-level {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-  }
-  
-  .level-bar {
-    flex-grow: 1;
-    height: 8px;
-    background-color: rgba(255, 255, 255, 0.1);
-    border-radius: 4px;
-    margin-right: 10px;
-    overflow: hidden;
-  }
-  
-  .level-fill {
-    height: 100%;
-    background-image: linear-gradient(90deg, var(--color-light-blue), var(--color-light-purple));
-    border-radius: 4px;
-  }
-  
-  .related-skills ul, .child-skills ul {
-    margin: 5px 0;
-    padding-left: 20px;
-    font-size: 1.3rem;
-    color: var(--color-ddd-color);
-  }
-  
-  .related-skills li, .child-skills li {
-    margin-bottom: 3px;
-  }
-  
-  .tooltip-hint {
-    margin-top: 12px;
-    font-size: 1.2rem;
-    font-style: italic;
-    color: var(--color-gray);
-    padding: 6px 10px;
-    background-color: rgba(255, 255, 255, 0.1);
-    border-radius: 4px;
-    text-align: center;
-  }
-  
-  .network-instructions {
-    position: absolute;
-    bottom: 15px;
-    left: 15px;
-    z-index: 90;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    background-color: rgba(17, 17, 27, 0.7);
-    backdrop-filter: blur(5px);
-    padding: 12px;
-    border-radius: 10px;
-    border: 1px solid var(--color-navbarBorder-dark);
-    max-width: 220px;
-  }
-  
-  .instruction-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  
-  .instruction-icon {
-    font-size: 1.8rem;
-  }
-  
-  .instruction-text {
-    font-family: 'fira code', monospace;
-    font-size: 1.3rem;
-    color: var(--color-white);
-  }
-  
-  /* Media queries for responsiveness */
-  @media screen and (max-width: 768px) {
-    .network-instructions {
-      bottom: 10px;
-      left: 10px;
-      padding: 8px;
-      gap: 8px;
-      max-width: 180px;
-    }
-    
-    .instruction-icon {
-      font-size: 1.6rem;
-    }
-    
-    .instruction-text {
-      font-size: 1.1rem;
-    }
-    
-    .skill-tooltip {
-      max-width: 260px;
-      width: 260px;
-      padding: 12px;
-    }
-    
-    .network-description {
-      font-size: 1.6rem;
-      padding: 0 15px;
-    }
-  }
-  
-  @media screen and (max-width: 500px) {
-    #neural-network-container {
-      height: 500px;
-    }
-    
-    .network-instructions {
-      max-width: 150px;
-    }
-    
-    .skill-tooltip {
-      max-width: 220px;
-      width: 220px;
-    }
   }
