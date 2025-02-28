@@ -117,15 +117,21 @@ const skillsData = {
     nodesGroup.setAttribute("class", "nodes");
     svg.appendChild(nodesGroup);
     
-    // Initialize D3 force simulation
+    // Initialize D3 force simulation with very strong forces to prevent overlap
     const simulation = d3.forceSimulation(skillsData.nodes)
       .force("link", d3.forceLink(skillsData.links)
         .id(d => d.id)
-        .distance(d => 150 - d.strength * 50)
-        .strength(d => d.strength * 0.1))
-      .force("charge", d3.forceManyBody().strength(-400))
-      .force("center", d3.forceCenter(width / 2, height / 2))
-      .force("collide", d3.forceCollide(d => 20 + d.level * 30));
+        .distance(250) // Even larger fixed distance
+        .strength(0.3)) // Even stronger link force
+      .force("charge", d3.forceManyBody()
+        .strength(-2000) // Much stronger repulsion
+        .distanceMax(500)) // Limit the distance of effect
+      .force("x", d3.forceX(width / 2).strength(0.1)) // Force toward center X
+      .force("y", d3.forceY(height / 2).strength(0.1)) // Force toward center Y
+      .force("collide", d3.forceCollide(d => 50 + d.level * 30).strength(1).iterations(3)) // Multiple collision iterations
+      .alphaDecay(0.005) // Very slow cooling
+      .alpha(1) // Start with maximum energy
+      .velocityDecay(0.1); // Very little friction for smoother movement
     
     // Create links
     const links = skillsData.links.map(link => {
@@ -140,13 +146,22 @@ const skillsData = {
       return { ...link, element };
     });
     
+    // Assign initial positions to spread nodes out before simulation
+    skillsData.nodes.forEach(node => {
+      // Random positions in a circle around center
+      const angle = Math.random() * 2 * Math.PI;
+      const radius = 100 + Math.random() * 150;
+      node.x = width / 2 + radius * Math.cos(angle);
+      node.y = height / 2 + radius * Math.sin(angle);
+    });
+    
     // Create nodes
     const nodes = skillsData.nodes.map(node => {
       // Node group
       const group = document.createElementNS("http://www.w3.org/2000/svg", "g");
       group.setAttribute("class", "node");
       group.setAttribute("data-id", node.id);
-      group.setAttribute("transform", "translate(0,0)"); // Initial position
+      group.setAttribute("transform", `translate(${node.x},${node.y})`); // Set initial position
       nodesGroup.appendChild(group);
       
       // Node circle
@@ -244,6 +259,19 @@ const skillsData = {
       }
     }
     
+    // Create loading indicator
+    const loadingIndicator = document.createElement("div");
+    loadingIndicator.className = "network-loading";
+    loadingIndicator.textContent = "Organizing neural network...";
+    container.appendChild(loadingIndicator);
+    
+    // Warm up the simulation with many iterations before starting animation
+    // This helps position nodes better before rendering
+    console.log("Warming up neural network simulation...");
+    for (let i = 0; i < 300; i++) {
+      simulation.tick();
+    }
+    
     // Update simulation on tick
     simulation.on("tick", () => {
       links.forEach(link => {
@@ -260,6 +288,11 @@ const skillsData = {
         
         node.element.setAttribute("transform", `translate(${node.x}, ${node.y})`);
       });
+      
+      // Remove loading indicator after first tick
+      if (loadingIndicator && loadingIndicator.parentNode) {
+        loadingIndicator.parentNode.removeChild(loadingIndicator);
+      }
     });
     
     // Make nodes draggable
@@ -322,10 +355,14 @@ const skillsData = {
       // Load D3.js dynamically if not already loaded
       const script = document.createElement('script');
       script.src = 'https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js';
-      script.onload = initNeuralNetwork;
+      script.onload = () => {
+        // Wait for everything to be properly loaded
+        setTimeout(initNeuralNetwork, 500);
+      };
       document.head.appendChild(script);
     } else {
-      initNeuralNetwork();
+      // Wait for everything to be properly loaded
+      setTimeout(initNeuralNetwork, 500);
     }
   });
   
