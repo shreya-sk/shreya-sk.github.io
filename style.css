@@ -1524,7 +1524,7 @@ footer {
 .footer-right-eye {
     box-shadow: 15px 15px 5px rgba(0, 0, 0, .233) inset, 10px 10px 5px rgba(41, 33, 33, .644) inset;
     position: relative;
-    transform: translateX(8px) translateY(-90px); /* this line to move the eye */
+    transform: translateX(11px) translateY(-90px); /* this line to move the eye */
 }
 
 .footer-left-eye {
