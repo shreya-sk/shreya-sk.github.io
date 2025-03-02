@@ -2019,3 +2019,64 @@ footer {
         margin-top: 100px;  
     }
 }
+/* hexagon-skills.css */
+/* These styles can be added to your existing style.css */
+/* hexagon-skills.css */
+/* These styles can be added to your existing style.css */
+
+.skill-row {
+    display: flex;
+    justify-content: center;
+    flex-wrap: nowrap !important;
+    width: 100%;
+    margin: 20px 0;
+  }
+  
+  .tech-stack-box {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    flex-shrink: 0;
+  }
+  
+  .skill-tooltip {
+    font-family: 'fira code', monospace;
+    color: #ffffff !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5) !important;
+    z-index: 99999 !important;
+    display: block !important;
+    background-color: rgba(26, 26, 41, 0.95) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    padding: 15px !important;
+  }
+  
+  .light-mode .skill-tooltip {
+    background-color: rgba(236, 231, 225, 0.95) !important;
+    color: #333333 !important;
+    border: 1px solid rgba(0, 0, 0, 0.2) !important;
+  }
+  
+  /* Adjust for light mode */
+  .light-mode .skill-tooltip {
+    background-color: var(--tech-stack-box-first-color);
+    color: var(--color-black);
+  }
+  
+  /* Media queries for responsiveness */
+  @media (max-width: 1024px) {
+    .skill-row {
+      overflow-x: auto;
+      padding: 10px 0;
+      justify-content: flex-start;
+      scroll-padding: 20px;
+      margin: 5px 0 !important;
+    }
+    
+    .tech-stack-wrapper {
+      padding: 0 20px;
+    }
+    
+    .tech-stack-box {
+      margin: 10px !important;
+    }
+  }
