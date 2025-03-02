@@ -2019,3 +2019,78 @@ footer {
         margin-top: 100px;  
     }
 }
+/* bubble-skills.css */
+.skills-bubbles-section {
+    margin: 50px 0;
+    width: 100%;
+  }
+  
+  #skills-bubbles-container {
+    width: 100%;
+    height: 550px;
+    border-radius: 30px;
+    border: 1px solid var(--tech-stack-box-border-color);
+    overflow: hidden;
+    margin-top: 20px;
+    position: relative;
+    transition: all 0.3s ease;
+    background-image: linear-gradient(to bottom right, var(--tech-stack-box-first-color), var(--tech-stack-box-second-color));
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  .main-bubble {
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .sub-bubble {
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+  
+  .skill-tooltip {
+    font-family: 'fira code', monospace;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    pointer-events: none;
+  }
+  
+  .bubbles-instructions {
+    transition: opacity 0.3s ease;
+  }
+  
+  .bubbles-instructions:hover {
+    opacity: 1 !important;
+  }
+  
+  .bubbles-description {
+    text-align: center;
+    margin: 20px auto;
+    max-width: 800px;
+    color: var(--color-ddd-color);
+    font-size: 1.8rem;
+    line-height: 1.5;
+    font-family: 'fira code', monospace;
+  }
+  
+  @media (max-width: 768px) {
+    #skills-bubbles-container {
+      height: 450px;
+    }
+    
+    .bubbles-instructions {
+      font-size: 10px !important;
+      max-width: 150px !important;
+    }
+    
+    .skill-tooltip {
+      max-width: 200px !important;
+      font-size: 12px !important;
+    }
+  }
+  
+  @media (max-width: 500px) {
+    #skills-bubbles-container {
+      height: 400px;
+    }
+  }
