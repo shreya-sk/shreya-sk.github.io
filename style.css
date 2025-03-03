@@ -2127,7 +2127,8 @@ footer {
   }
   
   .project-nav-btn:hover {
-    animation: jelly-button 0.9s both;
+    animation: jelly-button 0.9s ease both !important;
+    transition: none !important;
   }
   .project-nav-btn:hover svg {
     animation: jelly-button 0.9s both;
@@ -2137,12 +2138,12 @@ footer {
   }
   
 /* Streamlined carousel with clean rotation effect */
+/* Project Carousel Structure */
 .project-carousel {
     position: relative;
     width: 81%;
     height: 585px;
-    margin: 0 auto;
-    margin-top: 100px; /* Adjust the value as needed */
+    margin: 100px auto 0;
     overflow: visible;
   }
   
@@ -2152,7 +2153,7 @@ footer {
     height: 100%;
   }
   
-  /* Base slide styles */
+  /* Base Project Slide Styles */
   .project-slide {
     position: absolute;
     width: 100%;
@@ -2161,64 +2162,8 @@ footer {
     pointer-events: none;
     opacity: 0;
   }
-  .project-slide.active * {
-    opacity: 1;
-}
-  /* Active slide (current) */
-  .project-slide.active {
-    z-index: 3;
-    transform: translateX(0) scale(1);
-    opacity: 1;
-    pointer-events: auto;
-    background-color: var(--tech-stack-box-first-color);
-  }
   
-  /* Previous slide (left side) */
-.project-slide.preactive {
-    z-index: 1;
-    transform: translateX(-35%) scale(0.85);
-    opacity: 0.4;
-  }
-  
-  /* Next slide (right side) */
-  .project-slide.proactive {
-    z-index: 1;
-    transform: translateX(35%) scale(0.85);
-    opacity: 0.4;
-  }
-  
-  /* Make content of side slides visible but container faded */
-  .project-slide.preactive .project-box,
-  .project-slide.proactive .project-box {
-    opacity: 1; /* Keep the box fully opaque */
-    filter: brightness(0.7); /* Darken instead of making transparent */
-  }
-  
-  /* Ensure active slide and its contents are fully visible */
-  .project-slide.active,
-  .project-slide.active .project-box,
-  .project-slide.active * {
-    opacity: 1;
-    filter: none; /* Remove any filters */
-    background-color: var(--tech-stack-box-first-color);
-  }
-
-  /* Hidden slides
-  .project-slide.preactivede,
-  .project-slide.proactivede {
-    z-index: 0;
-    opacity: 0;
-    transform: translateX(0) scale(0);
-  } */
-  
-  /* Critical fix: prevent slides from crossing over */
-  .project-slide.transitioning {
-    opacity: 0 !important;
-    transition: opacity 0.2s ease-out !important;
-    z-index: 0 !important;
-  }
-  
-  /* Project box styling */
+  /* Project Box Styling */
   .project-box {
     height: 100%;
     border-radius: 30px;
@@ -2227,8 +2172,114 @@ footer {
     overflow: hidden;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
   }
+
+  /* Active Slide (Current) */
+  .project-slide.active {
+    z-index: 3;
+    transform: translateX(0) scale(1);
+    opacity: 1;
+    pointer-events: auto;
+    background-color: var(--tech-stack-box-first-color);
+  }
+    /* More aggressive fix - add this if the above doesn't work */
+.project-slide.active::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--tech-stack-box-first-color);
+    z-index: -1;
+    border-radius: 30px;
+  }
+  .project-slide.active .project-box {
+    opacity: 1;
+    filter: none;
+  }
   
-  /* Navigation buttons */
+  .project-slide.active * {
+    opacity: 1;
+  }
+  
+  /* Side Slides (Previous and Next) */
+  .project-slide.preactive {
+    z-index: 1;
+    transform: translateX(-35%) scale(0.85);
+    opacity: 0.4;
+  }
+  
+  .project-slide.proactive {
+    z-index: 1;
+    transform: translateX(35%) scale(0.85);
+    opacity: 0.4;
+  }
+  
+  .project-slide.preactive .project-box,
+  .project-slide.proactive .project-box {
+    filter: brightness(0.7);
+  }
+  
+  /* Transition Handling */
+  .project-slide.transitioning {
+    opacity: 0 !important;
+    transition: opacity 0.2s ease-out !important;
+    z-index: 0 !important;
+  }
+  
+  .jump-position {
+    transition: opacity 0.2s ease-out;
+    opacity: 0;
+  }
+  
+  /* Navigation Controls */
+  .project-controls {
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    display: flex;
+    justify-content: space-between;
+    padding: 0 10px;
+    pointer-events: none;
+    z-index: 10;
+  }
+  
+  .project-nav-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.5);
+    border: 1px solid var(--tech-stack-box-border-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    pointer-events: auto;
+    z-index: 20;
+  }
+  
+  .project-nav-btn:hover {
+    animation: jelly-button 0.9s both;
+  }
+  
+  .project-nav-btn:hover svg {
+    animation: jelly-button 0.9s both;
+  }
+  
+  .project-nav-btn svg {
+    width: 24px;
+    height: 24px;
+    fill: white;
+  }
+  
+  #project-counter {
+    display: none;
+  }
+  
+  /* Navigation Arrows */
   .nav-arrow {
     position: absolute;
     top: 50%;
@@ -2257,19 +2308,23 @@ footer {
     right: 2%;
   }
   
-  /* Button animation */
+  /* Animations */
+  @keyframes jelly-button {
+    0%, 100% { transform: scale(1); }
+    30% { transform: scale(0.75, 1.25); }
+    40% { transform: scale(1.25, 0.75); }
+    50% { transform: scale(0.85, 1.15); }
+    65% { transform: scale(1.05, 0.95); }
+    75% { transform: scale(0.95, 1.05); }
+  }
+  
   @keyframes subtle-bounce {
     0% { transform: translateY(-50%) scale(1); }
     50% { transform: translateY(-50%) scale(1.1); }
     100% { transform: translateY(-50%) scale(1); }
   }
   
-  .subtle-bounce {
-    animation: subtle-bounce 0.4s cubic-bezier(0.34, 1.12, 0.64, 1);
-  }
-
-  /* Clean up the animations to be simpler and smoother */
-@keyframes smoothEntry {
+  @keyframes smoothEntry {
     0% { transform: translateX(35%) scale(0.85); opacity: 0.4; }
     100% { transform: translateX(0) scale(1); opacity: 1; }
   }
@@ -2279,37 +2334,14 @@ footer {
     100% { transform: translateX(0) scale(1); opacity: 1; }
   }
   
+  .subtle-bounce {
+    animation: subtle-bounce 0.4s cubic-bezier(0.34, 1.12, 0.64, 1);
+  }
+  
   .slide-entry {
     animation: smoothEntry 0.8s cubic-bezier(0.25, 0.1, 0.25, 1.1) forwards;
   }
   
   .slide-entry-reverse {
     animation: smoothEntryReverse 0.8s cubic-bezier(0.25, 0.1, 0.25, 1.1) forwards;
-  }
-  
-  /* For slides that need to jump sides without being seen */
-  .jump-position {
-    transition: opacity 0.2s ease-out;
-    opacity: 0;
-  }
-
-  @keyframes jelly-button {
-    0%, 100% {
-      transform: scale3d(1, 1, 1);
-    }
-    30% {
-      transform: scale3d(0.75, 1.25, 1);
-    }
-    40% {
-      transform: scale3d(1.25, 0.75, 1);
-    }
-    50% {
-      transform: scale3d(0.85, 1.15, 1);
-    }
-    65% {
-      transform: scale3d(1.05, 0.95, 1);
-    }
-    75% {
-      transform: scale3d(0.95, 1.05, 1);
-    }
   }
