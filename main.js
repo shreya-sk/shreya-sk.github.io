@@ -10,29 +10,49 @@ window.addEventListener('DOMContentLoaded', function() {
     console.log(`Initialized carousel with ${slideTotal + 1} projects`);
     
     // Function to update carousel positioning
-    function updateCarousel(direction) {
-      if (isAnimating) return;
-      isAnimating = true;
-      
-      // Apply proper classes to ALL slides based on their position relative to current
+    // Only modifying the transition handling in updateCarousel
+function updateCarousel(direction) {
+    if (isAnimating) return;
+    isAnimating = true;
+    
+    // First, find the slide that will become active
+    let newActiveSlide;
+    if (direction === 'next') {
+      newActiveSlide = slides[(slideCurrent + 1) % (slideTotal + 1)];
+    } else if (direction === 'prev') {
+      newActiveSlide = slides[(slideCurrent - 1 + slideTotal + 1) % (slideTotal + 1)];
+    } else {
+      newActiveSlide = slides[slideCurrent];
+    }
+    
+    // First step: Move the current active slide to its new position
+    slides.forEach((slide, index) => {
+      if (slide.classList.contains('active')) {
+        // Remove active class but don't add new class yet to allow clean exit
+        slide.classList.remove('active');
+        slide.style.zIndex = '2'; // Keep it above other slides temporarily
+      }
+    });
+    
+    // Give a brief moment for the active slide to start moving away
+    setTimeout(() => {
+      // Now update all slides to their new positions
       slides.forEach((slide, index) => {
-        // Remove all animation classes first
+        // Remove all animation classes
         slide.classList.remove('smooth-slide', 'smooth-slide-reverse');
         
         // Remove all position classes
-        slide.classList.remove('active', 'preactive', 'proactive', 'preactivede', 'proactivede');
+        slide.classList.remove('preactive', 'proactive', 'preactivede', 'proactivede');
         
         // Calculate position relative to current slide
         let position = calculatePosition(index, slideCurrent, slideTotal);
         
         // Set appropriate class based on position
         if (position === 0) {
-          slide.classList.add('active');
-          if (direction === 'next') {
-            slide.classList.add('smooth-slide');
-          } else if (direction === 'prev') {
-            slide.classList.add('smooth-slide-reverse');
+          if (direction) { // Only if we're moving
+            slide.classList.add('smooth-slide' + (direction === 'prev' ? '-reverse' : ''));
           }
+          slide.classList.add('active');
         } else if (position === -1) {
           slide.classList.add('preactive');
         } else if (position === 1) {
@@ -41,12 +61,16 @@ window.addEventListener('DOMContentLoaded', function() {
           slide.classList.add('proactivede');
         }
       });
-      
-      // Reset animation flag after transition completes
-      setTimeout(() => {
-        isAnimating = false;
-      }, 1000); // Match transition duration
-    }
+    }, 50);
+    
+    // Reset animation flag after transition completes
+    setTimeout(() => {
+      isAnimating = false;
+      slides.forEach(slide => {
+        slide.style.zIndex = ''; // Clear any inline z-index
+      });
+    }, 1000);
+  }
     
     // Helper function to calculate a slide's position relative to current
     function calculatePosition(index, current, total) {
