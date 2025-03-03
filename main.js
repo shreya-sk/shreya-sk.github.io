@@ -179,6 +179,7 @@ document.addEventListener('DOMContentLoaded', function() {
         '你好();',
         'Hallo();',
         'Olá();',
+        'नमस्ते();',
         'Namaste();'
       ],
       typeSpeed: 70,
