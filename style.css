@@ -2123,6 +2123,7 @@ footer {
   
   /* For the carousel effect with faded edges */
  /* Enhanced Project Carousel Styles */
+/* Enhanced Project Carousel Styles */
 .project-carousel {
     position: relative;
     width: 100%;
@@ -2146,6 +2147,7 @@ footer {
     pointer-events: none;
   }
   
+  /* Active slide is fully visible */
   .project-slide.active {
     opacity: 1;
     transform: scale(1);
@@ -2153,10 +2155,11 @@ footer {
     z-index: 2;
   }
   
+  /* Preview slides are barely visible (10%) */
   .project-slide.prev-preview,
   .project-slide.next-preview {
-    opacity: 0.2;
-    filter: blur(4px);
+    opacity: 0.1; /* 10% visibility */
+    filter: blur(3px);
     z-index: 1;
   }
   
@@ -2168,20 +2171,11 @@ footer {
     transform: translateX(30%) scale(0.85);
   }
   
-  /* Side Navigation Buttons */
-  .nav-buttons-container {
-    position: absolute;
-    top: 0;
-    right: -70px; /* Position outside the project box */
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 20px;
-    z-index: 10;
-  }
-  
+  /* Navigation buttons positioned on the sides */
   .nav-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
     width: 60px;
     height: 60px;
     border-radius: 50%;
@@ -2195,10 +2189,21 @@ footer {
     cursor: pointer;
     transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+  }
+  
+  /* Position the previous button on the left edge */
+  #prev-project {
+    left: -30px;
+  }
+  
+  /* Position the next button on the right edge */
+  #next-project {
+    right: -30px;
   }
   
   .nav-arrow:hover {
-    transform: scale(1.1);
+    transform: translateY(-50%) scale(1.1);
     background-color: var(--color-purple);
     box-shadow: 0 0 20px rgba(128, 0, 255, 0.4);
   }
@@ -2206,9 +2211,9 @@ footer {
   /* Animation for the faded rectangle preview effect */
   @keyframes fadeInRectangle {
     0% {
-      opacity: 0.2;
+      opacity: 0.1;
       transform: scale(0.85);
-      filter: blur(4px);
+      filter: blur(3px);
     }
     100% {
       opacity: 1;
@@ -2223,13 +2228,13 @@ footer {
   
   /* Jelly animation for buttons */
   @keyframes jelly {
-    0% { transform: scale(1); }
-    30% { transform: scale(1.2); }
-    40% { transform: scale(0.9); }
-    50% { transform: scale(1.1); }
-    65% { transform: scale(0.95); }
-    75% { transform: scale(1.05); }
-    100% { transform: scale(1); }
+    0% { transform: translateY(-50%) scale(1); }
+    30% { transform: translateY(-50%) scale(1.2); }
+    40% { transform: translateY(-50%) scale(0.9); }
+    50% { transform: translateY(-50%) scale(1.1); }
+    65% { transform: translateY(-50%) scale(0.95); }
+    75% { transform: translateY(-50%) scale(1.05); }
+    100% { transform: translateY(-50%) scale(1); }
   }
   
   .jelly-button {
