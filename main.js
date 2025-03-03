@@ -189,7 +189,7 @@ document.addEventListener('DOMContentLoaded', function() {
       showCursor: true,
       cursorChar: '|',
       fadeOut: true,
-      fadeOutDelay: 500,
+      fadeOutDelay: 1000,
       smartBackspace: true
     });
   });

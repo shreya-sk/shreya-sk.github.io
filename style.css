@@ -2142,6 +2142,7 @@ footer {
     width: 81%;
     height: 585px;
     margin: 0 auto;
+    margin-top: 100px; /* Adjust the value as needed */
     overflow: visible;
   }
   
@@ -2172,15 +2173,11 @@ footer {
   }
   
   /* Previous slide (left side) */
-  .project-slide.preactive {
+.project-slide.preactive {
     z-index: 1;
     transform: translateX(-35%) scale(0.85);
     opacity: 0.4;
   }
-  .project-slide.active .project-box {
-    background-image: linear-gradient(to bottom right, var(--tech-stack-box-first-color), var(--tech-stack-box-second-color));
-    opacity: 1;
-}
   
   /* Next slide (right side) */
   .project-slide.proactive {
@@ -2189,13 +2186,28 @@ footer {
     opacity: 0.4;
   }
   
-  /* Hidden slides */
+  /* Make content of side slides visible but container faded */
+  .project-slide.preactive .project-box,
+  .project-slide.proactive .project-box {
+    opacity: 1; /* Keep the box fully opaque */
+    filter: brightness(0.7); /* Darken instead of making transparent */
+  }
+  
+  /* Ensure active slide and its contents are fully visible */
+  .project-slide.active,
+  .project-slide.active .project-box,
+  .project-slide.active * {
+    opacity: 1;
+    filter: none; /* Remove any filters */
+  }
+
+  /* Hidden slides
   .project-slide.preactivede,
   .project-slide.proactivede {
     z-index: 0;
     opacity: 0;
     transform: translateX(0) scale(0);
-  }
+  } */
   
   /* Critical fix: prevent slides from crossing over */
   .project-slide.transitioning {
