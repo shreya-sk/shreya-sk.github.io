@@ -15,38 +15,32 @@ window.addEventListener('DOMContentLoaded', function() {
         if (isAnimating) return;
         isAnimating = true;
         
-        // First find the current active slide
-        const currentActive = document.querySelector('.project-slide.active');
-        
-        // Update the current slide index
-        if (direction === 'next') {
-          slideCurrent = (slideCurrent + 1) % (slideTotal + 1);
-        } else if (direction === 'prev') {
-          slideCurrent = (slideCurrent - 1 + slideTotal + 1) % (slideTotal + 1);
-        }
-        
-        // Remove all animation classes from all slides
-        slides.forEach(slide => {
-          slide.classList.remove('slide-entry', 'slide-entry-reverse', 'jump-position');
-        });
-        
-        // Quick fade out for any slide that needs to jump sides
-        slides.forEach((slide, index) => {
-          // Check if this slide will need to jump from one far side to the other
-          const currentPos = [...slides].indexOf(slide) - [...slides].indexOf(currentActive);
-          const newPos = calculatePosition(index, slideCurrent, slideTotal);
+        // Find which slides need to "rotate" around
+        slides.forEach((slide) => {
+          // Get current position
+          const isActive = slide.classList.contains('active');
+          const isPreactive = slide.classList.contains('preactive');
+          const isProactive = slide.classList.contains('proactive');
           
-          // If the position changed drastically (e.g., from far left to far right)
-          if (Math.abs(currentPos - newPos) > 1 && currentPos * newPos < 0) {
-            slide.classList.add('jump-position');
+          // Mark slides that need to instantly rotate around
+          if ((direction === 'next' && isPreactive) || 
+              (direction === 'prev' && isProactive)) {
+            slide.classList.add('rotating');
           }
         });
         
-        // Very short delay to let the jump-position take effect
+        // Short delay to let rotation class take effect
         setTimeout(() => {
-          // Now update all positions
+          // Update the current slide index
+          if (direction === 'next') {
+            slideCurrent = (slideCurrent + 1) % (slideTotal + 1);
+          } else if (direction === 'prev') {
+            slideCurrent = (slideCurrent - 1 + slideTotal + 1) % (slideTotal + 1);
+          }
+          
+          // Now update all slides to their new positions
           slides.forEach((slide, index) => {
-            // Remove position classes
+            // Remove all classes
             slide.classList.remove('active', 'preactive', 'proactive', 'preactivede', 'proactivede');
             
             // Calculate position relative to current slide
@@ -55,12 +49,6 @@ window.addEventListener('DOMContentLoaded', function() {
             // Set appropriate class based on position
             if (position === 0) {
               slide.classList.add('active');
-              // Add the smooth entry animation (one continuous motion)
-              if (direction === 'next') {
-                slide.classList.add('slide-entry');
-              } else if (direction === 'prev') {
-                slide.classList.add('slide-entry-reverse');
-              }
             } else if (position === -1) {
               slide.classList.add('preactive');
             } else if (position === 1) {
@@ -69,9 +57,14 @@ window.addEventListener('DOMContentLoaded', function() {
               slide.classList.add('preactivede');
             }
           });
+          
+          // Remove the rotating class after positions are set
+          setTimeout(() => {
+            slides.forEach(slide => slide.classList.remove('rotating'));
+          }, 50);
         }, 50);
         
-        // Reset the animation flag after transition completes
+        // Reset animation flag
         setTimeout(() => {
           isAnimating = false;
         }, 850);
