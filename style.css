@@ -2082,73 +2082,92 @@ footer {
   }
   /* Project Carousel Styles - Add to style.css */
 /* Project Navigation Controls */
-/* Simple Project Carousel CSS */
-.project-carousel {
-    position: relative;
+/* Project Navigation Controls - Repositioned */
+.project-controls {
+    position: absolute;
     width: 100%;
-    padding: 20px 0;
-  }
-  
-  .project-nav {
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
     display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 20px;
-    gap: 20px;
+    justify-content: space-between;
+    padding: 0 10px;
+    pointer-events: none; /* This allows clicks to pass through to elements behind */
+    z-index: 10;
   }
   
-  .nav-arrow {
+  .project-nav-btn {
     width: 50px;
     height: 50px;
-    background-color: rgba(0, 0, 0, 0.7);
-    color: white;
-    border: none;
     border-radius: 50%;
-    font-size: 18px;
+    background-color: rgba(0, 0, 0, 0.5);
+    border: 1px solid var(--tech-stack-box-border-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
     transition: all 0.3s ease;
+    pointer-events: auto; /* Make sure buttons can be clicked */
+    z-index: 20; /* Ensure buttons are above other elements */
   }
   
-  .nav-arrow:hover {
-    background-color: var(--color-purple);
-    transform: scale(1.1);
+  .project-nav-btn svg {
+    width: 24px;
+    height: 24px;
+    fill: white; /* Make sure arrows are white */
   }
   
   #project-counter {
-    font-size: 1.8rem;
-    font-family: 'fira code', monospace;
-    color: var(--color-white);
+    display: none; /* Hide the counter since it's in the middle of the controls */
   }
   
-  .project-slide-container {
+  /* For the carousel effect with faded edges */
+  .project-container {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    padding: 0 60px; /* Add padding to make room for the faded previews */
+  }
+  
+  .project-preview-container {
+    display: flex;
+    width: 100%;
     position: relative;
   }
   
-  .project-slide {
-    display: none;
-    animation: fadeIn 0.5s ease forwards;
-  }
-  
-  .project-slide.active {
-    display: block;
-  }
-  
-  .project-box {
-    width: 100%;
-    height: 550px;
-    display: flex;
-    background-image: linear-gradient(to bottom right, var(--tech-stack-box-first-color), var(--tech-stack-box-second-color));
-    border: 1px solid var(--tech-stack-box-border-color);
-    border-radius: 30px;
+  .project-preview-prev, 
+  .project-preview-next {
+    position: absolute;
+    top: 0;
+    width: 70px;
+    height: 100%;
+    opacity: 0.3;
+    pointer-events: none;
+    filter: blur(2px);
     overflow: hidden;
   }
   
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+  .project-preview-prev {
+    left: -60px;
   }
   
-  @keyframes jelly {
+  .project-preview-next {
+    right: -60px;
+  }
+  /* Make all projects hidden by default except the first one */
+  .project-box {
+    display: none;
+    width: 100%;
+    height: 550px;
+  }
+  
+  /* Show only the first project initially */
+  #project-1 {
+    display: flex;
+  }
+  
+  /* Project box jelly animation */
+  @keyframes jelly-animation {
     0% { transform: scale(1); }
     30% { transform: scale(1.03); }
     40% { transform: scale(0.97); }
@@ -2158,10 +2177,11 @@ footer {
     100% { transform: scale(1); }
   }
   
-  .jelly-effect {
-    animation: jelly 0.7s ease;
+  .jelly-animation {
+    animation: jelly-animation 0.7s ease;
   }
   
+  /* Responsive fixes */
   @media screen and (max-width: 768px) {
     .project-box {
       height: auto;
@@ -2175,5 +2195,10 @@ footer {
     .image-div {
       height: auto;
       padding: 20px;
+    }
+    
+    .image-div img {
+      width: 100%;
+      height: auto;
     }
   }
