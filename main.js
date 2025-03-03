@@ -11,67 +11,71 @@ window.addEventListener('DOMContentLoaded', function() {
     
     // Function to update carousel positioning
     // Only modifying the transition handling in updateCarousel
-function updateCarousel(direction) {
-    if (isAnimating) return;
-    isAnimating = true;
-    
-    // First, find the slide that will become active
-    let newActiveSlide;
-    if (direction === 'next') {
-      newActiveSlide = slides[(slideCurrent + 1) % (slideTotal + 1)];
-    } else if (direction === 'prev') {
-      newActiveSlide = slides[(slideCurrent - 1 + slideTotal + 1) % (slideTotal + 1)];
-    } else {
-      newActiveSlide = slides[slideCurrent];
-    }
-    
-    // First step: Move the current active slide to its new position
-    slides.forEach((slide, index) => {
-      if (slide.classList.contains('active')) {
-        // Remove active class but don't add new class yet to allow clean exit
-        slide.classList.remove('active');
-        slide.style.zIndex = '2'; // Keep it above other slides temporarily
-      }
-    });
-    
-    // Give a brief moment for the active slide to start moving away
-    setTimeout(() => {
-      // Now update all slides to their new positions
-      slides.forEach((slide, index) => {
-        // Remove all animation classes
-        slide.classList.remove('smooth-slide', 'smooth-slide-reverse');
+    function updateCarousel(direction) {
+        if (isAnimating) return;
+        isAnimating = true;
         
-        // Remove all position classes
-        slide.classList.remove('preactive', 'proactive', 'preactivede', 'proactivede');
+        // First find the current active slide
+        const currentActive = document.querySelector('.project-slide.active');
         
-        // Calculate position relative to current slide
-        let position = calculatePosition(index, slideCurrent, slideTotal);
-        
-        // Set appropriate class based on position
-        if (position === 0) {
-          if (direction) { // Only if we're moving
-            slide.classList.add('smooth-slide' + (direction === 'prev' ? '-reverse' : ''));
-          }
-          slide.classList.add('active');
-        } else if (position === -1) {
-          slide.classList.add('preactive');
-        } else if (position === 1) {
-          slide.classList.add('proactive');
-        } else {
-          slide.classList.add('proactivede');
+        // Update the current slide index
+        if (direction === 'next') {
+          slideCurrent = (slideCurrent + 1) % (slideTotal + 1);
+        } else if (direction === 'prev') {
+          slideCurrent = (slideCurrent - 1 + slideTotal + 1) % (slideTotal + 1);
         }
-      });
-    }, 50);
-    
-    // Reset animation flag after transition completes
-    setTimeout(() => {
-      isAnimating = false;
-      slides.forEach(slide => {
-        slide.style.zIndex = ''; // Clear any inline z-index
-      });
-    }, 1000);
-  }
-    
+        
+        // Remove all animation classes from all slides
+        slides.forEach(slide => {
+          slide.classList.remove('slide-entry', 'slide-entry-reverse', 'jump-position');
+        });
+        
+        // Quick fade out for any slide that needs to jump sides
+        slides.forEach((slide, index) => {
+          // Check if this slide will need to jump from one far side to the other
+          const currentPos = [...slides].indexOf(slide) - [...slides].indexOf(currentActive);
+          const newPos = calculatePosition(index, slideCurrent, slideTotal);
+          
+          // If the position changed drastically (e.g., from far left to far right)
+          if (Math.abs(currentPos - newPos) > 1 && currentPos * newPos < 0) {
+            slide.classList.add('jump-position');
+          }
+        });
+        
+        // Very short delay to let the jump-position take effect
+        setTimeout(() => {
+          // Now update all positions
+          slides.forEach((slide, index) => {
+            // Remove position classes
+            slide.classList.remove('active', 'preactive', 'proactive', 'preactivede', 'proactivede');
+            
+            // Calculate position relative to current slide
+            const position = calculatePosition(index, slideCurrent, slideTotal);
+            
+            // Set appropriate class based on position
+            if (position === 0) {
+              slide.classList.add('active');
+              // Add the smooth entry animation (one continuous motion)
+              if (direction === 'next') {
+                slide.classList.add('slide-entry');
+              } else if (direction === 'prev') {
+                slide.classList.add('slide-entry-reverse');
+              }
+            } else if (position === -1) {
+              slide.classList.add('preactive');
+            } else if (position === 1) {
+              slide.classList.add('proactive');
+            } else {
+              slide.classList.add('preactivede');
+            }
+          });
+        }, 50);
+        
+        // Reset the animation flag after transition completes
+        setTimeout(() => {
+          isAnimating = false;
+        }, 850);
+      }
     // Helper function to calculate a slide's position relative to current
     function calculatePosition(index, current, total) {
       // Get the direct difference

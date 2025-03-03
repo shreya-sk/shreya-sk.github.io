@@ -2137,19 +2137,21 @@ footer {
     width: 100%;
     height: 100%;
   }
-  
-  .project-slide {
+  /* Fix for the transition messiness */
+.project-slide {
     position: absolute;
     width: 100%;
     height: 100%;
-    transition: all 1s cubic-bezier(0.34, 1.12, 0.64, 1);
+    transition: opacity 0.5s ease, transform 0.8s cubic-bezier(0.34, 1.12, 0.64, 1);
     pointer-events: none;
-    /* Add a clearer transition for opacity */
-    transition-property: transform, opacity, z-index;
-    /* Delay the opacity transition slightly */
-    transition-delay: 0s, 0.1s, 0s;
   }
   
+  /* Make sure slides that are moving to the opposite side fade out first before transitioning */
+  .project-slide.preactive.was-proactive,
+  .project-slide.proactive.was-preactive {
+    opacity: 0 !important;
+    transition: opacity 0.2s ease, transform 0s linear 0.2s;
+  }
   /* Ensure active slide stays opaque during transition */
   .project-slide.active {
     z-index: 3;
@@ -2283,4 +2285,29 @@ footer {
   
   .subtle-bounce {
     animation: subtle-bounce 0.4s cubic-bezier(0.34, 1.12, 0.64, 1);
+  }
+
+  /* Clean up the animations to be simpler and smoother */
+@keyframes smoothEntry {
+    0% { transform: translateX(35%) scale(0.85); opacity: 0.4; }
+    100% { transform: translateX(0) scale(1); opacity: 1; }
+  }
+  
+  @keyframes smoothEntryReverse {
+    0% { transform: translateX(-35%) scale(0.85); opacity: 0.4; }
+    100% { transform: translateX(0) scale(1); opacity: 1; }
+  }
+  
+  .slide-entry {
+    animation: smoothEntry 0.8s cubic-bezier(0.25, 0.1, 0.25, 1.1) forwards;
+  }
+  
+  .slide-entry-reverse {
+    animation: smoothEntryReverse 0.8s cubic-bezier(0.25, 0.1, 0.25, 1.1) forwards;
+  }
+  
+  /* For slides that need to jump sides without being seen */
+  .jump-position {
+    transition: opacity 0.2s ease-out;
+    opacity: 0;
   }
