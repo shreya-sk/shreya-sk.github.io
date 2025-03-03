@@ -2129,6 +2129,7 @@ footer {
     height: 585px;
     margin: 0 auto;
     overflow: visible;
+    perspective: 1000px;
   }
   
   .project-slide-container {
@@ -2157,18 +2158,18 @@ footer {
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
   }
   
-  /* Previous slide (left side) */
-  .project-slide.preactive {
+/* Previous slide (left side) - visible behind current */
+.project-slide.preactive {
     z-index: 1;
-    transform: translateX(-25%) scale(0.8);
-    opacity: 0.3;
+    transform: translateX(-35%) scale(0.85);
+    opacity: 0.4;
   }
   
-  /* Next slide (right side) */
+  /* Next slide (right side) - visible behind current */
   .project-slide.proactive {
     z-index: 1;
-    transform: translateX(25%) scale(0.8);
-    opacity: 0.3;
+    transform: translateX(35%) scale(0.85);
+    opacity: 0.4;
   }
   
   /* Hidden slides */
