@@ -50,25 +50,31 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // Show a specific project
-    function showProject(index) {
-      // Hide all projects
-      projects.forEach(project => {
-        project.style.display = 'none';
-      });
-      
-      // Show the selected project
-      projects[index].style.display = 'flex';
-      projects[index].classList.add('jelly-animation');
-      
-      // Remove animation class after animation completes
-      setTimeout(() => {
-        projects[index].classList.remove('jelly-animation');
-      }, 1000);
-      
-      // Update counter and previews
-      updateCounter();
-      updatePreviews();
-    }
+// Show a specific project
+function showProject(index) {
+    // Hide all projects
+    projects.forEach(project => {
+      project.style.display = 'none';
+      project.classList.remove('active-project'); // Remove any active class
+    });
+    
+    // Show the selected project
+    projects[index].style.display = 'flex';
+    projects[index].classList.add('active-project'); // Add active class
+    projects[index].classList.add('jelly-animation');
+    
+    // Remove animation class after animation completes
+    setTimeout(() => {
+      projects[index].classList.remove('jelly-animation');
+    }, 1000);
+    
+    // Update counter and previews
+    updateCounter();
+    updatePreviews();
+    
+    // Debug
+    console.log(`Showing project ${index + 1} of ${totalProjects}`);
+  }
     
     // Next project function
     function goToNextProject() {

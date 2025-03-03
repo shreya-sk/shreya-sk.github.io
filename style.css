@@ -2145,22 +2145,37 @@ footer {
     pointer-events: none;
     filter: blur(2px);
     overflow: hidden;
+    z-index: 1; /* Make sure they appear above the background but below the controls */
   }
   
   .project-preview-prev {
-    left: -60px;
+    left: 0; /* Position at the left edge of the container */
   }
   
   .project-preview-next {
-    right: -60px;
-  }
-  /* Make all projects hidden by default except the first one */
-  .project-box {
-    display: none;
-    width: 100%;
-    height: 550px;
+    right: 0; /* Position at the right edge of the container */
   }
   
+  /* Make sure your container has this */
+  .project-container {
+    position: relative;
+    overflow: visible; /* Allow the previews to be visible */
+    padding: 0 70px; /* Add padding to make room for the previews */
+  }
+  /* Make all projects hidden by default except the first one */
+.project-box {
+    /* Base styles for all project boxes */
+    width: 100%;
+    background-image: linear-gradient(to bottom right, var(--tech-stack-box-first-color), var(--tech-stack-box-second-color));
+    border: 1px solid var(--tech-stack-box-border-color);
+    border-radius: 30px;
+    overflow: hidden;
+  }
+  
+  .active-project {
+    /* Additional styles for the active project */
+    display: flex !important; /* Use !important to override inline styles */
+  }
   /* Show only the first project initially */
   #project-1 {
     display: flex;
