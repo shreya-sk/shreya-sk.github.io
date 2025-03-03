@@ -2170,6 +2170,7 @@ footer {
     transform: translateX(0) scale(1);
     opacity: 1;
     pointer-events: auto;
+    background-color: var(--tech-stack-box-first-color);
   }
   
   /* Previous slide (left side) */
@@ -2199,6 +2200,7 @@ footer {
   .project-slide.active * {
     opacity: 1;
     filter: none; /* Remove any filters */
+    background-color: var(--tech-stack-box-first-color);
   }
 
   /* Hidden slides
