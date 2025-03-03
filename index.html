@@ -419,66 +419,116 @@
     </section>
     <!-- skills section ends -->
     <!-- Projects Carousel Section - Replace the current project section with this -->
-<!-- Projects Section -->
-<section class="projects-section-container" id="projects">
-  <div class="projects-section-div">
-    <div class="section-heading" data-aos="fade-up">
-      <h2 class="section-heading-article" tabindex="0" aria-label="My projects starts from here">
-        &#60;/Projects&#62;
-      </h2>
-      <p class="sectionHeadingP"></p>
-    </div>
-    
-    <!-- Project Carousel -->
-    <div class="project-carousel">
-      <!-- Project Navigation -->
-      <div class="project-nav">
-        <button id="prev-project" class="nav-arrow" onclick="prevProject()">◀</button>
-        <button id="next-project" class="nav-arrow" onclick="nextProject()">▶</button>
-
-      </div>
-      <div class="project-preview-prev" id="prev-preview"></div>
-      <div class="project-preview-next" id="next-preview"></div>
-      
-      <!-- Projects -->
-      <div class="project-slide-container">
-        <!-- Project 1 -->
-        <div class="project-slide active">
-          <div class="project-box">
-            <div class="info-div">
-              <img src="src/webp/pexelicon-favicon.webp" alt="pexelicon website favicon" class="faviconforProject" />
-              <article class="ProjectHeading">Pexelicons</article>
-              <p class="ProjectDescription">
-                Pexelicons: A world of personalized file folder icons to
-                transform your PC into a reflection of your style.
-              </p>
-              <div class="project-buttons">
-                <a href="https://github.com/vinodjangid07/Pexelicons" target="_blank" class="github-redirect">
-                  <img src="src/svg/github.svg" alt="github redirect button" />
-                </a>
-                <a href="https://vinodjangid07.github.io/Pexelicons/" target="_blank" class="cta">
-                  <span>Live view</span>
-                  <svg viewBox="0 0 13 10" height="10px" width="15px">
-                    <path d="M1,5 L11,5"></path>
-                    <polyline points="8 1 12 5 8 9"></polyline>
-                  </svg>
-                </a>
+    <!-- Projects Section -->
+    <section class="projects-section-container" id="projects">
+      <div class="projects-section-div">
+        <div class="section-heading" data-aos="fade-up">
+          <h2 class="section-heading-article" tabindex="0" aria-label="My projects starts from here">
+            &#60;/Projects&#62;
+          </h2>
+          <p class="sectionHeadingP"></p>
+        </div>
+        
+        <!-- Project Carousel -->
+        <div class="project-carousel">
+          <!-- Project Navigation -->
+          <div class="nav-buttons-container">
+            <button id="prev-project" class="nav-arrow" onclick="prevProject()">◀</button>
+            <button id="next-project" class="nav-arrow" onclick="nextProject()">▶</button>
+          </div>
+          
+          <!-- Projects -->
+          <div class="project-slide-container">
+            <!-- Project 1 -->
+            <div class="project-slide active" data-index="0">
+              <div class="project-box">
+                <div class="info-div">
+                  <img src="src/webp/pexelicon-favicon.webp" alt="pexelicon website favicon" class="faviconforProject" />
+                  <article class="ProjectHeading">Pexelicons</article>
+                  <p class="ProjectDescription">
+                    Pexelicons: A world of personalized file folder icons to
+                    transform your PC into a reflection of your style.
+                  </p>
+                  <div class="project-buttons">
+                    <a href="https://github.com/vinodjangid07/Pexelicons" target="_blank" class="github-redirect">
+                      <img src="src/svg/github.svg" alt="github redirect button" />
+                    </a>
+                    <a href="https://vinodjangid07.github.io/Pexelicons/" target="_blank" class="cta">
+                      <span>Live view</span>
+                      <svg viewBox="0 0 13 10" height="10px" width="15px">
+                        <path d="M1,5 L11,5"></path>
+                        <polyline points="8 1 12 5 8 9"></polyline>
+                      </svg>
+                    </a>
+                  </div>
+                </div>
+                <div class="image-div">
+                  <img src="src/webp/Group 76.webp" alt="Pexelicon website preview image" />
+                </div>
               </div>
             </div>
-            <div class="image-div">
-              <img src="src/webp/Group 76.webp" alt="Pexelicon website preview image" />
+            
+            <!-- Project 2 -->
+            <div class="project-slide next-preview" data-index="1">
+              <div class="project-box">
+                <div class="info-div">
+                  <img src="src/webp/cropped-1086600-192x192.webp" alt="comickaze website favicon" class="faviconforProject" />
+                  <article class="ProjectHeading">ComicKaze</article>
+                  <p class="ProjectDescription">
+                    ComicKaze is an ecommerce website built on wordpress by me
+                    as a freelancer. It specializes in selling anime
+                    merchandise.
+                  </p>
+                  <div class="project-buttons">
+                    <a href="https://comickaze.in" target="_blank" class="cta" aria-label="Visit Comickaze live">
+                      <span>Live view</span>
+                      <svg viewBox="0 0 13 10" height="10px" width="15px">
+                        <path d="M1,5 L11,5"></path>
+                        <polyline points="8 1 12 5 8 9"></polyline>
+                      </svg>
+                    </a>
+                  </div>
+                </div>
+                <div class="image-div">
+                  <img src="src/webp/comickaze-preview.webp" alt="comickaze website preview image" />
+                </div>
+              </div>
             </div>
+            
+            <!-- Project 3 -->
+            <div class="project-slide" data-index="2">
+              <div class="project-box">
+                <div class="info-div">
+                  <img src="src/svg/aquaregia-favicon.svg" alt="Aquaregia website favicon" class="faviconforProjectAquaregia" />
+                  <article class="ProjectHeading">Aquaregia</article>
+                  <p class="ProjectDescription">
+                    A website for University Maharaja College fest "Aquaregia"
+                    for event registrations.
+                  </p>
+                  <div class="project-buttons">
+                    <a href="https://github.com/vinodjangid07/Aquaregia" target="_blank" class="github-redirect">
+                      <img src="src/svg/github.svg" alt="github redirect button" />
+                    </a>
+                    <a href="https://vinodjangid07.github.io/Aquaregia/" target="_blank" class="cta">
+                      <span>Live view</span>
+                      <svg viewBox="0 0 13 10" height="10px" width="15px">
+                        <path d="M1,5 L11,5"></path>
+                        <polyline points="8 1 12 5 8 9"></polyline>
+                      </svg>
+                    </a>
+                  </div>
+                </div>
+                <div class="image-div">
+                  <img src="src/webp/Aquaregia-project.webp" alt="Aquaregia website preview image" />
+                </div>
+              </div>
+            </div>
+            
+            <!-- Add more projects with the same structure -->
           </div>
         </div>
-        
-        <!-- Project 2 (Add your other projects here) -->
-        <!-- Example: -->
-        <div class="project-slide">
-          <div class="project-box">
-            <!-- Project 2 content -->
-          </div>
-        </div>
-        
+      </div>
+    </section>  
         <!-- Add more projects as needed -->
       </div>
     </div>
