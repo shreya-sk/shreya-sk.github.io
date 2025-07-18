@@ -4,27 +4,9 @@ import { ArrowRight, BookOpen, Lightbulb, Calendar } from "lucide-react";
 import { Link } from "react-router-dom";
 import BlogCard from "@/components/BlogCard";
 import TILCard from "@/components/TILCard";
+import { useGitHubPosts } from "@/hooks/useGitHubPosts";
 
-// Mock data for preview
-const recentPosts = [
-  {
-    id: "1",
-    title: "Building a Second Brain with Obsidian",
-    excerpt: "How I use Obsidian to capture, organize, and develop my thoughts into a comprehensive knowledge management system.",
-    date: "2024-01-15",
-    readTime: "5 min read",
-    slug: "building-second-brain-obsidian"
-  },
-  {
-    id: "2",
-    title: "The Power of Linked Thinking",
-    excerpt: "Exploring how connecting ideas through bidirectional links creates a more dynamic and discoverable knowledge base.",
-    date: "2024-01-12",
-    readTime: "3 min read",
-    slug: "power-of-linked-thinking"
-  }
-];
-
+// Mock data for TIL section
 const recentTIL = [
   {
     id: "1",
@@ -43,6 +25,11 @@ const recentTIL = [
 ];
 
 const Index = () => {
+  const { data: posts, isLoading } = useGitHubPosts();
+  
+  // Get the first 2 posts for recent posts section
+  const recentPosts = posts?.slice(0, 2) || [];
+
   return (
     <div className="min-h-screen">
       <Hero />
@@ -65,11 +52,23 @@ const Index = () => {
               </Link>
             </div>
             
-            <div className="grid md:grid-cols-2 gap-6">
-              {recentPosts.map((post) => (
-                <BlogCard key={post.id} post={post} />
-              ))}
-            </div>
+            {isLoading ? (
+              <div className="text-center py-12">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
+                <p className="text-muted-foreground">Loading posts from your Obsidian vault...</p>
+              </div>
+            ) : (
+              <div className="grid md:grid-cols-2 gap-6">
+                {recentPosts.map((post) => (
+                  <BlogCard key={post.id} post={post} />
+                ))}
+                {recentPosts.length === 0 && (
+                  <div className="col-span-2 text-center py-8">
+                    <p className="text-muted-foreground">No posts found. Make sure your GitHub repository contains markdown files.</p>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         </div>
       </section>
@@ -107,7 +106,7 @@ const Index = () => {
           <div className="mx-auto max-w-4xl">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
               <div className="space-y-2">
-                <div className="text-3xl font-bold text-primary">50+</div>
+                <div className="text-3xl font-bold text-primary">{posts?.length || 0}</div>
                 <div className="text-muted-foreground">Blog Posts</div>
               </div>
               <div className="space-y-2">
