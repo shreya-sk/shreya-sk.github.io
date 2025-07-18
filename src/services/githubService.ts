@@ -39,8 +39,13 @@ export const fetchMarkdownFiles = async (): Promise<BlogPost[]> => {
     }
     
     const data = await response.json();
+    
+    // Filter for markdown files, excluding README.md files and ensuring they have names
     const markdownFiles = data.tree.filter((file: GitHubFile) => 
-      file.name && file.name.endsWith('.md') && file.type === 'blob'
+      file.type === 'blob' && 
+      file.path && 
+      file.path.endsWith('.md') && 
+      !file.path.toLowerCase().includes('readme.md')
     );
     
     console.log('Found markdown files:', markdownFiles);
@@ -58,14 +63,15 @@ export const fetchMarkdownFiles = async (): Promise<BlogPost[]> => {
           
           // Extract title from content (first # heading) or use filename
           const titleMatch = content.match(/^#\s+(.+)$/m);
-          const title = titleMatch ? titleMatch[1] : file.name.replace('.md', '');
+          const fileName = file.path.split('/').pop()?.replace('.md', '') || 'Untitled';
+          const title = titleMatch ? titleMatch[1] : fileName;
           
           // Extract folder from path
           const pathParts = file.path.split('/');
           const folder = pathParts.length > 1 ? pathParts[0] : 'Root';
           
-          // Generate slug from filename
-          const slug = file.name.replace('.md', '').toLowerCase().replace(/\s+/g, '-');
+          // Generate slug from path
+          const slug = file.path.replace('.md', '').toLowerCase().replace(/\s+/g, '-').replace(/\//g, '/');
           
           posts.push({
             id: file.sha,
@@ -74,8 +80,10 @@ export const fetchMarkdownFiles = async (): Promise<BlogPost[]> => {
             path: file.path,
             folder,
             date: new Date().toISOString().split('T')[0], // We'll use current date for now
-            slug: `${folder.toLowerCase().replace(/\s+/g, '-')}/${slug}`
+            slug
           });
+        } else {
+          console.error(`Failed to fetch content for ${file.path}:`, contentResponse.status);
         }
       } catch (error) {
         console.error(`Failed to fetch content for ${file.path}:`, error);
