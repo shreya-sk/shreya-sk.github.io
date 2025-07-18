@@ -15,20 +15,20 @@ interface TILCardProps {
 
 const TILCard = ({ item }: TILCardProps) => {
   return (
-    <article className="rounded-lg border bg-card p-6 transition-all duration-200 hover:shadow-md">
-      <div className="space-y-4">
+    <article className="rounded-lg bg-card/40 border border-border/40 p-8 transition-all duration-300 hover:bg-card/60 hover:border-border/60 minimal-card">
+      <div className="space-y-5">
         <div className="flex items-start justify-between">
-          <div className="flex items-center gap-2">
-            <Lightbulb className="h-5 w-5 text-yellow-500" />
-            <h3 className="font-semibold">{item.title}</h3>
+          <div className="flex items-center gap-3">
+            <Lightbulb className="h-5 w-5 text-yellow-500/80" />
+            <h3 className="font-medium text-lg">{item.title}</h3>
           </div>
-          <div className="flex items-center gap-1 text-sm text-muted-foreground">
+          <div className="flex items-center gap-2 text-sm text-muted-foreground/80">
             <Calendar className="h-4 w-4" />
             <time dateTime={item.date}>{item.date}</time>
           </div>
         </div>
         
-        <p className="text-muted-foreground leading-relaxed">
+        <p className="text-muted-foreground leading-relaxed font-light text-[15px]">
           {item.content}
         </p>
         
@@ -37,7 +37,7 @@ const TILCard = ({ item }: TILCardProps) => {
             {item.tags.map((tag) => (
               <span 
                 key={tag}
-                className="inline-flex items-center rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-medium text-primary"
+                className="inline-flex items-center rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary/80"
               >
                 {tag}
               </span>

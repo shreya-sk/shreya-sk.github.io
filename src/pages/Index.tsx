@@ -1,6 +1,6 @@
 
 import Hero from "@/components/Hero";
-import { ArrowRight, BookOpen, Lightbulb, Calendar } from "lucide-react";
+import { ArrowRight, BookOpen, Lightbulb } from "lucide-react";
 import { Link } from "react-router-dom";
 import BlogCard from "@/components/BlogCard";
 import TILCard from "@/components/TILCard";
@@ -31,40 +31,40 @@ const Index = () => {
   const recentPosts = posts?.slice(0, 2) || [];
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen sage-gradient">
       <Hero />
       
       {/* Recent Blog Posts Section */}
-      <section className="py-16 bg-muted/30">
-        <div className="container px-4">
+      <section className="py-20 bg-background/40 backdrop-blur-sm">
+        <div className="container px-6">
           <div className="mx-auto max-w-6xl">
-            <div className="flex items-center justify-between mb-8">
-              <div className="flex items-center gap-3">
-                <BookOpen className="h-6 w-6 text-primary" />
-                <h2 className="text-3xl font-bold">Recent Posts</h2>
+            <div className="flex items-center justify-between mb-12">
+              <div className="flex items-center gap-4">
+                <BookOpen className="h-6 w-6 text-primary/80" />
+                <h2 className="text-3xl font-medium tracking-tight">Recent Posts</h2>
               </div>
               <Link 
                 to="/blog"
-                className="inline-flex items-center text-primary hover:text-primary/80 transition-colors"
+                className="inline-flex items-center text-primary/80 hover:text-primary transition-colors font-medium"
               >
                 View all posts
-                <ArrowRight className="ml-1 h-4 w-4" />
+                <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </div>
             
             {isLoading ? (
-              <div className="text-center py-12">
-                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
-                <p className="text-muted-foreground">Loading posts from your Obsidian vault...</p>
+              <div className="text-center py-16">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary/30 mx-auto mb-6"></div>
+                <p className="text-muted-foreground font-light">Loading posts from your Obsidian vault...</p>
               </div>
             ) : (
-              <div className="grid md:grid-cols-2 gap-6">
+              <div className="grid md:grid-cols-2 gap-8">
                 {recentPosts.map((post) => (
                   <BlogCard key={post.id} post={post} />
                 ))}
                 {recentPosts.length === 0 && (
-                  <div className="col-span-2 text-center py-8">
-                    <p className="text-muted-foreground">No posts found. Make sure your GitHub repository contains markdown files.</p>
+                  <div className="col-span-2 text-center py-12">
+                    <p className="text-muted-foreground font-light">No posts found. Make sure your GitHub repository contains markdown files.</p>
                   </div>
                 )}
               </div>
@@ -74,24 +74,24 @@ const Index = () => {
       </section>
       
       {/* Recent TIL Section */}
-      <section className="py-16">
-        <div className="container px-4">
+      <section className="py-20">
+        <div className="container px-6">
           <div className="mx-auto max-w-6xl">
-            <div className="flex items-center justify-between mb-8">
-              <div className="flex items-center gap-3">
-                <Lightbulb className="h-6 w-6 text-yellow-500" />
-                <h2 className="text-3xl font-bold">Today I Learned</h2>
+            <div className="flex items-center justify-between mb-12">
+              <div className="flex items-center gap-4">
+                <Lightbulb className="h-6 w-6 text-yellow-500/80" />
+                <h2 className="text-3xl font-medium tracking-tight">Today I Learned</h2>
               </div>
               <Link 
                 to="/til"
-                className="inline-flex items-center text-primary hover:text-primary/80 transition-colors"
+                className="inline-flex items-center text-primary/80 hover:text-primary transition-colors font-medium"
               >
                 View all learnings
-                <ArrowRight className="ml-1 h-4 w-4" />
+                <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </div>
             
-            <div className="grid md:grid-cols-2 gap-4">
+            <div className="grid md:grid-cols-2 gap-6">
               {recentTIL.map((item) => (
                 <TILCard key={item.id} item={item} />
               ))}
@@ -101,21 +101,21 @@ const Index = () => {
       </section>
       
       {/* Stats Section */}
-      <section className="py-16 bg-muted/30">
-        <div className="container px-4">
+      <section className="py-20 bg-background/40 backdrop-blur-sm">
+        <div className="container px-6">
           <div className="mx-auto max-w-4xl">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-              <div className="space-y-2">
-                <div className="text-3xl font-bold text-primary">{posts?.length || 0}</div>
-                <div className="text-muted-foreground">Blog Posts</div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
+              <div className="space-y-3">
+                <div className="text-4xl font-light text-primary">{posts?.length || 0}</div>
+                <div className="text-muted-foreground font-light">Blog Posts</div>
               </div>
-              <div className="space-y-2">
-                <div className="text-3xl font-bold text-primary">200+</div>
-                <div className="text-muted-foreground">TIL Entries</div>
+              <div className="space-y-3">
+                <div className="text-4xl font-light text-primary">200+</div>
+                <div className="text-muted-foreground font-light">TIL Entries</div>
               </div>
-              <div className="space-y-2">
-                <div className="text-3xl font-bold text-primary">1k+</div>
-                <div className="text-muted-foreground">Connected Notes</div>
+              <div className="space-y-3">
+                <div className="text-4xl font-light text-primary">1k+</div>
+                <div className="text-muted-foreground font-light">Connected Notes</div>
               </div>
             </div>
           </div>

@@ -16,39 +16,39 @@ const BlogCard = ({ post }: BlogCardProps) => {
     .replace(/^#.*$/gm, '') // Remove headings
     .replace(/\n+/g, ' ') // Replace newlines with spaces
     .trim()
-    .substring(0, 150) + (post.content.length > 150 ? '...' : '');
+    .substring(0, 120) + (post.content.length > 120 ? '...' : '');
 
   return (
-    <article className="group relative rounded-lg border bg-card p-6 transition-all duration-200 hover:shadow-md hover:-translate-y-1">
-      <div className="space-y-4">
-        <div className="flex items-center gap-4 text-sm text-muted-foreground">
-          <div className="flex items-center gap-1">
+    <article className="group relative rounded-lg bg-card/40 border border-border/40 p-8 transition-all duration-300 hover:bg-card/60 hover:border-border/60 hover:-translate-y-1 minimal-card">
+      <div className="space-y-5">
+        <div className="flex items-center gap-6 text-sm text-muted-foreground/80">
+          <div className="flex items-center gap-2">
             <Folder className="h-4 w-4" />
-            <span>{post.folder}</span>
+            <span className="font-medium">{post.folder}</span>
           </div>
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-2">
             <Calendar className="h-4 w-4" />
             <time dateTime={post.date}>{post.date}</time>
           </div>
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-2">
             <Clock className="h-4 w-4" />
             <span>{readTime}</span>
           </div>
         </div>
         
-        <h3 className="text-xl font-semibold leading-tight group-hover:text-primary transition-colors">
+        <h3 className="text-xl font-medium leading-snug group-hover:text-primary transition-colors">
           <Link to={`/blog/${post.slug}`} className="after:absolute after:inset-0">
             {post.title}
           </Link>
         </h3>
         
-        <p className="text-muted-foreground leading-relaxed">
+        <p className="text-muted-foreground leading-relaxed text-[15px]">
           {excerpt}
         </p>
         
-        <div className="flex items-center text-sm font-medium text-primary">
+        <div className="flex items-center text-sm font-medium text-primary/80 group-hover:text-primary transition-colors">
           Read more
-          <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
+          <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
         </div>
       </div>
     </article>

@@ -40,8 +40,10 @@ export const fetchMarkdownFiles = async (): Promise<BlogPost[]> => {
     
     const data = await response.json();
     const markdownFiles = data.tree.filter((file: GitHubFile) => 
-      file.name.endsWith('.md') && file.type === 'blob'
+      file.name && file.name.endsWith('.md') && file.type === 'blob'
     );
+    
+    console.log('Found markdown files:', markdownFiles);
     
     // Fetch content for each markdown file
     const posts: BlogPost[] = [];
@@ -80,6 +82,7 @@ export const fetchMarkdownFiles = async (): Promise<BlogPost[]> => {
       }
     }
     
+    console.log('Processed posts:', posts);
     return posts;
   } catch (error) {
     console.error('Error fetching markdown files:', error);
