@@ -1,32 +1,38 @@
 
-import { Calendar, Clock, ArrowRight } from "lucide-react";
+import { Calendar, Clock, ArrowRight, Folder } from "lucide-react";
 import { Link } from "react-router-dom";
-
-interface BlogPost {
-  id: string;
-  title: string;
-  excerpt: string;
-  date: string;
-  readTime: string;
-  slug: string;
-}
+import { BlogPost } from "@/services/githubService";
 
 interface BlogCardProps {
   post: BlogPost;
 }
 
 const BlogCard = ({ post }: BlogCardProps) => {
+  // Calculate approximate read time based on content length
+  const readTime = Math.max(1, Math.ceil(post.content.length / 1000)) + " min read";
+  
+  // Extract excerpt from content (first paragraph or first 150 chars)
+  const excerpt = post.content
+    .replace(/^#.*$/gm, '') // Remove headings
+    .replace(/\n+/g, ' ') // Replace newlines with spaces
+    .trim()
+    .substring(0, 150) + (post.content.length > 150 ? '...' : '');
+
   return (
     <article className="group relative rounded-lg border bg-card p-6 transition-all duration-200 hover:shadow-md hover:-translate-y-1">
       <div className="space-y-4">
         <div className="flex items-center gap-4 text-sm text-muted-foreground">
+          <div className="flex items-center gap-1">
+            <Folder className="h-4 w-4" />
+            <span>{post.folder}</span>
+          </div>
           <div className="flex items-center gap-1">
             <Calendar className="h-4 w-4" />
             <time dateTime={post.date}>{post.date}</time>
           </div>
           <div className="flex items-center gap-1">
             <Clock className="h-4 w-4" />
-            <span>{post.readTime}</span>
+            <span>{readTime}</span>
           </div>
         </div>
         
@@ -37,7 +43,7 @@ const BlogCard = ({ post }: BlogCardProps) => {
         </h3>
         
         <p className="text-muted-foreground leading-relaxed">
-          {post.excerpt}
+          {excerpt}
         </p>
         
         <div className="flex items-center text-sm font-medium text-primary">
