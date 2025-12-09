@@ -1,6 +1,6 @@
 
 import { Link, useLocation } from "react-router-dom";
-import { BookOpen, Lightbulb, Home } from "lucide-react";
+import { BookOpen, Lightbulb, Home, Code } from "lucide-react";
 
 const Header = () => {
   const location = useLocation();
@@ -50,6 +50,18 @@ const Header = () => {
           >
             <Lightbulb className="h-3.5 w-3.5" />
             <span>journal</span>
+          </Link>
+
+          <Link
+            to="/gists"
+            className={`flex items-center space-x-1 px-2.5 py-1.5 rounded-lg text-sm transition-colors ${
+              isActive('/gists')
+                ? 'bg-muted text-foreground'
+                : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
+            }`}
+          >
+            <Code className="h-3.5 w-3.5" />
+            <span>snippets</span>
           </Link>
         </nav>
       </div>
