@@ -2,6 +2,7 @@
 import { Calendar, Clock, ArrowRight, Folder } from "lucide-react";
 import { Link } from "react-router-dom";
 import { BlogPost } from "@/services/githubService";
+import { cleanForExcerpt } from "@/utils/markdownUtils";
 
 interface BlogCardProps {
   post: BlogPost;
@@ -10,13 +11,10 @@ interface BlogCardProps {
 const BlogCard = ({ post }: BlogCardProps) => {
   // Calculate approximate read time based on content length
   const readTime = Math.max(1, Math.ceil(post.content.length / 1000)) + " min read";
-  
-  // Extract excerpt from content (first paragraph or first 150 chars)
-  const excerpt = post.content
-    .replace(/^#.*$/gm, '') // Remove headings
-    .replace(/\n+/g, ' ') // Replace newlines with spaces
-    .trim()
-    .substring(0, 120) + (post.content.length > 120 ? '...' : '');
+
+  // Extract clean excerpt from content
+  const cleanContent = cleanForExcerpt(post.content);
+  const excerpt = cleanContent.substring(0, 150) + (cleanContent.length > 150 ? '...' : '');
 
   return (
     <article className="group relative rounded-2xl p-4 minimal-card border-l-4 border-l-primary/40 hover:border-l-primary transition-all">
