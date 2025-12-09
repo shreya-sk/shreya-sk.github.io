@@ -5,7 +5,7 @@ import { componentTagger } from "lovable-tagger";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
-  base: mode === 'production' ? '/daily-thought-display/' : '/',
+  base: '/', // User site deploys to root domain
   server: {
     host: "::",
     port: 8080,
