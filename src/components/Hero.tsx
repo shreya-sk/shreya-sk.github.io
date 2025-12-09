@@ -4,47 +4,46 @@ import { Link } from "react-router-dom";
 
 const Hero = () => {
   return (
-    <section className="relative overflow-hidden sage-gradient py-24 md:py-32">
+    <section className="relative overflow-hidden sage-gradient py-16 md:py-20">
       <div className="container px-4 relative z-10">
         <div className="mx-auto max-w-4xl text-center">
-          <div className="mb-8 inline-flex items-center rounded-full minimal-card px-4 py-2 text-sm shadow-lg">
+          <div className="mb-6 inline-flex items-center rounded-full minimal-card px-4 py-2 text-sm shadow-lg">
             <FileText className="mr-2 h-4 w-4 text-primary" />
             <span className="font-medium">Synced from Obsidian</span>
           </div>
-          
-          <h1 className="mb-6 text-4xl font-bold tracking-tight md:text-6xl lg:text-7xl">
-            My Digital
+
+          <h1 className="mb-4 text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl">
+            shreya's
             <span className="bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
-              {" "}Garden
+              {" "}digital garden
             </span>
           </h1>
-          
-          <p className="mb-8 text-lg text-muted-foreground md:text-xl lg:text-2xl max-w-3xl mx-auto leading-relaxed">
-            A collection of thoughts, learnings, and insights. Automatically synced from my Obsidian vault, 
-            where ideas grow and knowledge blooms.
+
+          <p className="mb-6 text-base md:text-lg max-w-2xl mx-auto leading-relaxed text-muted-foreground">
+            thoughts in progress, ideas taking root, and everything in between.
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+          <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
             <Link
               to="/blog"
-              className="glass-button inline-flex items-center justify-center rounded-2xl px-8 py-4 text-sm font-semibold text-primary-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+              className="glass-button inline-flex items-center justify-center rounded-2xl px-6 py-3 text-sm font-semibold text-primary-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
             >
-              Explore Blog Posts
+              read posts
               <ArrowRight className="ml-2 h-4 w-4" />
             </Link>
 
             <Link
               to="/til"
-              className="minimal-card inline-flex items-center justify-center rounded-2xl px-8 py-4 text-sm font-semibold transition-all focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+              className="minimal-card inline-flex items-center justify-center rounded-2xl px-6 py-3 text-sm font-semibold transition-all focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
             >
-              Today I Learned
+              daily journal
             </Link>
           </div>
-          
-          <div className="mt-12 flex justify-center">
-            <div className="flex items-center space-x-1 text-sm text-muted-foreground">
-              <Github className="h-4 w-4" />
-              <span>Automatically synced from Git repository</span>
+
+          <div className="mt-8 flex justify-center">
+            <div className="flex items-center gap-2 text-xs text-muted-foreground/70">
+              <Github className="h-3.5 w-3.5" />
+              <span>auto-synced from obsidian vault</span>
             </div>
           </div>
         </div>
