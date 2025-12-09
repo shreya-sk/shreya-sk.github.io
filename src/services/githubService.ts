@@ -40,12 +40,13 @@ export const fetchMarkdownFiles = async (): Promise<BlogPost[]> => {
     
     const data = await response.json();
     
-    // Filter for markdown files, excluding README.md files and ensuring they have names
-    const markdownFiles = data.tree.filter((file: GitHubFile) => 
-      file.type === 'blob' && 
-      file.path && 
-      file.path.endsWith('.md') && 
-      !file.path.toLowerCase().includes('readme.md')
+    // Filter for markdown files, excluding README files and ensuring they have names
+    const markdownFiles = data.tree.filter((file: GitHubFile) =>
+      file.type === 'blob' &&
+      file.path &&
+      file.path.endsWith('.md') &&
+      !file.path.toLowerCase().includes('readme') &&
+      !file.name.toLowerCase().startsWith('readme')
     );
     
     console.log('Found markdown files:', markdownFiles);
