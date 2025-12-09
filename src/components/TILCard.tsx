@@ -1,12 +1,8 @@
 
-import { Lightbulb, Calendar } from "lucide-react";
-
 interface TILItem {
   id: string;
-  title: string;
   content: string;
   date: string;
-  tags?: string[];
 }
 
 interface TILCardProps {
@@ -14,36 +10,36 @@ interface TILCardProps {
 }
 
 const TILCard = ({ item }: TILCardProps) => {
+  // Format date to show day and date (e.g., "Monday, Jan 16")
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    const options: Intl.DateTimeFormatOptions = {
+      weekday: 'long',
+      month: 'short',
+      day: 'numeric'
+    };
+    return date.toLocaleDateString('en-US', options);
+  };
+
   return (
-    <article className="rounded-lg bg-card/40 border border-border/40 p-8 transition-all duration-300 hover:bg-card/60 hover:border-border/60 minimal-card">
-      <div className="space-y-5">
-        <div className="flex items-start justify-between">
-          <div className="flex items-center gap-3">
-            <Lightbulb className="h-5 w-5 text-yellow-500/80" />
-            <h3 className="font-medium text-lg">{item.title}</h3>
+    <article className="minimal-card rounded-2xl p-4 group hover:scale-[1.01] transition-transform">
+      <div className="flex gap-4">
+        {/* Date column */}
+        <div className="flex-shrink-0 w-24">
+          <div className="text-xs font-medium text-primary">
+            {formatDate(item.date).split(', ')[0]}
           </div>
-          <div className="flex items-center gap-2 text-sm text-muted-foreground/80">
-            <Calendar className="h-4 w-4" />
-            <time dateTime={item.date}>{item.date}</time>
+          <div className="text-xs text-muted-foreground">
+            {formatDate(item.date).split(', ')[1]}
           </div>
         </div>
-        
-        <p className="text-muted-foreground leading-relaxed font-light text-[15px]">
-          {item.content}
-        </p>
-        
-        {item.tags && item.tags.length > 0 && (
-          <div className="flex flex-wrap gap-2">
-            {item.tags.map((tag) => (
-              <span 
-                key={tag}
-                className="inline-flex items-center rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary/80"
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
-        )}
+
+        {/* Content */}
+        <div className="flex-1 min-w-0">
+          <p className="text-sm text-foreground/90 leading-relaxed">
+            {item.content}
+          </p>
+        </div>
       </div>
     </article>
   );
