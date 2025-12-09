@@ -4,12 +4,12 @@ import { Link } from "react-router-dom";
 
 const Hero = () => {
   return (
-    <section className="relative overflow-hidden bg-gradient-to-br from-background via-muted/20 to-background py-24 md:py-32">
-      <div className="container px-4">
+    <section className="relative overflow-hidden sage-gradient py-24 md:py-32">
+      <div className="container px-4 relative z-10">
         <div className="mx-auto max-w-4xl text-center">
-          <div className="mb-8 inline-flex items-center rounded-full border bg-muted/50 px-3 py-1 text-sm">
-            <FileText className="mr-2 h-4 w-4" />
-            Synced from Obsidian
+          <div className="mb-8 inline-flex items-center rounded-full minimal-card px-4 py-2 text-sm shadow-lg">
+            <FileText className="mr-2 h-4 w-4 text-primary" />
+            <span className="font-medium">Synced from Obsidian</span>
           </div>
           
           <h1 className="mb-6 text-4xl font-bold tracking-tight md:text-6xl lg:text-7xl">
@@ -25,17 +25,17 @@ const Hero = () => {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Link 
+            <Link
               to="/blog"
-              className="inline-flex items-center justify-center rounded-md bg-primary px-6 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+              className="glass-button inline-flex items-center justify-center rounded-2xl px-8 py-4 text-sm font-semibold text-primary-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
             >
               Explore Blog Posts
               <ArrowRight className="ml-2 h-4 w-4" />
             </Link>
-            
-            <Link 
+
+            <Link
               to="/til"
-              className="inline-flex items-center justify-center rounded-md border border-input bg-background px-6 py-3 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+              className="minimal-card inline-flex items-center justify-center rounded-2xl px-8 py-4 text-sm font-semibold transition-all focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
             >
               Today I Learned
             </Link>
@@ -50,9 +50,11 @@ const Hero = () => {
         </div>
       </div>
       
-      {/* Decorative elements */}
-      <div className="absolute -top-24 -right-24 h-96 w-96 rounded-full bg-primary/5 blur-3xl"></div>
-      <div className="absolute -bottom-24 -left-24 h-96 w-96 rounded-full bg-primary/5 blur-3xl"></div>
+      {/* Floating bubble decorations */}
+      <div className="floating-bubble absolute -top-32 -right-32 h-96 w-96" style={{ animationDelay: '0s' }}></div>
+      <div className="floating-bubble absolute -bottom-32 -left-32 h-80 w-80" style={{ animationDelay: '5s' }}></div>
+      <div className="floating-bubble absolute top-1/4 left-1/4 h-64 w-64" style={{ animationDelay: '10s' }}></div>
+      <div className="floating-bubble absolute bottom-1/3 right-1/3 h-72 w-72" style={{ animationDelay: '15s' }}></div>
     </section>
   );
 };

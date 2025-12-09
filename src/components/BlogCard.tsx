@@ -19,7 +19,7 @@ const BlogCard = ({ post }: BlogCardProps) => {
     .substring(0, 120) + (post.content.length > 120 ? '...' : '');
 
   return (
-    <article className="group relative rounded-lg bg-card/40 border border-border/40 p-8 transition-all duration-300 hover:bg-card/60 hover:border-border/60 hover:-translate-y-1 minimal-card">
+    <article className="group relative rounded-2xl p-8 minimal-card">
       <div className="space-y-5">
         <div className="flex items-center gap-6 text-sm text-muted-foreground/80">
           <div className="flex items-center gap-2">
