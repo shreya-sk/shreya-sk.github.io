@@ -19,9 +19,9 @@ const BlogCard = ({ post }: BlogCardProps) => {
     .substring(0, 120) + (post.content.length > 120 ? '...' : '');
 
   return (
-    <article className="group relative rounded-2xl p-8 minimal-card">
-      <div className="space-y-5">
-        <div className="flex items-center gap-6 text-sm text-muted-foreground/80">
+    <article className="group relative rounded-2xl p-5 minimal-card">
+      <div className="space-y-3">
+        <div className="flex items-center gap-4 text-xs text-muted-foreground/80">
           <div className="flex items-center gap-2">
             <Folder className="h-4 w-4" />
             <span className="font-medium">{post.folder}</span>
@@ -36,19 +36,19 @@ const BlogCard = ({ post }: BlogCardProps) => {
           </div>
         </div>
         
-        <h3 className="text-xl font-medium leading-snug group-hover:text-primary transition-colors">
+        <h3 className="text-lg font-medium leading-snug group-hover:text-primary transition-colors">
           <Link to={`/blog/${post.slug}`} className="after:absolute after:inset-0">
             {post.title}
           </Link>
         </h3>
-        
-        <p className="text-muted-foreground leading-relaxed text-[15px]">
+
+        <p className="text-muted-foreground leading-relaxed text-sm">
           {excerpt}
         </p>
-        
-        <div className="flex items-center text-sm font-medium text-primary/80 group-hover:text-primary transition-colors">
-          Read more
-          <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+
+        <div className="flex items-center text-xs font-medium text-primary/80 group-hover:text-primary transition-colors">
+          read more
+          <ArrowRight className="ml-1.5 h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
         </div>
       </div>
     </article>
