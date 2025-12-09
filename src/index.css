@@ -330,7 +330,45 @@
   }
 
   .markdown-content blockquote {
-    @apply border-l-4 border-primary/40 pl-4 py-1 my-4 italic text-muted-foreground bg-muted/30 rounded-r;
+    @apply border-l-4 border-primary/40 pl-4 py-2 my-4 italic text-muted-foreground bg-muted/30 rounded-r;
+  }
+
+  /* Obsidian-style callouts */
+  .markdown-content blockquote:has(> p > strong:first-child) {
+    @apply not-italic;
+  }
+
+  .markdown-content blockquote p strong:first-child {
+    @apply block mb-2 not-italic font-bold text-sm uppercase tracking-wide;
+  }
+
+  /* Callout type colors */
+  .markdown-content blockquote:has(> p > strong:first-child:contains("NOTE")),
+  .markdown-content blockquote:has(> p > strong:first-child:contains("INFO")) {
+    @apply border-l-blue-500 bg-blue-50/50 text-blue-900;
+  }
+
+  .markdown-content blockquote:has(> p > strong:first-child:contains("IMPORTANT")),
+  .markdown-content blockquote:has(> p > strong:first-child:contains("WARNING")),
+  .markdown-content blockquote:has(> p > strong:first-child:contains("ATTENTION")) {
+    @apply border-l-amber-500 bg-amber-50/50 text-amber-900;
+  }
+
+  .markdown-content blockquote:has(> p > strong:first-child:contains("ERROR")),
+  .markdown-content blockquote:has(> p > strong:first-child:contains("DANGER")),
+  .markdown-content blockquote:has(> p > strong:first-child:contains("BUG")) {
+    @apply border-l-red-500 bg-red-50/50 text-red-900;
+  }
+
+  .markdown-content blockquote:has(> p > strong:first-child:contains("SUCCESS")),
+  .markdown-content blockquote:has(> p > strong:first-child:contains("CHECK")),
+  .markdown-content blockquote:has(> p > strong:first-child:contains("DONE")) {
+    @apply border-l-green-500 bg-green-50/50 text-green-900;
+  }
+
+  .markdown-content blockquote:has(> p > strong:first-child:contains("TIP")),
+  .markdown-content blockquote:has(> p > strong:first-child:contains("HINT")) {
+    @apply border-l-purple-500 bg-purple-50/50 text-purple-900;
   }
 
   .markdown-content code {
