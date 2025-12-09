@@ -1,13 +1,20 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Search, ChevronDown, ChevronRight, FileText } from "lucide-react";
 import BlogCard from "@/components/BlogCard";
 import { useGroupedPosts } from "@/hooks/useGitHubPosts";
 
 const Blog = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [expandedFolders, setExpandedFolders] = useState<Set<string>>(new Set());
   const { groupedPosts, isLoading, error } = useGroupedPosts();
+  const [expandedFolders, setExpandedFolders] = useState<Set<string>>(new Set());
+
+  // Expand all folders by default when data loads
+  useEffect(() => {
+    if (Object.keys(groupedPosts).length > 0 && expandedFolders.size === 0) {
+      setExpandedFolders(new Set(Object.keys(groupedPosts)));
+    }
+  }, [groupedPosts]);
 
   // Toggle folder expansion
   const toggleFolder = (folder: string) => {

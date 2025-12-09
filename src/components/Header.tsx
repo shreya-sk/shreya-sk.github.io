@@ -61,7 +61,7 @@ const Header = () => {
             }`}
           >
             <Code className="h-3.5 w-3.5" />
-            <span>snippets</span>
+            <span>gists</span>
           </Link>
         </nav>
       </div>

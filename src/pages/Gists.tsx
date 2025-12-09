@@ -22,7 +22,7 @@ const Gists = () => {
         <div className="mx-auto max-w-4xl">
           <div className="text-center py-12">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-secondary mx-auto mb-4"></div>
-            <p className="text-muted-foreground text-sm">Loading code snippets...</p>
+            <p className="text-muted-foreground text-sm">loading gists...</p>
           </div>
         </div>
       </div>
@@ -47,17 +47,17 @@ const Gists = () => {
       <div className="mx-auto max-w-4xl">
         <div className="mb-5">
           <h1 className="text-xl font-bold mb-1.5 bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent">
-            code snippets
+            gists
           </h1>
           <p className="text-xs text-foreground/60 mb-3">
-            {gists.length} gists from GitHub
+            too short for a blog, too long for til — {gists.length} gists
           </p>
 
           <div className="relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-accent h-3.5 w-3.5" />
             <input
               type="text"
-              placeholder="search snippets..."
+              placeholder="search gists..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="w-full pl-9 pr-3 py-1.5 text-xs border border-accent/30 bg-background/50 rounded-xl focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-1"
