@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Search, Code, Calendar } from "lucide-react";
 import { useGists } from "@/hooks/useGists";
+import { extractFirstHeading } from "@/services/gistsService";
 
 const Gists = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -74,6 +75,15 @@ const Gists = () => {
               year: 'numeric'
             });
 
+            // Try to extract H1 from markdown content
+            let title = gist.description || firstFile?.filename || "Untitled";
+            if (firstFile?.content && firstFile.filename.endsWith('.md')) {
+              const heading = extractFirstHeading(firstFile.content);
+              if (heading) {
+                title = heading;
+              }
+            }
+
             return (
               <Link
                 key={gist.id}
@@ -85,7 +95,7 @@ const Gists = () => {
                     <div className="flex items-start justify-between gap-3">
                       <div className="flex-1 min-w-0">
                         <h3 className="text-base font-medium text-foreground group-hover:text-accent mb-1 break-words transition-colors">
-                          {gist.description || firstFile?.filename || "Untitled"}
+                          {title}
                         </h3>
                         <div className="flex flex-wrap items-center gap-2 text-xs text-foreground/60">
                           <div className="flex items-center gap-1">

@@ -56,15 +56,23 @@ export const fetchMarkdownFiles = async (): Promise<BlogPost[]> => {
       return [];
     }
 
-    // Filter for markdown files, excluding README files and ensuring they have names
-    const markdownFiles = data.tree.filter((file: GitHubFile) =>
-      file.type === 'blob' &&
-      file.path &&
-      file.name &&
-      file.path.endsWith('.md') &&
-      !file.path.toLowerCase().includes('readme') &&
-      !file.name.toLowerCase().startsWith('readme')
-    );
+    // Filter for markdown files, excluding README files
+    const markdownFiles = data.tree.filter((file: GitHubFile) => {
+      if (file.type !== 'blob' || !file.path || !file.path.endsWith('.md')) {
+        return false;
+      }
+
+      // Extract filename from path
+      const fileName = file.path.split('/').pop() || '';
+
+      // Exclude README files and .obsidian config files
+      if (fileName.toLowerCase().startsWith('readme') ||
+          file.path.toLowerCase().includes('.obsidian/')) {
+        return false;
+      }
+
+      return true;
+    });
 
     console.log(`Found ${markdownFiles.length} markdown files:`, markdownFiles.map((f: GitHubFile) => f.path));
     
