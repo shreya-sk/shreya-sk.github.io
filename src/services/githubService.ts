@@ -60,6 +60,7 @@ export const fetchMarkdownFiles = async (): Promise<BlogPost[]> => {
     const markdownFiles = data.tree.filter((file: GitHubFile) =>
       file.type === 'blob' &&
       file.path &&
+      file.name &&
       file.path.endsWith('.md') &&
       !file.path.toLowerCase().includes('readme') &&
       !file.name.toLowerCase().startsWith('readme')
