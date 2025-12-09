@@ -19,20 +19,20 @@ const BlogCard = ({ post }: BlogCardProps) => {
     .substring(0, 120) + (post.content.length > 120 ? '...' : '');
 
   return (
-    <article className="group relative rounded-2xl p-5 minimal-card">
-      <div className="space-y-3">
-        <div className="flex items-center gap-4 text-xs text-muted-foreground/80">
-          <div className="flex items-center gap-2">
-            <Folder className="h-4 w-4" />
-            <span className="font-medium">{post.folder}</span>
+    <article className="group relative rounded-2xl p-4 minimal-card border-l-4 border-l-primary/40 hover:border-l-primary transition-all">
+      <div className="space-y-2.5">
+        <div className="flex items-center gap-3 text-xs text-muted-foreground">
+          <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-primary/10">
+            <Folder className="h-3 w-3 text-primary" />
+            <span className="font-medium text-primary">{post.folder}</span>
           </div>
-          <div className="flex items-center gap-2">
-            <Calendar className="h-4 w-4" />
-            <time dateTime={post.date}>{post.date}</time>
+          <div className="flex items-center gap-1">
+            <Calendar className="h-3 w-3" />
+            <time dateTime={post.date} className="text-xs">{post.date}</time>
           </div>
-          <div className="flex items-center gap-2">
-            <Clock className="h-4 w-4" />
-            <span>{readTime}</span>
+          <div className="flex items-center gap-1">
+            <Clock className="h-3 w-3" />
+            <span className="text-xs">{readTime}</span>
           </div>
         </div>
         
