@@ -31,15 +31,31 @@ const REPO_NAME = 'Knowledge-hub';
 
 export const fetchMarkdownFiles = async (): Promise<BlogPost[]> => {
   try {
-    // First, get the repository structure
-    const response = await fetch(`${GITHUB_API_BASE}/repos/${REPO_OWNER}/${REPO_NAME}/git/trees/main?recursive=1`);
-    
-    if (!response.ok) {
-      throw new Error('Failed to fetch repository structure');
+    console.log('Fetching from:', `${GITHUB_API_BASE}/repos/${REPO_OWNER}/${REPO_NAME}`);
+
+    // Try main branch first, then master if main fails
+    let response = await fetch(`${GITHUB_API_BASE}/repos/${REPO_OWNER}/${REPO_NAME}/git/trees/main?recursive=1`);
+
+    if (!response.ok && response.status === 409) {
+      // Branch might be 'master' instead of 'main'
+      console.log('Main branch not found, trying master...');
+      response = await fetch(`${GITHUB_API_BASE}/repos/${REPO_OWNER}/${REPO_NAME}/git/trees/master?recursive=1`);
     }
-    
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      console.error('GitHub API Error:', response.status, errorData);
+      throw new Error(`Failed to fetch repository: ${response.status} - ${errorData.message || 'Unknown error'}`);
+    }
+
     const data = await response.json();
-    
+    console.log('Repository tree data:', data);
+
+    if (!data.tree || data.tree.length === 0) {
+      console.warn('Repository is empty or has no files');
+      return [];
+    }
+
     // Filter for markdown files, excluding README files and ensuring they have names
     const markdownFiles = data.tree.filter((file: GitHubFile) =>
       file.type === 'blob' &&
@@ -48,8 +64,8 @@ export const fetchMarkdownFiles = async (): Promise<BlogPost[]> => {
       !file.path.toLowerCase().includes('readme') &&
       !file.name.toLowerCase().startsWith('readme')
     );
-    
-    console.log('Found markdown files:', markdownFiles);
+
+    console.log(`Found ${markdownFiles.length} markdown files:`, markdownFiles.map((f: GitHubFile) => f.path));
     
     // Fetch content for each markdown file
     const posts: BlogPost[] = [];
