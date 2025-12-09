@@ -10,6 +10,7 @@ import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
 import TIL from "./pages/TIL";
 import Gists from "./pages/Gists";
+import GistDetail from "./pages/GistDetail";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -28,6 +29,7 @@ const App = () => (
             <Route path="/blog/*" element={<BlogPost />} />
             <Route path="/til" element={<TIL />} />
             <Route path="/gists" element={<Gists />} />
+            <Route path="/gists/:gistId" element={<GistDetail />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>

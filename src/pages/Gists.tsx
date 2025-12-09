@@ -1,6 +1,7 @@
 
 import { useState } from "react";
-import { Search, Code, ExternalLink, Calendar } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Search, Code, Calendar } from "lucide-react";
 import { useGists } from "@/hooks/useGists";
 
 const Gists = () => {
@@ -74,56 +75,50 @@ const Gists = () => {
             });
 
             return (
-              <article
+              <Link
                 key={gist.id}
-                className="minimal-card rounded-2xl p-4 border-l-4 border-l-accent/40 hover:border-l-accent transition-all group"
+                to={`/gists/${gist.id}`}
+                className="block"
               >
-                <div className="space-y-2.5">
-                  <div className="flex items-start justify-between gap-3">
-                    <div className="flex-1 min-w-0">
-                      <h3 className="text-base font-medium text-foreground mb-1 break-words">
-                        {gist.description || "Untitled Gist"}
-                      </h3>
-                      <div className="flex flex-wrap items-center gap-2 text-xs text-foreground/60">
-                        <div className="flex items-center gap-1">
-                          <Code className="h-3 w-3" />
-                          <span>{fileCount} {fileCount === 1 ? 'file' : 'files'}</span>
-                        </div>
-                        {firstFile && (
-                          <div className="px-2 py-0.5 rounded-full bg-accent/10 text-accent font-medium">
-                            {firstFile.language || 'text'}
+                <article className="minimal-card rounded-2xl p-4 border-l-4 border-l-accent/40 hover:border-l-accent transition-all group cursor-pointer">
+                  <div className="space-y-2.5">
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="flex-1 min-w-0">
+                        <h3 className="text-base font-medium text-foreground group-hover:text-accent mb-1 break-words transition-colors">
+                          {gist.description || firstFile?.filename || "Untitled"}
+                        </h3>
+                        <div className="flex flex-wrap items-center gap-2 text-xs text-foreground/60">
+                          <div className="flex items-center gap-1">
+                            <Code className="h-3 w-3" />
+                            <span>{fileCount} {fileCount === 1 ? 'file' : 'files'}</span>
                           </div>
-                        )}
-                        <div className="flex items-center gap-1">
-                          <Calendar className="h-3 w-3" />
-                          <span>{createdDate}</span>
+                          {firstFile && firstFile.language && (
+                            <div className="px-2 py-0.5 rounded-full bg-accent/10 text-accent font-medium">
+                              {firstFile.language}
+                            </div>
+                          )}
+                          <div className="flex items-center gap-1">
+                            <Calendar className="h-3 w-3" />
+                            <span>{createdDate}</span>
+                          </div>
                         </div>
                       </div>
                     </div>
-                    <a
-                      href={gist.html_url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex-shrink-0 p-2 rounded-lg bg-accent/10 hover:bg-accent/20 transition-colors"
-                      title="Open on GitHub"
-                    >
-                      <ExternalLink className="h-4 w-4 text-accent" />
-                    </a>
-                  </div>
 
-                  {/* File list */}
-                  <div className="flex flex-wrap gap-1.5">
-                    {Object.values(gist.files).map((file) => (
-                      <div
-                        key={file.filename}
-                        className="text-xs px-2 py-0.5 bg-muted/50 rounded-md text-foreground/70 font-mono"
-                      >
-                        {file.filename}
-                      </div>
-                    ))}
+                    {/* File list */}
+                    <div className="flex flex-wrap gap-1.5">
+                      {Object.values(gist.files).map((file) => (
+                        <div
+                          key={file.filename}
+                          className="text-xs px-2 py-0.5 bg-muted/50 rounded-md text-foreground/70 font-mono"
+                        >
+                          {file.filename}
+                        </div>
+                      ))}
+                    </div>
                   </div>
-                </div>
-              </article>
+                </article>
+              </Link>
             );
           })}
 
