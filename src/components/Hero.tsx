@@ -6,44 +6,61 @@ const Hero = () => {
   return (
     <section className="relative overflow-hidden sage-gradient py-12 md:py-16">
       <div className="container px-4 relative z-10">
-        <div className="mx-auto max-w-4xl text-center">
-          <div className="mb-4 inline-flex items-center rounded-full px-3 py-1.5 text-xs shadow-lg bg-gradient-to-r from-secondary/20 to-accent/20 border border-secondary/30">
-            <FileText className="mr-1.5 h-3.5 w-3.5 text-secondary" />
-            <span className="font-medium text-foreground">synced from obsidian</span>
-          </div>
+        <div className="mx-auto max-w-5xl">
+          <div className="flex flex-col md:flex-row items-center gap-6 md:gap-10">
+            {/* Profile Picture */}
+            <div className="flex-shrink-0">
+              <div className="relative group">
+                <div className="absolute inset-0 bg-gradient-to-br from-primary via-secondary to-accent rounded-full blur-lg opacity-50 group-hover:opacity-75 transition-opacity"></div>
+                <img
+                  src="/profile.png"
+                  alt="Shreya"
+                  className="relative w-28 h-28 md:w-36 md:h-36 rounded-full object-cover border-4 border-white/50 shadow-2xl"
+                />
+              </div>
+            </div>
 
-          <h1 className="mb-3 text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl">
-            shreya's
-            <span className="bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
-              {" "}digital garden
-            </span>
-          </h1>
+            {/* Content */}
+            <div className="flex-1 text-center md:text-left">
+              <div className="mb-3 inline-flex items-center rounded-full px-3 py-1.5 text-xs shadow-lg bg-gradient-to-r from-secondary/20 to-accent/20 border border-secondary/30">
+                <FileText className="mr-1.5 h-3.5 w-3.5 text-secondary" />
+                <span className="font-medium text-foreground">synced from obsidian</span>
+              </div>
 
-          <p className="mb-5 text-sm md:text-base max-w-xl mx-auto leading-relaxed text-foreground/70">
-            thoughts in progress, ideas taking root, everything in between.
-          </p>
+              <h1 className="mb-2 text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl">
+                shreya's
+                <span className="bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
+                  {" "}digital garden
+                </span>
+              </h1>
+
+              <p className="mb-4 text-sm md:text-base max-w-xl mx-auto md:mx-0 leading-relaxed text-foreground/70">
+                thoughts in progress, ideas taking root, everything in between.
+              </p>
           
-          <div className="flex flex-wrap gap-2 justify-center items-center">
-            <Link
-              to="/blog"
-              className="glass-button inline-flex items-center justify-center rounded-2xl px-5 py-2.5 text-sm font-semibold text-primary-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
-            >
-              read posts
-              <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
-            </Link>
+              <div className="flex flex-wrap gap-2 justify-center md:justify-start items-center">
+                <Link
+                  to="/blog"
+                  className="glass-button inline-flex items-center justify-center rounded-2xl px-5 py-2.5 text-sm font-semibold text-primary-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                >
+                  read posts
+                  <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
+                </Link>
 
-            <Link
-              to="/til"
-              className="inline-flex items-center justify-center rounded-2xl px-5 py-2.5 text-sm font-semibold transition-all focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 bg-gradient-to-r from-secondary/80 to-secondary text-secondary-foreground hover:from-secondary hover:to-secondary shadow-lg"
-            >
-              daily journal
-            </Link>
-          </div>
+                <Link
+                  to="/til"
+                  className="inline-flex items-center justify-center rounded-2xl px-5 py-2.5 text-sm font-semibold transition-all focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 bg-gradient-to-r from-secondary/80 to-secondary text-secondary-foreground hover:from-secondary hover:to-secondary shadow-lg"
+                >
+                  daily journal
+                </Link>
+              </div>
 
-          <div className="mt-5 flex justify-center">
-            <div className="flex items-center gap-1.5 text-xs text-foreground/50">
-              <Github className="h-3 w-3" />
-              <span>auto-synced from Knowledge-hub</span>
+              <div className="mt-4 flex justify-center md:justify-start">
+                <div className="flex items-center gap-1.5 text-xs text-foreground/50">
+                  <Github className="h-3 w-3" />
+                  <span>auto-synced from Knowledge-hub</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
