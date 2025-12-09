@@ -7,50 +7,56 @@
 
 @layer base {
   :root {
-    /* Glassmorphism Sage Design System */
-    --background: 140 25% 96%;
-    --foreground: 150 30% 12%;
+    /* Vibrant Glassmorphism Design System */
+    --background: 140 30% 98%;
+    --foreground: 150 40% 10%;
 
     --card: 0 0% 100%;
-    --card-foreground: 150 30% 12%;
+    --card-foreground: 150 40% 10%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 150 30% 12%;
+    --popover-foreground: 150 40% 10%;
 
-    --primary: 150 35% 50%;
+    --primary: 150 50% 45%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 145 25% 85%;
-    --secondary-foreground: 150 30% 15%;
+    --secondary: 280 45% 65%;
+    --secondary-foreground: 0 0% 100%;
 
-    --muted: 145 20% 92%;
-    --muted-foreground: 150 20% 45%;
+    --muted: 145 20% 90%;
+    --muted-foreground: 150 25% 35%;
 
-    --accent: 160 30% 75%;
-    --accent-foreground: 150 30% 15%;
+    --accent: 45 90% 60%;
+    --accent-foreground: 150 40% 10%;
 
-    --destructive: 0 60% 50%;
+    --destructive: 0 70% 50%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 145 25% 85%;
-    --input: 145 25% 85%;
-    --ring: 150 35% 50%;
+    --border: 145 20% 82%;
+    --input: 145 20% 82%;
+    --ring: 150 50% 45%;
 
     --radius: 1rem;
 
     --sidebar-background: 0 0% 100%;
-    --sidebar-foreground: 150 25% 25%;
-    --sidebar-primary: 150 35% 50%;
+    --sidebar-foreground: 150 30% 20%;
+    --sidebar-primary: 150 50% 45%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 145 25% 90%;
-    --sidebar-accent-foreground: 150 30% 15%;
-    --sidebar-border: 145 25% 88%;
-    --sidebar-ring: 150 35% 50%;
+    --sidebar-accent: 280 45% 65%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 145 20% 85%;
+    --sidebar-ring: 150 50% 45%;
 
-    /* Glass effect colors */
+    /* Glass effect colors with more variety */
     --glass-bg: 0 0% 100%;
-    --glass-border: 145 30% 90%;
-    --glass-shadow: 150 20% 80%;
+    --glass-border: 145 30% 88%;
+    --glass-shadow: 150 20% 70%;
+
+    /* Bubble colors */
+    --bubble-1: 150 60% 55%;
+    --bubble-2: 280 50% 65%;
+    --bubble-3: 45 85% 60%;
+    --bubble-4: 200 55% 60%;
   }
 
   .dark {
@@ -164,14 +170,42 @@
   .floating-bubble {
     position: absolute;
     border-radius: 50%;
-    background: radial-gradient(
-      circle at 30% 30%,
-      hsla(var(--primary), 0.3),
-      hsla(var(--primary), 0.1)
-    );
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(20px);
     animation: float 20s infinite ease-in-out;
     pointer-events: none;
+    opacity: 0.6;
+  }
+
+  .floating-bubble:nth-child(1) {
+    background: radial-gradient(
+      circle at 30% 30%,
+      hsla(var(--bubble-1), 0.4),
+      hsla(var(--bubble-1), 0.1)
+    );
+  }
+
+  .floating-bubble:nth-child(2) {
+    background: radial-gradient(
+      circle at 30% 30%,
+      hsla(var(--bubble-2), 0.4),
+      hsla(var(--bubble-2), 0.1)
+    );
+  }
+
+  .floating-bubble:nth-child(3) {
+    background: radial-gradient(
+      circle at 30% 30%,
+      hsla(var(--bubble-3), 0.4),
+      hsla(var(--bubble-3), 0.1)
+    );
+  }
+
+  .floating-bubble:nth-child(4) {
+    background: radial-gradient(
+      circle at 30% 30%,
+      hsla(var(--bubble-4), 0.4),
+      hsla(var(--bubble-4), 0.1)
+    );
   }
 
   @keyframes float {

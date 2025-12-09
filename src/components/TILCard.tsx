@@ -22,21 +22,21 @@ const TILCard = ({ item }: TILCardProps) => {
   };
 
   return (
-    <article className="minimal-card rounded-2xl p-4 group hover:scale-[1.01] transition-transform">
-      <div className="flex gap-4">
+    <article className="minimal-card rounded-2xl p-3.5 group hover:scale-[1.01] transition-transform border-l-4 border-l-secondary/40 hover:border-l-secondary">
+      <div className="flex gap-3">
         {/* Date column */}
-        <div className="flex-shrink-0 w-24">
-          <div className="text-xs font-medium text-primary">
+        <div className="flex-shrink-0 w-20">
+          <div className="text-xs font-semibold text-secondary">
             {formatDate(item.date).split(', ')[0]}
           </div>
-          <div className="text-xs text-muted-foreground">
+          <div className="text-xs text-foreground/60">
             {formatDate(item.date).split(', ')[1]}
           </div>
         </div>
 
         {/* Content */}
         <div className="flex-1 min-w-0">
-          <p className="text-sm text-foreground/90 leading-relaxed">
+          <p className="text-sm text-foreground/80 leading-relaxed">
             {item.content}
           </p>
         </div>

@@ -40,27 +40,27 @@ const TIL = () => {
   );
 
   return (
-    <div className="container px-4 py-6 sage-gradient min-h-screen">
+    <div className="container px-4 py-5 sage-gradient min-h-screen">
       <div className="mx-auto max-w-3xl">
-        <div className="mb-6">
-          <h1 className="text-2xl font-bold mb-2">daily journal</h1>
-          <p className="text-sm text-muted-foreground mb-4">
+        <div className="mb-5">
+          <h1 className="text-xl font-bold mb-1.5 bg-gradient-to-r from-secondary to-accent bg-clip-text text-transparent">daily journal</h1>
+          <p className="text-xs text-foreground/60 mb-3">
             quick thoughts, small wins, random discoveries.
           </p>
 
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-secondary h-3.5 w-3.5" />
             <input
               type="text"
               placeholder="search entries..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 text-sm border border-input bg-background/50 rounded-xl focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+              className="w-full pl-9 pr-3 py-1.5 text-xs border border-secondary/30 bg-background/50 rounded-xl focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-1"
             />
           </div>
         </div>
 
-        <div className="space-y-3">
+        <div className="space-y-2">
           {filteredItems.map((item) => (
             <TILCard key={item.id} item={item} />
           ))}
