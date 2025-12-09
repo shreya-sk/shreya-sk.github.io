@@ -4,6 +4,11 @@ import { Calendar, Clock, ArrowLeft, Folder } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { fetchPostBySlug } from "@/services/githubService";
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import rehypeHighlight from 'rehype-highlight';
+import rehypeRaw from 'rehype-raw';
+import 'highlight.js/styles/github-dark.css';
 
 const BlogPost = () => {
   const { "*": slug } = useParams();
@@ -81,8 +86,14 @@ const BlogPost = () => {
             </div>
           </header>
           
-          <div className="whitespace-pre-wrap leading-relaxed">
-            {post.content}
+          <div className="markdown-content">
+            <ReactMarkdown
+              remarkPlugins={[remarkGfm]}
+              rehypePlugins={[rehypeHighlight, rehypeRaw]}
+              className="leading-relaxed"
+            >
+              {post.content}
+            </ReactMarkdown>
           </div>
         </article>
       </div>
