@@ -1,3 +1,4 @@
+import { processMarkdownContent } from '@/utils/markdownUtils';
 
 interface GitHubFile {
   name: string;
@@ -85,20 +86,23 @@ export const fetchMarkdownFiles = async (): Promise<BlogPost[]> => {
         
         if (contentResponse.ok) {
           const contentData: GitHubContent = await contentResponse.json();
-          const content = atob(contentData.content); // Decode base64 content
-          
+          const rawContent = atob(contentData.content); // Decode base64 content
+
+          // Process content to remove frontmatter and convert Obsidian syntax
+          const content = processMarkdownContent(rawContent);
+
           // Extract title from content (first # heading) or use filename
           const titleMatch = content.match(/^#\s+(.+)$/m);
           const fileName = file.path.split('/').pop()?.replace('.md', '') || 'Untitled';
           const title = titleMatch ? titleMatch[1] : fileName;
-          
+
           // Extract folder from path
           const pathParts = file.path.split('/');
           const folder = pathParts.length > 1 ? pathParts[0] : 'Root';
-          
+
           // Generate slug from path
           const slug = file.path.replace('.md', '').toLowerCase().replace(/\s+/g, '-').replace(/\//g, '/');
-          
+
           posts.push({
             id: file.sha,
             title,
