@@ -70,16 +70,18 @@ The blog is currently configured to fetch from `shreya-sk/Knowledge-hub`. To cha
 
 **Enable GitHub Pages:**
 
-1. Go to your repository on GitHub: `https://github.com/shreya-sk/daily-thought-display`
+1. Go to your repository on GitHub: `https://github.com/shreya-sk/shreya-sk.github.io`
 2. Click **Settings** → **Pages**
-3. Under **Source**, select **GitHub Actions**
-4. The workflow is already set up in `.github/workflows/deploy.yml`
+3. Under **Build and deployment** → **Source**, select **GitHub Actions**
+   - DO NOT select "Jekyll" or "Static HTML" workflows
+   - Just select "GitHub Actions" as the source
+4. The custom workflow is already set up in `.github/workflows/deploy.yml`
 
 **Automatic Deployment:**
 
 Every time you push to the `main` branch, your site will automatically rebuild and deploy! 🎉
 
-Your site will be available at: `https://shreya-sk.github.io/daily-thought-display/`
+Your site will be available at: `https://shreya-sk.github.io/`
 
 ### 4. Sync Your Obsidian Notes
 
