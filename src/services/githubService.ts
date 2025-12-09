@@ -96,9 +96,9 @@ export const fetchMarkdownFiles = async (): Promise<BlogPost[]> => {
           const fileName = file.path.split('/').pop()?.replace('.md', '') || 'Untitled';
           const title = titleMatch ? titleMatch[1] : fileName;
 
-          // Extract folder from path
+          // Extract folder from path (use full directory path, not just top level)
           const pathParts = file.path.split('/');
-          const folder = pathParts.length > 1 ? pathParts[0] : 'Root';
+          const folder = pathParts.length > 1 ? pathParts.slice(0, -1).join('/') : 'Root';
 
           // Generate slug from path
           const slug = file.path.replace('.md', '').toLowerCase().replace(/\s+/g, '-').replace(/\//g, '/');
@@ -130,5 +130,16 @@ export const fetchMarkdownFiles = async (): Promise<BlogPost[]> => {
 
 export const fetchPostBySlug = async (slug: string): Promise<BlogPost | null> => {
   const posts = await fetchMarkdownFiles();
-  return posts.find(post => post.slug === slug) || null;
+  console.log('Looking for slug:', slug);
+  console.log('Available slugs:', posts.map(p => p.slug));
+
+  // Normalize both slugs for comparison
+  const normalizedSlug = slug.toLowerCase().trim();
+  const found = posts.find(post => post.slug.toLowerCase().trim() === normalizedSlug);
+
+  if (!found) {
+    console.error(`Post not found for slug: ${slug}`);
+  }
+
+  return found || null;
 };
