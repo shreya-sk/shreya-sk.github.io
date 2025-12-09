@@ -20,6 +20,12 @@ export interface Gist {
 const GITHUB_API_BASE = 'https://api.github.com';
 const GITHUB_USERNAME = 'shreya-sk';
 
+// Extract the first H1 heading from markdown content
+export const extractFirstHeading = (content: string): string | null => {
+  const match = content.match(/^#\s+(.+)$/m);
+  return match ? match[1].trim() : null;
+};
+
 export const fetchGists = async (): Promise<Gist[]> => {
   try {
     console.log('Fetching gists from:', `${GITHUB_API_BASE}/users/${GITHUB_USERNAME}/gists`);

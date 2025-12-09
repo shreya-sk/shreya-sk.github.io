@@ -2,7 +2,7 @@
 import { useParams, Link } from "react-router-dom";
 import { Calendar, ArrowLeft, ExternalLink, FileText } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
-import { fetchGistContent } from "@/services/gistsService";
+import { fetchGistContent, extractFirstHeading } from "@/services/gistsService";
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeHighlight from 'rehype-highlight';
@@ -52,7 +52,16 @@ const GistDetail = () => {
   }
 
   const firstFile = Object.values(gist.files)[0];
-  const title = gist.description || firstFile?.filename || "Untitled";
+
+  // Try to extract H1 from markdown content
+  let title = gist.description || firstFile?.filename || "Untitled";
+  if (firstFile?.content && firstFile.filename.endsWith('.md')) {
+    const heading = extractFirstHeading(firstFile.content);
+    if (heading) {
+      title = heading;
+    }
+  }
+
   const createdDate = new Date(gist.created_at).toLocaleDateString('en-US', {
     month: 'long',
     day: 'numeric',
