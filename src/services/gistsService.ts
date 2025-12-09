@@ -44,6 +44,7 @@ export const fetchGists = async (): Promise<Gist[]> => {
 
 export const fetchGistContent = async (gistId: string): Promise<Gist | null> => {
   try {
+    console.log('Fetching gist content for:', gistId);
     const response = await fetch(`${GITHUB_API_BASE}/gists/${gistId}`);
 
     if (!response.ok) {
@@ -52,6 +53,22 @@ export const fetchGistContent = async (gistId: string): Promise<Gist | null> => 
     }
 
     const gist: Gist = await response.json();
+
+    // Fetch content for each file
+    for (const filename in gist.files) {
+      const file = gist.files[filename];
+      if (file.raw_url && !file.content) {
+        try {
+          const contentResponse = await fetch(file.raw_url);
+          if (contentResponse.ok) {
+            file.content = await contentResponse.text();
+          }
+        } catch (err) {
+          console.error(`Failed to fetch content for ${filename}:`, err);
+        }
+      }
+    }
+
     return gist;
   } catch (error) {
     console.error('Error fetching gist content:', error);
