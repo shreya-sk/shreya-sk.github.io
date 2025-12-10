@@ -17,6 +17,27 @@ const Hero = () => {
                   alt="Shreya"
                   className="relative w-28 h-28 md:w-36 md:h-36 rounded-full object-cover border-4 border-white/50 shadow-2xl"
                 />
+
+                {/* Animated Speech Bubbles */}
+                <div className="absolute -top-2 -right-2 speech-bubble-1">
+                  <div className="bg-white/90 backdrop-blur-sm rounded-full px-2.5 py-1.5 shadow-lg border border-primary/20">
+                    <div className="flex gap-0.5">
+                      <span className="w-1.5 h-1.5 bg-gradient-to-r from-primary to-secondary rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></span>
+                      <span className="w-1.5 h-1.5 bg-gradient-to-r from-primary to-secondary rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></span>
+                      <span className="w-1.5 h-1.5 bg-gradient-to-r from-primary to-secondary rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="absolute -bottom-3 -left-3 speech-bubble-2">
+                  <div className="bg-white/90 backdrop-blur-sm rounded-full px-2.5 py-1.5 shadow-lg border border-secondary/20">
+                    <div className="flex gap-0.5">
+                      <span className="w-1.5 h-1.5 bg-gradient-to-r from-secondary to-accent rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></span>
+                      <span className="w-1.5 h-1.5 bg-gradient-to-r from-secondary to-accent rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></span>
+                      <span className="w-1.5 h-1.5 bg-gradient-to-r from-secondary to-accent rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
 

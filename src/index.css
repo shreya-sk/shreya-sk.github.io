@@ -227,6 +227,37 @@
     }
   }
 
+  /* Speech bubble animations */
+  .speech-bubble-1 {
+    animation: bubble-float-1 3s ease-in-out infinite;
+  }
+
+  .speech-bubble-2 {
+    animation: bubble-float-2 4s ease-in-out infinite;
+  }
+
+  @keyframes bubble-float-1 {
+    0%, 100% {
+      transform: translate(0, 0) scale(1);
+      opacity: 0.8;
+    }
+    50% {
+      transform: translate(-3px, -5px) scale(1.05);
+      opacity: 1;
+    }
+  }
+
+  @keyframes bubble-float-2 {
+    0%, 100% {
+      transform: translate(0, 0) scale(1);
+      opacity: 0.8;
+    }
+    50% {
+      transform: translate(3px, 5px) scale(1.05);
+      opacity: 1;
+    }
+  }
+
   /* Watery ripple effect */
   @keyframes ripple {
     0% {
