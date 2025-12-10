@@ -359,17 +359,28 @@
     }
   }
 
-  .glass-button.sage {
-  background: linear-gradient(135deg, hsla(140, 30%, 90%, 0.8) 0%, hsla(140, 30%, 90%, 0.9) 100%);
+/* Initial button: dark enough for white text */
+.glass-button.sage {
+  background: linear-gradient(
+    135deg,
+    hsla(140, 40%, 55%, 0.9) 0%,
+    hsla(140, 40%, 50%, 1) 100%
+  );
   color: white;
-  border: 1px solid hsl(140 30% 70% / 0.3);
+  border: 1px solid hsl(140 35% 45% / 0.3);
   transition: all 0.3s ease;
 }
 
+/* Hover: darker sage */
 .glass-button.sage:hover {
-  background: linear-gradient(135deg, hsla(140, 30%, 70%, 0.9) 0%, hsla(140, 30%, 70%, 1) 100%);
+  background: linear-gradient(
+    135deg,
+    hsla(140, 45%, 40%, 0.9) 0%,
+    hsla(140, 45%, 35%, 1) 100%
+  );
   transform: translateY(-2px);
 }
+
 
 
   .glass-button {
