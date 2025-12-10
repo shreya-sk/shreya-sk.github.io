@@ -10,8 +10,8 @@ const Header = () => {
   
   const navLinks = [
     { path: "/", icon: Home, label: "home" },
-    { path: "/blog", icon: BookOpen, label: "posts" },
-    { path: "/til", icon: Lightbulb, label: "journal" },
+    { path: "/blog", icon: BookOpen, label: "learning" },
+    { path: "/til", icon: Lightbulb, label: "til" },
     { path: "/gists", icon: Code, label: "gists" }
   ];
   
@@ -20,7 +20,7 @@ const Header = () => {
       <div className="container flex h-14 items-center justify-between px-4">
         <Link to="/" className="flex items-center space-x-2 font-semibold text-base">
           <BookOpen className="h-5 w-5" />
-          <span>shreya's garden</span>
+          <span>digital diary</span>
         </Link>
         
         {/* Desktop Navigation */}
