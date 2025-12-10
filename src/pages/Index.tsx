@@ -36,33 +36,6 @@ const Index = () => {
     <div className="min-h-screen sage-gradient">
       <Hero />
       
-      {/* Horizontal Stats Section */}
-      <section className="py-8 bg-background/40 backdrop-blur-sm">
-        <div className="container px-6">
-          <div className="mx-auto max-w-4xl">
-            <div className="flex justify-around items-center gap-4">
-              <Link to="/blog" className="stat-card group">
-                <BookOpen className="h-5 w-5 text-primary mb-2 group-hover:scale-110 transition-transform" />
-                <div className="text-3xl font-light text-primary">{totalPosts}</div>
-                <div className="text-xs text-muted-foreground">posts</div>
-              </Link>
-              
-              <Link to="/gists" className="stat-card group">
-                <Code className="h-5 w-5 text-accent mb-2 group-hover:scale-110 transition-transform" />
-                <div className="text-3xl font-light text-accent">{totalGists}</div>
-                <div className="text-xs text-muted-foreground">gists</div>
-              </Link>
-              
-              <Link to="/til" className="stat-card group">
-                <Lightbulb className="h-5 w-5 text-secondary mb-2 group-hover:scale-110 transition-transform" />
-                <div className="text-3xl font-light text-secondary">{totalTIL}+</div>
-                <div className="text-xs text-muted-foreground">learnings</div>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-      
       {/* Recent Blog Posts Section - Compact Grid */}
       <section className="py-12 bg-background/40 backdrop-blur-sm">
         <div className="container px-6">
@@ -124,6 +97,30 @@ const Index = () => {
               {recentTIL.map((item) => (
                 <TILCard key={item.id} item={item} />
               ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Compact Stats Section at Bottom */}
+      <section className="py-6 bg-background/60 backdrop-blur-sm border-t border-border/30">
+        <div className="container px-6">
+          <div className="mx-auto max-w-4xl">
+            <div className="flex justify-center items-center gap-8">
+              <Link to="/blog" className="stat-card-compact group">
+                <div className="text-2xl font-light text-primary">{totalPosts}</div>
+                <div className="text-xs text-muted-foreground">posts</div>
+              </Link>
+              
+              <Link to="/gists" className="stat-card-compact group">
+                <div className="text-2xl font-light text-accent">{totalGists}</div>
+                <div className="text-xs text-muted-foreground">gists</div>
+              </Link>
+              
+              <Link to="/til" className="stat-card-compact group">
+                <div className="text-2xl font-light text-secondary">{totalTIL}+</div>
+                <div className="text-xs text-muted-foreground">learnings</div>
+              </Link>
             </div>
           </div>
         </div>
