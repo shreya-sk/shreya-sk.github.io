@@ -20,37 +20,12 @@ export interface Gist {
 const GITHUB_API_BASE = 'https://api.github.com';
 const GITHUB_USERNAME = 'shreya-sk';
 
-// Use Netlify Function for GitHub API calls (keeps token server-side)
-const NETLIFY_FUNCTION_URL = '/.netlify/functions/github-proxy';
-
-// Helper to call GitHub API through Netlify Function proxy
-const callGitHubAPI = async (endpoint: string, method: string = 'GET'): Promise<Response> => {
-  // In development, use direct GitHub API calls (for local testing without Netlify)
-  const isDevelopment = import.meta.env.DEV;
-
-  if (isDevelopment) {
-    // Fallback to direct GitHub API in development
-    const fullUrl = endpoint.startsWith('http') ? endpoint : `${GITHUB_API_BASE}${endpoint}`;
-    return fetch(fullUrl, {
-      method,
-      headers: {
-        'Accept': 'application/vnd.github.v3+json',
-        'X-GitHub-Api-Version': '2022-11-28',
-      }
-    });
-  }
-
-  // In production, use Netlify Function proxy (token stays server-side)
-  const response = await fetch(NETLIFY_FUNCTION_URL, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ endpoint, method }),
-  });
-
-  return response;
-};
+// Simple headers for public GitHub API (no authentication needed!)
+// GitHub allows 60 requests/hour per IP for public repos - plenty for a personal blog
+const getHeaders = (): HeadersInit => ({
+  'Accept': 'application/vnd.github.v3+json',
+  'X-GitHub-Api-Version': '2022-11-28',
+});
 
 // Extract the first H1 heading from markdown content
 export const extractFirstHeading = (content: string): string | null => {
@@ -62,7 +37,10 @@ export const fetchGists = async (): Promise<Gist[]> => {
   try {
     console.log('Fetching gists from:', `${GITHUB_API_BASE}/users/${GITHUB_USERNAME}/gists`);
 
-    const response = await callGitHubAPI(`/users/${GITHUB_USERNAME}/gists`);
+    const response = await fetch(
+      `${GITHUB_API_BASE}/users/${GITHUB_USERNAME}/gists`,
+      { headers: getHeaders() }
+    );
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
@@ -89,10 +67,10 @@ export const fetchGistContent = async (gistId: string): Promise<Gist | null> => 
       return null;
     }
 
-    const endpoint = `/gists/${gistId.trim()}`;
-    console.log('Fetching gist:', endpoint);
+    const url = `${GITHUB_API_BASE}/gists/${gistId.trim()}`;
+    console.log('Fetching from URL:', url);
 
-    const response = await callGitHubAPI(endpoint);
+    const response = await fetch(url, { headers: getHeaders() });
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
@@ -108,8 +86,7 @@ export const fetchGistContent = async (gistId: string): Promise<Gist | null> => 
       const file = gist.files[filename];
       if (file.raw_url && !file.content) {
         try {
-          // For raw_url, we need to fetch directly (it's a different domain)
-          const contentResponse = await callGitHubAPI(file.raw_url);
+          const contentResponse = await fetch(file.raw_url, { headers: getHeaders() });
           if (contentResponse.ok) {
             file.content = await contentResponse.text();
           }

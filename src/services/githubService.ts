@@ -38,37 +38,12 @@ const GITHUB_API_BASE = 'https://api.github.com';
 const REPO_OWNER = import.meta.env.VITE_GITHUB_OWNER || 'shreya-sk';
 const REPO_NAME = import.meta.env.VITE_GITHUB_REPO || 'Knowledge-hub';
 
-// Use Netlify Function for GitHub API calls (keeps token server-side)
-const NETLIFY_FUNCTION_URL = '/.netlify/functions/github-proxy';
-
-// Helper to call GitHub API through Netlify Function proxy
-const callGitHubAPI = async (endpoint: string, method: string = 'GET'): Promise<Response> => {
-  // In development, use direct GitHub API calls (for local testing without Netlify)
-  const isDevelopment = import.meta.env.DEV;
-
-  if (isDevelopment) {
-    // Fallback to direct GitHub API in development
-    const fullUrl = endpoint.startsWith('http') ? endpoint : `${GITHUB_API_BASE}${endpoint}`;
-    return fetch(fullUrl, {
-      method,
-      headers: {
-        'Accept': 'application/vnd.github.v3+json',
-        'X-GitHub-Api-Version': '2022-11-28',
-      }
-    });
-  }
-
-  // In production, use Netlify Function proxy (token stays server-side)
-  const response = await fetch(NETLIFY_FUNCTION_URL, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ endpoint, method }),
-  });
-
-  return response;
-};
+// Simple headers for public GitHub API (no authentication needed!)
+// GitHub allows 60 requests/hour per IP for public repos - plenty for a personal blog
+const getHeaders = (): HeadersInit => ({
+  'Accept': 'application/vnd.github.v3+json',
+  'X-GitHub-Api-Version': '2022-11-28',
+});
 
 // Cache for fetched posts to avoid repeated API calls
 let postsCache: BlogPost[] | null = null;
@@ -78,10 +53,10 @@ const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
 // Recursively fetch all markdown files from a directory
 const fetchDirectoryContents = async (path: string = ''): Promise<GitHubContent[]> => {
   try {
-    const endpoint = `/repos/${REPO_OWNER}/${REPO_NAME}/contents/${path}`;
+    const url = `${GITHUB_API_BASE}/repos/${REPO_OWNER}/${REPO_NAME}/contents/${path}`;
     console.log(`Fetching directory: ${path || 'root'}`);
 
-    const response = await callGitHubAPI(endpoint);
+    const response = await fetch(url, { headers: getHeaders() });
 
     if (!response.ok) {
       if (response.status === 404) {
@@ -124,8 +99,8 @@ const fetchMarkdownFile = async (file: GitHubContent): Promise<BlogPost | null> 
     console.log(`Fetching content for: ${file.path}`);
 
     // Use GitHub API /contents endpoint to get base64-encoded content (avoids CORS)
-    const endpoint = `/repos/${REPO_OWNER}/${REPO_NAME}/contents/${file.path}`;
-    const response = await callGitHubAPI(endpoint);
+    const url = `${GITHUB_API_BASE}/repos/${REPO_OWNER}/${REPO_NAME}/contents/${file.path}`;
+    const response = await fetch(url, { headers: getHeaders() });
 
     if (!response.ok) {
       console.error(`Failed to fetch ${file.path}: ${response.status}`);
@@ -266,11 +241,17 @@ export const fetchTILEntries = async (): Promise<TILEntry[]> => {
     console.log('Fetching TIL entries from:', `${GITHUB_API_BASE}/repos/${REPO_OWNER}/${REPO_NAME}`);
 
     // Try main branch first, then master if main fails
-    let response = await callGitHubAPI(`/repos/${REPO_OWNER}/${REPO_NAME}/git/trees/main?recursive=1`);
+    let response = await fetch(
+      `${GITHUB_API_BASE}/repos/${REPO_OWNER}/${REPO_NAME}/git/trees/main?recursive=1`,
+      { headers: getHeaders() }
+    );
 
     if (!response.ok && response.status === 409) {
       console.log('Main branch not found, trying master...');
-      response = await callGitHubAPI(`/repos/${REPO_OWNER}/${REPO_NAME}/git/trees/master?recursive=1`);
+      response = await fetch(
+        `${GITHUB_API_BASE}/repos/${REPO_OWNER}/${REPO_NAME}/git/trees/master?recursive=1`,
+        { headers: getHeaders() }
+      );
     }
 
     if (!response.ok) {
@@ -298,7 +279,10 @@ export const fetchTILEntries = async (): Promise<TILEntry[]> => {
     
     for (const file of tilFiles) {
       try {
-        const contentResponse = await callGitHubAPI(`/repos/${REPO_OWNER}/${REPO_NAME}/contents/${file.path}`);
+        const contentResponse = await fetch(
+          `${GITHUB_API_BASE}/repos/${REPO_OWNER}/${REPO_NAME}/contents/${file.path}`,
+          { headers: getHeaders() }
+        );
 
         if (contentResponse.ok) {
           const contentData: GitHubContent = await contentResponse.json();
