@@ -23,14 +23,27 @@ export const stripEmojis = (content: string): string => {
     .replace(/[\u{25A0}-\u{25FF}]/gu, '') // Geometric Shapes
     .replace(/[\u{2B00}-\u{2BFF}]/gu, '') // Miscellaneous Symbols and Arrows
     // Remove Obsidian emoji syntax like :emoji_name:
-    .replace(/:[a-z_]+:/gi, '')
-    // Remove zero-width characters
+    .replace(/:[a-z_]+:/g, '')
+    // Remove zero-width characters and other invisible Unicode
     .replace(/[\u200B-\u200D\uFEFF]/g, '')
-    // More aggressive: remove any character outside basic Latin + common punctuation
-    // This catches weird Unicode that slips through
-    .replace(/[^\u0000-\u007F\u00A0-\u00FF\u0100-\u017F\u0180-\u024F\n\r\t]/g, '');
-
-  return cleaned.trim();
+    // Remove special quotation marks and replace with standard ones
+    .replace(/[\u2018\u2019]/g, "'")
+    .replace(/[\u201C\u201D]/g, '"')
+    // Remove special dashes and replace with standard ones
+    .replace(/[\u2013\u2014]/g, '-')
+    // Remove bullet points and other list markers
+    .replace(/[\u2022\u2023\u2043]/g, '')
+    // Remove various brackets and parentheses variants
+    .replace(/[\u3008\u3009\u300A\u300B]/g, '')
+    // Replace special spaces with regular space
+    .replace(/[\u00A0\u2000-\u200A\u202F\u205F]/g, ' ')
+    // Remove combining diacritical marks
+    .replace(/[\u0300-\u036F]/g, '')
+    // Remove any remaining problematic non-printable characters
+    .replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F-\x9F]/g, '')
+    // Clean up multiple spaces
+    .replace(/\s+/g, ' ')
+    .trim();
 };
 
 /**
@@ -60,6 +73,7 @@ export const convertObsidianCallouts = (content: string): string => {
  */
 export const cleanForExcerpt = (content: string): string => {
   let cleaned = stripFrontmatter(content);
+  cleaned = stripEmojis(cleaned);
 
   // Remove headings
   cleaned = cleaned.replace(/^#{1,6}\s+.+$/gm, '');

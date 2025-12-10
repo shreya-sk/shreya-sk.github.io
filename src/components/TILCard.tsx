@@ -1,4 +1,3 @@
-
 interface TILItem {
   id: string;
   content: string;
@@ -12,32 +11,52 @@ interface TILCardProps {
 const TILCard = ({ item }: TILCardProps) => {
   // Format date to show day and date (e.g., "Monday, Jan 16")
   const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    const options: Intl.DateTimeFormatOptions = {
-      weekday: 'long',
-      month: 'short',
-      day: 'numeric'
-    };
-    return date.toLocaleDateString('en-US', options);
+    if (!dateString) return { day: 'N/A', date: 'N/A' };
+    
+    try {
+      const date = new Date(dateString);
+      // Check if date is valid
+      if (isNaN(date.getTime())) {
+        return { day: 'N/A', date: dateString };
+      }
+      
+      const options: Intl.DateTimeFormatOptions = {
+        weekday: 'short',
+        month: 'short',
+        day: 'numeric'
+      };
+      const formatted = date.toLocaleDateString('en-US', options);
+      const parts = formatted.split(', ');
+      
+      return {
+        day: parts[0] || 'N/A',
+        date: parts[1] || 'N/A'
+      };
+    } catch (error) {
+      console.error('Error formatting date:', error);
+      return { day: 'N/A', date: dateString };
+    }
   };
 
+  const { day, date } = formatDate(item.date);
+
   return (
-    <article className="minimal-card rounded-2xl p-3.5 group hover:scale-[1.01] transition-transform border-l-4 border-l-secondary/40 hover:border-l-secondary">
+    <article className="journal-card rounded-2xl p-4 group hover:scale-[1.01] transition-all border-l-4 border-l-secondary/40 hover:border-l-secondary">
       <div className="flex gap-3">
-        {/* Date column */}
-        <div className="flex-shrink-0 w-20">
-          <div className="text-xs font-semibold text-secondary">
-            {formatDate(item.date).split(', ')[0]}
+        {/* Date column - styled like a journal tab */}
+        <div className="flex-shrink-0 w-16 journal-date-tab">
+          <div className="text-xs font-bold text-secondary uppercase tracking-wide">
+            {day}
           </div>
-          <div className="text-xs text-foreground/60">
-            {formatDate(item.date).split(', ')[1]}
+          <div className="text-xs text-foreground/60 mt-0.5">
+            {date}
           </div>
         </div>
 
-        {/* Content */}
+        {/* Content - journal entry style */}
         <div className="flex-1 min-w-0">
-          <p className="text-sm text-foreground/80 leading-relaxed">
-            {item.content}
+          <p className="text-sm text-foreground/80 leading-relaxed journal-text">
+            {item.content || 'No content available'}
           </p>
         </div>
       </div>
