@@ -19,6 +19,20 @@ export interface Gist {
 
 const GITHUB_API_BASE = 'https://api.github.com';
 const GITHUB_USERNAME = 'shreya-sk';
+const GITHUB_TOKEN = import.meta.env.VITE_GITHUB_TOKEN;
+
+// Headers with optional authentication
+const getHeaders = () => {
+  const headers: HeadersInit = {
+    'X-GitHub-Api-Version': '2022-11-28',
+  };
+
+  if (GITHUB_TOKEN) {
+    headers['Authorization'] = `Bearer ${GITHUB_TOKEN}`;
+  }
+
+  return headers;
+};
 
 // Extract the first H1 heading from markdown content
 export const extractFirstHeading = (content: string): string | null => {
@@ -30,7 +44,7 @@ export const fetchGists = async (): Promise<Gist[]> => {
   try {
     console.log('Fetching gists from:', `${GITHUB_API_BASE}/users/${GITHUB_USERNAME}/gists`);
 
-    const response = await fetch(`${GITHUB_API_BASE}/users/${GITHUB_USERNAME}/gists`);
+    const response = await fetch(`${GITHUB_API_BASE}/users/${GITHUB_USERNAME}/gists`, { headers: getHeaders() });
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
@@ -60,7 +74,7 @@ export const fetchGistContent = async (gistId: string): Promise<Gist | null> => 
     const url = `${GITHUB_API_BASE}/gists/${gistId.trim()}`;
     console.log('Fetching from URL:', url);
 
-    const response = await fetch(url);
+    const response = await fetch(url, { headers: getHeaders() });
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
@@ -76,7 +90,7 @@ export const fetchGistContent = async (gistId: string): Promise<Gist | null> => 
       const file = gist.files[filename];
       if (file.raw_url && !file.content) {
         try {
-          const contentResponse = await fetch(file.raw_url);
+          const contentResponse = await fetch(file.raw_url, { headers: getHeaders() });
           if (contentResponse.ok) {
             file.content = await contentResponse.text();
           }
