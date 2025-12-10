@@ -103,20 +103,26 @@ const fetchDirectoryContents = async (path: string = ''): Promise<GitHubContent[
 // Fetch and parse a single markdown file
 const fetchMarkdownFile = async (file: GitHubContent): Promise<BlogPost | null> => {
   try {
-    if (!file.download_url) {
-      console.warn(`No download URL for ${file.path}`);
-      return null;
-    }
-
     console.log(`Fetching content for: ${file.path}`);
-    const response = await fetch(file.download_url, { headers: getHeaders() });
+
+    // Use GitHub API /contents endpoint to get base64-encoded content (avoids CORS)
+    const url = `${GITHUB_API_BASE}/repos/${REPO_OWNER}/${REPO_NAME}/contents/${file.path}`;
+    const response = await fetch(url, { headers: getHeaders() });
 
     if (!response.ok) {
       console.error(`Failed to fetch ${file.path}: ${response.status}`);
       return null;
     }
 
-    const rawContent = await response.text();
+    const data: GitHubContent = await response.json();
+
+    // Decode base64 content
+    if (!data.content) {
+      console.warn(`No content for ${file.path}`);
+      return null;
+    }
+
+    const rawContent = atob(data.content.replace(/\n/g, ''));
     const content = processMarkdownContent(rawContent);
 
     // Extract title from content (first # heading) or use filename
@@ -278,7 +284,14 @@ export const fetchTILEntries = async (): Promise<TILEntry[]> => {
 
         if (contentResponse.ok) {
           const contentData: GitHubContent = await contentResponse.json();
-          const rawContent = atob(contentData.content);
+
+          // Safety check: ensure content exists
+          if (!contentData.content) {
+            console.warn(`No content for TIL file: ${file.path}`);
+            continue;
+          }
+
+          const rawContent = atob(contentData.content.replace(/\n/g, ''));
 
           // Process content
           const content = processMarkdownContent(rawContent);
