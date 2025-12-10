@@ -209,17 +209,49 @@ export const fetchTILEntries = async (): Promise<TILEntry[]> => {
           // Process content
           const content = processMarkdownContent(rawContent);
 
-          // Extract date from filename (assuming format like "2024-01-16.md" or similar)
-          const fileName = file.path.split('/').pop() || '';
-          const dateMatch = fileName.match(/(\d{4}-\d{2}-\d{2})/);
-          const date = dateMatch ? dateMatch[1] : new Date().toISOString().split('T')[0];
+          // Extract date from title (format: "DD - MM - YYYY" or similar)
+          // First try to get it from the first heading
+          const titleMatch = content.match(/^#\s+(.+)$/m);
+          let dateString = '';
+          
+          if (titleMatch && titleMatch[1]) {
+            const title = titleMatch[1].trim();
+            // Try to extract date from title like "10 - 12 - 2025" or "10-12-2025"
+            const dateMatch = title.match(/(\d{1,2})\s*-\s*(\d{1,2})\s*-\s*(\d{4})/);
+            
+            if (dateMatch) {
+              // Convert DD-MM-YYYY to YYYY-MM-DD
+              const day = dateMatch[1].padStart(2, '0');
+              const month = dateMatch[2].padStart(2, '0');
+              const year = dateMatch[3];
+              dateString = `${year}-${month}-${day}`;
+            }
+          }
+          
+          // Fallback: try filename
+          if (!dateString) {
+            const fileName = file.path.split('/').pop() || '';
+            const fileMatch = fileName.match(/(\d{4}-\d{2}-\d{2})|(\d{1,2}-\d{1,2}-\d{4})/);
+            if (fileMatch) {
+              dateString = fileMatch[0];
+              // Convert DD-MM-YYYY to YYYY-MM-DD if needed
+              if (dateString.match(/^\d{1,2}-\d{1,2}-\d{4}$/)) {
+                const parts = dateString.split('-');
+                dateString = `${parts[2]}-${parts[1].padStart(2, '0')}-${parts[0].padStart(2, '0')}`;
+              }
+            }
+          }
+          
+          // Final fallback: use current date
+          const date = dateString || new Date().toISOString().split('T')[0];
 
-          // Clean content for display
-          const cleanedContent = cleanForExcerpt(content);
+          // Clean content for display (remove the title heading)
+          let cleanedContent = content.replace(/^#\s+.+$/m, '').trim();
+          cleanedContent = cleanForExcerpt(cleanedContent);
 
           entries.push({
             id: file.sha,
-            content: cleanedContent,
+            content: cleanedContent || 'No content',
             date,
             path: file.path
           });
@@ -230,7 +262,13 @@ export const fetchTILEntries = async (): Promise<TILEntry[]> => {
     }
     
     // Sort by date (newest first)
-    entries.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+    entries.sort((a, b) => {
+      try {
+        return new Date(b.date).getTime() - new Date(a.date).getTime();
+      } catch {
+        return 0;
+      }
+    });
     
     console.log('Processed TIL entries:', entries.length);
     return entries;
