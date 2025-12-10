@@ -1,19 +1,14 @@
 import { processMarkdownContent, cleanForExcerpt } from '@/utils/markdownUtils';
 
-interface GitHubFile {
-  name: string;
-  path: string;
-  sha: string;
-  download_url: string;
-  type: string;
-}
-
 interface GitHubContent {
   name: string;
   path: string;
   sha: string;
-  content: string;
-  encoding: string;
+  size: number;
+  type: 'file' | 'dir';
+  download_url?: string;
+  content?: string;
+  encoding?: string;
 }
 
 export interface BlogPost {
@@ -34,33 +29,133 @@ export interface TILEntry {
 }
 
 const GITHUB_API_BASE = 'https://api.github.com';
-const REPO_OWNER = 'shreya-sk';
-const REPO_NAME = 'Knowledge-hub';
+const REPO_OWNER = import.meta.env.VITE_GITHUB_OWNER || 'shreya-sk';
+const REPO_NAME = import.meta.env.VITE_GITHUB_REPO || 'Knowledge-hub';
+const GITHUB_TOKEN = import.meta.env.VITE_GITHUB_TOKEN;
 
-export const fetchMarkdownFiles = async (): Promise<BlogPost[]> => {
+// Headers with optional authentication
+const getHeaders = () => {
+  const headers: HeadersInit = {
+    'X-GitHub-Api-Version': '2022-11-28',
+  };
+
+  if (GITHUB_TOKEN) {
+    headers['Authorization'] = `Bearer ${GITHUB_TOKEN}`;
+  }
+
+  return headers;
+};
+
+// Cache for fetched posts to avoid repeated API calls
+let postsCache: BlogPost[] | null = null;
+let cacheTimestamp: number = 0;
+const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
+
+// Recursively fetch all markdown files from a directory
+const fetchDirectoryContents = async (path: string = ''): Promise<GitHubContent[]> => {
   try {
-    console.log('Fetching from:', `${GITHUB_API_BASE}/repos/${REPO_OWNER}/${REPO_NAME}`);
+    const url = `${GITHUB_API_BASE}/repos/${REPO_OWNER}/${REPO_NAME}/contents/${path}`;
+    console.log(`Fetching directory: ${path || 'root'}`);
 
-    // Try main branch first, then master if main fails
-    let response = await fetch(`${GITHUB_API_BASE}/repos/${REPO_OWNER}/${REPO_NAME}/git/trees/main?recursive=1`);
-
-    if (!response.ok && response.status === 409) {
-      // Branch might be 'master' instead of 'main'
-      console.log('Main branch not found, trying master...');
-      response = await fetch(`${GITHUB_API_BASE}/repos/${REPO_OWNER}/${REPO_NAME}/git/trees/master?recursive=1`);
-    }
+    const response = await fetch(url, { headers: getHeaders() });
 
     if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}));
-      console.error('GitHub API Error:', response.status, errorData);
-      throw new Error(`Failed to fetch repository: ${response.status} - ${errorData.message || 'Unknown error'}`);
+      if (response.status === 404) {
+        console.warn(`Directory not found: ${path}`);
+        return [];
+      }
+      throw new Error(`Failed to fetch directory ${path}: ${response.status}`);
     }
 
-    const data = await response.json();
-    console.log('Repository tree data:', data);
+    const items: GitHubContent[] = await response.json();
+    let allFiles: GitHubContent[] = [];
 
-    if (!data.tree || data.tree.length === 0) {
-      console.warn('Repository is empty or has no files');
+    for (const item of items) {
+      // Skip .obsidian directories and README files
+      if (item.path.toLowerCase().includes('.obsidian') ||
+          item.name.toLowerCase().startsWith('readme')) {
+        continue;
+      }
+
+      if (item.type === 'dir') {
+        // Recursively fetch subdirectory contents
+        const subFiles = await fetchDirectoryContents(item.path);
+        allFiles = allFiles.concat(subFiles);
+      } else if (item.type === 'file' && item.name.endsWith('.md')) {
+        allFiles.push(item);
+      }
+    }
+
+    return allFiles;
+  } catch (error) {
+    console.error(`Error fetching directory ${path}:`, error);
+    return [];
+  }
+};
+
+// Fetch and parse a single markdown file
+const fetchMarkdownFile = async (file: GitHubContent): Promise<BlogPost | null> => {
+  try {
+    if (!file.download_url) {
+      console.warn(`No download URL for ${file.path}`);
+      return null;
+    }
+
+    console.log(`Fetching content for: ${file.path}`);
+    const response = await fetch(file.download_url, { headers: getHeaders() });
+
+    if (!response.ok) {
+      console.error(`Failed to fetch ${file.path}: ${response.status}`);
+      return null;
+    }
+
+    const rawContent = await response.text();
+    const content = processMarkdownContent(rawContent);
+
+    // Extract title from content (first # heading) or use filename
+    const titleMatch = content.match(/^#\s+(.+)$/m);
+    const fileName = file.name.replace('.md', '');
+    const title = titleMatch ? titleMatch[1] : fileName;
+
+    // Extract folder from path
+    const pathParts = file.path.split('/');
+    const folder = pathParts.length > 1 ? pathParts.slice(0, -1).join('/') : 'Root';
+
+    // Generate slug from path
+    const slug = file.path.replace('.md', '').toLowerCase().replace(/\s+/g, '-');
+
+    return {
+      id: file.sha,
+      title,
+      content,
+      path: file.path,
+      folder,
+      date: new Date().toISOString().split('T')[0],
+      slug
+    };
+  } catch (error) {
+    console.error(`Error processing ${file.path}:`, error);
+    return null;
+  }
+};
+
+export const fetchMarkdownFiles = async (forceRefresh: boolean = false): Promise<BlogPost[]> => {
+  // Check cache first
+  const now = Date.now();
+  if (!forceRefresh && postsCache && (now - cacheTimestamp) < CACHE_DURATION) {
+    console.log('Using cached posts');
+    return postsCache;
+  }
+
+  try {
+    console.log('Fetching markdown files from GitHub...');
+
+    // Fetch all markdown files recursively
+    const markdownFiles = await fetchDirectoryContents();
+    console.log(`Found ${markdownFiles.length} markdown files`);
+
+    if (markdownFiles.length === 0) {
+      console.warn('No markdown files found');
       return [];
     }
 
@@ -70,8 +165,7 @@ export const fetchMarkdownFiles = async (): Promise<BlogPost[]> => {
         return false;
       }
 
-      // Extract filename from path
-      const fileName = file.path.split('/').pop() || '';
+      posts.push(...batchResults.filter((post): post is BlogPost => post !== null));
 
       // Exclude README files, .obsidian config files, and TIL directory
       if (fileName.toLowerCase().startsWith('readme') ||
@@ -79,9 +173,9 @@ export const fetchMarkdownFiles = async (): Promise<BlogPost[]> => {
           file.path.toLowerCase().includes('daily - til/')) {
         return false;
       }
+    }
 
-      return true;
-    });
+    console.log(`Successfully processed ${posts.length} posts`);
 
     console.log(`Found ${markdownFiles.length} markdown files:`, markdownFiles.map((f: GitHubFile) => f.path));
     
@@ -138,11 +232,23 @@ export const fetchMarkdownFiles = async (): Promise<BlogPost[]> => {
         console.error(`Failed to fetch content for ${file.path}:`, error);
       }
     }
-    
-    console.log('Processed posts:', posts);
+
     return posts;
   } catch (error) {
     console.error('Error fetching markdown files:', error);
+
+    // Try to load from localStorage if available
+    try {
+      const cached = localStorage.getItem('blog-posts-cache');
+      if (cached) {
+        const { posts } = JSON.parse(cached);
+        console.log('Loading posts from localStorage backup');
+        return posts;
+      }
+    } catch (e) {
+      console.warn('Failed to load from localStorage:', e);
+    }
+
     return [];
   }
 };
