@@ -1,449 +1,135 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+import Hero from "@/components/Hero";
+import { ArrowRight, BookOpen, Lightbulb, Code } from "lucide-react";
+import { Link } from "react-router-dom";
+import BlogCard from "@/components/BlogCard";
+import TILCard from "@/components/TILCard";
+import { useGitHubPosts } from "@/hooks/useGitHubPosts";
+import { useGists } from "@/hooks/useGists";
 
-/* Sage Minimalist Design System */
-
-@layer base {
-  :root {
-    /* Vibrant Glassmorphism Design System */
-    --background: 140 30% 98%;
-    --foreground: 150 40% 10%;
-
-    --card: 0 0% 100%;
-    --card-foreground: 150 40% 10%;
-
-    --popover: 0 0% 100%;
-    --popover-foreground: 150 40% 10%;
-
-    --primary: 150 50% 45%;
-    --primary-foreground: 0 0% 100%;
-
-    --secondary: 280 45% 65%;
-    --secondary-foreground: 0 0% 100%;
-
-    --muted: 145 20% 90%;
-    --muted-foreground: 150 25% 35%;
-
-    --accent: 45 90% 60%;
-    --accent-foreground: 150 40% 10%;
-
-    --destructive: 0 70% 50%;
-    --destructive-foreground: 0 0% 100%;
-
-    --border: 145 20% 82%;
-    --input: 145 20% 82%;
-    --ring: 150 50% 45%;
-
-    --radius: 1rem;
-
-    --sidebar-background: 0 0% 100%;
-    --sidebar-foreground: 150 30% 20%;
-    --sidebar-primary: 150 50% 45%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 280 45% 65%;
-    --sidebar-accent-foreground: 0 0% 100%;
-    --sidebar-border: 145 20% 85%;
-    --sidebar-ring: 150 50% 45%;
-
-    /* Glass effect colors with more variety */
-    --glass-bg: 0 0% 100%;
-    --glass-border: 145 30% 88%;
-    --glass-shadow: 150 20% 70%;
-
-    /* Bubble colors */
-    --bubble-1: 150 60% 55%;
-    --bubble-2: 280 50% 65%;
-    --bubble-3: 45 85% 60%;
-    --bubble-4: 200 55% 60%;
+// Mock data for TIL section
+const recentTIL = [
+  {
+    id: "1",
+    content: "discovered CSS subgrid is finally supported everywhere. makes nested grids so much easier - no more hacky workarounds for alignment.",
+    date: "2024-01-16",
+  },
+  {
+    id: "2",
+    content: "learned the hard way: server components can't use useState. need to add 'use client' directive when you need interactivity.",
+    date: "2024-01-15",
   }
+];
 
-  .dark {
-    --background: 150 20% 6%;
-    --foreground: 145 15% 90%;
+const Index = () => {
+  const { data: posts, isLoading } = useGitHubPosts();
+  const { data: gists = [] } = useGists();
+  
+  // Get the first 4 posts for recent posts section (2x2 grid)
+  const recentPosts = posts?.slice(0, 4) || [];
+  
+  // Calculate real stats
+  const totalPosts = posts?.length || 0;
+  const totalGists = gists.length || 0;
+  const totalTIL = 200; // You can make this dynamic if you have TIL data
 
-    --card: 150 15% 10%;
-    --card-foreground: 145 15% 90%;
+  return (
+    <div className="min-h-screen sage-gradient">
+      <Hero />
+      
+      {/* Horizontal Stats Section */}
+      <section className="py-8 bg-background/40 backdrop-blur-sm">
+        <div className="container px-6">
+          <div className="mx-auto max-w-4xl">
+            <div className="flex justify-around items-center gap-4">
+              <Link to="/blog" className="stat-card group">
+                <BookOpen className="h-5 w-5 text-primary mb-2 group-hover:scale-110 transition-transform" />
+                <div className="text-3xl font-light text-primary">{totalPosts}</div>
+                <div className="text-xs text-muted-foreground">posts</div>
+              </Link>
+              
+              <Link to="/gists" className="stat-card group">
+                <Code className="h-5 w-5 text-accent mb-2 group-hover:scale-110 transition-transform" />
+                <div className="text-3xl font-light text-accent">{totalGists}</div>
+                <div className="text-xs text-muted-foreground">gists</div>
+              </Link>
+              
+              <Link to="/til" className="stat-card group">
+                <Lightbulb className="h-5 w-5 text-secondary mb-2 group-hover:scale-110 transition-transform" />
+                <div className="text-3xl font-light text-secondary">{totalTIL}+</div>
+                <div className="text-xs text-muted-foreground">learnings</div>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      {/* Recent Blog Posts Section - Compact Grid */}
+      <section className="py-12 bg-background/40 backdrop-blur-sm">
+        <div className="container px-6">
+          <div className="mx-auto max-w-5xl">
+            <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center gap-3">
+                <BookOpen className="h-5 w-5 text-primary/80" />
+                <h2 className="text-xl font-medium tracking-tight">recent posts</h2>
+              </div>
+              <Link 
+                to="/blog"
+                className="inline-flex items-center text-sm text-primary/80 hover:text-primary transition-colors font-medium"
+              >
+                view all
+                <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
+              </Link>
+            </div>
+            
+            {isLoading ? (
+              <div className="text-center py-12">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary/30 mx-auto mb-4"></div>
+                <p className="text-muted-foreground text-sm font-light">loading posts...</p>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {recentPosts.map((post) => (
+                  <BlogCard key={post.id} post={post} />
+                ))}
+                {recentPosts.length === 0 && (
+                  <div className="col-span-2 text-center py-12">
+                    <p className="text-muted-foreground text-sm font-light">no posts yet</p>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        </div>
+      </section>
+      
+      {/* Recent TIL Section - Journal Style */}
+      <section className="py-12">
+        <div className="container px-6">
+          <div className="mx-auto max-w-5xl">
+            <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center gap-3">
+                <Lightbulb className="h-5 w-5 text-secondary/80" />
+                <h2 className="text-xl font-medium tracking-tight">daily journal</h2>
+              </div>
+              <Link 
+                to="/til"
+                className="inline-flex items-center text-sm text-secondary/80 hover:text-secondary transition-colors font-medium"
+              >
+                view all
+                <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
+              </Link>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {recentTIL.map((item) => (
+                <TILCard key={item.id} item={item} />
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+};
 
-    --popover: 150 15% 8%;
-    --popover-foreground: 145 15% 90%;
-
-    --primary: 150 40% 60%;
-    --primary-foreground: 150 20% 8%;
-
-    --secondary: 150 15% 15%;
-    --secondary-foreground: 145 15% 85%;
-
-    --muted: 150 12% 14%;
-    --muted-foreground: 150 12% 55%;
-
-    --accent: 155 25% 25%;
-    --accent-foreground: 145 15% 85%;
-
-    --destructive: 0 60% 50%;
-    --destructive-foreground: 145 15% 90%;
-
-    --border: 150 15% 18%;
-    --input: 150 15% 18%;
-    --ring: 150 40% 60%;
-
-    --sidebar-background: 150 15% 8%;
-    --sidebar-foreground: 145 15% 85%;
-    --sidebar-primary: 150 40% 60%;
-    --sidebar-primary-foreground: 150 20% 8%;
-    --sidebar-accent: 150 15% 15%;
-    --sidebar-accent-foreground: 145 15% 85%;
-    --sidebar-border: 150 15% 18%;
-    --sidebar-ring: 150 40% 60%;
-
-    /* Glass effect colors (dark mode) */
-    --glass-bg: 150 15% 10%;
-    --glass-border: 150 20% 20%;
-    --glass-shadow: 150 30% 5%;
-  }
-}
-
-@layer base {
-  * {
-    @apply border-border;
-  }
-
-  body {
-    @apply bg-background text-foreground font-light;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  }
-
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-normal tracking-tight;
-  }
-}
-
-/* Glassmorphism & Liquid Design */
-@layer components {
-  /* Glass card effect - iOS style */
-  .minimal-card {
-    background: linear-gradient(135deg,
-      hsla(var(--glass-bg), 0.7) 0%,
-      hsla(var(--glass-bg), 0.5) 100%
-    );
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border: 1px solid hsl(var(--glass-border) / 0.3);
-    box-shadow:
-      0 8px 32px 0 hsl(var(--glass-shadow) / 0.1),
-      inset 0 1px 0 0 hsl(var(--glass-border) / 0.2),
-      0 1px 2px 0 hsl(var(--glass-shadow) / 0.05);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .minimal-card:hover {
-    background: linear-gradient(135deg,
-      hsla(var(--glass-bg), 0.8) 0%,
-      hsla(var(--glass-bg), 0.6) 100%
-    );
-    box-shadow:
-      0 12px 40px 0 hsl(var(--glass-shadow) / 0.15),
-      inset 0 1px 0 0 hsl(var(--glass-border) / 0.3),
-      0 2px 4px 0 hsl(var(--glass-shadow) / 0.08);
-    transform: translateY(-2px);
-  }
-
-  /* Liquid gradient background */
-  .sage-gradient {
-    background: linear-gradient(
-      135deg,
-      hsl(var(--background)) 0%,
-      hsl(var(--muted)) 50%,
-      hsl(var(--background)) 100%
-    );
-    background-size: 200% 200%;
-    animation: gradient-shift 15s ease infinite;
-  }
-
-  @keyframes gradient-shift {
-    0%, 100% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-  }
-
-  /* Floating bubble animation */
-  .floating-bubble {
-    position: absolute;
-    border-radius: 50%;
-    backdrop-filter: blur(20px);
-    animation: float 20s infinite ease-in-out;
-    pointer-events: none;
-    opacity: 0.6;
-  }
-
-  .floating-bubble:nth-child(1) {
-    background: radial-gradient(
-      circle at 30% 30%,
-      hsla(var(--bubble-1), 0.4),
-      hsla(var(--bubble-1), 0.1)
-    );
-  }
-
-  .floating-bubble:nth-child(2) {
-    background: radial-gradient(
-      circle at 30% 30%,
-      hsla(var(--bubble-2), 0.4),
-      hsla(var(--bubble-2), 0.1)
-    );
-  }
-
-  .floating-bubble:nth-child(3) {
-    background: radial-gradient(
-      circle at 30% 30%,
-      hsla(var(--bubble-3), 0.4),
-      hsla(var(--bubble-3), 0.1)
-    );
-  }
-
-  .floating-bubble:nth-child(4) {
-    background: radial-gradient(
-      circle at 30% 30%,
-      hsla(var(--bubble-4), 0.4),
-      hsla(var(--bubble-4), 0.1)
-    );
-  }
-
-  @keyframes float {
-    0%, 100% {
-      transform: translate(0, 0) scale(1);
-      opacity: 0.3;
-    }
-    25% {
-      transform: translate(20px, -20px) scale(1.1);
-      opacity: 0.5;
-    }
-    50% {
-      transform: translate(-15px, -40px) scale(0.9);
-      opacity: 0.4;
-    }
-    75% {
-      transform: translate(-30px, -20px) scale(1.05);
-      opacity: 0.6;
-    }
-  }
-
-  /* Speech bubble animations */
-  .speech-bubble-1 {
-    animation: bubble-float-1 3s ease-in-out infinite;
-  }
-
-  .speech-bubble-2 {
-    animation: bubble-float-2 4s ease-in-out infinite;
-  }
-
-  @keyframes bubble-float-1 {
-    0%, 100% {
-      transform: translate(0, 0) scale(1);
-      opacity: 0.8;
-    }
-    50% {
-      transform: translate(-3px, -5px) scale(1.05);
-      opacity: 1;
-    }
-  }
-
-  @keyframes bubble-float-2 {
-    0%, 100% {
-      transform: translate(0, 0) scale(1);
-      opacity: 0.8;
-    }
-    50% {
-      transform: translate(3px, 5px) scale(1.05);
-      opacity: 1;
-    }
-  }
-
-  /* Watery ripple effect */
-  @keyframes ripple {
-    0% {
-      transform: scale(0.8);
-      opacity: 1;
-    }
-    100% {
-      transform: scale(2.4);
-      opacity: 0;
-    }
-  }
-
-  .glass-button {
-    background: linear-gradient(135deg,
-      hsla(var(--primary), 0.8) 0%,
-      hsla(var(--primary), 0.9) 100%
-    );
-    backdrop-filter: blur(10px);
-    border: 1px solid hsl(var(--primary) / 0.3);
-    box-shadow:
-      0 4px 16px 0 hsl(var(--primary) / 0.2),
-      inset 0 1px 0 0 hsl(var(--primary-foreground) / 0.1);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .glass-button:hover {
-    background: linear-gradient(135deg,
-      hsla(var(--primary), 0.9) 0%,
-      hsla(var(--primary), 1) 100%
-    );
-    box-shadow:
-      0 8px 24px 0 hsl(var(--primary) / 0.3),
-      inset 0 1px 0 0 hsl(var(--primary-foreground) / 0.2);
-    transform: translateY(-2px);
-  }
-
-  /* Glass header */
-  .glass-header {
-    background: hsla(var(--background), 0.8);
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border-bottom: 1px solid hsl(var(--border) / 0.5);
-    box-shadow: 0 2px 16px 0 hsl(var(--glass-shadow) / 0.06);
-  }
-
-  /* Glass menu for mobile */
-  .glass-menu {
-    background: hsla(var(--background), 0.95);
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    box-shadow: 0 4px 24px 0 hsl(var(--glass-shadow) / 0.1);
-  }
-
-  /* Obsidian-inspired markdown content styling */
-  .markdown-content {
-    @apply text-foreground/90;
-    font-size: 1rem;
-    line-height: 1.7;
-  }
-
-  .markdown-content h1,
-  .markdown-content h2,
-  .markdown-content h3,
-  .markdown-content h4,
-  .markdown-content h5,
-  .markdown-content h6 {
-    @apply text-foreground font-semibold mt-8 mb-4 tracking-tight;
-  }
-
-  .markdown-content h1 {
-    @apply text-3xl border-b border-border/40 pb-2;
-  }
-
-  .markdown-content h2 {
-    @apply text-2xl border-b border-border/30 pb-2;
-  }
-
-  .markdown-content h3 {
-    @apply text-xl;
-  }
-
-  .markdown-content h4 {
-    @apply text-lg;
-  }
-
-  .markdown-content p {
-    @apply mb-4;
-  }
-
-  .markdown-content a {
-    @apply text-primary hover:text-primary/80 underline decoration-primary/30 hover:decoration-primary/60 transition-colors;
-  }
-
-  .markdown-content ul,
-  .markdown-content ol {
-    @apply mb-4 ml-6;
-  }
-
-  .markdown-content ul {
-    @apply list-disc;
-  }
-
-  .markdown-content ol {
-    @apply list-decimal;
-  }
-
-  .markdown-content li {
-    @apply mb-2;
-  }
-
-  .markdown-content blockquote {
-    @apply border-l-4 border-primary/40 pl-4 py-2 my-4 italic text-muted-foreground bg-muted/30 rounded-r;
-  }
-
-  /* Obsidian-style callouts */
-  .markdown-content blockquote:has(> p > strong:first-child) {
-    @apply not-italic;
-  }
-
-  .markdown-content blockquote p strong:first-child {
-    @apply block mb-2 not-italic font-bold text-sm uppercase tracking-wide;
-  }
-
-  /* Callout type colors */
-  .markdown-content blockquote:has(> p > strong:first-child:contains("NOTE")),
-  .markdown-content blockquote:has(> p > strong:first-child:contains("INFO")) {
-    @apply border-l-blue-500 bg-blue-50/50 text-blue-900;
-  }
-
-  .markdown-content blockquote:has(> p > strong:first-child:contains("IMPORTANT")),
-  .markdown-content blockquote:has(> p > strong:first-child:contains("WARNING")),
-  .markdown-content blockquote:has(> p > strong:first-child:contains("ATTENTION")) {
-    @apply border-l-amber-500 bg-amber-50/50 text-amber-900;
-  }
-
-  .markdown-content blockquote:has(> p > strong:first-child:contains("ERROR")),
-  .markdown-content blockquote:has(> p > strong:first-child:contains("DANGER")),
-  .markdown-content blockquote:has(> p > strong:first-child:contains("BUG")) {
-    @apply border-l-red-500 bg-red-50/50 text-red-900;
-  }
-
-  .markdown-content blockquote:has(> p > strong:first-child:contains("SUCCESS")),
-  .markdown-content blockquote:has(> p > strong:first-child:contains("CHECK")),
-  .markdown-content blockquote:has(> p > strong:first-child:contains("DONE")) {
-    @apply border-l-green-500 bg-green-50/50 text-green-900;
-  }
-
-  .markdown-content blockquote:has(> p > strong:first-child:contains("TIP")),
-  .markdown-content blockquote:has(> p > strong:first-child:contains("HINT")) {
-    @apply border-l-purple-500 bg-purple-50/50 text-purple-900;
-  }
-
-  .markdown-content code {
-    @apply bg-muted px-1.5 py-0.5 rounded text-sm font-mono text-foreground/90;
-  }
-
-  .markdown-content pre {
-    @apply bg-muted/50 border border-border/50 rounded-lg p-4 mb-4 overflow-x-auto;
-  }
-
-  .markdown-content pre code {
-    @apply bg-transparent p-0 text-sm;
-  }
-
-  .markdown-content table {
-    @apply w-full border-collapse mb-4;
-  }
-
-  .markdown-content th,
-  .markdown-content td {
-    @apply border border-border px-4 py-2 text-left;
-  }
-
-  .markdown-content th {
-    @apply bg-muted/50 font-semibold;
-  }
-
-  .markdown-content img {
-    @apply rounded-lg shadow-md max-w-full h-auto my-4;
-  }
-
-  .markdown-content hr {
-    @apply border-border/50 my-8;
-  }
-
-  /* Code syntax highlighting adjustments */
-  .markdown-content .hljs {
-    @apply bg-transparent;
-  }
-}
+export default Index;
