@@ -28,6 +28,12 @@ export interface TILEntry {
   path: string;
 }
 
+interface GitHubFile {
+  path: string;
+  type: string;
+  sha: string;
+}
+
 const GITHUB_API_BASE = 'https://api.github.com';
 const REPO_OWNER = import.meta.env.VITE_GITHUB_OWNER || 'shreya-sk';
 const REPO_NAME = import.meta.env.VITE_GITHUB_REPO || 'Knowledge-hub';
@@ -160,78 +166,39 @@ export const fetchMarkdownFiles = async (forceRefresh: boolean = false): Promise
       return [];
     }
 
-    // Filter for markdown files, excluding README files and TIL directory
-    const markdownFiles = data.tree.filter((file: GitHubFile) => {
-      if (file.type !== 'blob' || !file.path || !file.path.endsWith('.md')) {
-        return false;
-      }
+    // Fetch content for each file
+    const posts: BlogPost[] = [];
+
+    // Process files in batches to avoid rate limiting
+    const batchSize = 5;
+    for (let i = 0; i < markdownFiles.length; i += batchSize) {
+      const batch = markdownFiles.slice(i, i + batchSize);
+      const batchResults = await Promise.all(
+        batch.map(file => fetchMarkdownFile(file))
+      );
 
       posts.push(...batchResults.filter((post): post is BlogPost => post !== null));
 
-      // Exclude README files, .obsidian config files, and TIL directory
-      if (fileName.toLowerCase().startsWith('readme') ||
-          file.path.toLowerCase().includes('.obsidian/') ||
-          file.path.toLowerCase().includes('daily - til/')) {
-        return false;
+      // Small delay between batches to avoid rate limiting
+      if (i + batchSize < markdownFiles.length) {
+        await new Promise(resolve => setTimeout(resolve, 100));
       }
     }
 
     console.log(`Successfully processed ${posts.length} posts`);
 
-    console.log(`Found ${markdownFiles.length} markdown files:`, markdownFiles.map((f: GitHubFile) => f.path));
-    
-    // Fetch content for each markdown file
-    const posts: BlogPost[] = [];
-    
-    for (const file of markdownFiles) {
-      try {
-        const contentResponse = await fetch(`${GITHUB_API_BASE}/repos/${REPO_OWNER}/${REPO_NAME}/contents/${file.path}`);
-        
-        if (contentResponse.ok) {
-          const contentData: GitHubContent = await contentResponse.json();
-          const rawContent = atob(contentData.content); // Decode base64 content
+    // Update cache
+    postsCache = posts;
+    cacheTimestamp = now;
 
-          // Process content to remove frontmatter and convert Obsidian syntax
-          const content = processMarkdownContent(rawContent);
-
-          // Extract title ONLY from first heading line, not entire content
-          // Look for first # heading, but only take the heading text itself
-          const headingMatch = content.match(/^#\s+(.+)$/m);
-          const fileName = file.path.split('/').pop()?.replace('.md', '') || 'Untitled';
-          
-          let title = fileName; // Default to filename
-          
-          if (headingMatch && headingMatch[1]) {
-            // Get just the heading text, limit to reasonable length
-            const headingText = headingMatch[1].trim();
-            // Take only first line if heading spans multiple lines
-            const firstLine = headingText.split('\n')[0];
-            // Limit title to 100 characters max
-            title = firstLine.length > 100 ? firstLine.substring(0, 97) + '...' : firstLine;
-          }
-
-          // Extract folder from path (use full directory path, not just top level)
-          const pathParts = file.path.split('/');
-          const folder = pathParts.length > 1 ? pathParts.slice(0, -1).join('/') : 'Root';
-
-          // Generate slug from path
-          const slug = file.path.replace('.md', '').toLowerCase().replace(/\s+/g, '-').replace(/\//g, '/');
-
-          posts.push({
-            id: file.sha,
-            title,
-            content,
-            path: file.path,
-            folder,
-            date: new Date().toISOString().split('T')[0], // We'll use current date for now
-            slug
-          });
-        } else {
-          console.error(`Failed to fetch content for ${file.path}:`, contentResponse.status);
-        }
-      } catch (error) {
-        console.error(`Failed to fetch content for ${file.path}:`, error);
-      }
+    // Store in localStorage as backup
+    try {
+      localStorage.setItem('blog-posts-cache', JSON.stringify({
+        posts,
+        timestamp: now
+      }));
+    } catch (e) {
+      console.warn('Failed to store cache in localStorage:', e);
     }
 
     return posts;
@@ -275,11 +242,11 @@ export const fetchTILEntries = async (): Promise<TILEntry[]> => {
     console.log('Fetching TIL entries from:', `${GITHUB_API_BASE}/repos/${REPO_OWNER}/${REPO_NAME}`);
 
     // Try main branch first, then master if main fails
-    let response = await fetch(`${GITHUB_API_BASE}/repos/${REPO_OWNER}/${REPO_NAME}/git/trees/main?recursive=1`);
+    let response = await fetch(`${GITHUB_API_BASE}/repos/${REPO_OWNER}/${REPO_NAME}/git/trees/main?recursive=1`, { headers: getHeaders() });
 
     if (!response.ok && response.status === 409) {
       console.log('Main branch not found, trying master...');
-      response = await fetch(`${GITHUB_API_BASE}/repos/${REPO_OWNER}/${REPO_NAME}/git/trees/master?recursive=1`);
+      response = await fetch(`${GITHUB_API_BASE}/repos/${REPO_OWNER}/${REPO_NAME}/git/trees/master?recursive=1`, { headers: getHeaders() });
     }
 
     if (!response.ok) {
@@ -307,8 +274,8 @@ export const fetchTILEntries = async (): Promise<TILEntry[]> => {
     
     for (const file of tilFiles) {
       try {
-        const contentResponse = await fetch(`${GITHUB_API_BASE}/repos/${REPO_OWNER}/${REPO_NAME}/contents/${file.path}`);
-        
+        const contentResponse = await fetch(`${GITHUB_API_BASE}/repos/${REPO_OWNER}/${REPO_NAME}/contents/${file.path}`, { headers: getHeaders() });
+
         if (contentResponse.ok) {
           const contentData: GitHubContent = await contentResponse.json();
           const rawContent = atob(contentData.content);
