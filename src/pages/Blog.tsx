@@ -1,6 +1,5 @@
-
 import { useState } from "react";
-import { Search, ChevronRight, Folder } from "lucide-react";
+import { Search, ChevronRight } from "lucide-react";
 import BlogCard from "@/components/BlogCard";
 import { useGroupedPosts } from "@/hooks/useGitHubPosts";
 
@@ -106,25 +105,40 @@ const Blog = () => {
       <div className="space-y-2">
         <button
           onClick={() => toggleDir(path)}
-          className="w-full minimal-card rounded-2xl p-4 bg-gradient-to-r from-primary/5 via-secondary/5 to-primary/5 backdrop-blur-sm border border-primary/10 hover:border-primary/30 transition-all duration-300 hover:shadow-lg group"
+          className="w-full group rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-lg"
         >
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="p-2 rounded-lg bg-white/50 backdrop-blur-sm transition-all duration-300 group-hover:scale-110 group-hover:bg-gradient-to-br group-hover:from-primary/20 group-hover:to-secondary/20">
-                <Folder className="h-4 w-4 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent" />
+          {/* Glassy purple-green gradient background */}
+          <div className="relative p-4 backdrop-blur-xl bg-gradient-to-br from-purple-500/20 via-green-500/20 to-purple-500/20 border border-white/20">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                {/* File icon */}
+                <div className="p-2 rounded-lg bg-white/30 backdrop-blur-sm transition-all duration-300 group-hover:scale-110">
+                  <img 
+                    src="/file-icon.png" 
+                    alt="" 
+                    className="h-5 w-5"
+                    onError={(e) => {
+                      // Fallback to Folder icon if file-icon.png doesn't exist
+                      e.currentTarget.style.display = 'none';
+                      const fallback = document.createElement('div');
+                      fallback.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg>';
+                      e.currentTarget.parentElement?.appendChild(fallback.firstChild!);
+                    }}
+                  />
+                </div>
+                <div className="text-left">
+                  <h3 className="text-base font-bold text-white lowercase">
+                    {name}
+                  </h3>
+                  <p className="text-xs text-white/70">
+                    {totalItems} {totalItems === 1 ? 'item' : 'items'}
+                  </p>
+                </div>
               </div>
-              <div className="text-left">
-                <h3 className="text-base font-bold bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent lowercase">
-                  {name}
-                </h3>
-                <p className="text-xs text-foreground/50">
-                  {totalItems} {totalItems === 1 ? 'item' : 'items'}
-                </p>
-              </div>
-            </div>
 
-            <div className={`transition-transform duration-300 ${isExpanded ? 'rotate-90' : 'rotate-0'}`}>
-              <ChevronRight className="h-5 w-5 text-primary/60" />
+              <div className={`transition-transform duration-300 ${isExpanded ? 'rotate-90' : 'rotate-0'}`}>
+                <ChevronRight className="h-5 w-5 text-white/80" />
+              </div>
             </div>
           </div>
         </button>
