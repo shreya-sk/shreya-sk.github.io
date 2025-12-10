@@ -105,39 +105,49 @@ const Blog = () => {
       <div className="space-y-2">
         <button
           onClick={() => toggleDir(path)}
-          className="w-full group rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-lg"
+          className="w-full group rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-lg relative"
         >
           {/* Glassy purple-green gradient background */}
-          <div className="relative p-4 backdrop-blur-xl bg-gradient-to-br from-purple-500/20 via-green-500/20 to-purple-500/20 border border-white/20">
+          <div className="relative p-4 backdrop-blur-xl bg-gradient-to-br from-purple-500/20 via-green-500/20 to-purple-500/20 border-2 border-purple-400/40">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                {/* File icon */}
-                <div className="p-2 rounded-lg bg-white/30 backdrop-blur-sm transition-all duration-300 group-hover:scale-110">
+                {/* Purple file icon floating next to folder name */}
+                <div className="relative">
                   <img 
                     src="/file-icon.png" 
                     alt="" 
-                    className="h-5 w-5"
+                    className="h-6 w-6 floating-icon"
+                    style={{ filter: 'hue-rotate(270deg) saturate(1.5)' }}
                     onError={(e) => {
-                      // Fallback to Folder icon if file-icon.png doesn't exist
+                      // Fallback to purple folder SVG if file-icon.png doesn't exist
                       e.currentTarget.style.display = 'none';
-                      const fallback = document.createElement('div');
-                      fallback.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg>';
-                      e.currentTarget.parentElement?.appendChild(fallback.firstChild!);
+                      const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+                      svg.setAttribute('width', '24');
+                      svg.setAttribute('height', '24');
+                      svg.setAttribute('viewBox', '0 0 24 24');
+                      svg.setAttribute('fill', 'none');
+                      svg.setAttribute('stroke', '#a855f7');
+                      svg.setAttribute('stroke-width', '2');
+                      svg.setAttribute('class', 'floating-icon');
+                      const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                      path.setAttribute('d', 'M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z');
+                      svg.appendChild(path);
+                      e.currentTarget.parentElement?.appendChild(svg);
                     }}
                   />
                 </div>
                 <div className="text-left">
-                  <h3 className="text-base font-bold text-white lowercase">
+                  <h3 className="text-base font-bold text-purple-600 lowercase">
                     {name}
                   </h3>
-                  <p className="text-xs text-white/70">
+                  <p className="text-xs text-purple-500/80">
                     {totalItems} {totalItems === 1 ? 'item' : 'items'}
                   </p>
                 </div>
               </div>
 
               <div className={`transition-transform duration-300 ${isExpanded ? 'rotate-90' : 'rotate-0'}`}>
-                <ChevronRight className="h-5 w-5 text-white/80" />
+                <ChevronRight className="h-5 w-5 text-purple-500" />
               </div>
             </div>
           </div>
