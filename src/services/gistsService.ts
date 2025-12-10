@@ -19,20 +19,13 @@ export interface Gist {
 
 const GITHUB_API_BASE = 'https://api.github.com';
 const GITHUB_USERNAME = 'shreya-sk';
-const GITHUB_TOKEN = import.meta.env.VITE_GITHUB_TOKEN;
 
-// Headers with optional authentication
-const getHeaders = () => {
-  const headers: HeadersInit = {
-    'X-GitHub-Api-Version': '2022-11-28',
-  };
-
-  if (GITHUB_TOKEN) {
-    headers['Authorization'] = `Bearer ${GITHUB_TOKEN}`;
-  }
-
-  return headers;
-};
+// Simple headers for public GitHub API (no authentication needed!)
+// GitHub allows 60 requests/hour per IP for public repos - plenty for a personal blog
+const getHeaders = (): HeadersInit => ({
+  'Accept': 'application/vnd.github.v3+json',
+  'X-GitHub-Api-Version': '2022-11-28',
+});
 
 // Extract the first H1 heading from markdown content
 export const extractFirstHeading = (content: string): string | null => {
@@ -44,7 +37,10 @@ export const fetchGists = async (): Promise<Gist[]> => {
   try {
     console.log('Fetching gists from:', `${GITHUB_API_BASE}/users/${GITHUB_USERNAME}/gists`);
 
-    const response = await fetch(`${GITHUB_API_BASE}/users/${GITHUB_USERNAME}/gists`, { headers: getHeaders() });
+    const response = await fetch(
+      `${GITHUB_API_BASE}/users/${GITHUB_USERNAME}/gists`,
+      { headers: getHeaders() }
+    );
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
