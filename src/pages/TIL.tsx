@@ -1,79 +1,47 @@
+interface TILItem {
+  id: string;
+  content: string;
+  date: string;
+}
 
-import { useState } from "react";
-import { Search } from "lucide-react";
-import TILCard from "@/components/TILCard";
+interface TILCardProps {
+  item: TILItem;
+}
 
-// Mock data - this will be replaced with actual markdown file parsing
-const mockTILItems = [
-  {
-    id: "1",
-    content: "discovered CSS subgrid is finally supported everywhere. makes nested grids so much easier — no more hacky workarounds for alignment.",
-    date: "2024-01-16",
-  },
-  {
-    id: "2",
-    content: "learned the hard way: server components can't use useState. need to add 'use client' directive when you need interactivity.",
-    date: "2024-01-15",
-  },
-  {
-    id: "3",
-    content: "git worktree is a game changer. can work on multiple branches simultaneously without constant switching. why didn't I know this sooner?",
-    date: "2024-01-14",
-  },
-  {
-    id: "4",
-    content: "the 'satisfies' operator in TypeScript is brilliant. gives you type checking without losing the specific type. safer than type assertions.",
-    date: "2024-01-13",
-  },
-  {
-    id: "5",
-    content: "finally understood closures properly. they're not magic — just functions remembering their environment. mind = blown.",
-    date: "2024-01-12",
-  },
-];
-
-const TIL = () => {
-  const [searchTerm, setSearchTerm] = useState("");
-
-  const filteredItems = mockTILItems.filter(item =>
-    item.content.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+const TILCard = ({ item }: TILCardProps) => {
+  // Format date to show day and date (e.g., "Monday, Jan 16")
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    const options: Intl.DateTimeFormatOptions = {
+      weekday: 'short',
+      month: 'short',
+      day: 'numeric'
+    };
+    return date.toLocaleDateString('en-US', options);
+  };
 
   return (
-    <div className="container px-4 py-5 sage-gradient min-h-screen">
-      <div className="mx-auto max-w-3xl">
-        <div className="mb-5">
-          <h1 className="text-xl font-bold mb-1.5 bg-gradient-to-r from-secondary to-accent bg-clip-text text-transparent">daily journal</h1>
-          <p className="text-xs text-foreground/60 mb-3">
-            quick thoughts, small wins, random discoveries.
-          </p>
-
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-secondary h-3.5 w-3.5" />
-            <input
-              type="text"
-              placeholder="search entries..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-9 pr-3 py-1.5 text-xs border border-secondary/30 bg-background/50 rounded-xl focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-1"
-            />
+    <article className="journal-card rounded-2xl p-4 group hover:scale-[1.01] transition-all border-l-4 border-l-secondary/40 hover:border-l-secondary">
+      <div className="flex gap-3">
+        {/* Date column - styled like a journal tab */}
+        <div className="flex-shrink-0 w-16 journal-date-tab">
+          <div className="text-xs font-bold text-secondary uppercase tracking-wide">
+            {formatDate(item.date).split(', ')[0]}
+          </div>
+          <div className="text-xs text-foreground/60 mt-0.5">
+            {formatDate(item.date).split(', ')[1]}
           </div>
         </div>
 
-        <div className="space-y-2">
-          {filteredItems.map((item) => (
-            <TILCard key={item.id} item={item} />
-          ))}
-
-          {filteredItems.length === 0 && (
-            <div className="text-center py-12 minimal-card rounded-2xl">
-              <p className="text-sm text-muted-foreground">no entries found.</p>
-            </div>
-          )}
+        {/* Content - journal entry style */}
+        <div className="flex-1 min-w-0">
+          <p className="text-sm text-foreground/80 leading-relaxed journal-text">
+            {item.content}
+          </p>
         </div>
       </div>
-    </div>
+    </article>
   );
 };
 
-export default TIL;
+export default TILCard;
