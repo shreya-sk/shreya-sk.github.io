@@ -91,10 +91,21 @@ export const fetchMarkdownFiles = async (): Promise<BlogPost[]> => {
           // Process content to remove frontmatter and convert Obsidian syntax
           const content = processMarkdownContent(rawContent);
 
-          // Extract title from content (first # heading) or use filename
-          const titleMatch = content.match(/^#\s+(.+)$/m);
+          // Extract title ONLY from first heading line, not entire content
+          // Look for first # heading, but only take the heading text itself
+          const headingMatch = content.match(/^#\s+(.+)$/m);
           const fileName = file.path.split('/').pop()?.replace('.md', '') || 'Untitled';
-          const title = titleMatch ? titleMatch[1] : fileName;
+          
+          let title = fileName; // Default to filename
+          
+          if (headingMatch && headingMatch[1]) {
+            // Get just the heading text, limit to reasonable length
+            const headingText = headingMatch[1].trim();
+            // Take only first line if heading spans multiple lines
+            const firstLine = headingText.split('\n')[0];
+            // Limit title to 100 characters max
+            title = firstLine.length > 100 ? firstLine.substring(0, 97) + '...' : firstLine;
+          }
 
           // Extract folder from path (use full directory path, not just top level)
           const pathParts = file.path.split('/');
