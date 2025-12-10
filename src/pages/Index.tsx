@@ -1,70 +1,99 @@
-
 import Hero from "@/components/Hero";
-import { ArrowRight, BookOpen, Lightbulb } from "lucide-react";
+import { ArrowRight, BookOpen, Lightbulb, Code } from "lucide-react";
 import { Link } from "react-router-dom";
 import BlogCard from "@/components/BlogCard";
 import TILCard from "@/components/TILCard";
 import { useGitHubPosts } from "@/hooks/useGitHubPosts";
+import { useGists } from "@/hooks/useGists";
 
 // Mock data for TIL section
 const recentTIL = [
   {
     id: "1",
-    title: "CSS Grid subgrid is finally here",
-    content: "Learned that CSS subgrid is now supported in all major browsers. It allows grid items to participate in the grid of their parent, making complex layouts much easier to achieve.",
+    content: "discovered CSS subgrid is finally supported everywhere. makes nested grids so much easier - no more hacky workarounds for alignment.",
     date: "2024-01-16",
-    tags: ["CSS", "Web Development", "Grid"]
   },
   {
     id: "2",
-    title: "React Server Components can't use useState",
-    content: "Server Components run on the server and can't maintain client-side state. If you need state, you have to use a Client Component by adding 'use client' directive.",
+    content: "learned the hard way: server components can't use useState. need to add 'use client' directive when you need interactivity.",
     date: "2024-01-15",
-    tags: ["React", "Server Components", "Next.js"]
   }
 ];
 
 const Index = () => {
   const { data: posts, isLoading } = useGitHubPosts();
+  const { data: gists = [] } = useGists();
   
-  // Get the first 2 posts for recent posts section
-  const recentPosts = posts?.slice(0, 2) || [];
+  // Get the first 4 posts for recent posts section (2x2 grid)
+  const recentPosts = posts?.slice(0, 4) || [];
+  
+  // Calculate real stats
+  const totalPosts = posts?.length || 0;
+  const totalGists = gists.length || 0;
+  const totalTIL = 200; // You can make this dynamic if you have TIL data
 
   return (
     <div className="min-h-screen sage-gradient">
       <Hero />
       
-      {/* Recent Blog Posts Section */}
-      <section className="py-20 bg-background/40 backdrop-blur-sm">
+      {/* Horizontal Stats Section */}
+      <section className="py-8 bg-background/40 backdrop-blur-sm">
         <div className="container px-6">
-          <div className="mx-auto max-w-6xl">
-            <div className="flex items-center justify-between mb-12">
-              <div className="flex items-center gap-4">
-                <BookOpen className="h-6 w-6 text-primary/80" />
-                <h2 className="text-3xl font-medium tracking-tight">Recent Posts</h2>
+          <div className="mx-auto max-w-4xl">
+            <div className="flex justify-around items-center gap-4">
+              <Link to="/blog" className="stat-card group">
+                <BookOpen className="h-5 w-5 text-primary mb-2 group-hover:scale-110 transition-transform" />
+                <div className="text-3xl font-light text-primary">{totalPosts}</div>
+                <div className="text-xs text-muted-foreground">posts</div>
+              </Link>
+              
+              <Link to="/gists" className="stat-card group">
+                <Code className="h-5 w-5 text-accent mb-2 group-hover:scale-110 transition-transform" />
+                <div className="text-3xl font-light text-accent">{totalGists}</div>
+                <div className="text-xs text-muted-foreground">gists</div>
+              </Link>
+              
+              <Link to="/til" className="stat-card group">
+                <Lightbulb className="h-5 w-5 text-secondary mb-2 group-hover:scale-110 transition-transform" />
+                <div className="text-3xl font-light text-secondary">{totalTIL}+</div>
+                <div className="text-xs text-muted-foreground">learnings</div>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      {/* Recent Blog Posts Section - Compact Grid */}
+      <section className="py-12 bg-background/40 backdrop-blur-sm">
+        <div className="container px-6">
+          <div className="mx-auto max-w-5xl">
+            <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center gap-3">
+                <BookOpen className="h-5 w-5 text-primary/80" />
+                <h2 className="text-xl font-medium tracking-tight">recent posts</h2>
               </div>
               <Link 
                 to="/blog"
-                className="inline-flex items-center text-primary/80 hover:text-primary transition-colors font-medium"
+                className="inline-flex items-center text-sm text-primary/80 hover:text-primary transition-colors font-medium"
               >
-                View all posts
-                <ArrowRight className="ml-2 h-4 w-4" />
+                view all
+                <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
               </Link>
             </div>
             
             {isLoading ? (
-              <div className="text-center py-16">
-                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary/30 mx-auto mb-6"></div>
-                <p className="text-muted-foreground font-light">Loading posts from your Obsidian vault...</p>
+              <div className="text-center py-12">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary/30 mx-auto mb-4"></div>
+                <p className="text-muted-foreground text-sm font-light">loading posts...</p>
               </div>
             ) : (
-              <div className="grid md:grid-cols-2 gap-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {recentPosts.map((post) => (
                   <BlogCard key={post.id} post={post} />
                 ))}
                 {recentPosts.length === 0 && (
                   <div className="col-span-2 text-center py-12">
-                    <p className="text-muted-foreground font-light">No posts found. Make sure your GitHub repository contains markdown files.</p>
+                    <p className="text-muted-foreground text-sm font-light">no posts yet</p>
                   </div>
                 )}
               </div>
@@ -73,50 +102,28 @@ const Index = () => {
         </div>
       </section>
       
-      {/* Recent TIL Section */}
-      <section className="py-20">
+      {/* Recent TIL Section - Journal Style */}
+      <section className="py-12">
         <div className="container px-6">
-          <div className="mx-auto max-w-6xl">
-            <div className="flex items-center justify-between mb-12">
-              <div className="flex items-center gap-4">
-                <Lightbulb className="h-6 w-6 text-yellow-500/80" />
-                <h2 className="text-3xl font-medium tracking-tight">Today I Learned</h2>
+          <div className="mx-auto max-w-5xl">
+            <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center gap-3">
+                <Lightbulb className="h-5 w-5 text-secondary/80" />
+                <h2 className="text-xl font-medium tracking-tight">daily journal</h2>
               </div>
               <Link 
                 to="/til"
-                className="inline-flex items-center text-primary/80 hover:text-primary transition-colors font-medium"
+                className="inline-flex items-center text-sm text-secondary/80 hover:text-secondary transition-colors font-medium"
               >
-                View all learnings
-                <ArrowRight className="ml-2 h-4 w-4" />
+                view all
+                <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
               </Link>
             </div>
             
-            <div className="grid md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {recentTIL.map((item) => (
                 <TILCard key={item.id} item={item} />
               ))}
-            </div>
-          </div>
-        </div>
-      </section>
-      
-      {/* Stats Section */}
-      <section className="py-20 bg-background/40 backdrop-blur-sm">
-        <div className="container px-6">
-          <div className="mx-auto max-w-4xl">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
-              <div className="space-y-3">
-                <div className="text-4xl font-light text-primary">{posts?.length || 0}</div>
-                <div className="text-muted-foreground font-light">Blog Posts</div>
-              </div>
-              <div className="space-y-3">
-                <div className="text-4xl font-light text-primary">200+</div>
-                <div className="text-muted-foreground font-light">TIL Entries</div>
-              </div>
-              <div className="space-y-3">
-                <div className="text-4xl font-light text-primary">1k+</div>
-                <div className="text-muted-foreground font-light">Connected Notes</div>
-              </div>
             </div>
           </div>
         </div>
