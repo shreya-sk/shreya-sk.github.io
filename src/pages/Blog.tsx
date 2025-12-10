@@ -87,10 +87,10 @@ const Blog = () => {
       </div>
 
       {/* Main Layout */}
-      <div className="flex h-screen pt-16 lg:pt-0">
+      <div className="flex h-screen pt-16 lg:pt-0 p-0 lg:p-4 gap-4">
         {/* Left Sidebar - Desktop */}
-        <aside className="hidden lg:block w-80 border-r border-primary/10 minimal-card backdrop-blur-xl">
-          <div className="p-6 border-b border-primary/10">
+        <aside className="hidden lg:flex flex-col w-80 h-full bg-white/5 backdrop-blur-2xl rounded-3xl border border-white/10 shadow-2xl shadow-black/20 overflow-hidden ios-glass">
+          <div className="p-6 border-b border-white/10 bg-gradient-to-b from-white/5 to-transparent">
             <h1 className="text-xl font-bold bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
               shreya's knowledge hub
             </h1>
@@ -98,11 +98,13 @@ const Blog = () => {
               {posts.length} notes from obsidian
             </p>
           </div>
-          <NoteSidebar
-            posts={posts}
-            selectedPost={selectedPost}
-            onSelectPost={handleSelectPost}
-          />
+          <div className="flex-1 overflow-hidden">
+            <NoteSidebar
+              posts={posts}
+              selectedPost={selectedPost}
+              onSelectPost={handleSelectPost}
+            />
+          </div>
         </aside>
 
         {/* Left Sidebar - Mobile */}
@@ -110,21 +112,23 @@ const Blog = () => {
           <>
             {/* Backdrop */}
             <div
-              className="lg:hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-40"
+              className="lg:hidden fixed inset-0 bg-black/60 backdrop-blur-md z-40"
               onClick={() => setIsSidebarOpen(false)}
             />
             {/* Sidebar */}
-            <aside className="lg:hidden fixed left-0 top-16 bottom-0 w-80 max-w-[85vw] minimal-card backdrop-blur-xl border-r border-primary/10 z-50 animate-in slide-in-from-left duration-300">
-              <div className="p-4 border-b border-primary/10">
+            <aside className="lg:hidden fixed left-4 top-20 bottom-4 w-80 max-w-[85vw] bg-white/10 backdrop-blur-2xl rounded-3xl border border-white/20 shadow-2xl shadow-black/30 z-50 animate-in slide-in-from-left duration-300 overflow-hidden ios-glass">
+              <div className="p-4 border-b border-white/10 bg-gradient-to-b from-white/5 to-transparent">
                 <p className="text-xs text-foreground/50">
                   {posts.length} notes from obsidian
                 </p>
               </div>
-              <NoteSidebar
-                posts={posts}
-                selectedPost={selectedPost}
-                onSelectPost={handleSelectPost}
-              />
+              <div className="h-[calc(100%-4rem)] overflow-hidden">
+                <NoteSidebar
+                  posts={posts}
+                  selectedPost={selectedPost}
+                  onSelectPost={handleSelectPost}
+                />
+              </div>
             </aside>
           </>
         )}

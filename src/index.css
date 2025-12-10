@@ -305,4 +305,65 @@
     scrollbar-width: thin;
     scrollbar-color: hsla(150, 50%, 45%, 0.3) transparent;
   }
+
+  /* iOS-style Glass Effect */
+  .ios-glass {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .ios-glass::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.1) 0%,
+      rgba(255, 255, 255, 0.05) 50%,
+      transparent 100%
+    );
+    pointer-events: none;
+  }
+
+  .ios-glass::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.3) 50%,
+      transparent 100%
+    );
+    pointer-events: none;
+  }
+
+  /* iOS-style Scrollbar */
+  .ios-scrollbar::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .ios-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .ios-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+    transition: background 0.2s ease;
+  }
+
+  .ios-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.25);
+  }
+
+  /* Firefox */
+  .ios-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
+  }
 }
+
