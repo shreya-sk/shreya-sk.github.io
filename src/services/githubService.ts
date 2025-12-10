@@ -1,4 +1,4 @@
-import { processMarkdownContent } from '@/utils/markdownUtils';
+import { processMarkdownContent, cleanForExcerpt } from '@/utils/markdownUtils';
 
 interface GitHubFile {
   name: string;
@@ -24,6 +24,13 @@ export interface BlogPost {
   folder: string;
   date: string;
   slug: string;
+}
+
+export interface TILEntry {
+  id: string;
+  content: string;
+  date: string;
+  path: string;
 }
 
 const GITHUB_API_BASE = 'https://api.github.com';
@@ -57,7 +64,7 @@ export const fetchMarkdownFiles = async (): Promise<BlogPost[]> => {
       return [];
     }
 
-    // Filter for markdown files, excluding README files
+    // Filter for markdown files, excluding README files and TIL directory
     const markdownFiles = data.tree.filter((file: GitHubFile) => {
       if (file.type !== 'blob' || !file.path || !file.path.endsWith('.md')) {
         return false;
@@ -66,9 +73,10 @@ export const fetchMarkdownFiles = async (): Promise<BlogPost[]> => {
       // Extract filename from path
       const fileName = file.path.split('/').pop() || '';
 
-      // Exclude README files and .obsidian config files
+      // Exclude README files, .obsidian config files, and TIL directory
       if (fileName.toLowerCase().startsWith('readme') ||
-          file.path.toLowerCase().includes('.obsidian/')) {
+          file.path.toLowerCase().includes('.obsidian/') ||
+          file.path.toLowerCase().includes('daily - til/')) {
         return false;
       }
 
@@ -153,4 +161,81 @@ export const fetchPostBySlug = async (slug: string): Promise<BlogPost | null> =>
   }
 
   return found || null;
+};
+
+export const fetchTILEntries = async (): Promise<TILEntry[]> => {
+  try {
+    console.log('Fetching TIL entries from:', `${GITHUB_API_BASE}/repos/${REPO_OWNER}/${REPO_NAME}`);
+
+    // Try main branch first, then master if main fails
+    let response = await fetch(`${GITHUB_API_BASE}/repos/${REPO_OWNER}/${REPO_NAME}/git/trees/main?recursive=1`);
+
+    if (!response.ok && response.status === 409) {
+      console.log('Main branch not found, trying master...');
+      response = await fetch(`${GITHUB_API_BASE}/repos/${REPO_OWNER}/${REPO_NAME}/git/trees/master?recursive=1`);
+    }
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      console.error('GitHub API Error:', response.status, errorData);
+      throw new Error(`Failed to fetch repository: ${response.status}`);
+    }
+
+    const data = await response.json();
+
+    // Filter for markdown files in "Daily - TIL" directory
+    const tilFiles = data.tree.filter((file: GitHubFile) => {
+      if (file.type !== 'blob' || !file.path || !file.path.endsWith('.md')) {
+        return false;
+      }
+
+      // Must be in "Daily - TIL" directory
+      return file.path.toLowerCase().includes('daily - til/');
+    });
+
+    console.log(`Found ${tilFiles.length} TIL entries:`, tilFiles.map((f: GitHubFile) => f.path));
+    
+    // Fetch content for each TIL file
+    const entries: TILEntry[] = [];
+    
+    for (const file of tilFiles) {
+      try {
+        const contentResponse = await fetch(`${GITHUB_API_BASE}/repos/${REPO_OWNER}/${REPO_NAME}/contents/${file.path}`);
+        
+        if (contentResponse.ok) {
+          const contentData: GitHubContent = await contentResponse.json();
+          const rawContent = atob(contentData.content);
+
+          // Process content
+          const content = processMarkdownContent(rawContent);
+
+          // Extract date from filename (assuming format like "2024-01-16.md" or similar)
+          const fileName = file.path.split('/').pop() || '';
+          const dateMatch = fileName.match(/(\d{4}-\d{2}-\d{2})/);
+          const date = dateMatch ? dateMatch[1] : new Date().toISOString().split('T')[0];
+
+          // Clean content for display
+          const cleanedContent = cleanForExcerpt(content);
+
+          entries.push({
+            id: file.sha,
+            content: cleanedContent,
+            date,
+            path: file.path
+          });
+        }
+      } catch (error) {
+        console.error(`Failed to fetch TIL content for ${file.path}:`, error);
+      }
+    }
+    
+    // Sort by date (newest first)
+    entries.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+    
+    console.log('Processed TIL entries:', entries.length);
+    return entries;
+  } catch (error) {
+    console.error('Error fetching TIL entries:', error);
+    return [];
+  }
 };
