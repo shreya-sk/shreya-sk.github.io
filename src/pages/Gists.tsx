@@ -75,13 +75,24 @@ const Gists = () => {
               year: 'numeric'
             });
 
-            // Try to extract H1 from markdown content
-            let title = gist.description || firstFile?.filename || "Untitled";
+            // Try to extract H1 from markdown content, fallback to description, then filename
+            let title = "Untitled";
+
+            // First priority: Extract H1 from markdown file content
             if (firstFile?.content && firstFile.filename.endsWith('.md')) {
               const heading = extractFirstHeading(firstFile.content);
               if (heading) {
                 title = heading;
+              } else if (gist.description) {
+                title = gist.description;
+              } else {
+                // Remove .md extension from filename
+                title = firstFile.filename.replace('.md', '');
               }
+            } else if (gist.description) {
+              title = gist.description;
+            } else if (firstFile?.filename) {
+              title = firstFile.filename;
             }
 
             return (
