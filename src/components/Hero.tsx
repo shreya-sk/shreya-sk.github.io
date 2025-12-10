@@ -52,9 +52,10 @@ const Hero = () => {
               <div className="flex flex-wrap gap-2 justify-center md:justify-start items-center">
                 <Link
                   to="/blog"
-                  className="glass-button inline-flex items-center justify-center rounded-2xl px-5 py-2.5 text-sm font-semibold text-primary-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                  className="inline-flex items-center justify-center rounded-2xl px-5 py-2.5 text-sm font-semibold text-white bg-sage-200 hover:bg-sage-500 focus:outline-none focus:ring-2 focus:ring-sage-500 focus:ring-offset-2"
+
                 >
-                  read posts
+                  currently learning
                   <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
                 </Link>
 
