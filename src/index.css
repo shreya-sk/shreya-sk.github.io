@@ -57,50 +57,6 @@
     --bubble-3: 45 85% 60%;
     --bubble-4: 200 55% 60%;
   }
-
-  .dark {
-    --background: 150 20% 6%;
-    --foreground: 145 15% 90%;
-
-    --card: 150 15% 10%;
-    --card-foreground: 145 15% 90%;
-
-    --popover: 150 15% 8%;
-    --popover-foreground: 145 15% 90%;
-
-    --primary: 150 40% 60%;
-    --primary-foreground: 150 20% 8%;
-
-    --secondary: 150 15% 15%;
-    --secondary-foreground: 145 15% 85%;
-
-    --muted: 150 12% 14%;
-    --muted-foreground: 150 12% 55%;
-
-    --accent: 155 25% 25%;
-    --accent-foreground: 145 15% 85%;
-
-    --destructive: 0 60% 50%;
-    --destructive-foreground: 145 15% 90%;
-
-    --border: 150 15% 18%;
-    --input: 150 15% 18%;
-    --ring: 150 40% 60%;
-
-    --sidebar-background: 150 15% 8%;
-    --sidebar-foreground: 145 15% 85%;
-    --sidebar-primary: 150 40% 60%;
-    --sidebar-primary-foreground: 150 20% 8%;
-    --sidebar-accent: 150 15% 15%;
-    --sidebar-accent-foreground: 145 15% 85%;
-    --sidebar-border: 150 15% 18%;
-    --sidebar-ring: 150 40% 60%;
-
-    /* Glass effect colors (dark mode) */
-    --glass-bg: 150 15% 10%;
-    --glass-border: 150 20% 20%;
-    --glass-shadow: 150 30% 5%;
-  }
 }
 
 @layer base {
@@ -211,31 +167,35 @@
     letter-spacing: 0.01em;
   }
 
-  /* Stat card */
-  .stat-card {
-    @apply flex flex-col items-center justify-center p-4 rounded-2xl min-w-[90px];
-    background: linear-gradient(135deg,
-      hsla(var(--glass-bg), 0.7) 0%,
-      hsla(var(--glass-bg), 0.5) 100%
-    );
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border: 1px solid hsl(var(--glass-border) / 0.3);
-    box-shadow:
-      0 4px 16px 0 hsl(var(--glass-shadow) / 0.08),
-      inset 0 1px 0 0 hsl(var(--glass-border) / 0.2);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  /* Cute floating icon animation */
+  .floating-icon {
+    animation: float-gentle 3s ease-in-out infinite;
+    filter: drop-shadow(0 2px 4px rgba(168, 85, 247, 0.3));
+    transform-origin: center;
+    transition: all 0.3s ease;
   }
 
-  .stat-card:hover {
-    background: linear-gradient(135deg,
-      hsla(var(--glass-bg), 0.8) 0%,
-      hsla(var(--glass-bg), 0.6) 100%
-    );
-    box-shadow:
-      0 8px 24px 0 hsl(var(--glass-shadow) / 0.12),
-      inset 0 1px 0 0 hsl(var(--glass-border) / 0.3);
-    transform: translateY(-2px);
+  @keyframes float-gentle {
+    0%, 100% {
+      transform: translateY(0px) rotate(-2deg);
+    }
+    50% {
+      transform: translateY(-8px) rotate(2deg);
+    }
+  }
+
+  /* Add a subtle glow pulse on hover */
+  .floating-icon:hover {
+    animation: float-gentle 3s ease-in-out infinite, glow-pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes glow-pulse {
+    0%, 100% {
+      filter: drop-shadow(0 2px 4px rgba(168, 85, 247, 0.3));
+    }
+    50% {
+      filter: drop-shadow(0 4px 8px rgba(168, 85, 247, 0.5));
+    }
   }
 
   /* Liquid gradient background */
@@ -255,308 +215,22 @@
     50% { background-position: 100% 50%; }
   }
 
-  /* Floating bubble animation */
-  .floating-bubble {
-    position: absolute;
-    border-radius: 50%;
-    backdrop-filter: blur(20px);
-    animation: float 20s infinite ease-in-out;
-    pointer-events: none;
-    opacity: 0.6;
-  }
-
-  .floating-bubble:nth-child(1) {
-    background: radial-gradient(
-      circle at 30% 30%,
-      hsla(var(--bubble-1), 0.4),
-      hsla(var(--bubble-1), 0.1)
+  .glass-button.sage {
+    background: linear-gradient(
+      135deg,
+      hsla(120, 35%, 82%, 0.9) 0%,
+      hsla(120, 35%, 78%, 1) 100%
     );
+    color: white; 
+    border: 1px solid hsl(120 35% 70% / 0.3);
+    transition: all 0.3s ease;
   }
 
-  .floating-bubble:nth-child(2) {
-    background: radial-gradient(
-      circle at 30% 30%,
-      hsla(var(--bubble-2), 0.4),
-      hsla(var(--bubble-2), 0.1)
+  .glass-button.sage:hover {
+    background: linear-gradient(
+      135deg,
+      hsla(120, 35%, 70%, 0.9) 0%,
+      hsla(120, 35%, 65%, 1) 100%
     );
-  }
-
-  .floating-bubble:nth-child(3) {
-    background: radial-gradient(
-      circle at 30% 30%,
-      hsla(var(--bubble-3), 0.4),
-      hsla(var(--bubble-3), 0.1)
-    );
-  }
-
-  .floating-bubble:nth-child(4) {
-    background: radial-gradient(
-      circle at 30% 30%,
-      hsla(var(--bubble-4), 0.4),
-      hsla(var(--bubble-4), 0.1)
-    );
-  }
-
-  @keyframes float {
-    0%, 100% {
-      transform: translate(0, 0) scale(1);
-      opacity: 0.3;
-    }
-    25% {
-      transform: translate(20px, -20px) scale(1.1);
-      opacity: 0.5;
-    }
-    50% {
-      transform: translate(-15px, -40px) scale(0.9);
-      opacity: 0.4;
-    }
-    75% {
-      transform: translate(-30px, -20px) scale(1.05);
-      opacity: 0.6;
-    }
-  }
-
-  /* Speech bubble animations */
-  .speech-bubble-1 {
-    animation: bubble-float-1 3s ease-in-out infinite;
-  }
-
-  .speech-bubble-2 {
-    animation: bubble-float-2 4s ease-in-out infinite;
-  }
-
-  @keyframes bubble-float-1 {
-    0%, 100% {
-      transform: translate(0, 0) scale(1);
-      opacity: 0.8;
-    }
-    50% {
-      transform: translate(-3px, -5px) scale(1.05);
-      opacity: 1;
-    }
-  }
-
-  @keyframes bubble-float-2 {
-    0%, 100% {
-      transform: translate(0, 0) scale(1);
-      opacity: 0.8;
-    }
-    50% {
-      transform: translate(3px, 5px) scale(1.05);
-      opacity: 1;
-    }
-  }
-
-  /* Watery ripple effect */
-  @keyframes ripple {
-    0% {
-      transform: scale(0.8);
-      opacity: 1;
-    }
-    100% {
-      transform: scale(2.4);
-      opacity: 0;
-    }
-  }
-
-.glass-button.sage {
-  background: linear-gradient(
-    135deg,
-    hsla(120, 35%, 82%, 0.9) 0%,
-    hsla(120, 35%, 78%, 1) 100%
-  );
-  color: white; 
-  border: 1px solid hsl(120 35% 70% / 0.3);
-  transition: all 0.3s ease;
-}
-
-
-
-.glass-button.sage:hover {
-  background: linear-gradient(
-    135deg,
-    hsla(120, 35%, 70%, 0.9) 0%,
-    hsla(120, 35%, 65%, 1) 100%
-  );
-}
-
-
-
-  .glass-button {
-    background: linear-gradient(135deg,
-      hsla(var(--primary), 0.8) 0%,
-      hsla(var(--primary), 0.9) 100%
-    );
-    backdrop-filter: blur(10px);
-    border: 1px solid hsl(var(--primary) / 0.3);
-    box-shadow:
-      0 4px 16px 0 hsl(var(--primary) / 0.2),
-      inset 0 1px 0 0 hsl(var(--primary-foreground) / 0.1);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .glass-button:hover {
-    background: linear-gradient(135deg,
-      hsla(var(--primary), 0.9) 0%,
-      hsla(var(--primary), 1) 100%
-    );
-    box-shadow:
-      0 8px 24px 0 hsl(var(--primary) / 0.3),
-      inset 0 1px 0 0 hsl(var(--primary-foreground) / 0.2);
-    transform: translateY(-2px);
-  }
-
-  /* Glass header */
-  .glass-header {
-    background: hsla(var(--background), 0.8);
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border-bottom: 1px solid hsl(var(--border) / 0.5);
-    box-shadow: 0 2px 16px 0 hsl(var(--glass-shadow) / 0.06);
-  }
-
-  /* Glass menu for mobile */
-  .glass-menu {
-    background: hsla(var(--background), 0.95);
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    box-shadow: 0 4px 24px 0 hsl(var(--glass-shadow) / 0.1);
-  }
-
-  /* Obsidian-inspired markdown content styling */
-  .markdown-content {
-    @apply text-foreground/90;
-    font-size: 1rem;
-    line-height: 1.7;
-  }
-
-  .markdown-content h1,
-  .markdown-content h2,
-  .markdown-content h3,
-  .markdown-content h4,
-  .markdown-content h5,
-  .markdown-content h6 {
-    @apply text-foreground font-semibold mt-8 mb-4 tracking-tight;
-  }
-
-  .markdown-content h1 {
-    @apply text-3xl border-b border-border/40 pb-2;
-  }
-
-  .markdown-content h2 {
-    @apply text-2xl border-b border-border/30 pb-2;
-  }
-
-  .markdown-content h3 {
-    @apply text-xl;
-  }
-
-  .markdown-content h4 {
-    @apply text-lg;
-  }
-
-  .markdown-content p {
-    @apply mb-4;
-  }
-
-  .markdown-content a {
-    @apply text-primary hover:text-primary/80 underline decoration-primary/30 hover:decoration-primary/60 transition-colors;
-  }
-
-  .markdown-content ul,
-  .markdown-content ol {
-    @apply mb-4 ml-6;
-  }
-
-  .markdown-content ul {
-    @apply list-disc;
-  }
-
-  .markdown-content ol {
-    @apply list-decimal;
-  }
-
-  .markdown-content li {
-    @apply mb-2;
-  }
-
-  .markdown-content blockquote {
-    @apply border-l-4 border-primary/40 pl-4 py-2 my-4 italic text-muted-foreground bg-muted/30 rounded-r;
-  }
-
-  /* Obsidian-style callouts */
-  .markdown-content blockquote:has(> p > strong:first-child) {
-    @apply not-italic;
-  }
-
-  .markdown-content blockquote p strong:first-child {
-    @apply block mb-2 not-italic font-bold text-sm uppercase tracking-wide;
-  }
-
-  /* Callout type colors */
-  .markdown-content blockquote:has(> p > strong:first-child:contains("NOTE")),
-  .markdown-content blockquote:has(> p > strong:first-child:contains("INFO")) {
-    @apply border-l-blue-500 bg-blue-50/50 text-blue-900;
-  }
-
-  .markdown-content blockquote:has(> p > strong:first-child:contains("IMPORTANT")),
-  .markdown-content blockquote:has(> p > strong:first-child:contains("WARNING")),
-  .markdown-content blockquote:has(> p > strong:first-child:contains("ATTENTION")) {
-    @apply border-l-amber-500 bg-amber-50/50 text-amber-900;
-  }
-
-  .markdown-content blockquote:has(> p > strong:first-child:contains("ERROR")),
-  .markdown-content blockquote:has(> p > strong:first-child:contains("DANGER")),
-  .markdown-content blockquote:has(> p > strong:first-child:contains("BUG")) {
-    @apply border-l-red-500 bg-red-50/50 text-red-900;
-  }
-
-  .markdown-content blockquote:has(> p > strong:first-child:contains("SUCCESS")),
-  .markdown-content blockquote:has(> p > strong:first-child:contains("CHECK")),
-  .markdown-content blockquote:has(> p > strong:first-child:contains("DONE")) {
-    @apply border-l-green-500 bg-green-50/50 text-green-900;
-  }
-
-  .markdown-content blockquote:has(> p > strong:first-child:contains("TIP")),
-  .markdown-content blockquote:has(> p > strong:first-child:contains("HINT")) {
-    @apply border-l-purple-500 bg-purple-50/50 text-purple-900;
-  }
-
-  .markdown-content code {
-    @apply bg-muted px-1.5 py-0.5 rounded text-sm font-mono text-foreground/90;
-  }
-
-  .markdown-content pre {
-    @apply bg-muted/50 border border-border/50 rounded-lg p-4 mb-4 overflow-x-auto;
-  }
-
-  .markdown-content pre code {
-    @apply bg-transparent p-0 text-sm;
-  }
-
-  .markdown-content table {
-    @apply w-full border-collapse mb-4;
-  }
-
-  .markdown-content th,
-  .markdown-content td {
-    @apply border border-border px-4 py-2 text-left;
-  }
-
-  .markdown-content th {
-    @apply bg-muted/50 font-semibold;
-  }
-
-  .markdown-content img {
-    @apply rounded-lg shadow-md max-w-full h-auto my-4;
-  }
-
-  .markdown-content hr {
-    @apply border-border/50 my-8;
-  }
-
-  /* Code syntax highlighting adjustments */
-  .markdown-content .hljs {
-    @apply bg-transparent;
   }
 }
