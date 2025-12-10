@@ -1,4 +1,3 @@
-
 import { Calendar, Clock, ArrowRight, Folder } from "lucide-react";
 import { Link } from "react-router-dom";
 import { BlogPost } from "@/services/githubService";
@@ -12,9 +11,20 @@ const BlogCard = ({ post }: BlogCardProps) => {
   // Calculate approximate read time based on content length
   const readTime = Math.max(1, Math.ceil(post.content.length / 1000)) + " min read";
 
-  // Extract clean excerpt from content
+  // Extract clean excerpt from content - get first paragraph after title
   const cleanContent = cleanForExcerpt(post.content);
-  const excerpt = cleanContent.substring(0, 150) + (cleanContent.length > 150 ? '...' : '');
+  // Take first 120 characters for a more compact excerpt
+  const excerpt = cleanContent.substring(0, 120) + (cleanContent.length > 120 ? '...' : '');
+
+  // Extract just the first line or first sentence as title if it's too long
+  let displayTitle = post.title;
+  if (displayTitle.length > 80) {
+    // If title is too long, take first sentence or first 80 chars
+    const firstSentence = displayTitle.split(/[.!?]/)[0];
+    displayTitle = firstSentence.length > 0 && firstSentence.length < 80 
+      ? firstSentence 
+      : displayTitle.substring(0, 77) + '...';
+  }
 
   return (
     <article className="group relative rounded-2xl p-4 minimal-card border-l-4 border-l-primary/40 hover:border-l-primary transition-all">
@@ -34,13 +44,13 @@ const BlogCard = ({ post }: BlogCardProps) => {
           </div>
         </div>
         
-        <h3 className="text-lg font-medium leading-snug group-hover:text-primary transition-colors">
+        <h3 className="text-lg font-medium leading-snug group-hover:text-primary transition-colors line-clamp-2">
           <Link to={`/blog/${post.slug}`} className="after:absolute after:inset-0">
-            {post.title}
+            {displayTitle}
           </Link>
         </h3>
 
-        <p className="text-muted-foreground leading-relaxed text-sm">
+        <p className="text-muted-foreground leading-relaxed text-sm line-clamp-2">
           {excerpt}
         </p>
 
