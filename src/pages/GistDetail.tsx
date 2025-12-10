@@ -116,12 +116,11 @@ const GistDetail = () => {
                   </div>
                 )}
 
-                <div className="markdown-content">
+                <div className="markdown-content leading-relaxed">
                   {file.filename.endsWith('.md') ? (
                     <ReactMarkdown
                       remarkPlugins={[remarkGfm]}
                       rehypePlugins={[rehypeHighlight, rehypeRaw]}
-                      className="leading-relaxed"
                     >
                       {file.content || ''}
                     </ReactMarkdown>
