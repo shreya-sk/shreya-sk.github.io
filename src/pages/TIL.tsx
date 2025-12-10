@@ -7,11 +7,16 @@ const TIL = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const { data: tilEntries = [], isLoading, error } = useTILEntries();
 
-  // Filter TIL entries based on search term
-  const filteredEntries = tilEntries.filter(entry =>
-    entry.content.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    entry.date.includes(searchTerm)
-  );
+  // Filter TIL entries based on search term with safety checks
+  const filteredEntries = tilEntries.filter(entry => {
+    if (!entry || !entry.content) return false;
+    
+    const searchLower = searchTerm.toLowerCase();
+    const contentMatch = entry.content.toLowerCase().includes(searchLower);
+    const dateMatch = entry.date ? entry.date.includes(searchTerm) : false;
+    
+    return contentMatch || dateMatch;
+  });
 
   if (isLoading) {
     return (
