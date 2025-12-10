@@ -1,6 +1,6 @@
 
-import { useState, useEffect } from "react";
-import { Search, ChevronDown, ChevronRight, FileText } from "lucide-react";
+import { useState } from "react";
+import { Search, ChevronDown, FileText } from "lucide-react";
 import BlogCard from "@/components/BlogCard";
 import { useGroupedPosts } from "@/hooks/useGitHubPosts";
 
@@ -8,13 +8,6 @@ const Blog = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const { groupedPosts, isLoading, error } = useGroupedPosts();
   const [expandedFolders, setExpandedFolders] = useState<Set<string>>(new Set());
-
-  // Expand all folders by default when data loads
-  useEffect(() => {
-    if (Object.keys(groupedPosts).length > 0 && expandedFolders.size === 0) {
-      setExpandedFolders(new Set(Object.keys(groupedPosts)));
-    }
-  }, [groupedPosts]);
 
   // Toggle folder expansion
   const toggleFolder = (folder: string) => {
@@ -69,16 +62,6 @@ const Blog = () => {
 
   const totalPosts = Object.values(groupedPosts).flat().length;
 
-  // Color scheme for directories
-  const folderColors = [
-    { bg: 'bg-gradient-to-br from-green-50 to-emerald-100', border: 'border-green-400', text: 'text-green-700', icon: 'text-green-500' },
-    { bg: 'bg-gradient-to-br from-purple-50 to-violet-100', border: 'border-purple-400', text: 'text-purple-700', icon: 'text-purple-500' },
-    { bg: 'bg-gradient-to-br from-yellow-50 to-amber-100', border: 'border-yellow-400', text: 'text-yellow-700', icon: 'text-yellow-500' },
-    { bg: 'bg-gradient-to-br from-blue-50 to-cyan-100', border: 'border-blue-400', text: 'text-blue-700', icon: 'text-blue-500' },
-    { bg: 'bg-gradient-to-br from-pink-50 to-rose-100', border: 'border-pink-400', text: 'text-pink-700', icon: 'text-pink-500' },
-    { bg: 'bg-gradient-to-br from-indigo-50 to-blue-100', border: 'border-indigo-400', text: 'text-indigo-700', icon: 'text-indigo-500' },
-  ];
-
   return (
     <div className="container px-4 py-8 sage-gradient min-h-screen">
       <div className="mx-auto max-w-5xl">
@@ -101,23 +84,22 @@ const Blog = () => {
         </div>
 
         <div className="space-y-4">
-          {Object.entries(filteredGroups).map(([folder, posts], index) => {
-            const colorScheme = folderColors[index % folderColors.length];
+          {Object.entries(filteredGroups).map(([folder, posts]) => {
             const isExpanded = expandedFolders.has(folder);
 
             return (
-              <div key={folder} className="minimal-card rounded-3xl overflow-hidden border-2 border-transparent hover:border-primary/20 transition-all">
+              <div key={folder} className="minimal-card rounded-3xl overflow-hidden border border-primary/10 hover:border-primary/30 transition-all duration-300">
                 {/* Folder Header - Clickable */}
                 <button
                   onClick={() => toggleFolder(folder)}
-                  className={`w-full p-5 ${colorScheme.bg} flex items-center justify-between group cursor-pointer transition-all hover:shadow-md`}
+                  className="w-full p-5 bg-gradient-to-r from-primary/5 via-secondary/5 to-primary/5 backdrop-blur-sm flex items-center justify-between group cursor-pointer transition-all hover:shadow-lg hover:from-primary/10 hover:via-secondary/10 hover:to-primary/10"
                 >
                   <div className="flex items-center gap-3">
-                    <div className={`p-2.5 rounded-xl bg-white/70 ${colorScheme.icon} transition-transform group-hover:scale-110`}>
-                      <FileText className="h-5 w-5" />
+                    <div className="p-2.5 rounded-xl bg-white/50 backdrop-blur-sm transition-all duration-300 group-hover:scale-110 group-hover:bg-gradient-to-br group-hover:from-primary/20 group-hover:to-secondary/20">
+                      <FileText className="h-5 w-5 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent" />
                     </div>
                     <div className="text-left">
-                      <h2 className={`text-lg font-bold ${colorScheme.text} lowercase`}>
+                      <h2 className="text-lg font-bold bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent lowercase">
                         {folder}
                       </h2>
                       <p className="text-xs text-foreground/50">
@@ -126,8 +108,8 @@ const Blog = () => {
                     </div>
                   </div>
 
-                  <div className={`transition-transform ${isExpanded ? 'rotate-0' : '-rotate-90'} ${colorScheme.icon}`}>
-                    <ChevronDown className="h-5 w-5" />
+                  <div className={`transition-transform duration-300 ${isExpanded ? 'rotate-0' : '-rotate-90'}`}>
+                    <ChevronDown className="h-5 w-5 text-primary/60" />
                   </div>
                 </button>
 
