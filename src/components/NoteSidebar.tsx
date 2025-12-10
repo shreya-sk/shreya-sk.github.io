@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ChevronRight, Folder, FileText } from "lucide-react";
+import { ChevronRight, FileText } from "lucide-react";
 import { BlogPost } from "@/services/githubService";
 
 interface DirectoryTree {
@@ -74,22 +74,27 @@ const NoteSidebar = ({ posts, selectedPost, onSelectPost }: NoteSidebarProps) =>
               setExpandedDirs(prev => new Set([...prev, path]));
             }
           }}
-          className="w-full flex items-center gap-2 px-3 py-1.5 text-sm hover:bg-white/10 rounded-lg transition-colors group"
+          className="w-full flex items-center gap-2.5 px-3 py-2 text-sm hover:bg-white/10 rounded-xl transition-all duration-200 group"
           style={{ paddingLeft: `${level * 16 + 12}px` }}
         >
           <ChevronRight
-            className={`h-3 w-3 text-foreground/50 transition-transform ${
+            className={`h-3.5 w-3.5 text-foreground/40 transition-transform duration-200 ${
               isExpanded ? 'rotate-90' : ''
             }`}
           />
-          <Folder className="h-3.5 w-3.5 text-primary/70" />
-          <span className="text-foreground/80 group-hover:text-foreground lowercase">
+          {/* Use file-icon.png instead of Lucide Folder icon */}
+          <img
+            src="/file-icon.png"
+            alt="folder"
+            className="h-4 w-4 opacity-70 group-hover:opacity-100 transition-opacity"
+          />
+          <span className="text-foreground/80 group-hover:text-foreground font-medium lowercase tracking-wide">
             {name}
           </span>
         </button>
 
         {isExpanded && (
-          <div className="animate-in slide-in-from-top-1 duration-200">
+          <div className="animate-in slide-in-from-top-1 duration-200 ease-out">
             {/* Render subdirectories */}
             {hasSubdirs && Object.entries(node.subdirs).map(([subName, subNode]) => (
               <DirectoryNode
@@ -106,13 +111,15 @@ const NoteSidebar = ({ posts, selectedPost, onSelectPost }: NoteSidebarProps) =>
               <button
                 key={post.id}
                 onClick={() => onSelectPost(post)}
-                className={`w-full flex items-center gap-2 px-3 py-1.5 text-sm hover:bg-white/10 rounded-lg transition-colors ${
-                  selectedPost?.id === post.id ? 'bg-primary/10' : ''
+                className={`w-full flex items-center gap-2.5 px-3 py-2 text-sm hover:bg-white/10 rounded-xl transition-all duration-200 ${
+                  selectedPost?.id === post.id
+                    ? 'bg-gradient-to-r from-primary/20 to-secondary/20 border-l-2 border-primary'
+                    : ''
                 }`}
                 style={{ paddingLeft: `${(level + 1) * 16 + 12}px` }}
               >
                 <FileText className="h-3 w-3 text-foreground/40" />
-                <span className="text-xs text-foreground/70 truncate">
+                <span className="text-xs text-foreground/70 truncate hover:text-foreground transition-colors">
                   {post.title}
                 </span>
               </button>
@@ -124,8 +131,8 @@ const NoteSidebar = ({ posts, selectedPost, onSelectPost }: NoteSidebarProps) =>
   };
 
   return (
-    <div className="h-full overflow-y-auto custom-scrollbar">
-      <div className="p-4 space-y-1">
+    <div className="h-full overflow-y-auto ios-scrollbar px-2 py-3">
+      <div className="space-y-1">
         {Object.entries(tree).map(([dirName, node]) => (
           <DirectoryNode
             key={dirName}
