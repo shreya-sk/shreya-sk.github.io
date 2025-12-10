@@ -365,7 +365,7 @@
     hsla(120, 35%, 82%, 0.9) 0%,
     hsla(120, 35%, 78%, 1) 100%
   );
-  color: #0A3D00; /* darker text for contrast */
+  color: white; 
   border: 1px solid hsl(120 35% 70% / 0.3);
   transition: all 0.3s ease;
 }
