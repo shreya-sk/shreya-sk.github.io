@@ -1,36 +1,27 @@
 import Hero from "@/components/Hero";
-import { ArrowRight, BookOpen, Lightbulb, Code } from "lucide-react";
+import { ArrowRight, BookOpen, Lightbulb } from "lucide-react";
 import { Link } from "react-router-dom";
 import BlogCard from "@/components/BlogCard";
 import TILCard from "@/components/TILCard";
 import { useGitHubPosts } from "@/hooks/useGitHubPosts";
 import { useGists } from "@/hooks/useGists";
-
-// Mock data for TIL section
-const recentTIL = [
-  {
-    id: "1",
-    content: "discovered CSS subgrid is finally supported everywhere. makes nested grids so much easier - no more hacky workarounds for alignment.",
-    date: "2024-01-16",
-  },
-  {
-    id: "2",
-    content: "learned the hard way: server components can't use useState. need to add 'use client' directive when you need interactivity.",
-    date: "2024-01-15",
-  }
-];
+import { useTILEntries } from "@/hooks/useTILEntries";
 
 const Index = () => {
   const { data: posts, isLoading } = useGitHubPosts();
   const { data: gists = [] } = useGists();
+  const { data: tilEntries = [] } = useTILEntries();
   
   // Get the first 4 posts for recent posts section (2x2 grid)
   const recentPosts = posts?.slice(0, 4) || [];
   
+  // Get the first 2 TIL entries for the home page
+  const recentTIL = tilEntries.slice(0, 2);
+  
   // Calculate real stats
   const totalPosts = posts?.length || 0;
   const totalGists = gists.length || 0;
-  const totalTIL = 200; // You can make this dynamic if you have TIL data
+  const totalTIL = tilEntries.length || 0;
 
   return (
     <div className="min-h-screen sage-gradient">
@@ -94,9 +85,15 @@ const Index = () => {
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {recentTIL.map((item) => (
-                <TILCard key={item.id} item={item} />
-              ))}
+              {recentTIL.length > 0 ? (
+                recentTIL.map((item) => (
+                  <TILCard key={item.id} item={item} />
+                ))
+              ) : (
+                <div className="col-span-2 text-center py-12">
+                  <p className="text-muted-foreground text-sm font-light">no journal entries yet</p>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -118,7 +115,7 @@ const Index = () => {
               </Link>
               
               <Link to="/til" className="stat-card-compact group">
-                <div className="text-2xl font-light text-secondary">{totalTIL}+</div>
+                <div className="text-2xl font-light text-secondary">{totalTIL}</div>
                 <div className="text-xs text-muted-foreground">learnings</div>
               </Link>
             </div>
