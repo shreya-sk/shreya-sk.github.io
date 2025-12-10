@@ -4,8 +4,8 @@
  * Remove emojis and problematic Unicode characters
  */
 export const stripEmojis = (content: string): string => {
-  //Remove emojis and special symbols
-  return content
+  // Remove emojis and special symbols
+  let cleaned = content
     .replace(/[\u{1F300}-\u{1F9FF}]/gu, '') // Emoticons
     .replace(/[\u{2600}-\u{26FF}]/gu, '') // Miscellaneous Symbols
     .replace(/[\u{2700}-\u{27BF}]/gu, '') // Dingbats
@@ -16,6 +16,12 @@ export const stripEmojis = (content: string): string => {
     .replace(/[\u{1F900}-\u{1F9FF}]/gu, '') // Supplemental Symbols
     .replace(/[\u{FE00}-\u{FE0F}]/gu, '') // Variation Selectors
     .replace(/[\u{1F1E6}-\u{1F1FF}]/gu, '') // Flags
+    .replace(/[\u{E000}-\u{F8FF}]/gu, '') // Private Use Area
+    .replace(/[\u{2000}-\u{206F}]/gu, ' ') // General Punctuation (replace with space)
+    .replace(/[\u{2190}-\u{21FF}]/gu, '') // Arrows
+    .replace(/[\u{2300}-\u{23FF}]/gu, '') // Miscellaneous Technical
+    .replace(/[\u{25A0}-\u{25FF}]/gu, '') // Geometric Shapes
+    .replace(/[\u{2B00}-\u{2BFF}]/gu, '') // Miscellaneous Symbols and Arrows
     // Remove Obsidian emoji syntax like :emoji_name:
     .replace(/:[a-z_]+:/g, '')
     // Remove zero-width characters and other invisible Unicode
