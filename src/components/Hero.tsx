@@ -39,14 +39,14 @@ const Hero = () => {
               </div>
 
               <h1 className="mb-2 text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl">
-                shreya's
+                mostly by
                 <span className="bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
-                  {" "}digital garden
+                  {" "}shreya!
                 </span>
               </h1>
 
               <p className="mb-4 text-sm md:text-base max-w-xl mx-auto md:mx-0 leading-relaxed text-foreground/70">
-                thoughts in progress, ideas taking root, everything in between. sometimes i write too.
+                an organised corner of an otherwise overflowing brain.
               </p>
           
               <div className="flex flex-wrap gap-2 justify-center md:justify-start items-center">
