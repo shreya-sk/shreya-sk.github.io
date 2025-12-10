@@ -71,9 +71,10 @@ const fetchDirectoryContents = async (path: string = ''): Promise<GitHubContent[
     let allFiles: GitHubContent[] = [];
 
     for (const item of items) {
-      // Skip .obsidian directories and README files
+      // Skip .obsidian directories, README files, and Daily - TIL folder
       if (item.path.toLowerCase().includes('.obsidian') ||
-          item.name.toLowerCase().startsWith('readme')) {
+          item.name.toLowerCase().startsWith('readme') ||
+          item.path.toLowerCase().includes('daily - til')) {
         continue;
       }
 
