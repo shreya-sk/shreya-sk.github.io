@@ -106,25 +106,25 @@ const Blog = () => {
       <div className="space-y-2">
         <button
           onClick={() => toggleDir(path)}
-          className="w-full rounded-2xl p-4 glass-bucket border border-white/20 hover:border-white/40 transition-all duration-300 hover:shadow-lg hover:shadow-primary/10 group"
+          className="w-full minimal-card rounded-2xl p-4 bg-gradient-to-r from-primary/5 via-secondary/5 to-primary/5 backdrop-blur-sm border border-primary/10 hover:border-primary/30 transition-all duration-300 hover:shadow-lg group"
         >
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="p-2 rounded-lg bg-white/20 backdrop-blur-sm transition-all duration-300 group-hover:scale-110">
-                <img src="/file-icon.jpg" alt="folder" className="h-4 w-4 object-contain" />
+              <div className="p-2 rounded-lg bg-white/50 backdrop-blur-sm transition-all duration-300 group-hover:scale-110 group-hover:bg-gradient-to-br group-hover:from-primary/20 group-hover:to-secondary/20">
+                <Folder className="h-4 w-4 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent" />
               </div>
               <div className="text-left">
-                <h3 className="text-base font-bold text-white lowercase">
+                <h3 className="text-base font-bold bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent lowercase">
                   {name}
                 </h3>
-                <p className="text-xs text-white/70">
+                <p className="text-xs text-foreground/50">
                   {totalItems} {totalItems === 1 ? 'item' : 'items'}
                 </p>
               </div>
             </div>
 
             <div className={`transition-transform duration-300 ${isExpanded ? 'rotate-90' : 'rotate-0'}`}>
-              <ChevronRight className="h-5 w-5 text-white/80" />
+              <ChevronRight className="h-5 w-5 text-primary/60" />
             </div>
           </div>
         </button>

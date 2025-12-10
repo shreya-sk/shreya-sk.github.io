@@ -86,10 +86,11 @@ const BlogPost = () => {
             </div>
           </header>
           
-          <div className="markdown-content leading-relaxed">
+          <div className="markdown-content">
             <ReactMarkdown
               remarkPlugins={[remarkGfm]}
               rehypePlugins={[rehypeHighlight, rehypeRaw]}
+              className="leading-relaxed"
             >
               {post.content}
             </ReactMarkdown>

@@ -1,54 +1,25 @@
 // Utility functions for cleaning and processing markdown content
 
 /**
- * Remove emojis, problematic Unicode characters, and encoding artifacts
+ * Remove emojis and problematic Unicode characters
  */
 export const stripEmojis = (content: string): string => {
+  //Remove emojis and special symbols
   return content
-    // Remove emojis and special symbols
-    .replace(/[\u{1F300}-\u{1F9FF}]/gu, '')
-    .replace(/[\u{2600}-\u{26FF}]/gu, '')
-    .replace(/[\u{2700}-\u{27BF}]/gu, '')
-    .replace(/[\u{1F000}-\u{1F02F}]/gu, '')
-    .replace(/[\u{1F0A0}-\u{1F0FF}]/gu, '')
-    .replace(/[\u{1F100}-\u{1F64F}]/gu, '')
-    .replace(/[\u{1F680}-\u{1F6FF}]/gu, '')
-    .replace(/[\u{1F900}-\u{1F9FF}]/gu, '')
-    .replace(/[\u{FE00}-\u{FE0F}]/gu, '')
-    .replace(/[\u{1F1E6}-\u{1F1FF}]/gu, '')
+    .replace(/[\u{1F300}-\u{1F9FF}]/gu, '') // Emoticons
+    .replace(/[\u{2600}-\u{26FF}]/gu, '') // Miscellaneous Symbols
+    .replace(/[\u{2700}-\u{27BF}]/gu, '') // Dingbats
+    .replace(/[\u{1F000}-\u{1F02F}]/gu, '') // Mahjong Tiles
+    .replace(/[\u{1F0A0}-\u{1F0FF}]/gu, '') // Playing Cards
+    .replace(/[\u{1F100}-\u{1F64F}]/gu, '') // Enclosed characters
+    .replace(/[\u{1F680}-\u{1F6FF}]/gu, '') // Transport and Map
+    .replace(/[\u{1F900}-\u{1F9FF}]/gu, '') // Supplemental Symbols
+    .replace(/[\u{FE00}-\u{FE0F}]/gu, '') // Variation Selectors
+    .replace(/[\u{1F1E6}-\u{1F1FF}]/gu, '') // Flags
     // Remove Obsidian emoji syntax like :emoji_name:
     .replace(/:[a-z_]+:/g, '')
-    // Remove common Unicode replacement characters and encoding issues
-    .replace(/\uFFFD/g, '') // Replacement character
-    .replace(/\u00A0/g, ' ') // Non-breaking space to regular space
-    .replace(/[\u200B-\u200D\uFEFF]/g, '') // Zero-width characters
-    // Remove Windows-1252 encoding artifacts that appear as Â, Ã, etc.
-    .replace(/Â\s?/g, '')
-    .replace(/Ã©/g, 'é')
-    .replace(/Ã¨/g, 'è')
-    .replace(/Ã /g, 'à')
-    .replace(/Ã§/g, 'ç')
-    .replace(/Ãª/g, 'ê')
-    .replace(/Ã®/g, 'î')
-    .replace(/Ã´/g, 'ô')
-    .replace(/Ã»/g, 'û')
-    .replace(/Ã¯/g, 'ï')
-    .replace(/Ã¼/g, 'ü')
-    .replace(/Ã«/g, 'ë')
-    .replace(/Ã¢/g, 'â')
-    .replace(/Ã/g, 'À')
-    // Remove other common encoding artifacts
-    .replace(/â€™/g, "'")
-    .replace(/â€œ/g, '"')
-    .replace(/â€/g, '"')
-    .replace(/â€"/g, '–')
-    .replace(/â€"/g, '—')
-    .replace(/â€¢/g, '•')
-    .replace(/â€¦/g, '...')
-    .replace(/Ã‰/g, 'É')
-    .replace(/Ã€/g, 'À')
-    // Clean up any remaining double spaces
-    .replace(/  +/g, ' ')
+    // Remove any remaining problematic characters
+    .replace(/[^\x00-\x7F\u0080-\uFFFF]/g, '')
     .trim();
 };
 
@@ -107,9 +78,6 @@ export const cleanForExcerpt = (content: string): string => {
 
   // Remove extra spaces
   cleaned = cleaned.replace(/\s+/g, ' ');
-
-  // Strip encoding artifacts
-  cleaned = stripEmojis(cleaned);
 
   return cleaned.trim();
 };
