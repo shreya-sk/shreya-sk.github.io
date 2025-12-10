@@ -87,14 +87,14 @@ const Blog = () => {
       </div>
 
       {/* Main Layout */}
-      <div className="flex h-screen pt-16 lg:pt-0 p-0 lg:p-4 gap-4">
-        {/* Left Sidebar - Desktop */}
-        <aside className="hidden lg:flex flex-col w-80 h-full bg-white/5 backdrop-blur-2xl rounded-3xl border border-white/10 shadow-2xl shadow-black/20 overflow-hidden ios-glass">
-          <div className="p-6 border-b border-white/10 bg-gradient-to-b from-white/5 to-transparent">
-            <h1 className="text-xl font-bold bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
+      <div className="flex h-screen pt-16 lg:pt-0 relative">
+        {/* Left Sidebar - Desktop - Floating Pill */}
+        <aside className="hidden lg:flex flex-col absolute left-6 top-1/2 -translate-y-1/2 w-72 h-[70vh] max-h-[600px] bg-white/5 backdrop-blur-2xl rounded-[2rem] border border-white/10 shadow-2xl shadow-black/20 overflow-hidden ios-glass z-10">
+          <div className="p-5 border-b border-white/10 bg-gradient-to-b from-white/5 to-transparent flex-shrink-0">
+            <h1 className="text-base font-bold bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
               shreya's knowledge hub
             </h1>
-            <p className="text-xs text-foreground/50 mt-1">
+            <p className="text-[10px] text-foreground/50 mt-1">
               {posts.length} notes from obsidian
             </p>
           </div>
@@ -134,7 +134,7 @@ const Blog = () => {
         )}
 
         {/* Right Content Area */}
-        <main className="flex-1 overflow-hidden">
+        <main className="flex-1 overflow-hidden lg:pl-80">
           <MarkdownViewer post={selectedPost} />
         </main>
       </div>
