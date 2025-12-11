@@ -27,3 +27,7 @@ dist-ssr
 *.sln
 *.sw?
 .env.local
+
+# Obsidian workspace (these are personal settings)
+obsidian/.obsidian/workspace.json
+obsidian/.obsidian/workspace-mobile.json
