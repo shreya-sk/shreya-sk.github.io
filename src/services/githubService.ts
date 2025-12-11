@@ -122,8 +122,26 @@ const fetchMarkdownFile = async (file: GitHubFile): Promise<BlogPost | null> => 
     }
 
     try {
-      const rawContent = atob(data.content.replace(/\n/g, ''));
+      const base64Content = data.content.replace(/\n/g, '');
+      const rawContent = atob(base64Content);
+
+      // Ensure rawContent is valid before processing
+      if (!rawContent || typeof rawContent !== 'string') {
+        console.warn(`Invalid decoded content for ${file.path}:`, typeof rawContent, rawContent);
+        return null;
+      }
+
+      if (rawContent.trim() === '') {
+        console.warn(`Empty content after decode for ${file.path}`);
+        return null;
+      }
+
       const content = processMarkdownContent(rawContent);
+
+      if (!content || typeof content !== 'string') {
+        console.warn(`Invalid processed content for ${file.path}:`, typeof content);
+        return null;
+      }
 
       // Extract title from content (first # heading) or use filename
       const titleMatch = content.match(/^#\s+(.+)$/m);
