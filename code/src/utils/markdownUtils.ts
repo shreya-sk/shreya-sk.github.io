@@ -65,6 +65,25 @@ export const stripFrontmatter = (content: string): string => {
 };
 
 /**
+ * Convert Obsidian image syntax to standard markdown
+ * Obsidian: ![[path/to/image.png]] or ![[path/to/image.png|alt text]]
+ * Standard: ![alt text](path/to/image.png)
+ */
+export const convertObsidianImages = (content: string): string => {
+  if (!content || typeof content !== 'string') {
+    return '';
+  }
+
+  // Match Obsidian image syntax: ![[path]] or ![[path|alt]]
+  return content.replace(/!\[\[([^\]|]+)(?:\|([^\]]+))?\]\]/g, (match, path, alt) => {
+    const altText = alt || path.split('/').pop()?.replace(/\.[^.]+$/, '') || 'image';
+    // Remove ../ and normalize path
+    const normalizedPath = path.replace(/^\.\.\//, '');
+    return `![${altText}](${normalizedPath})`;
+  });
+};
+
+/**
  * Convert Obsidian callouts to HTML-friendly format
  * Obsidian callouts: > [!note], > [!important], > [!warning], etc.
  */
@@ -124,7 +143,7 @@ export const cleanForExcerpt = (content: string): string => {
 };
 
 /**
- * Process full content for display (strip frontmatter, convert callouts, keep emojis)
+ * Process full content for display (strip frontmatter, convert Obsidian syntax, keep emojis)
  */
 export const processMarkdownContent = (content: string): string => {
   if (!content || typeof content !== 'string') {
@@ -132,8 +151,12 @@ export const processMarkdownContent = (content: string): string => {
     return '';
   }
   let processed = stripFrontmatter(content);
-  // Don't strip emojis - they add personality and render fine in modern browsers
-  // Only clean up problematic invisible characters
+
+  // Convert Obsidian-specific syntax to standard markdown
+  processed = convertObsidianImages(processed);
+  processed = convertObsidianCallouts(processed);
+
+  // Clean up problematic invisible characters but keep emojis
   processed = processed
     // Remove zero-width characters
     .replace(/[\u200B-\u200D\uFEFF]/g, '')
@@ -143,7 +166,16 @@ export const processMarkdownContent = (content: string): string => {
     .replace(/[\u2018\u2019]/g, "'")
     .replace(/[\u201C\u201D]/g, '"')
     // Normalize dashes
-    .replace(/[\u2013\u2014]/g, '-');
-  processed = convertObsidianCallouts(processed);
+    .replace(/[\u2013\u2014]/g, '-')
+    // Fix common mojibake patterns (incorrectly decoded UTF-8)
+    .replace(/â/g, '✓')  // Common checkbox
+    .replace(/ð/g, '👉')  // Common pointer emoji
+    .replace(/ð¥¸/g, '🥸')  // Face with disguise
+    .replace(/ð/g, '📝')  // Memo/note
+    .replace(/ð§/g, '🔧')  // Wrench/tool
+    .replace(/â/g, '⚠')   // Warning sign
+    .replace(/â¡/g, '⚡')  // Lightning
+    .replace(/ð/g, '🔥');  // Fire
+
   return processed;
 };
