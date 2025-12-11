@@ -34,7 +34,7 @@ export async function getAllMarkdownFiles(): Promise<MarkdownFile[]> {
       }
 
       // Extract metadata
-      const cleanPath = path.replace('../../../obsidian/', '');
+      const cleanPath = path.replace('../../../../obsidian/', '');
       const slug = cleanPath.replace('.md', '').toLowerCase().replace(/\s+/g, '-');
       const title = extractTitle(content) || extractTitleFromPath(cleanPath);
       const category = extractCategory(cleanPath);
@@ -90,7 +90,7 @@ export async function getFilesByCategory(category: string): Promise<MarkdownFile
  */
 
 export async function getFileByPath(filePath: string): Promise<MarkdownFile | null> {
-  const normalizedPath = `../../../obsidian/${filePath}`;
+  const normalizedPath = `../../../../obsidian/${filePath}`;
 
   if (!(normalizedPath in markdownModules)) {
     console.warn(`File not found: ${filePath}`);
