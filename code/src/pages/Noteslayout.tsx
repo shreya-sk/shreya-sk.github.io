@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useGitHubPosts } from '@/hooks/useGitHubPosts';
 import SidebarTree from '@/components/SidebarTree';
 import MarkdownRenderer from '@/components/MarkdownRenderer';
@@ -8,24 +8,7 @@ const NotesLayout = () => {
   const { data: posts = [], isLoading, error } = useGitHubPosts();
   const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
 
-  // Find and set "Hey, there!" as default on load
-  useEffect(() => {
-    if (posts.length > 0 && !selectedPost) {
-      // Look for "Hey, there!" file (case-insensitive)
-      const defaultPost = posts.find(
-        (post) =>
-          post.title.toLowerCase().includes('hey') ||
-          post.path.toLowerCase().includes('hey, there')
-      );
-
-      if (defaultPost) {
-        setSelectedPost(defaultPost);
-      } else {
-        // Fallback to first post if "Hey, there!" doesn't exist
-        setSelectedPost(posts[0]);
-      }
-    }
-  }, [posts, selectedPost]);
+  // Default selection is now handled by SidebarTree component
 
   if (isLoading) {
     return (
