@@ -259,3 +259,5 @@ const SidebarTree = ({ posts, selectedPath, onFileSelect }: SidebarTreeProps) =>
     </div>
   );
 };
+
+export default SidebarTree;
