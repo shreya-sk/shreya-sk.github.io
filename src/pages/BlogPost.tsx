@@ -23,10 +23,14 @@ const transformToPost = (file: MarkdownFile): BlogPostType => ({
 
 const BlogPost = () => {
   const { "*": slug } = useParams();
-  
+
+  if (!slug) {
+    return <p className="text-center py-12">No post selected.</p>;
+  }
+
   // Convert slug back to file path
-  const filePath = slug ? decodeURIComponent(slug).replace(/-/g, ' ') + '.md' : '';
-  
+  const filePath = decodeURIComponent(slug).replace(/-/g, ' ') + '.md';
+
   const { data: file, isLoading, error } = useQuery({
     queryKey: ['blog-post', slug],
     queryFn: async () => {
