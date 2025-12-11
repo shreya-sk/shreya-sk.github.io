@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
-import { fetchTILEntries, TILEntry } from '@/services/githubService';
+import { fetchTILEntries } from '@/services/localMarkdownService';
+import { TILEntry } from '@/types/blog';
 
 export const useTILEntries = () => {
   return useQuery<TILEntry[], Error>({
