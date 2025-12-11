@@ -48,6 +48,7 @@ export const stripEmojis = (content: string): string => {
     // Clean up multiple spaces
     .replace(/\s+/g, ' ')
     .trim();
+  return cleaned;
 };
 
 /**
@@ -89,7 +90,6 @@ export const cleanForExcerpt = (content: string): string => {
     return '';
   }
   let cleaned = stripFrontmatter(content);
-
   cleaned = stripEmojis(cleaned);
 
   // Remove headings
@@ -127,6 +127,10 @@ export const cleanForExcerpt = (content: string): string => {
  * Process full content for display (strip frontmatter, convert callouts, remove emojis)
  */
 export const processMarkdownContent = (content: string): string => {
+  if (!content || typeof content !== 'string') {
+    console.warn('processMarkdownContent received invalid content:', typeof content);
+    return '';
+  }
   let processed = stripFrontmatter(content);
   processed = stripEmojis(processed);
   processed = convertObsidianCallouts(processed);
