@@ -84,7 +84,12 @@ export const convertObsidianCallouts = (content: string): string => {
  * Clean content for excerpt display (remove frontmatter, callouts, links, etc.)
  */
 export const cleanForExcerpt = (content: string): string => {
+  if (!content || typeof content !== 'string') {
+    console.warn('cleanForExcerpt received invalid content:', typeof content);
+    return '';
+  }
   let cleaned = stripFrontmatter(content);
+
   cleaned = stripEmojis(cleaned);
 
   // Remove headings
