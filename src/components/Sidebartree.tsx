@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { Folder, FileText, ChevronRight } from 'lucide-react';
 import { BlogPost } from '@/types/blog';
 
@@ -69,6 +69,7 @@ const TreeNodeComponent = ({
   onFileSelect: (post: BlogPost) => void;
 }) => {
   const [isHovered, setIsHovered] = useState(false);
+  const collapseTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const isSelected = selectedPath === node.path;
   const hasChildren = node.children && node.children.length > 0;
 
@@ -78,8 +79,25 @@ const TreeNodeComponent = ({
     }
   };
 
+  const handleMouseEnter = () => {
+    if (collapseTimeoutRef.current) {
+      clearTimeout(collapseTimeoutRef.current);
+    }
+    setIsHovered(true);
+  };
+
+  const handleMouseLeave = () => {
+    collapseTimeoutRef.current = setTimeout(() => {
+      setIsHovered(false);
+    }, 150);
+  };
+
   return (
-    <div className="relative">
+    <div 
+      className="relative"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
       {/* Node item */}
       <div
         className={`
@@ -89,8 +107,6 @@ const TreeNodeComponent = ({
           ${level > 0 ? 'ml-4' : ''}
         `}
         style={{ paddingLeft: `${level * 16 + 12}px` }}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
         onClick={handleClick}
       >
         {/* Icon */}
@@ -122,8 +138,8 @@ const TreeNodeComponent = ({
       {hasChildren && (
         <div
           className={`
-            overflow-hidden transition-all duration-500 ease-in-out
-            ${isHovered ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0'}
+            overflow-hidden transition-all duration-300 ease-in-out
+            ${isHovered ? 'max-h-[5000px] opacity-100' : 'max-h-0 opacity-0'}
           `}
         >
           <div className="mt-1 space-y-1">
@@ -167,5 +183,3 @@ const SidebarTree = ({ posts, selectedPath, onFileSelect }: SidebarTreeProps) =>
     </div>
   );
 };
-
-export default SidebarTree;

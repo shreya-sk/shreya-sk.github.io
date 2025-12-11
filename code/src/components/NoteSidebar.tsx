@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { ChevronRight, FileText } from "lucide-react";
 import { BlogPost } from "@/services/githubService";
+import fileIcon from '@/assets/file-icon.png';
 
 interface DirectoryTree {
   [key: string]: {
@@ -84,7 +85,7 @@ const NoteSidebar = ({ posts, selectedPost, onSelectPost }: NoteSidebarProps) =>
           />
           {/* Use file-icon.png instead of Lucide Folder icon */}
           <img
-            src="/file-icon.png"
+            src={fileIcon}
             alt="folder"
             className="h-4 w-4 opacity-70 group-hover:opacity-100 transition-opacity"
           />
