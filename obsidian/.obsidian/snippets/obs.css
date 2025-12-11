@@ -1,0 +1,46 @@
+/* Style for tables with proficiency tags - COLORS THE ENTIRE CELL */
+.markdown-rendered table td:has(a.tag[href="#not-started"]) {
+  background-color: #ffe6e6;
+}
+
+.markdown-rendered table td:has(a.tag[href="#aware"]) {
+  background-color: #fff2e6;
+}
+
+.markdown-rendered table td:has(a.tag[href="#beginner"]) {
+  background-color: #fffbe6;
+}
+
+.markdown-rendered table td:has(a.tag[href="#intermediate"]) {
+  background-color: #e6ffe6;
+}
+
+.markdown-rendered table td:has(a.tag[href="#advanced"]) {
+  background-color: #e6f2ff;
+}
+
+.markdown-rendered table td:has(a.tag[href="#expert"]) {
+  background-color: #f2e6ff;
+}
+
+/* Make tags themselves more subtle since the cell is colored */
+a.tag[href^="#not-started"],
+a.tag[href^="#aware"],
+a.tag[href^="#beginner"],
+a.tag[href^="#intermediate"],
+a.tag[href^="#advanced"],
+a.tag[href^="#expert"] {
+  background-color: transparent;
+  border: 1px solid rgba(0,0,0,0.2);
+  padding: 2px 5px;
+  border-radius: 3px;
+  font-size: 0.8em;
+}
+
+.note-definitions-term {
+  text-decoration: none !important;
+  border-bottom: none !important;
+  background-color: rgba(200, 200, 200, 0.2) !important; /* Light gray with transparency */
+  padding: 0 2px;
+  border-radius: 2px;
+}
