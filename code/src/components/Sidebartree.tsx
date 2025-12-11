@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Folder, FileText, ChevronRight } from 'lucide-react';
 import { BlogPost } from '../types/blog';
 
@@ -15,6 +15,16 @@ interface SidebarTreeProps {
   selectedPath: string | null;
   onFileSelect: (post: BlogPost) => void;
 }
+
+// Find the "Hey, there!" post for default selection
+const findDefaultPost = (posts: BlogPost[]): BlogPost | null => {
+  const heyTherePost = posts.find(
+    (post) =>
+      post.title.toLowerCase().includes('hey') ||
+      post.path.toLowerCase().includes('hey, there')
+  );
+  return heyTherePost || (posts.length > 0 ? posts[0] : null);
+};
 
 // Build hierarchical tree structure from flat posts array
 const buildTree = (posts: BlogPost[]): TreeNode[] => {
@@ -56,7 +66,7 @@ const buildTree = (posts: BlogPost[]): TreeNode[] => {
   return root;
 };
 
-// Recursive TreeNode component
+// Recursive TreeNode component with hover-to-expand behavior
 const TreeNodeComponent = ({
   node,
   level = 0,
@@ -70,79 +80,123 @@ const TreeNodeComponent = ({
 }) => {
   const [isHovered, setIsHovered] = useState(false);
   const collapseTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const nodeRef = useRef<HTMLDivElement>(null);
   const isSelected = selectedPath === node.path;
   const hasChildren = node.children && node.children.length > 0;
 
   const handleClick = () => {
+    // Only handle clicks for files, not folders
     if (node.type === 'file' && node.post) {
       onFileSelect(node.post);
     }
   };
 
   const handleMouseEnter = () => {
+    // Clear any pending collapse
     if (collapseTimeoutRef.current) {
       clearTimeout(collapseTimeoutRef.current);
+      collapseTimeoutRef.current = null;
     }
-    setIsHovered(true);
+    // Expand on hover (only for folders with children)
+    if (hasChildren) {
+      setIsHovered(true);
+    }
   };
 
   const handleMouseLeave = () => {
-    collapseTimeoutRef.current = setTimeout(() => {
-      setIsHovered(false);
-    }, 150);
+    // Auto-collapse after a brief delay
+    if (hasChildren) {
+      collapseTimeoutRef.current = setTimeout(() => {
+        setIsHovered(false);
+      }, 200);
+    }
   };
 
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (collapseTimeoutRef.current) {
+        clearTimeout(collapseTimeoutRef.current);
+      }
+    };
+  }, []);
+
   return (
-    <div 
+    <div
+      ref={nodeRef}
       className="relative"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      {/* Node item */}
+      {/* Node item - pill-like design */}
       <div
         className={`
-          group relative flex items-center gap-2 px-3 py-2 rounded-xl
-          transition-all duration-300 cursor-pointer
-          ${isSelected ? 'bg-gradient-to-r from-primary/20 to-secondary/20 shadow-sm' : 'hover:bg-white/40'}
-          ${level > 0 ? 'ml-4' : ''}
+          group relative flex items-center gap-2.5 px-4 py-2.5
+          rounded-full transition-all duration-300 ease-out cursor-pointer
+          ${isSelected
+            ? 'bg-gradient-to-r from-primary/25 to-secondary/20 shadow-lg scale-[1.02]'
+            : isHovered
+              ? 'bg-white/50 shadow-md scale-[1.01]'
+              : 'bg-white/20 hover:bg-white/30'
+          }
         `}
-        style={{ paddingLeft: `${level * 16 + 12}px` }}
+        style={{ marginLeft: `${level * 12}px` }}
         onClick={handleClick}
       >
         {/* Icon */}
         {node.type === 'folder' ? (
-          <Folder className={`h-4 w-4 transition-colors ${isHovered ? 'text-primary' : 'text-foreground/60'}`} />
+          <Folder
+            className={`h-4 w-4 transition-all duration-200 ${
+              isHovered ? 'text-primary scale-110' : 'text-foreground/60'
+            }`}
+          />
         ) : (
-          <FileText className={`h-4 w-4 transition-colors ${isSelected ? 'text-primary' : 'text-foreground/60'}`} />
+          <FileText
+            className={`h-4 w-4 transition-all duration-200 ${
+              isSelected ? 'text-primary scale-110' : 'text-foreground/60'
+            }`}
+          />
         )}
 
         {/* Name */}
-        <span className={`text-sm flex-1 transition-colors ${isSelected ? 'text-primary font-medium' : 'text-foreground/80'}`}>
+        <span
+          className={`text-sm flex-1 truncate transition-all duration-200 ${
+            isSelected
+              ? 'text-primary font-semibold'
+              : isHovered
+                ? 'text-foreground font-medium'
+                : 'text-foreground/80'
+          }`}
+        >
           {node.name}
         </span>
 
         {/* Chevron for folders */}
         {hasChildren && (
-          <ChevronRight 
-            className={`h-3 w-3 text-foreground/40 transition-transform duration-300 ${isHovered ? 'rotate-90 text-primary' : ''}`}
+          <ChevronRight
+            className={`
+              h-3.5 w-3.5 transition-all duration-300 ease-out
+              ${isHovered
+                ? 'rotate-90 text-primary opacity-100'
+                : 'rotate-0 text-foreground/30 opacity-70'
+              }
+            `}
           />
-        )}
-
-        {/* Hover glow effect */}
-        {isHovered && (
-          <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-primary/5 to-secondary/5 pointer-events-none" />
         )}
       </div>
 
-      {/* Children (expanded on hover) */}
+      {/* Children (expanded on hover with smooth animation) */}
       {hasChildren && (
         <div
           className={`
-            overflow-hidden transition-all duration-300 ease-in-out
-            ${isHovered ? 'max-h-[5000px] opacity-100' : 'max-h-0 opacity-0'}
+            overflow-hidden transition-all duration-300 ease-out
+            ${isHovered
+              ? 'max-h-[2000px] opacity-100 mt-1'
+              : 'max-h-0 opacity-0 mt-0'
+            }
           `}
         >
-          <div className="mt-1 space-y-1">
+          <div className="space-y-1 pl-2">
             {node.children!.map((child) => (
               <TreeNodeComponent
                 key={child.path}
@@ -162,15 +216,25 @@ const TreeNodeComponent = ({
 const SidebarTree = ({ posts, selectedPath, onFileSelect }: SidebarTreeProps) => {
   const tree = buildTree(posts);
 
+  // Auto-select "Hey, there!" on first load
+  useEffect(() => {
+    if (posts.length > 0 && !selectedPath) {
+      const defaultPost = findDefaultPost(posts);
+      if (defaultPost) {
+        onFileSelect(defaultPost);
+      }
+    }
+  }, [posts, selectedPath, onFileSelect]);
+
   return (
     <div className="h-full overflow-y-auto overflow-x-hidden custom-scrollbar">
-      <div className="p-4 space-y-1">
-        <div className="mb-4 px-3">
-          <h2 className="text-sm font-semibold text-foreground/60 uppercase tracking-wider">
+      <div className="p-4 space-y-2">
+        <div className="mb-4 px-4">
+          <h2 className="text-xs font-semibold text-foreground/50 uppercase tracking-widest">
             Notes
           </h2>
         </div>
-        
+
         {tree.map((node) => (
           <TreeNodeComponent
             key={node.path}
