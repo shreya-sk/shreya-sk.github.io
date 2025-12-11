@@ -4,6 +4,10 @@
  * Remove emojis and problematic Unicode characters
  */
 export const stripEmojis = (content: string): string => {
+  if (!content || typeof content !== 'string') {
+    console.warn('stripEmojis received invalid content:', typeof content);
+    return '';
+  }
   // Remove emojis and special symbols
   let cleaned = content
     .replace(/[\u{1F300}-\u{1F9FF}]/gu, '') // Emoticons
@@ -50,6 +54,10 @@ export const stripEmojis = (content: string): string => {
  * Remove YAML frontmatter from markdown content
  */
 export const stripFrontmatter = (content: string): string => {
+  if (!content || typeof content !== 'string') {
+    console.warn('stripFrontmatter received invalid content:', typeof content);
+    return '';
+  }
   // Match YAML frontmatter: --- ... ---
   const frontmatterRegex = /^---\n[\s\S]*?\n---\n/;
   return content.replace(frontmatterRegex, '').trim();
@@ -60,6 +68,10 @@ export const stripFrontmatter = (content: string): string => {
  * Obsidian callouts: > [!note], > [!important], > [!warning], etc.
  */
 export const convertObsidianCallouts = (content: string): string => {
+  if (!content || typeof content !== 'string') {
+    console.warn('convertObsidianCallouts received invalid content:', typeof content);
+    return '';
+  }
   const calloutRegex = /^>\s*\[!(note|important|warning|tip|info|question|success|error|bug|example|quote|abstract|summary|todo|hint|danger|attention|caution|failure|check|done)\](.*?)$/gim;
 
   return content.replace(calloutRegex, (match, type, title) => {
