@@ -50,51 +50,56 @@ let postsCache: BlogPost[] | null = null;
 let cacheTimestamp: number = 0;
 const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
 
-// Recursively fetch all markdown files from a directory
-const fetchDirectoryContents = async (path: string = ''): Promise<GitHubContent[]> => {
+// Fetch ALL markdown files using Git Tree API (single API call!)
+const fetchAllMarkdownFiles = async (): Promise<GitHubFile[]> => {
   try {
-    const url = `${GITHUB_API_BASE}/repos/${REPO_OWNER}/${REPO_NAME}/contents/${path}`;
-    console.log(`Fetching directory: ${path || 'root'}`);
+    console.log('Fetching file tree from GitHub...');
 
-    const response = await fetch(url, { headers: getHeaders() });
+    // Try main branch first, then master if main fails
+    let response = await fetch(
+      `${GITHUB_API_BASE}/repos/${REPO_OWNER}/${REPO_NAME}/git/trees/main?recursive=1`,
+      { headers: getHeaders() }
+    );
+
+    if (!response.ok && response.status === 409) {
+      console.log('Main branch not found, trying master...');
+      response = await fetch(
+        `${GITHUB_API_BASE}/repos/${REPO_OWNER}/${REPO_NAME}/git/trees/master?recursive=1`,
+        { headers: getHeaders() }
+      );
+    }
 
     if (!response.ok) {
-      if (response.status === 404) {
-        console.warn(`Directory not found: ${path}`);
-        return [];
-      }
-      throw new Error(`Failed to fetch directory ${path}: ${response.status}`);
+      const errorData = await response.json().catch(() => ({}));
+      console.error('GitHub API Error:', response.status, errorData);
+      throw new Error(`Failed to fetch repository tree: ${response.status}`);
     }
 
-    const items: GitHubContent[] = await response.json();
-    let allFiles: GitHubContent[] = [];
+    const data = await response.json();
 
-    for (const item of items) {
+    // Filter for markdown files, excluding specific directories
+    const markdownFiles = data.tree.filter((file: GitHubFile) => {
+      if (file.type !== 'blob' || !file.path || !file.path.endsWith('.md')) {
+        return false;
+      }
+
       // Skip .obsidian directories, README files, and Daily - TIL folder
-      if (item.path.toLowerCase().includes('.obsidian') ||
-          item.name.toLowerCase().startsWith('readme') ||
-          item.path.toLowerCase().includes('daily - til')) {
-        continue;
-      }
+      const pathLower = file.path.toLowerCase();
+      return !pathLower.includes('.obsidian') &&
+             !pathLower.includes('readme') &&
+             !pathLower.includes('daily - til');
+    });
 
-      if (item.type === 'dir') {
-        // Recursively fetch subdirectory contents
-        const subFiles = await fetchDirectoryContents(item.path);
-        allFiles = allFiles.concat(subFiles);
-      } else if (item.type === 'file' && item.name.endsWith('.md')) {
-        allFiles.push(item);
-      }
-    }
-
-    return allFiles;
+    console.log(`Found ${markdownFiles.length} markdown files`);
+    return markdownFiles;
   } catch (error) {
-    console.error(`Error fetching directory ${path}:`, error);
+    console.error('Error fetching file tree:', error);
     return [];
   }
 };
 
 // Fetch and parse a single markdown file
-const fetchMarkdownFile = async (file: GitHubContent): Promise<BlogPost | null> => {
+const fetchMarkdownFile = async (file: GitHubFile): Promise<BlogPost | null> => {
   try {
     console.log(`Fetching content for: ${file.path}`);
 
@@ -103,42 +108,48 @@ const fetchMarkdownFile = async (file: GitHubContent): Promise<BlogPost | null> 
     const response = await fetch(url, { headers: getHeaders() });
 
     if (!response.ok) {
+      // If rate limited or other error, log and skip this file
       console.error(`Failed to fetch ${file.path}: ${response.status}`);
       return null;
     }
 
     const data: GitHubContent = await response.json();
 
-    // Decode base64 content
-    if (!data.content) {
-      console.warn(`No content for ${file.path}`);
+    // Decode base64 content with better error handling
+    if (!data || !data.content || typeof data.content !== 'string') {
+      console.warn(`No valid content for ${file.path}`, data);
       return null;
     }
 
-    const rawContent = atob(data.content.replace(/\n/g, ''));
-    const content = processMarkdownContent(rawContent);
+    try {
+      const rawContent = atob(data.content.replace(/\n/g, ''));
+      const content = processMarkdownContent(rawContent);
 
-    // Extract title from content (first # heading) or use filename
-    const titleMatch = content.match(/^#\s+(.+)$/m);
-    const fileName = file.name.replace('.md', '');
-    const title = titleMatch ? titleMatch[1] : fileName;
+      // Extract title from content (first # heading) or use filename
+      const titleMatch = content.match(/^#\s+(.+)$/m);
+      const fileName = file.path.split('/').pop()?.replace('.md', '') || 'Untitled';
+      const title = titleMatch ? titleMatch[1] : fileName;
 
-    // Extract folder from path
-    const pathParts = file.path.split('/');
-    const folder = pathParts.length > 1 ? pathParts.slice(0, -1).join('/') : 'Root';
+      // Extract folder from path
+      const pathParts = file.path.split('/');
+      const folder = pathParts.length > 1 ? pathParts.slice(0, -1).join('/') : 'Root';
 
-    // Generate slug from path
-    const slug = file.path.replace('.md', '').toLowerCase().replace(/\s+/g, '-');
+      // Generate slug from path
+      const slug = file.path.replace('.md', '').toLowerCase().replace(/\s+/g, '-');
 
-    return {
-      id: file.sha,
-      title,
-      content,
-      path: file.path,
-      folder,
-      date: new Date().toISOString().split('T')[0],
-      slug
-    };
+      return {
+        id: file.sha,
+        title,
+        content,
+        path: file.path,
+        folder,
+        date: new Date().toISOString().split('T')[0],
+        slug
+      };
+    } catch (decodeError) {
+      console.error(`Error decoding content for ${file.path}:`, decodeError);
+      return null;
+    }
   } catch (error) {
     console.error(`Error processing ${file.path}:`, error);
     return null;
@@ -156,9 +167,8 @@ export const fetchMarkdownFiles = async (forceRefresh: boolean = false): Promise
   try {
     console.log('Fetching markdown files from GitHub...');
 
-    // Fetch all markdown files recursively
-    const markdownFiles = await fetchDirectoryContents();
-    console.log(`Found ${markdownFiles.length} markdown files`);
+    // Fetch all markdown files using Git Tree API (1 API call instead of 10+!)
+    const markdownFiles = await fetchAllMarkdownFiles();
 
     if (markdownFiles.length === 0) {
       console.warn('No markdown files found');
