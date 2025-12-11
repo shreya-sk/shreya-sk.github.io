@@ -1,6 +1,12 @@
 import { useState } from "react";
 import { ChevronRight, FileText } from "lucide-react";
-import { BlogPost } from "@/services/githubService";
+interface BlogPost {
+  id: string;
+  title: string;
+  folder: string;
+  date: string;
+  content: string;
+}
 import fileIcon from '@/assets/file-icon.png';
 
 interface DirectoryTree {

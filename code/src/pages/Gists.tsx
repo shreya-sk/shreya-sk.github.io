@@ -3,16 +3,16 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Search, Code, Calendar } from "lucide-react";
 import { useGists } from "@/hooks/useGists";
-import { extractFirstHeading } from "@/services/gistsService";
+import { extractFirstHeading, type Gist } from "@/services/gistsService";
 
 const Gists = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const { data: gists = [], isLoading, error } = useGists();
 
-  const filteredGists = gists.filter(gist =>
+  const filteredGists = gists.filter((gist: Gist) =>
     gist.description?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    Object.values(gist.files).some(file =>
-      file.filename.toLowerCase().includes(searchTerm.toLowerCase())
+    Object.values(gist.files).some((file: Gist['files'][string]) =>
+      file.filename?.toLowerCase().includes(searchTerm.toLowerCase())
     )
   );
 
@@ -66,9 +66,9 @@ const Gists = () => {
         </div>
 
         <div className="space-y-3">
-          {filteredGists.map((gist) => {
+          {filteredGists.map((gist: Gist) => {
             const fileCount = Object.keys(gist.files).length;
-            const firstFile = Object.values(gist.files)[0];
+            const firstFile = Object.values(gist.files)[0] as Gist['files'][string] | undefined;
             const createdDate = new Date(gist.created_at).toLocaleDateString('en-US', {
               month: 'short',
               day: 'numeric',
@@ -79,13 +79,13 @@ const Gists = () => {
             let title = "Untitled";
 
             // First priority: Extract H1 from markdown file content
-            if (firstFile?.content && firstFile.filename.endsWith('.md')) {
+            if (firstFile?.content && firstFile.filename?.endsWith('.md')) {
               const heading = extractFirstHeading(firstFile.content);
               if (heading) {
                 title = heading;
               } else if (gist.description) {
                 title = gist.description;
-              } else {
+              } else if (firstFile.filename) {
                 // Remove .md extension from filename
                 title = firstFile.filename.replace('.md', '');
               }
@@ -128,7 +128,7 @@ const Gists = () => {
 
                     {/* File list */}
                     <div className="flex flex-wrap gap-1.5">
-                      {Object.values(gist.files).map((file) => (
+                      {Object.values(gist.files).map((file: Gist['files'][string]) => (
                         <div
                           key={file.filename}
                           className="text-xs px-2 py-0.5 bg-muted/50 rounded-md text-foreground/70 font-mono"
