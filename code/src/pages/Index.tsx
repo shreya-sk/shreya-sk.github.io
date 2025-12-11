@@ -13,7 +13,7 @@ const Index = () => {
   const { data: tilEntries = [] } = useTILEntries();
   
   // Get the first 4 posts for recent posts section (2x2 grid)
-  const recentPosts = posts?.slice(0, 4) || [];
+  const recentPosts = posts?.slice(0, 2) || [];
   
   // Get the first 2 TIL entries for the home page
   const recentTIL = tilEntries.slice(0, 2);
