@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useGitHubPosts } from '@/hooks/useGitHubPosts';
-import SidebarTree from '@/components/SidebarTree';
-import MarkdownRenderer from '@/components/MarkdownRenderer';
+import SidebarTree from '@/components/Sidebartree';
+import MarkdownRenderer from '@/components/Markdownrenderer';
 import { BlogPost } from '@/services/githubService';
 
 const NotesLayout = () => {
