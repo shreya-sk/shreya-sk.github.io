@@ -178,7 +178,7 @@ const TreeNodeComponent = ({
             overflow-hidden transition-all duration-300 ease-out
             ${isHovered
               ? 'max-h-[2000px] opacity-100 mt-1'
-              : 'max-h-0 opacity-0 mt-0'
+              : 'max-h-0 opacity-0 mt-0 pointer-events-none'
             }
           `}
         >
