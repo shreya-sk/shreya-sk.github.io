@@ -69,11 +69,10 @@ const MarkdownRenderer = ({ post }: MarkdownRendererProps) => {
         </header>
 
         {/* Content */}
-        <div className="markdown-content journal-text">
+        <div className="markdown-content journal-text leading-relaxed">
           <ReactMarkdown
             remarkPlugins={[remarkGfm]}
             rehypePlugins={[rehypeHighlight, rehypeRaw]}
-            className="leading-relaxed"
           >
             {post.content}
           </ReactMarkdown>
