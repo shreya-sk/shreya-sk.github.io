@@ -1,6 +1,6 @@
 
 import { useQuery } from '@tanstack/react-query';
-import { fetchMarkdownFiles, BlogPost } from '@/services/githubService';
+import { fetchMarkdownFiles, BlogPost } from '@/services/localMarkdownService';
 
 export const useGitHubPosts = () => {
   return useQuery({
