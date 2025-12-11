@@ -26,5 +26,5 @@
       "@/*": ["code/src/*"]
     }
   },
-  "include": ["src", "code/src/types"]
+  "include": ["code/src"]
 }
