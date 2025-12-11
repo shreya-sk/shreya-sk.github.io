@@ -124,7 +124,7 @@ export const cleanForExcerpt = (content: string): string => {
 };
 
 /**
- * Process full content for display (strip frontmatter, convert callouts, remove emojis)
+ * Process full content for display (strip frontmatter, convert callouts, keep emojis)
  */
 export const processMarkdownContent = (content: string): string => {
   if (!content || typeof content !== 'string') {
@@ -132,7 +132,18 @@ export const processMarkdownContent = (content: string): string => {
     return '';
   }
   let processed = stripFrontmatter(content);
-  processed = stripEmojis(processed);
+  // Don't strip emojis - they add personality and render fine in modern browsers
+  // Only clean up problematic invisible characters
+  processed = processed
+    // Remove zero-width characters
+    .replace(/[\u200B-\u200D\uFEFF]/g, '')
+    // Remove Obsidian emoji syntax like :emoji_name: if needed
+    .replace(/:([a-z_]+):/g, '')
+    // Normalize quotes
+    .replace(/[\u2018\u2019]/g, "'")
+    .replace(/[\u201C\u201D]/g, '"')
+    // Normalize dashes
+    .replace(/[\u2013\u2014]/g, '-');
   processed = convertObsidianCallouts(processed);
   return processed;
 };
