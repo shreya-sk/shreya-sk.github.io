@@ -72,11 +72,13 @@ const TreeNodeComponent = ({
   level = 0,
   selectedPath,
   onFileSelect,
+  onHoverChange,
 }: {
   node: TreeNode;
   level?: number;
   selectedPath: string | null;
   onFileSelect: (post: BlogPost) => void;
+  onHoverChange?: (isHovered: boolean) => void;
 }) => {
   const [isHovered, setIsHovered] = useState(false);
   const collapseTimeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -98,17 +100,24 @@ const TreeNodeComponent = ({
       collapseTimeoutRef.current = null;
     }
     // Expand on hover (only for folders with children)
-    if (hasChildren) {
+    if (hasChildren && !isHovered) {
       setIsHovered(true);
+      onHoverChange?.(true);
     }
   };
 
-  const handleMouseLeave = () => {
-    // Auto-collapse after a brief delay
-    if (hasChildren) {
+  const handleMouseLeave = (e: React.MouseEvent) => {
+    // Check if we're actually leaving the node area
+    if (collapseTimeoutRef.current) {
+      clearTimeout(collapseTimeoutRef.current);
+    }
+
+    // Auto-collapse after a delay
+    if (hasChildren && isHovered) {
       collapseTimeoutRef.current = setTimeout(() => {
         setIsHovered(false);
-      }, 200);
+        onHoverChange?.(false);
+      }, 300);
     }
   };
 
@@ -204,6 +213,7 @@ const TreeNodeComponent = ({
                 level={level + 1}
                 selectedPath={selectedPath}
                 onFileSelect={onFileSelect}
+                onHoverChange={onHoverChange}
               />
             ))}
           </div>
@@ -215,6 +225,8 @@ const TreeNodeComponent = ({
 
 const SidebarTree = ({ posts, selectedPath, onFileSelect }: SidebarTreeProps) => {
   const tree = buildTree(posts);
+  const [hasExpandedFolders, setHasExpandedFolders] = useState(false);
+  const expandedCountRef = useRef(0);
 
   // Auto-select "Hey, there!" on first load
   useEffect(() => {
@@ -226,8 +238,24 @@ const SidebarTree = ({ posts, selectedPath, onFileSelect }: SidebarTreeProps) =>
     }
   }, [posts, selectedPath, onFileSelect]);
 
+  const handleHoverChange = (isHovered: boolean) => {
+    // Track how many folders are currently expanded
+    if (isHovered) {
+      expandedCountRef.current += 1;
+    } else {
+      expandedCountRef.current = Math.max(0, expandedCountRef.current - 1);
+    }
+    setHasExpandedFolders(expandedCountRef.current > 0);
+  };
+
   return (
-    <div className="h-full overflow-y-auto overflow-x-hidden custom-scrollbar">
+    <div
+      className={`
+        h-full overflow-y-auto overflow-x-hidden custom-scrollbar
+        transition-all duration-300 ease-out
+        ${hasExpandedFolders ? 'w-96' : 'w-64'}
+      `}
+    >
       <div className="p-4 space-y-2">
         <div className="mb-4 px-4">
           <h2 className="text-xs font-semibold text-foreground/50 uppercase tracking-widest">
@@ -241,6 +269,7 @@ const SidebarTree = ({ posts, selectedPath, onFileSelect }: SidebarTreeProps) =>
             node={node}
             selectedPath={selectedPath}
             onFileSelect={onFileSelect}
+            onHoverChange={handleHoverChange}
           />
         ))}
       </div>
