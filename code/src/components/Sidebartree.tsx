@@ -72,17 +72,15 @@ const TreeNodeComponent = ({
   level = 0,
   selectedPath,
   onFileSelect,
-  onHoverChange,
+  onExpandedDepthChange,
 }: {
   node: TreeNode;
   level?: number;
   selectedPath: string | null;
   onFileSelect: (post: BlogPost) => void;
-  onHoverChange?: (isHovered: boolean) => void;
+  onExpandedDepthChange?: (depth: number, isExpanding: boolean) => void;
 }) => {
   const [isHovered, setIsHovered] = useState(false);
-  const collapseTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const nodeRef = useRef<HTMLDivElement>(null);
   const isSelected = selectedPath === node.path;
   const hasChildren = node.children && node.children.length > 0;
 
@@ -93,46 +91,25 @@ const TreeNodeComponent = ({
     }
   };
 
+  // Simple hover handlers - no timeouts, no complexity
   const handleMouseEnter = () => {
-    // Clear any pending collapse
-    if (collapseTimeoutRef.current) {
-      clearTimeout(collapseTimeoutRef.current);
-      collapseTimeoutRef.current = null;
-    }
-    // Expand on hover (only for folders with children)
     if (hasChildren && !isHovered) {
       setIsHovered(true);
-      onHoverChange?.(true);
+      // Notify parent of expansion depth
+      onExpandedDepthChange?.(level, true);
     }
   };
 
-  const handleMouseLeave = (e: React.MouseEvent) => {
-    // Check if we're actually leaving the node area
-    if (collapseTimeoutRef.current) {
-      clearTimeout(collapseTimeoutRef.current);
-    }
-
-    // Auto-collapse after a delay
+  const handleMouseLeave = () => {
     if (hasChildren && isHovered) {
-      collapseTimeoutRef.current = setTimeout(() => {
-        setIsHovered(false);
-        onHoverChange?.(false);
-      }, 300);
+      setIsHovered(false);
+      // Notify parent of collapse
+      onExpandedDepthChange?.(level, false);
     }
   };
-
-  // Cleanup timeout on unmount
-  useEffect(() => {
-    return () => {
-      if (collapseTimeoutRef.current) {
-        clearTimeout(collapseTimeoutRef.current);
-      }
-    };
-  }, []);
 
   return (
     <div
-      ref={nodeRef}
       className="relative"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
@@ -213,7 +190,7 @@ const TreeNodeComponent = ({
                 level={level + 1}
                 selectedPath={selectedPath}
                 onFileSelect={onFileSelect}
-                onHoverChange={onHoverChange}
+                onExpandedDepthChange={onExpandedDepthChange}
               />
             ))}
           </div>
@@ -225,8 +202,8 @@ const TreeNodeComponent = ({
 
 const SidebarTree = ({ posts, selectedPath, onFileSelect }: SidebarTreeProps) => {
   const tree = buildTree(posts);
-  const [hasExpandedFolders, setHasExpandedFolders] = useState(false);
-  const expandedCountRef = useRef(0);
+  const [maxExpandedDepth, setMaxExpandedDepth] = useState(0);
+  const expandedDepthsRef = useRef<Set<number>>(new Set());
 
   // Auto-select "Hey, there!" on first load
   useEffect(() => {
@@ -238,23 +215,29 @@ const SidebarTree = ({ posts, selectedPath, onFileSelect }: SidebarTreeProps) =>
     }
   }, [posts, selectedPath, onFileSelect]);
 
-  const handleHoverChange = (isHovered: boolean) => {
-    // Track how many folders are currently expanded
-    if (isHovered) {
-      expandedCountRef.current += 1;
+  const handleExpandedDepthChange = (depth: number, isExpanding: boolean) => {
+    if (isExpanding) {
+      expandedDepthsRef.current.add(depth);
     } else {
-      expandedCountRef.current = Math.max(0, expandedCountRef.current - 1);
+      expandedDepthsRef.current.delete(depth);
     }
-    setHasExpandedFolders(expandedCountRef.current > 0);
+
+    // Calculate max depth currently expanded
+    const depths = Array.from(expandedDepthsRef.current);
+    const newMaxDepth = depths.length > 0 ? Math.max(...depths) : 0;
+    setMaxExpandedDepth(newMaxDepth);
   };
+
+  // Calculate dynamic width based on expansion depth
+  // Base: 256px (w-64), add ~60px per level of nesting
+  const baseWidth = 256;
+  const widthPerLevel = 60;
+  const calculatedWidth = baseWidth + (maxExpandedDepth * widthPerLevel);
 
   return (
     <div
-      className={`
-        h-full overflow-y-auto overflow-x-hidden custom-scrollbar
-        transition-all duration-300 ease-out
-        ${hasExpandedFolders ? 'w-96' : 'w-64'}
-      `}
+      className="h-full overflow-y-auto overflow-x-hidden custom-scrollbar transition-all duration-300 ease-out"
+      style={{ width: `${calculatedWidth}px` }}
     >
       <div className="p-4 space-y-2">
         <div className="mb-4 px-4">
@@ -269,7 +252,7 @@ const SidebarTree = ({ posts, selectedPath, onFileSelect }: SidebarTreeProps) =>
             node={node}
             selectedPath={selectedPath}
             onFileSelect={onFileSelect}
-            onHoverChange={handleHoverChange}
+            onExpandedDepthChange={handleExpandedDepthChange}
           />
         ))}
       </div>
