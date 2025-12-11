@@ -79,13 +79,14 @@ const Gists = () => {
             let title = "Untitled";
 
             // First priority: Extract H1 from markdown file content
-            if (firstFile?.content && firstFile.filename.endsWith('.md')) {
+                        // First priority: Extract H1 from markdown file content
+            if (firstFile?.content && firstFile.filename?.endsWith('.md')) {
               const heading = extractFirstHeading(firstFile.content);
               if (heading) {
                 title = heading;
               } else if (gist.description) {
                 title = gist.description;
-              } else {
+              } else if (firstFile.filename) {
                 // Remove .md extension from filename
                 title = firstFile.filename.replace('.md', '');
               }
