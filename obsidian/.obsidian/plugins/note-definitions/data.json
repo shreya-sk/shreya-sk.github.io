@@ -1,0 +1,24 @@
+{
+  "enableInReadingView": true,
+  "enableSpellcheck": true,
+  "popoverEvent": "hover",
+  "defFileParseConfig": {
+    "defaultFileType": "consolidated",
+    "divider": {
+      "dash": true,
+      "underscore": false
+    },
+    "autoPlurals": false
+  },
+  "defPopoverConfig": {
+    "displayAliases": true,
+    "displayDefFileName": false,
+    "enableCustomSize": false,
+    "maxWidth": 184,
+    "maxHeight": 150,
+    "popoverDismissEvent": "mouse_exit",
+    "enableDefinitionLink": true,
+    "backgroundColour": "#fafafa"
+  },
+  "defFolder": "DevOps/GoLang"
+}

@@ -1,0 +1,9 @@
+{
+  "alwaysUpdateLinks": true,
+  "attachmentFolderPath": "Media - Archive",
+  "newFileLocation": "current",
+  "newLinkFormat": "relative",
+  "showLineNumber": true,
+  "readableLineLength": true,
+  "showUnsupportedFiles": true
+}
