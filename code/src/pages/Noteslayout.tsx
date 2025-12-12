@@ -52,7 +52,7 @@ const NotesLayout = () => {
           </aside>
 
           {/* Markdown Content - Full width with left padding for sidebar space */}
-          <main className="h-full pl-6">
+          <main className="h-full" style={{ paddingLeft: '240px' }}>
             <div className="h-full liquid-glass-content rounded-3xl overflow-hidden shadow-2xl">
               <MarkdownRenderer post={selectedPost} />
             </div>
