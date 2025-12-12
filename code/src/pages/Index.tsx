@@ -13,7 +13,7 @@ const Index = () => {
   const { data: tilEntries = [] } = useTILEntries();
   
   // Get the first 4 posts for recent posts section (2x2 grid)
-  const recentPosts = posts?.slice(0, 4) || [];
+  const recentPosts = posts?.slice(0, 2) || [];
   
   // Get the first 2 TIL entries for the home page
   const recentTIL = tilEntries.slice(0, 2);
@@ -34,7 +34,7 @@ const Index = () => {
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center gap-3">
                 <BookOpen className="h-5 w-5 text-primary/80" />
-                <h2 className="text-xl font-medium tracking-tight">recent posts</h2>
+                <h2 className="text-xl font-medium tracking-tight">currently learning</h2>
               </div>
               <Link 
                 to="/blog"
@@ -73,7 +73,7 @@ const Index = () => {
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center gap-3">
                 <Lightbulb className="h-5 w-5 text-secondary/80" />
-                <h2 className="text-xl font-medium tracking-tight">daily journal</h2>
+                <h2 className="text-xl font-medium tracking-tight">today i learned</h2>
               </div>
               <Link 
                 to="/til"

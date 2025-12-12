@@ -37,19 +37,17 @@ const NotesLayout = () => {
 
   return (
     <div className="min-h-screen sage-gradient">
-      <div className="h-screen px-4 py-4">
-        {/* Main Content Area - Full width with floating sidebar */}
-        <div className="relative h-full">
-          {/* Floating Sidebar - Positioned absolutely in left margin */}
-          <aside className="absolute left-0 top-0 bottom-0 z-10 flex items-center">
-            <div className="ml-4 h-[90%] liquid-glass-sidebar rounded-3xl overflow-hidden shadow-2xl">
-              <SidebarTree
-                posts={posts}
-                selectedPath={selectedPost?.path || null}
-                onFileSelect={setSelectedPost}
-              />
-            </div>
-          </aside>
+      <div className="h-screen flex gap-4 px-4 py-4">
+        {/* Left Sidebar - Glass Directory Tree with dynamic width */}
+        <aside className="flex-shrink-0">
+          <div className="h-full liquid-glass-sidebar rounded-3xl overflow-hidden shadow-2xl">
+            <SidebarTree
+              posts={posts}
+              selectedPath={selectedPost?.path || null}
+              onFileSelect={setSelectedPost}
+            />
+          </div>
+        </aside>
 
           {/* Markdown Content - Full width with left padding for sidebar space */}
           <main className="h-full" style={{ paddingLeft: '240px' }}>

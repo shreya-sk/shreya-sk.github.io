@@ -240,22 +240,17 @@ const SidebarTree = ({ posts, selectedPath, onFileSelect }: SidebarTreeProps) =>
   };
 
   // Calculate dynamic width based on expansion depth
-  // Base: 200px to fit root directory names, add ~100px per level of nesting
-  const baseWidth = 200;
-  const widthPerLevel = 100;
+  // Base: 100px (small pill), add ~80px per level of nesting
+  const baseWidth = 100;
+  const widthPerLevel = 80;
   const calculatedWidth = baseWidth + (maxExpandedDepth * widthPerLevel);
 
   return (
     <div
-      className="h-full overflow-y-auto overflow-x-hidden custom-scrollbar transition-all duration-300 ease-out"
-      style={{
-        width: `${calculatedWidth}px`,
-        // Enhanced 3D glass effect
-        backdropFilter: 'blur(20px) saturate(180%)',
-        WebkitBackdropFilter: 'blur(20px) saturate(180%)',
-      }}
+      className="h-full overflow-y-auto overflow-x-hidden custom-scrollbar transition-all duration-300 ease-out flex flex-col justify-center"
+      style={{ width: `${calculatedWidth}px` }}
     >
-      <div className="p-4 space-y-2 h-full flex flex-col justify-center">
+      <div className="p-4 space-y-2">
         <div className="mb-4 px-2">
           <h2 className="text-xs font-semibold text-foreground/50 uppercase tracking-widest">
             Notes

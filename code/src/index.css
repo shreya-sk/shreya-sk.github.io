@@ -234,32 +234,21 @@
     );
   }
 
-  /* Liquid Glass Sidebar - Floating 3D Pill */
+  /* Liquid Glass Sidebar - Obsidian Style */
   .liquid-glass-sidebar {
     background: linear-gradient(
       135deg,
-      hsla(var(--glass-bg), 0.75) 0%,
-      hsla(var(--glass-bg), 0.6) 50%,
-      hsla(280, 45%, 65%, 0.15) 100%
+      hsla(var(--glass-bg), 0.7) 0%,
+      hsla(var(--glass-bg), 0.5) 50%,
+      hsla(280, 45%, 65%, 0.1) 100%
     );
-    backdrop-filter: blur(24px) saturate(180%);
-    -webkit-backdrop-filter: blur(24px) saturate(180%);
-    border: 1px solid hsla(var(--border), 0.3);
-    /* Enhanced 3D shadow for floating effect */
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid hsla(var(--border), 0.2);
     box-shadow:
-      /* Main depth shadow */
-      0 30px 80px -10px hsla(150, 50%, 45%, 0.25),
-      /* Mid-level shadow */
-      0 15px 40px -5px hsla(var(--glass-shadow), 0.15),
-      /* Close shadow for definition */
-      0 8px 16px 0 hsla(var(--glass-shadow), 0.12),
-      /* Inner highlight for glass effect */
-      inset 0 1px 0 0 hsla(var(--glass-border), 0.4),
-      /* Subtle outer glow */
-      0 0 0 1px hsla(150, 50%, 45%, 0.1);
-    /* 3D transform hint */
-    transform: translateZ(0);
-    will-change: box-shadow, transform;
+      0 20px 60px 0 hsla(150, 50%, 45%, 0.15),
+      inset 0 1px 0 0 hsla(var(--glass-border), 0.3),
+      0 4px 8px 0 hsla(var(--glass-shadow), 0.08);
   }
 
   /* Liquid Glass Content Area */
