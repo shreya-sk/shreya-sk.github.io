@@ -215,8 +215,12 @@ export const convertObsidianImages = (content: string): string => {
  * Obsidian callouts: > [!note], > [!important], > [!warning], etc.
  */
 export const convertObsidianCallouts = (content: string): string => {
-  if (!content || typeof content !== 'string') {
-    console.warn('convertObsidianCallouts received invalid content:', typeof content);
+  if (typeof content !== 'string') {
+    console.warn('convertObsidianCallouts received non-string content:', typeof content);
+    return '';
+  }
+  if (!content) {
+    // Empty string is valid, just return it without warning
     return '';
   }
   const calloutRegex = /^>\s*\[!(note|important|warning|tip|info|question|success|error|bug|example|quote|abstract|summary|todo|hint|danger|attention|caution|failure|check|done)\](.*?)$/gim;
