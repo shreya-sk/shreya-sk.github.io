@@ -443,17 +443,59 @@
   }
 
   .markdown-content blockquote {
-    @apply border-l-4 border-primary/40 pl-4 pr-4 py-2 my-4;
+    @apply border-l-4 border-primary/40 pl-4 pr-4 py-3 my-4;
     @apply bg-primary/5 rounded-r-lg;
-    @apply italic text-foreground/80;
+    @apply text-foreground/90;
   }
 
   .markdown-content blockquote p {
-    @apply mb-2 last:mb-0;
+    @apply mb-2 last:mb-0 not-italic;
   }
 
+  /* Callout types - enhanced styling based on content */
   .markdown-content blockquote strong {
-    @apply text-primary font-semibold not-italic;
+    @apply font-semibold not-italic block mb-2;
+    @apply text-base;
+  }
+
+  /* NOTE callouts - blue */
+  .markdown-content blockquote:has(strong:first-child:contains("NOTE")) {
+    @apply border-blue-500/60 bg-blue-50/80;
+  }
+  .markdown-content blockquote strong:first-child:contains("NOTE") {
+    @apply text-blue-700;
+  }
+
+  /* TIP callouts - green */
+  .markdown-content blockquote:has(strong:first-child:contains("TIP")) {
+    @apply border-green-500/60 bg-green-50/80;
+  }
+  .markdown-content blockquote strong:first-child:contains("TIP") {
+    @apply text-green-700;
+  }
+
+  /* WARNING callouts - orange/amber */
+  .markdown-content blockquote:has(strong:first-child:contains("WARNING")) {
+    @apply border-amber-500/60 bg-amber-50/80;
+  }
+  .markdown-content blockquote strong:first-child:contains("WARNING") {
+    @apply text-amber-700;
+  }
+
+  /* IMPORTANT callouts - purple */
+  .markdown-content blockquote:has(strong:first-child:contains("IMPORTANT")) {
+    @apply border-purple-500/60 bg-purple-50/80;
+  }
+  .markdown-content blockquote strong:first-child:contains("IMPORTANT") {
+    @apply text-purple-700;
+  }
+
+  /* INFO callouts - cyan */
+  .markdown-content blockquote:has(strong:first-child:contains("INFO")) {
+    @apply border-cyan-500/60 bg-cyan-50/80;
+  }
+  .markdown-content blockquote strong:first-child:contains("INFO") {
+    @apply text-cyan-700;
   }
 
   .markdown-content table {
