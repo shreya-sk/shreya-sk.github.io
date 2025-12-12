@@ -91,8 +91,9 @@ const TreeNodeComponent = ({
     }
   };
 
-  // Simple hover handlers - no timeouts, no complexity
-  const handleMouseEnter = () => {
+  // Simple hover handlers - prevent event bubbling to avoid interference
+  const handleMouseEnter = (e: React.MouseEvent) => {
+    e.stopPropagation();
     if (hasChildren && !isHovered) {
       setIsHovered(true);
       // Notify parent of expansion depth
@@ -100,7 +101,17 @@ const TreeNodeComponent = ({
     }
   };
 
-  const handleMouseLeave = () => {
+  const handleMouseLeave = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    // Only collapse if mouse is truly leaving this node's entire area
+    const relatedTarget = e.relatedTarget as HTMLElement;
+    const currentTarget = e.currentTarget as HTMLElement;
+
+    // Check if we're moving to a descendant element
+    if (relatedTarget && currentTarget.contains(relatedTarget)) {
+      return;
+    }
+
     if (hasChildren && isHovered) {
       setIsHovered(false);
       // Notify parent of collapse
@@ -229,9 +240,9 @@ const SidebarTree = ({ posts, selectedPath, onFileSelect }: SidebarTreeProps) =>
   };
 
   // Calculate dynamic width based on expansion depth
-  // Base: 256px (w-64), add ~60px per level of nesting
-  const baseWidth = 256;
-  const widthPerLevel = 60;
+  // Base: 320px (w-80), add ~80px per level of nesting for better readability
+  const baseWidth = 320;
+  const widthPerLevel = 80;
   const calculatedWidth = baseWidth + (maxExpandedDepth * widthPerLevel);
 
   return (
@@ -259,3 +270,5 @@ const SidebarTree = ({ posts, selectedPath, onFileSelect }: SidebarTreeProps) =>
     </div>
   );
 };
+
+export default SidebarTree;
