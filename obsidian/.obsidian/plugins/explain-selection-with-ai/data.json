@@ -1,0 +1,6 @@
+{
+  "dropdownValue": "openai",
+  "baseURL": "https://api.openai.com/v1/",
+  "endpoint": "gpt-3.5-turbo",
+  "apiKey": ""
+}
