@@ -2,7 +2,7 @@
 // Local Markdown Service - Reads from obsidian/ folder instead of GitHub API
 
 import { BlogPost, TILEntry } from '@/types/blog';
-import { processMarkdownContent } from '@/utils/markdownUtils';
+import { processMarkdownContent, extractFrontmatter } from '@/utils/markdownUtils';
 
 export interface MarkdownFile {
   path: string;
@@ -176,15 +176,28 @@ export async function fetchMarkdownFiles(): Promise<BlogPost[]> {
   // Filter out TIL entries
   const blogFiles = files.filter(f => !f.path.startsWith('Daily - TIL/'));
 
-  return blogFiles.map(file => ({
-    id: file.slug,
-    title: file.title,
-    content: processMarkdownContent(file.content),
-    path: file.path,
-    folder: file.category || 'Uncategorized',
-    date: new Date().toISOString().split('T')[0],
-    slug: file.slug
-  }));
+  return blogFiles.map(file => {
+    // Extract frontmatter metadata
+    const frontmatter = extractFrontmatter(file.content);
+
+    // Try to get date from frontmatter (date, created, or use current date as fallback)
+    let date = new Date().toISOString().split('T')[0];
+    if (frontmatter.date) {
+      date = frontmatter.date;
+    } else if (frontmatter.created) {
+      date = frontmatter.created;
+    }
+
+    return {
+      id: file.slug,
+      title: file.title,
+      content: processMarkdownContent(file.content),
+      path: file.path,
+      folder: file.category || 'Uncategorized',
+      date,
+      slug: file.slug
+    };
+  });
 }
 
 /**

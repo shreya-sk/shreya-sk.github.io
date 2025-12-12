@@ -52,6 +52,133 @@ export const stripEmojis = (content: string): string => {
 };
 
 /**
+ * Fix UTF-8 mojibake (incorrectly decoded UTF-8 as Latin-1/Windows-1252)
+ * This happens when UTF-8 bytes are interpreted as a different encoding
+ */
+export const fixMojibake = (content: string): string => {
+  if (!content || typeof content !== 'string') {
+    return '';
+  }
+
+  // Common emoji mojibake patterns
+  const mojibakePatterns: [RegExp, string][] = [
+    // Emojis
+    [/ð°/g, '💰'],  // Money bag
+    [/â¡/g, '⚡'],  // Lightning
+    [/ð§/g, '🔧'],  // Wrench
+    [/ð/g, '🗑️'],  // Trash
+    [/ðï¸/g, '🗑️'],  // Trash with variant
+    [/ðï¸/g, '🏗️'],  // Construction
+    [/ðï¸/g, '🖥️'],  // Desktop computer
+    [/ð¥¸/g, '🥸'],  // Disguised face
+    [/ð/g, '📝'],  // Memo
+    [/ðï¸/g, '📝️'],  // Memo with variant
+    [/ð/g, '📄'],  // Page
+    [/âï¸/g, '⚙️'],  // Gear
+    [/ð/g, '📚'],  // Books
+    [/ð/g, '🔍'],  // Magnifying glass
+    [/ðï¸/g, '🏢'],  // Office building
+    [/ð/g, '📜'],  // Scroll
+    [/ð/g, '🐳'],  // Whale (Docker logo)
+    [/â¸ï¸/g, '☸️'],  // Kubernetes symbol
+    [/ð/g, '🚀'],  // Rocket
+    [/ð¯/g, '🎯'],  // Target
+    [/ð/g, '🔑'],  // Key
+    [/ð/g, '🔄'],  // Arrows
+    [/ð/g, '📦'],  // Package
+    [/ð/g, '🌐'],  // Globe
+    [/ð/g, '📊'],  // Bar chart
+    [/ð¨âð»/g, '👨‍💻'],  // Male technologist
+    [/ð¨âð§/g, '👨‍🔧'],  // Male mechanic
+    [/ð/g, '📋'],  // Clipboard
+    [/ð/g, '📚'],  // Books
+    [/ð¢/g, '🐢'],  // Turtle
+    [/ð¶/g, '🚶'],  // Walking
+    [/ð/g, '🔒'],  // Lock
+    [/ð/g, '🔓'],  // Unlocked
+    [/â±ï¸/g, '⏱️'],  // Stopwatch
+    [/ð½/g, '💽'],  // Disk
+
+    // Checkmarks and symbols
+    [/â/g, '✅'],  // Check mark
+    [/â/g, '❌'],  // Cross mark
+    [/â/g, '⚠'],   // Warning
+    [/â/g, '✓'],   // Check
+    [/â/g, '➡'],   // Right arrow
+
+    // Special characters that get corrupted
+    [/Â°/g, '°'],  // Degree symbol
+    [/Â§/g, '§'],  // Section symbol
+    [/Â¡/g, '¡'],  // Inverted exclamation
+    [/Â¿/g, '¿'],  // Inverted question mark
+  ];
+
+  let fixed = content;
+  for (const [pattern, replacement] of mojibakePatterns) {
+    fixed = fixed.replace(pattern, replacement);
+  }
+
+  return fixed;
+};
+
+/**
+ * Convert Obsidian wiki links to website URLs
+ * [[link]] or [[link|display text]] or [[folder/link|text]]
+ */
+export const convertWikiLinks = (content: string): string => {
+  if (!content || typeof content !== 'string') {
+    return '';
+  }
+
+  // Match [[path/to/file|display text]] or [[file]]
+  return content.replace(/\[\[([^\]|]+)(?:\|([^\]]+))?\]\]/g, (match, path, displayText) => {
+    // Remove ../ and .md extension
+    const cleanPath = path.replace(/^\.\.\//, '').replace(/\.md$/, '');
+
+    // Create URL slug (lowercase, replace spaces with hyphens)
+    const slug = cleanPath.toLowerCase().replace(/\s+/g, '-');
+
+    // Use display text if provided, otherwise use the filename
+    const text = displayText || path.split('/').pop()?.replace(/\.md$/, '') || cleanPath;
+
+    // Link to /blog route (assuming all notes are under /blog)
+    return `[${text}](/blog?note=${encodeURIComponent(cleanPath)})`;
+  });
+};
+
+/**
+ * Extract frontmatter data from markdown content
+ */
+export const extractFrontmatter = (content: string): { [key: string]: string } => {
+  if (!content || typeof content !== 'string') {
+    return {};
+  }
+
+  const frontmatterRegex = /^---\n([\s\S]*?)\n---\n/;
+  const match = content.match(frontmatterRegex);
+
+  if (!match) {
+    return {};
+  }
+
+  const frontmatterText = match[1];
+  const frontmatter: { [key: string]: string } = {};
+
+  // Parse YAML-like frontmatter (simple key: value pairs)
+  const lines = frontmatterText.split('\n');
+  for (const line of lines) {
+    const colonIndex = line.indexOf(':');
+    if (colonIndex > 0) {
+      const key = line.substring(0, colonIndex).trim();
+      const value = line.substring(colonIndex + 1).trim();
+      frontmatter[key] = value;
+    }
+  }
+
+  return frontmatter;
+};
+
+/**
  * Remove YAML frontmatter from markdown content
  */
 export const stripFrontmatter = (content: string): string => {
@@ -67,7 +194,7 @@ export const stripFrontmatter = (content: string): string => {
 /**
  * Convert Obsidian image syntax to standard markdown
  * Obsidian: ![[path/to/image.png]] or ![[path/to/image.png|alt text]]
- * Standard: ![alt text](path/to/image.png)
+ * Standard: ![alt text](/obsidian/path/to/image.png)
  */
 export const convertObsidianImages = (content: string): string => {
   if (!content || typeof content !== 'string') {
@@ -77,9 +204,9 @@ export const convertObsidianImages = (content: string): string => {
   // Match Obsidian image syntax: ![[path]] or ![[path|alt]]
   return content.replace(/!\[\[([^\]|]+)(?:\|([^\]]+))?\]\]/g, (match, path, alt) => {
     const altText = alt || path.split('/').pop()?.replace(/\.[^.]+$/, '') || 'image';
-    // Remove ../ and normalize path
+    // Remove ../ and prepend /obsidian/ to make it accessible from public folder
     const normalizedPath = path.replace(/^\.\.\//, '');
-    return `![${altText}](${normalizedPath})`;
+    return `![${altText}](/obsidian/${normalizedPath})`;
   });
 };
 
@@ -152,7 +279,11 @@ export const processMarkdownContent = (content: string): string => {
   }
   let processed = stripFrontmatter(content);
 
+  // Fix any UTF-8 mojibake issues first
+  processed = fixMojibake(processed);
+
   // Convert Obsidian-specific syntax to standard markdown
+  processed = convertWikiLinks(processed);  // Convert wiki links before images
   processed = convertObsidianImages(processed);
   processed = convertObsidianCallouts(processed);
 
@@ -160,22 +291,11 @@ export const processMarkdownContent = (content: string): string => {
   processed = processed
     // Remove zero-width characters
     .replace(/[\u200B-\u200D\uFEFF]/g, '')
-    // Remove Obsidian emoji syntax like :emoji_name: if needed
-    .replace(/:([a-z_]+):/g, '')
     // Normalize quotes
     .replace(/[\u2018\u2019]/g, "'")
     .replace(/[\u201C\u201D]/g, '"')
     // Normalize dashes
-    .replace(/[\u2013\u2014]/g, '-')
-    // Fix common mojibake patterns (incorrectly decoded UTF-8)
-    .replace(/â/g, '✓')  // Common checkbox
-    .replace(/ð/g, '👉')  // Common pointer emoji
-    .replace(/ð¥¸/g, '🥸')  // Face with disguise
-    .replace(/ð/g, '📝')  // Memo/note
-    .replace(/ð§/g, '🔧')  // Wrench/tool
-    .replace(/â/g, '⚠')   // Warning sign
-    .replace(/â¡/g, '⚡')  // Lightning
-    .replace(/ð/g, '🔥');  // Fire
+    .replace(/[\u2013\u2014]/g, '-');
 
   return processed;
 };
