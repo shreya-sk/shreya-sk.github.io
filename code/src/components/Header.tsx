@@ -20,7 +20,7 @@ const Header = () => {
       <div className="container flex h-14 items-center justify-between px-4">
         <Link to="/" className="flex items-center space-x-2 font-semibold text-base">
           <BookOpen className="h-5 w-5" />
-          <span>Shreya Kothari</span>
+          <span>digital diary</span>
         </Link>
         
         {/* Desktop Navigation */}
