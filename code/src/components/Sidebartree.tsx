@@ -128,7 +128,7 @@ const TreeNodeComponent = ({
       {/* Node item - pill-like design */}
       <div
         className={`
-          group relative flex items-center gap-2.5 px-4 py-2.5
+          group relative flex items-center gap-2 px-3 py-2
           rounded-full transition-all duration-300 ease-out cursor-pointer
           ${isSelected
             ? 'bg-gradient-to-r from-primary/25 to-secondary/20 shadow-lg scale-[1.02]'
@@ -137,7 +137,7 @@ const TreeNodeComponent = ({
               : 'bg-white/20 hover:bg-white/30'
           }
         `}
-        style={{ marginLeft: `${level * 12}px` }}
+        style={{ marginLeft: `${level * 8}px` }}
         onClick={handleClick}
       >
         {/* Icon */}
@@ -157,7 +157,7 @@ const TreeNodeComponent = ({
 
         {/* Name */}
         <span
-          className={`text-sm flex-1 truncate transition-all duration-200 ${
+          className={`text-xs flex-1 truncate transition-all duration-200 ${
             isSelected
               ? 'text-primary font-semibold'
               : isHovered
@@ -240,18 +240,18 @@ const SidebarTree = ({ posts, selectedPath, onFileSelect }: SidebarTreeProps) =>
   };
 
   // Calculate dynamic width based on expansion depth
-  // Base: 320px (w-80), add ~80px per level of nesting for better readability
-  const baseWidth = 320;
+  // Base: 100px (small pill), add ~80px per level of nesting
+  const baseWidth = 100;
   const widthPerLevel = 80;
   const calculatedWidth = baseWidth + (maxExpandedDepth * widthPerLevel);
 
   return (
     <div
-      className="h-full overflow-y-auto overflow-x-hidden custom-scrollbar transition-all duration-300 ease-out"
+      className="h-full overflow-y-auto overflow-x-hidden custom-scrollbar transition-all duration-300 ease-out flex flex-col justify-center"
       style={{ width: `${calculatedWidth}px` }}
     >
       <div className="p-4 space-y-2">
-        <div className="mb-4 px-4">
+        <div className="mb-4 px-2">
           <h2 className="text-xs font-semibold text-foreground/50 uppercase tracking-widest">
             Notes
           </h2>
