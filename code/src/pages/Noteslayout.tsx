@@ -37,7 +37,7 @@ const NotesLayout = () => {
 
   return (
     <div className="min-h-screen sage-gradient">
-      <div className="container mx-auto px-4 py-6 h-screen flex gap-6">
+      <div className="h-screen flex gap-4 px-4 py-4">
         {/* Left Sidebar - Glass Directory Tree with dynamic width */}
         <aside className="flex-shrink-0">
           <div className="h-full liquid-glass-sidebar rounded-3xl overflow-hidden shadow-2xl">
