@@ -14,7 +14,8 @@ export interface MarkdownFile {
 
 // Vite's glob import - reads all .md files from obsidian folder
 const markdownModules = import.meta.glob('../../../obsidian/**/*.md', {
-  as: 'raw',
+  query: '?raw',
+  import: 'default',
   eager: false
 });
 
