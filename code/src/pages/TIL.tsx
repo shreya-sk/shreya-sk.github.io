@@ -87,9 +87,10 @@ const TIL = () => {
           {/* TIL entries content - takes full surface */}
           <main className="h-full overflow-y-auto px-8 py-8 pl-[360px]">
             <div className="max-w-4xl mx-auto">
-              <div className="mb-8">
-                <h1 className="text-2xl font-bold mb-2 bg-gradient-to-r from-secondary to-accent bg-clip-text text-transparent">
-                  daily journal
+              <div className="mb-8 md:ml-24"> 
+
+                <h1 className="text-3xl font-bold mb-2 bg-gradient-to-r from-secondary to-accent bg-clip-text text-transparent">
+                  my weekly learnings
                 </h1>
                 <p className="text-foreground/60 text-sm">
                   {filteredEntries.length} {filteredEntries.length === 1 ? 'entry' : 'entries'} this week
