@@ -26,6 +26,76 @@ const Index = () => {
   return (
     <div className="min-h-screen sage-gradient">
       <Hero />
+
+    <section className="py-12">
+  <div className="container px-6">
+    <div className="mx-auto max-w-5xl">
+
+      {/* Header */}
+      <div className="flex items-center gap-3 mb-6">
+        <Lightbulb className="h-5 w-5 text-secondary floating-icon" />
+        <h2 className="text-xl font-medium tracking-tight">
+          Hi, there!
+        </h2>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+        {/* Card 1 */}
+        <div className="journal-card rounded-2xl p-5 space-y-3">
+          <p className="text-sm text-muted-foreground">
+            what I do
+          </p>
+          <p className="text-sm leading-relaxed">
+            I’m a DevOps engineer - still learning, always curious.
+            I like understanding systems end-to-end and making them calmer,
+            clearer, and easier to reason about.
+          </p>
+        </div>
+
+        {/* Card 2 */}
+        <div className="journal-card rounded-2xl p-5 space-y-3">
+          <p className="text-sm text-muted-foreground">
+            how I think
+          </p>
+          <ul className="text-sm space-y-1">
+            <li>→ everything needs a system</li>
+            <li>→ clarity beats cleverness</li>
+            <li>→ if it’s messy, I want to organise it</li>
+            <li>→ if it’s confusing, I want to map it</li>
+          </ul>
+        </div>
+
+        {/* Card 3 */}
+        <div className="journal-card rounded-2xl p-5 space-y-3">
+          <p className="text-sm text-muted-foreground">
+            things I love
+          </p>
+          <p className="journal-text text-sm">
+            reading, music, research, making notes, designing workflows,
+            and constantly refining how I learn and work.
+          </p>
+        </div>
+
+        {/* Wide card */}
+        <div className="md:col-span-3 minimal-card rounded-2xl p-6">
+          <p className="text-sm text-muted-foreground mb-2">
+            📓 why this site exists
+          </p>
+          <p className="text-sm leading-relaxed max-w-3xl">
+            This is my thinking space.
+            A place where I document what I learn, experiment with ideas,
+            and build systems for my own understanding — shared openly,
+            imperfectly, and intentionally.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
       
       {/* Recent Blog Posts Section - Compact Grid */}
       <section className="py-12 bg-background/40 backdrop-blur-sm">
@@ -66,38 +136,6 @@ const Index = () => {
         </div>
       </section>
       
-      {/* Recent TIL Section - Journal Style */}
-      <section className="py-12">
-        <div className="container px-6">
-          <div className="mx-auto max-w-5xl">
-            <div className="flex items-center justify-between mb-6">
-              <div className="flex items-center gap-3">
-                <Lightbulb className="h-5 w-5 text-secondary/80" />
-                <h2 className="text-xl font-medium tracking-tight">today i learned</h2>
-              </div>
-              <Link 
-                to="/til"
-                className="inline-flex items-center text-sm text-secondary/80 hover:text-secondary transition-colors font-medium"
-              >
-                view all
-                <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
-              </Link>
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {recentTIL.length > 0 ? (
-                recentTIL.map((item) => (
-                  <TILCard key={item.id} item={item} />
-                ))
-              ) : (
-                <div className="col-span-2 text-center py-12">
-                  <p className="text-muted-foreground text-sm font-light">no journal entries yet</p>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* Compact Stats Section at Bottom */}
       <section className="py-6 bg-background/60 backdrop-blur-sm border-t border-border/30">
