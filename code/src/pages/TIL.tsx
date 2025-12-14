@@ -85,7 +85,7 @@ const TIL = () => {
           </aside>
 
           {/* TIL entries content - takes full surface */}
-          <main className="h-full overflow-y-auto px-8 py-8">
+          <main className="h-full overflow-y-auto px-8 py-8 pl-[360px]">
             <div className="max-w-4xl mx-auto">
               <div className="mb-8">
                 <h1 className="text-2xl font-bold mb-2 bg-gradient-to-r from-secondary to-accent bg-clip-text text-transparent">

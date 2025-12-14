@@ -52,7 +52,7 @@ const NotesLayout = () => {
           </aside>
 
           {/* Markdown content - takes full surface */}
-          <main className="h-full overflow-y-auto px-8 py-8">
+          <main className="h-full overflow-y-auto py-8" style={{ paddingLeft: '500px', paddingRight: '32px' }}>
             <div className="max-w-4xl mx-auto">
               <MarkdownRenderer post={selectedPost} />
             </div>
