@@ -240,14 +240,14 @@ const SidebarTree = ({ posts, selectedPath, onFileSelect }: SidebarTreeProps) =>
   };
 
   // Calculate dynamic width based on expansion depth
-  // Base: 100px (small pill), add ~80px per level of nesting
-  const baseWidth = 100;
-  const widthPerLevel = 80;
+  // Base: 280px (wider pill for readability), add ~100px per level of nesting
+  const baseWidth = 280;
+  const widthPerLevel = 100;
   const calculatedWidth = baseWidth + (maxExpandedDepth * widthPerLevel);
 
   return (
     <div
-      className="h-full overflow-y-auto overflow-x-hidden custom-scrollbar transition-all duration-300 ease-out flex flex-col justify-center"
+      className="h-full overflow-y-auto overflow-x-hidden custom-scrollbar transition-all duration-200 ease-out flex flex-col justify-center"
       style={{ width: `${calculatedWidth}px` }}
     >
       <div className="p-4 space-y-2">
