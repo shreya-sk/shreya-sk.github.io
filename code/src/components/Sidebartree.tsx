@@ -243,7 +243,7 @@ const SidebarTree = ({ posts, selectedPath, onFileSelect }: SidebarTreeProps) =>
   };
 
   // Calculate dynamic width based on expansion depth
-  // Base: 560px (wide pill for full directory name visibility), add ~100px per level of nesting
+  // Base: 350px (wide pill for full directory name visibility), add ~100px per level of nesting
   const baseWidth = 560;
   const widthPerLevel = 100;
   const calculatedWidth = baseWidth + (maxExpandedDepth * widthPerLevel);
