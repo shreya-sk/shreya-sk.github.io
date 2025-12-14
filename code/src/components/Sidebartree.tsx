@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
-import { Folder, FileText, ChevronRight } from 'lucide-react';
+import { FileText, ChevronRight } from 'lucide-react';
 import { BlogPost } from '../types/blog';
+import fileIcon from '../assets/file-icon.png';
 
 interface TreeNode {
   name: string;
@@ -142,9 +143,11 @@ const TreeNodeComponent = ({
       >
         {/* Icon */}
         {node.type === 'folder' ? (
-          <Folder
+          <img
+            src={fileIcon}
+            alt="folder"
             className={`h-4 w-4 transition-all duration-200 ${
-              isHovered ? 'text-primary scale-110' : 'text-foreground/60'
+              isHovered ? 'scale-110' : ''
             }`}
           />
         ) : (
@@ -240,8 +243,8 @@ const SidebarTree = ({ posts, selectedPath, onFileSelect }: SidebarTreeProps) =>
   };
 
   // Calculate dynamic width based on expansion depth
-  // Base: 280px (wider pill for readability), add ~100px per level of nesting
-  const baseWidth = 280;
+  // Base: 560px (wide pill for full directory name visibility), add ~100px per level of nesting
+  const baseWidth = 560;
   const widthPerLevel = 100;
   const calculatedWidth = baseWidth + (maxExpandedDepth * widthPerLevel);
 
