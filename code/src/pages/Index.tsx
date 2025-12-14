@@ -1,5 +1,5 @@
 import Hero from "@/components/Hero";
-import { ArrowRight, BookOpen, Lightbulb } from "lucide-react";
+import { ArrowRight, BookOpen, Lightbulb, Briefcase, Brain, Heart, FileText } from "lucide-react";
 import { Link } from "react-router-dom";
 import BlogCard from "@/components/BlogCard";
 import TILCard from "@/components/TILCard";
@@ -27,67 +27,101 @@ const Index = () => {
     <div className="min-h-screen sage-gradient">
       <Hero />
 
-    <section className="py-12">
+    <section className="py-16 relative overflow-hidden">
   <div className="container px-6">
     <div className="mx-auto max-w-5xl">
 
-      {/* Header */}
-      <div className="flex items-center gap-3 mb-6">
-        <Lightbulb className="h-5 w-5 text-secondary floating-icon" />
-        <h2 className="text-xl font-medium tracking-tight">
-          Hi, there!
+      {/* Header with gradient */}
+      <div className="flex items-center gap-3 mb-10">
+        <div className="p-2 rounded-xl bg-gradient-to-br from-secondary/20 to-primary/10 backdrop-blur-sm">
+          <Lightbulb className="h-5 w-5 text-secondary" />
+        </div>
+        <h2 className="text-2xl font-semibold bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent tracking-tight">
+          getting to know me
         </h2>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
 
-        {/* Card 1 */}
-        <div className="journal-card rounded-2xl p-5 space-y-3">
-          <p className="text-sm text-muted-foreground">
-            what I do
-          </p>
-          <p className="text-sm leading-relaxed">
-            I’m a DevOps engineer - still learning, always curious.
-            I like understanding systems end-to-end and making them calmer,
-            clearer, and easier to reason about.
+        {/* Card 1 - What I do */}
+        <div className="minimal-card rounded-3xl p-6 space-y-4 hover:shadow-xl transition-all duration-300 group border border-primary/10">
+          <div className="flex items-center gap-3">
+            <div className="p-2 rounded-xl bg-gradient-to-br from-primary/20 to-primary/10">
+              <Briefcase className="h-4 w-4 text-primary" />
+            </div>
+            <p className="text-xs font-semibold uppercase tracking-wider text-primary/70">
+              what I do
+            </p>
+          </div>
+          <p className="text-sm leading-relaxed text-foreground/80">
+            I'm a DevOps engineer - still learning, always curious.
+            I like understanding systems end-to-end and making them <span className="text-primary font-medium">calmer, clearer</span>, and easier to reason about.
           </p>
         </div>
 
-        {/* Card 2 */}
-        <div className="journal-card rounded-2xl p-5 space-y-3">
-          <p className="text-sm text-muted-foreground">
-            how I think
-          </p>
-          <ul className="text-sm space-y-1">
-            <li>→ everything needs a system</li>
-            <li>→ clarity beats cleverness</li>
-            <li>→ if it’s messy, I want to organise it</li>
-            <li>→ if it’s confusing, I want to map it</li>
+        {/* Card 2 - How I think */}
+        <div className="minimal-card rounded-3xl p-6 space-y-4 hover:shadow-xl transition-all duration-300 group border border-secondary/10">
+          <div className="flex items-center gap-3">
+            <div className="p-2 rounded-xl bg-gradient-to-br from-secondary/20 to-secondary/10">
+              <Brain className="h-4 w-4 text-secondary" />
+            </div>
+            <p className="text-xs font-semibold uppercase tracking-wider text-secondary/70">
+              how I think
+            </p>
+          </div>
+          <ul className="text-sm space-y-2.5 text-foreground/80">
+            <li className="flex items-start gap-2">
+              <span className="text-secondary mt-0.5">→</span>
+              <span>everything needs a system</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-secondary mt-0.5">→</span>
+              <span><span className="font-medium text-secondary">clarity</span> beats cleverness</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-secondary mt-0.5">→</span>
+              <span>if it's messy, I want to organise it</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-secondary mt-0.5">→</span>
+              <span>if it's confusing, I want to map it</span>
+            </li>
           </ul>
         </div>
 
-        {/* Card 3 */}
-        <div className="journal-card rounded-2xl p-5 space-y-3">
-          <p className="text-sm text-muted-foreground">
-            things I love
-          </p>
-          <p className="journal-text text-sm">
+        {/* Card 3 - Things I love */}
+        <div className="minimal-card rounded-3xl p-6 space-y-4 hover:shadow-xl transition-all duration-300 group border border-accent/10">
+          <div className="flex items-center gap-3">
+            <div className="p-2 rounded-xl bg-gradient-to-br from-accent/20 to-accent/10">
+              <Heart className="h-4 w-4 text-accent" />
+            </div>
+            <p className="text-xs font-semibold uppercase tracking-wider text-accent/70">
+              things I love
+            </p>
+          </div>
+          <p className="text-sm leading-relaxed text-foreground/80">
             reading, music, research, making notes, designing workflows,
-            and constantly refining how I learn and work.
+            and constantly <span className="text-accent font-medium">refining</span> how I learn and work.
           </p>
         </div>
 
-        {/* Wide card */}
-        <div className="md:col-span-3 minimal-card rounded-2xl p-6">
-          <p className="text-sm text-muted-foreground mb-2">
-            📓 why this site exists
-          </p>
-          <p className="text-sm leading-relaxed max-w-3xl">
-            This is my thinking space.
-            A place where I document what I learn, experiment with ideas,
-            and build systems for my own understanding — shared openly,
-            imperfectly, and intentionally.
-          </p>
+        {/* Wide card - Why this site exists */}
+        <div className="md:col-span-3 minimal-card rounded-3xl p-8 border border-primary/10 hover:border-primary/20 transition-all duration-300 bg-gradient-to-br from-background/95 to-background/80">
+          <div className="flex items-start gap-4">
+            <div className="p-3 rounded-2xl bg-gradient-to-br from-primary/15 to-secondary/10">
+              <FileText className="h-5 w-5 text-primary" />
+            </div>
+            <div className="flex-1 space-y-3">
+              <p className="text-sm font-semibold uppercase tracking-wider text-primary/70">
+                why this site exists
+              </p>
+              <p className="text-base leading-relaxed text-foreground/80 max-w-3xl">
+                This is my <span className="text-primary font-medium">thinking space</span>.
+                A place where I document what I learn, experiment with ideas,
+                and build systems for my own understanding — shared <span className="text-secondary font-medium">openly, imperfectly</span>, and intentionally.
+              </p>
+            </div>
+          </div>
         </div>
 
       </div>
