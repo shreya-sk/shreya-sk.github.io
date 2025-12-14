@@ -28,67 +28,107 @@ const Index = () => {
       <Hero />
       
 
-    <section className="py-12">
+    <section className="py-20 relative">
   <div className="container px-6">
-    <div className="mx-auto max-w-5xl">
+    <div className="mx-auto max-w-6xl">
 
-      {/* Header */}
-      <div className="flex items-center gap-3 mb-6">
-        <Lightbulb className="h-5 w-5 text-secondary floating-icon" />
-        <h2 className="text-xl font-medium tracking-tight">
-          Hi, there!
+      {/* Bold Header */}
+      <div className="mb-16 text-center">
+        <h2 className="text-5xl md:text-6xl font-bold mb-4 bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent leading-tight">
+          getting to know me
         </h2>
+        <p className="text-lg text-foreground/60 max-w-2xl mx-auto">
+          DevOps engineer · Design thinker · System builder
+        </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
 
-        {/* Card 1 */}
-        <div className="journal-card rounded-2xl p-5 space-y-3">
-          <p className="text-sm text-muted-foreground">
-            what I do
-          </p>
-          <p className="text-sm leading-relaxed">
-            I’m a DevOps engineer - still learning, always curious.
-            I like understanding systems end-to-end and making them calmer,
-            clearer, and easier to reason about.
-          </p>
+        {/* Card 1 - Vibrant Primary */}
+        <div className="group relative">
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary/5 rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-300"></div>
+          <div className="relative bg-white/90 backdrop-blur-xl rounded-3xl p-8 shadow-2xl hover:shadow-primary/20 hover:-translate-y-1 transition-all duration-300 border border-primary/20">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-primary to-primary/70 flex items-center justify-center shadow-lg shadow-primary/30">
+                <span className="text-2xl">💼</span>
+              </div>
+              <h3 className="text-xl font-bold text-primary">what I do</h3>
+            </div>
+            <p className="text-base leading-relaxed text-foreground/80">
+              I'm a DevOps engineer - still learning, always curious.
+              I like understanding systems end-to-end and making them <span className="font-semibold text-primary">calmer, clearer</span>, and easier to reason about.
+            </p>
+          </div>
         </div>
 
-        {/* Card 2 */}
-        <div className="journal-card rounded-2xl p-5 space-y-3">
-          <p className="text-sm text-muted-foreground">
-            how I think
-          </p>
-          <ul className="text-sm space-y-1">
-            <li>→ everything needs a system</li>
-            <li>→ clarity beats cleverness</li>
-            <li>→ if it’s messy, I want to organise it</li>
-            <li>→ if it’s confusing, I want to map it</li>
-          </ul>
+        {/* Card 2 - Vibrant Secondary */}
+        <div className="group relative">
+          <div className="absolute inset-0 bg-gradient-to-br from-secondary/20 to-secondary/5 rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-300"></div>
+          <div className="relative bg-white/90 backdrop-blur-xl rounded-3xl p-8 shadow-2xl hover:shadow-secondary/20 hover:-translate-y-1 transition-all duration-300 border border-secondary/20">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-secondary to-secondary/70 flex items-center justify-center shadow-lg shadow-secondary/30">
+                <span className="text-2xl">🧠</span>
+              </div>
+              <h3 className="text-xl font-bold text-secondary">how I think</h3>
+            </div>
+            <ul className="space-y-3 text-base text-foreground/80">
+              <li className="flex items-start gap-3">
+                <span className="text-secondary font-bold mt-1">→</span>
+                <span><span className="font-semibold text-foreground">everything</span> needs a system</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-secondary font-bold mt-1">→</span>
+                <span><span className="font-semibold text-secondary">clarity</span> beats cleverness</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-secondary font-bold mt-1">→</span>
+                <span>if it's messy, I <span className="font-semibold text-foreground">organize</span> it</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-secondary font-bold mt-1">→</span>
+                <span>if it's confusing, I <span className="font-semibold text-foreground">map</span> it</span>
+              </li>
+            </ul>
+          </div>
         </div>
 
-        {/* Card 3 */}
-        <div className="journal-card rounded-2xl p-5 space-y-3">
-          <p className="text-sm text-muted-foreground">
-            things I love
-          </p>
-          <p className="journal-text text-sm">
-            reading, music, research, making notes, designing workflows,
-            and constantly refining how I learn and work.
-          </p>
+        {/* Card 3 - Vibrant Accent */}
+        <div className="group relative">
+          <div className="absolute inset-0 bg-gradient-to-br from-accent/20 to-accent/5 rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-300"></div>
+          <div className="relative bg-white/90 backdrop-blur-xl rounded-3xl p-8 shadow-2xl hover:shadow-accent/20 hover:-translate-y-1 transition-all duration-300 border border-accent/20">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-accent to-accent/70 flex items-center justify-center shadow-lg shadow-accent/30">
+                <span className="text-2xl">✨</span>
+              </div>
+              <h3 className="text-xl font-bold text-accent">things I love</h3>
+            </div>
+            <p className="text-base leading-relaxed text-foreground/80">
+              reading, music, research, making notes, designing workflows,
+              and constantly <span className="font-semibold text-accent">refining</span> how I learn and work.
+            </p>
+          </div>
         </div>
 
-        {/* Wide card */}
-        <div className="md:col-span-3 minimal-card rounded-2xl p-6">
-          <p className="text-sm text-muted-foreground mb-2">
-            📓 why this site exists
-          </p>
-          <p className="text-sm leading-relaxed max-w-3xl">
-            This is my thinking space.
-            A place where I document what I learn, experiment with ideas,
-            and build systems for my own understanding — shared openly,
-            imperfectly, and intentionally.
-          </p>
+        {/* Wide card - Bold Statement */}
+        <div className="md:col-span-3 group relative">
+          <div className="absolute inset-0 bg-gradient-to-r from-primary/10 via-secondary/10 to-accent/10 rounded-3xl blur-2xl"></div>
+          <div className="relative bg-gradient-to-br from-white/95 to-white/85 backdrop-blur-xl rounded-3xl p-10 shadow-2xl border border-primary/20">
+            <div className="flex items-start gap-6">
+              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary via-secondary to-accent flex items-center justify-center shadow-xl shrink-0">
+                <span className="text-3xl">💭</span>
+              </div>
+              <div className="flex-1">
+                <h3 className="text-2xl font-bold mb-4 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                  why this site exists
+                </h3>
+                <p className="text-lg leading-relaxed text-foreground/80 max-w-3xl">
+                  This is my <span className="font-bold text-primary">thinking space</span>.
+                  A place where I document what I learn, experiment with ideas,
+                  and build systems for my own understanding — shared <span className="font-bold text-secondary">openly, imperfectly</span>, and intentionally.
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
 
       </div>
