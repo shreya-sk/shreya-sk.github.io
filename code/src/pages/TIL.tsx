@@ -2,12 +2,12 @@ import { useState, useMemo } from "react";
 import TILCard from "@/components/TILCard";
 import WeekCalendar from "@/components/WeekCalendar";
 import { useTILEntries } from "@/hooks/useTILEntries";
-import { Lightbulb } from "lucide-react";
 
 const TIL = () => {
   const [selectedWeek, setSelectedWeek] = useState(new Date());
   const { data: tilEntries = [], isLoading, error } = useTILEntries();
 
+  // Get Sunday of the selected week
   const getWeekStart = (date: Date): Date => {
     const d = new Date(date);
     const day = d.getDay();
@@ -15,12 +15,14 @@ const TIL = () => {
     return new Date(d.setDate(diff));
   };
 
+  // Get week end (Saturday)
   const getWeekEnd = (weekStart: Date): Date => {
     const weekEnd = new Date(weekStart);
     weekEnd.setDate(weekStart.getDate() + 6);
     return weekEnd;
   };
 
+  // Calculate entry counts per day for the calendar
   const entryCounts = useMemo(() => {
     const counts: { [date: string]: number } = {};
     tilEntries.forEach(entry => {
@@ -31,6 +33,7 @@ const TIL = () => {
     return counts;
   }, [tilEntries]);
 
+  // Filter TIL entries for the selected week
   const weekStart = getWeekStart(selectedWeek);
   const weekEnd = getWeekEnd(weekStart);
 
@@ -42,13 +45,10 @@ const TIL = () => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen liquid-gradient flex items-center justify-center">
+      <div className="min-h-screen sage-gradient flex items-center justify-center">
         <div className="text-center space-y-4">
-          <div className="relative w-16 h-16 mx-auto">
-            <div className="absolute inset-0 rounded-full border-2 border-secondary/20"></div>
-            <div className="absolute inset-0 rounded-full border-2 border-secondary border-t-transparent animate-spin"></div>
-          </div>
-          <p className="text-muted-foreground">loading journal entries...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
+          <p className="text-foreground/60 text-sm">loading journal entries...</p>
         </div>
       </div>
     );
@@ -56,11 +56,11 @@ const TIL = () => {
 
   if (error) {
     return (
-      <div className="min-h-screen liquid-gradient flex items-center justify-center">
-        <div className="text-center space-y-4 max-w-md ios-card rounded-3xl p-8">
+      <div className="min-h-screen sage-gradient flex items-center justify-center">
+        <div className="text-center space-y-4 max-w-md">
           <div className="text-4xl">⚠️</div>
           <h2 className="text-xl font-semibold text-foreground">Failed to load entries</h2>
-          <p className="text-muted-foreground text-sm">
+          <p className="text-foreground/60 text-sm">
             Please check your internet connection and try again.
           </p>
         </div>
@@ -69,16 +69,13 @@ const TIL = () => {
   }
 
   return (
-    <div className="min-h-screen liquid-gradient">
-      {/* Background orbs */}
-      <div className="glow-orb glow-orb-secondary w-[400px] h-[400px] top-20 -right-40" style={{ animationDelay: '0s' }}></div>
-      <div className="glow-orb glow-orb-primary w-[300px] h-[300px] bottom-40 -left-20" style={{ animationDelay: '3s' }}></div>
-
-      <div className="h-screen px-4 md:px-6 py-6">
-        <div className="relative h-full ios-card rounded-3xl overflow-hidden">
-          {/* Sidebar calendar - hidden on mobile */}
-          <aside className="hidden lg:block absolute left-6 top-1/2 -translate-y-1/2 z-10">
-            <div className="ios-card rounded-2xl overflow-hidden" style={{ width: '300px' }}>
+    <div className="min-h-screen sage-gradient">
+      <div className="h-screen px-4 py-4">
+        {/* Single unified glass surface */}
+        <div className="relative h-full liquid-glass-content rounded-3xl overflow-hidden shadow-2xl">
+          {/* Week calendar pill floating on the left side of the surface */}
+          <aside className="absolute left-6 top-1/2 -translate-y-1/2 z-10">
+            <div className="liquid-glass-pill rounded-3xl overflow-hidden shadow-2xl" style={{ width: '320px' }}>
               <WeekCalendar
                 selectedWeek={selectedWeek}
                 onWeekChange={setSelectedWeek}
@@ -87,47 +84,27 @@ const TIL = () => {
             </div>
           </aside>
 
-          {/* Main content */}
-          <main className="h-full overflow-y-auto ios-scrollbar px-6 md:px-8 py-8 lg:pl-[340px]">
-            <div className="max-w-3xl mx-auto">
-              {/* Mobile calendar */}
-              <div className="lg:hidden mb-6">
-                <div className="ios-card rounded-2xl overflow-hidden">
-                  <WeekCalendar
-                    selectedWeek={selectedWeek}
-                    onWeekChange={setSelectedWeek}
-                    entryCounts={entryCounts}
-                  />
-                </div>
+          {/* TIL entries content - takes full surface */}
+          <main className="h-full overflow-y-auto px-8 py-8 pl-[360px]">
+            <div className="max-w-4xl mx-auto">
+              <div className="mb-8 md:ml-24"> 
+
+                <h1 className="text-3xl font-bold mb-2 bg-gradient-to-r from-secondary to-accent bg-clip-text text-transparent">
+                  my weekly learnings
+                </h1>
+                <p className="text-foreground/60 text-sm">
+                  {filteredEntries.length} {filteredEntries.length === 1 ? 'entry' : 'entries'} this week
+                </p>
               </div>
 
-              {/* Header */}
-              <div className="mb-8">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-secondary to-secondary/60 flex items-center justify-center shadow-lg shadow-secondary/30">
-                    <Lightbulb className="h-6 w-6 text-secondary-foreground" />
-                  </div>
-                  <div>
-                    <h1 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-secondary to-accent bg-clip-text text-transparent">
-                      my weekly learnings
-                    </h1>
-                    <p className="text-muted-foreground text-sm">
-                      {filteredEntries.length} {filteredEntries.length === 1 ? 'entry' : 'entries'} this week
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Entries */}
-              <div className="space-y-4">
+              <div className="space-y-3">
                 {filteredEntries.length > 0 ? (
                   filteredEntries.map((entry) => (
                     <TILCard key={entry.id} item={entry} />
                   ))
                 ) : (
-                  <div className="text-center py-20 ios-card rounded-2xl">
-                    <div className="text-4xl mb-4">📝</div>
-                    <p className="text-muted-foreground">
+                  <div className="text-center py-16 minimal-card rounded-3xl">
+                    <p className="text-foreground/60 text-sm">
                       no journal entries for this week
                     </p>
                   </div>
