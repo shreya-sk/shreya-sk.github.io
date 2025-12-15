@@ -9,13 +9,11 @@ interface TILCardProps {
 }
 
 const TILCard = ({ item }: TILCardProps) => {
-  // Format date to show day and date (e.g., "Monday, Jan 16")
   const formatDate = (dateString: string) => {
     if (!dateString) return { day: 'N/A', date: 'N/A' };
     
     try {
       const date = new Date(dateString);
-      // Check if date is valid
       if (isNaN(date.getTime())) {
         return { day: 'N/A', date: dateString };
       }
@@ -41,21 +39,23 @@ const TILCard = ({ item }: TILCardProps) => {
   const { day, date } = formatDate(item.date);
 
   return (
-    <article className="journal-card rounded-2xl p-4 group hover:scale-[1.01] transition-all border-l-4 border-l-secondary/40 hover:border-l-secondary">
-      <div className="flex gap-3">
-        {/* Date column - styled like a journal tab */}
-        <div className="flex-shrink-0 w-16 journal-date-tab">
-          <div className="text-xs font-bold text-secondary uppercase tracking-wide">
-            {day}
-          </div>
-          <div className="text-xs text-foreground/60 mt-0.5">
-            {date}
+    <article className="group ios-card rounded-2xl p-5 hover:border-secondary/40 transition-all duration-300">
+      <div className="flex gap-4">
+        {/* Date column */}
+        <div className="flex-shrink-0 w-16">
+          <div className="flex flex-col items-center p-3 rounded-xl bg-secondary/10 border border-secondary/20 group-hover:bg-secondary/20 transition-colors">
+            <div className="text-xs font-bold text-secondary uppercase tracking-wide">
+              {day}
+            </div>
+            <div className="text-xs text-muted-foreground mt-0.5">
+              {date}
+            </div>
           </div>
         </div>
 
-        {/* Content - journal entry style */}
+        {/* Content */}
         <div className="flex-1 min-w-0">
-          <p className="text-sm text-foreground/80 leading-relaxed journal-text">
+          <p className="text-sm text-foreground/80 leading-relaxed">
             {item.content || 'No content available'}
           </p>
         </div>
