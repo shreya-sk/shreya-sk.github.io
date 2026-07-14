@@ -1,4 +1,4 @@
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
 
 interface WeekCalendarProps {
   selectedWeek: Date;
@@ -6,136 +6,105 @@ interface WeekCalendarProps {
   entryCounts: { [date: string]: number };
 }
 
+// Get Sunday of the current week
+export const getWeekStart = (date: Date): Date => {
+  const d = new Date(date);
+  const day = d.getDay();
+  const diff = d.getDate() - day; // Adjust to Sunday
+  return new Date(d.setDate(diff));
+};
+
+// Get the 7 days of the week (Sunday to Saturday)
+export const getWeekDays = (weekStart: Date): Date[] => {
+  const days: Date[] = [];
+  for (let i = 0; i < 7; i++) {
+    const day = new Date(weekStart);
+    day.setDate(weekStart.getDate() + i);
+    days.push(day);
+  }
+  return days;
+};
+
+// Format date as YYYY-MM-DD for comparison (local time, not UTC)
+export const formatDateKey = (date: Date): string => {
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, '0');
+  const d = String(date.getDate()).padStart(2, '0');
+  return `${y}-${m}-${d}`;
+};
+
+export const DAY_NAMES = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+// Horizontal week strip: ← [ SUN | MON | ... | SAT ] →
 const WeekCalendar = ({ selectedWeek, onWeekChange, entryCounts }: WeekCalendarProps) => {
-  // Get Sunday of the current week
-  const getWeekStart = (date: Date): Date => {
-    const d = new Date(date);
-    const day = d.getDay();
-    const diff = d.getDate() - day; // Adjust to Sunday
-    return new Date(d.setDate(diff));
-  };
-
-  // Get the 7 days of the week (Sunday to Saturday)
-  const getWeekDays = (weekStart: Date): Date[] => {
-    const days: Date[] = [];
-    for (let i = 0; i < 7; i++) {
-      const day = new Date(weekStart);
-      day.setDate(weekStart.getDate() + i);
-      days.push(day);
-    }
-    return days;
-  };
-
-  // Navigate to previous/next week
   const navigateWeek = (direction: 'prev' | 'next') => {
     const newDate = new Date(selectedWeek);
     newDate.setDate(newDate.getDate() + (direction === 'next' ? 7 : -7));
     onWeekChange(newDate);
   };
 
-  // Format date range for header
   const formatWeekRange = (weekStart: Date): string => {
     const weekEnd = new Date(weekStart);
     weekEnd.setDate(weekStart.getDate() + 6);
-
-    const formatDate = (date: Date) => {
-      const day = date.getDate();
-      const suffix = day === 1 || day === 21 || day === 31 ? 'st'
-        : day === 2 || day === 22 ? 'nd'
-        : day === 3 || day === 23 ? 'rd'
-        : 'th';
-      const month = date.toLocaleDateString('en-US', { month: 'short' });
-      return `${day}${suffix} ${month}`;
-    };
-
-    const year = weekStart.getFullYear();
-    return `${formatDate(weekStart)} - ${formatDate(weekEnd)} ${year}`;
-  };
-
-  // Format date as YYYY-MM-DD for comparison
-  const formatDateKey = (date: Date): string => {
-    return date.toISOString().split('T')[0];
+    const fmt = (date: Date) => date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    return `${fmt(weekStart)} — ${fmt(weekEnd)}`;
   };
 
   const weekStart = getWeekStart(selectedWeek);
   const weekDays = getWeekDays(weekStart);
-  const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  const todayKey = formatDateKey(new Date());
 
   return (
-    <div className="h-full flex flex-col p-6">
-      {/* Week Navigation Header */}
-      <div className="mb-6">
-        <div className="flex items-center justify-between mb-4">
-          <button
-            onClick={() => navigateWeek('prev')}
-            className="p-2 hover:text-accent hover:bg-muted transition-colors"
-            aria-label="Previous week"
-          >
-            <ChevronLeft className="h-5 w-5 text-foreground/70" />
-          </button>
-
-          <button
-            onClick={() => navigateWeek('next')}
-            className="p-2 hover:text-accent hover:bg-muted transition-colors"
-            aria-label="Next week"
-          >
-            <ChevronRight className="h-5 w-5 text-foreground/70" />
-          </button>
-        </div>
-
-        {/* Week Range */}
-        <h3 className="text-xs font-semibold text-foreground/70 text-center uppercase tracking-wide">
-          {formatWeekRange(weekStart)}
-        </h3>
+    <div>
+      {/* Week range */}
+      <div className="text-center font-mono text-xs uppercase tracking-wide text-muted-foreground mb-4">
+        {formatWeekRange(weekStart)}
       </div>
 
-      {/* Week Days */}
-      <div className="flex-1 space-y-3">
-        {weekDays.map((day, index) => {
-          const dateKey = formatDateKey(day);
-          const count = entryCounts[dateKey] || 0;
-          const isToday = formatDateKey(new Date()) === dateKey;
+      {/* Strip */}
+      <div className="flex items-center gap-4">
+        <button
+          onClick={() => navigateWeek('prev')}
+          className="p-3 border border-foreground/20 hover:border-accent hover:text-accent transition-colors"
+          aria-label="Previous week"
+        >
+          <ArrowLeft className="h-4 w-4" />
+        </button>
 
-          return (
-            <div
-              key={dateKey}
-              className={`
-                relative p-3 transition-colors
-                ${count > 0
-                  ? 'bg-accent/5 hover:bg-accent/10 cursor-pointer'
-                  : 'hover:bg-muted'
-                }
-                ${isToday ? 'border-2 border-accent' : 'border border-foreground/20'}
-              `}
-            >
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className={`
-                    font-mono text-xs uppercase tracking-wide
-                    ${count > 0 ? 'text-accent' : 'text-foreground/50'}
-                  `}>
-                    {dayNames[index]}
-                  </div>
-                  <div className={`
-                    text-sm font-medium
-                    ${count > 0 ? 'text-foreground' : 'text-foreground/40'}
-                  `}>
-                    {day.getDate()}
-                  </div>
+        <div className="flex-1 grid grid-cols-7 border border-foreground/20">
+          {weekDays.map((day, i) => {
+            const key = formatDateKey(day);
+            const isToday = key === todayKey;
+            const hasEntries = (entryCounts[key] || 0) > 0;
+            return (
+              <div
+                key={key}
+                className={`text-center py-4 border-r border-foreground/20 last:border-r-0 transition-colors ${
+                  isToday ? 'bg-accent/10' : ''
+                }`}
+              >
+                <div
+                  className={`font-mono text-xs uppercase tracking-wide mb-1 ${
+                    isToday ? 'text-accent' : hasEntries ? 'text-foreground/70' : 'text-foreground/40'
+                  }`}
+                >
+                  {DAY_NAMES[i]}
                 </div>
-
-                {count > 0 && (
-                  <div className="flex items-center gap-2">
-                    <span className="font-mono text-[11px] uppercase tracking-wide text-foreground/60">
-                      {count} {count === 1 ? 'entry' : 'entries'}
-                    </span>
-                    <div className="w-2 h-2 bg-accent" />
-                  </div>
-                )}
+                <div className={`text-2xl font-extrabold ${isToday ? 'text-accent' : hasEntries ? '' : 'text-foreground/40'}`}>
+                  {day.getDate()}
+                </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
+
+        <button
+          onClick={() => navigateWeek('next')}
+          className="p-3 border border-foreground/20 hover:border-accent hover:text-accent transition-colors"
+          aria-label="Next week"
+        >
+          <ArrowRight className="h-4 w-4" />
+        </button>
       </div>
     </div>
   );

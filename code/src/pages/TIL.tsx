@@ -1,26 +1,11 @@
 import { useState, useMemo } from "react";
-import TILCard from "@/components/TILCard";
-import WeekCalendar from "@/components/WeekCalendar";
+import WeekCalendar, { getWeekStart, getWeekDays, formatDateKey, DAY_NAMES } from "@/components/WeekCalendar";
 import { useTILEntries } from "@/hooks/useTILEntries";
+import { TILEntry } from "@/types/blog";
 
 const TIL = () => {
   const [selectedWeek, setSelectedWeek] = useState(new Date());
   const { data: tilEntries = [], isLoading, error } = useTILEntries();
-
-  // Get Sunday of the selected week
-  const getWeekStart = (date: Date): Date => {
-    const d = new Date(date);
-    const day = d.getDay();
-    const diff = d.getDate() - day;
-    return new Date(d.setDate(diff));
-  };
-
-  // Get week end (Saturday)
-  const getWeekEnd = (weekStart: Date): Date => {
-    const weekEnd = new Date(weekStart);
-    weekEnd.setDate(weekStart.getDate() + 6);
-    return weekEnd;
-  };
 
   // Calculate entry counts per day for the calendar
   const entryCounts = useMemo(() => {
@@ -33,22 +18,29 @@ const TIL = () => {
     return counts;
   }, [tilEntries]);
 
-  // Filter TIL entries for the selected week
   const weekStart = getWeekStart(selectedWeek);
-  const weekEnd = getWeekEnd(weekStart);
+  const weekDays = getWeekDays(weekStart);
 
-  const filteredEntries = tilEntries.filter(entry => {
-    if (!entry || !entry.date) return false;
-    const entryDate = new Date(entry.date);
-    return entryDate >= weekStart && entryDate <= weekEnd;
-  });
+  // Group this week's entries by day
+  const entriesByDay = useMemo(() => {
+    const groups: { [date: string]: TILEntry[] } = {};
+    tilEntries.forEach(entry => {
+      if (entry.date) {
+        (groups[entry.date] = groups[entry.date] || []).push(entry);
+      }
+    });
+    return groups;
+  }, [tilEntries]);
+
+  const weekEntryCount = weekDays.reduce(
+    (sum, day) => sum + (entriesByDay[formatDateKey(day)]?.length || 0),
+    0
+  );
 
   if (isLoading) {
     return (
       <div className="min-h-screen sage-gradient flex items-center justify-center">
-        <div className="text-center">
-          <p className="text-muted-foreground text-sm font-mono">loading journal entries...</p>
-        </div>
+        <p className="text-muted-foreground text-sm font-mono">loading journal entries...</p>
       </div>
     );
   }
@@ -56,10 +48,9 @@ const TIL = () => {
   if (error) {
     return (
       <div className="min-h-screen sage-gradient flex items-center justify-center">
-        <div className="text-center space-y-4 max-w-md">
-          <div className="text-4xl">⚠️</div>
-          <h2 className="text-xl font-semibold text-foreground">Failed to load entries</h2>
-          <p className="text-foreground/60 text-sm">
+        <div className="text-center space-y-2 max-w-md">
+          <h2 className="text-xl font-extrabold uppercase tracking-tighter">Failed to load entries</h2>
+          <p className="text-muted-foreground text-sm font-mono">
             Please check your internet connection and try again.
           </p>
         </div>
@@ -69,48 +60,57 @@ const TIL = () => {
 
   return (
     <div className="min-h-screen sage-gradient">
-      <div className="h-screen px-4 py-4">
-        {/* Single unified glass surface */}
-        <div className="relative h-full liquid-glass-content overflow-hidden">
-          {/* Week calendar panel on the left side of the surface */}
-          <aside className="absolute left-6 top-1/2 -translate-y-1/2 z-10">
-            <div className="liquid-glass-pill overflow-hidden" style={{ width: '320px' }}>
-              <WeekCalendar
-                selectedWeek={selectedWeek}
-                onWeekChange={setSelectedWeek}
-                entryCounts={entryCounts}
-              />
-            </div>
-          </aside>
+      <div className="container px-6 py-14">
+        <div className="mx-auto max-w-6xl">
+          {/* Heading row */}
+          <div className="mb-8 flex items-baseline justify-between">
+            <h1 className="text-4xl md:text-5xl font-extrabold uppercase tracking-tighter">
+              my weekly learnings
+            </h1>
+            <span className="font-mono text-xs uppercase tracking-wide text-muted-foreground">
+              {weekEntryCount} {weekEntryCount === 1 ? 'entry' : 'entries'} this week
+            </span>
+          </div>
 
-          {/* TIL entries content - takes full surface */}
-          <main className="h-full overflow-y-auto px-8 py-8 pl-[360px]">
-            <div className="max-w-4xl mx-auto">
-              <div className="mb-8 md:ml-24"> 
+          {/* Horizontal week strip */}
+          <WeekCalendar
+            selectedWeek={selectedWeek}
+            onWeekChange={setSelectedWeek}
+            entryCounts={entryCounts}
+          />
 
-                <h1 className="text-3xl font-extrabold uppercase tracking-tighter mb-2">
-                  my weekly learnings<span className="text-accent">;</span>
-                </h1>
-                <p className="font-mono text-xs uppercase tracking-wide text-muted-foreground">
-                  {filteredEntries.length} {filteredEntries.length === 1 ? 'entry' : 'entries'} this week
-                </p>
-              </div>
-
-              <div className="space-y-3">
-                {filteredEntries.length > 0 ? (
-                  filteredEntries.map((entry) => (
-                    <TILCard key={entry.id} item={entry} />
-                  ))
-                ) : (
-                  <div className="text-center py-16 minimal-card">
-                    <p className="text-foreground/60 text-sm">
-                      no journal entries for this week
-                    </p>
+          {/* Day-by-day entries */}
+          <div className="mt-12">
+            {weekDays.map((day, i) => {
+              const key = formatDateKey(day);
+              const dayEntries = entriesByDay[key] || [];
+              return (
+                <div
+                  key={key}
+                  className="grid grid-cols-[80px_1fr] gap-6 py-6 border-b border-foreground/20"
+                >
+                  <div className="font-mono text-xs uppercase tracking-wide text-foreground/70">
+                    <div>{DAY_NAMES[i]}</div>
+                    <div className="mt-0.5">{day.getDate()}</div>
                   </div>
-                )}
-              </div>
-            </div>
-          </main>
+                  <div>
+                    {dayEntries.length > 0 ? (
+                      dayEntries.map((entry) => (
+                        <p
+                          key={entry.id}
+                          className="text-base leading-relaxed mb-4 last:mb-0 whitespace-pre-line"
+                        >
+                          {entry.content || 'No content available'}
+                        </p>
+                      ))
+                    ) : (
+                      <p className="italic text-muted-foreground">snooze day</p>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
     </div>

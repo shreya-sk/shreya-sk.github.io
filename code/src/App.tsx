@@ -12,6 +12,7 @@ import BlogPost from "./pages/BlogPost";
 import TIL from "./pages/TIL";
 import Gists from "./pages/Gists";
 import GistDetail from "./pages/GistDetail";
+import Resume from "./pages/Resume";
 import NotFound from "./pages/NotFound";
 
 // Vault editor is code-split so CodeMirror/LightningFS never weigh down the blog
@@ -34,6 +35,7 @@ const App = () => (
             <Route path="/til" element={<TIL />} />
             <Route path="/gists" element={<Gists />} />
             <Route path="/gists/:gistId" element={<GistDetail />} />
+            <Route path="/resume" element={<Resume />} />
             <Route
               path="/editor"
               element={
