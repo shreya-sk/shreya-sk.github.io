@@ -34,7 +34,7 @@ const Index = () => {
           <div className="mx-auto max-w-6xl">
 
             <div className="mb-16 flex items-baseline justify-between">
-              <h2 className="text-4xl md:text-5xl font-extrabold uppercase tracking-tighter">
+              <h2 className="text-2xl sm:text-3xl md:text-5xl font-extrabold uppercase tracking-tighter whitespace-nowrap">
                 getting to know me
               </h2>
               <span className="font-mono text-xs uppercase tracking-wide text-muted-foreground hidden md:block">

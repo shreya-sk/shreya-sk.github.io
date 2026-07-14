@@ -6,7 +6,7 @@ const Hero = () => {
     <section className="relative sage-gradient border-b-2 border-foreground/90 py-16 md:py-20">
       <div className="container px-4">
         <div className="mx-auto max-w-5xl">
-          <div className="flex flex-col md:flex-row items-end gap-8 md:gap-14">
+          <div className="flex flex-col md:flex-row items-center md:items-end gap-8 md:gap-14">
             {/* Profile Picture */}
             <div className="flex-shrink-0">
               <img
@@ -14,7 +14,7 @@ const Hero = () => {
                 alt="Shreya"
                 className="w-32 h-32 md:w-44 md:h-44 rounded-none object-cover"
               />
-              <div className="mt-3 flex items-center gap-2 font-mono text-[11px] uppercase tracking-wide text-muted-foreground">
+              <div className="mt-3 flex items-center justify-center md:justify-start gap-2 font-mono text-[11px] uppercase tracking-wide text-muted-foreground">
                 <span className="text-accent">●</span> synced from obsidian
               </div>
             </div>
