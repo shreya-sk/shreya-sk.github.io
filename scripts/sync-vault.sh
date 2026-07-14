@@ -30,8 +30,12 @@ COMMON=(--exclude '.obsidian/' --exclude '.trash/' --exclude '.DS_Store'
 
 REPO_ONLY=(--exclude 'Daily - TIL/' --exclude 'Hey, there!.md' --exclude 'test-note.md' --exclude 'recent.json')
 
-# ---- optional: install a launchd agent that runs this every 10 minutes ----
+# ---- optional: install a launchd agent ------------------------------------
+# Usage: --install-agent [minutes]   (default 10; e.g. 60 = hourly, 1440 = daily)
+# Note: while the Mac sleeps the agent pauses; it runs once on wake to catch up.
 if [[ "${1:-}" == "--install-agent" ]]; then
+  MINUTES="${2:-10}"
+  INTERVAL=$((MINUTES * 60))
   PLIST="$HOME/Library/LaunchAgents/com.shreya.vaultsync.plist"
   mkdir -p "$HOME/Library/LaunchAgents"
   cat > "$PLIST" << EOF
@@ -45,7 +49,7 @@ if [[ "${1:-}" == "--install-agent" ]]; then
     <string>/bin/bash</string>
     <string>$REPO/scripts/sync-vault.sh</string>
   </array>
-  <key>StartInterval</key><integer>600</integer>
+  <key>StartInterval</key><integer>$INTERVAL</integer>
   <key>RunAtLoad</key><true/>
   <key>StandardOutPath</key><string>/tmp/vaultsync.log</string>
   <key>StandardErrorPath</key><string>/tmp/vaultsync.log</string>
@@ -54,7 +58,7 @@ if [[ "${1:-}" == "--install-agent" ]]; then
 EOF
   launchctl unload "$PLIST" 2>/dev/null || true
   launchctl load "$PLIST"
-  echo "✔ Installed. Vault syncs every 10 minutes (log: /tmp/vaultsync.log)"
+  echo "✔ Installed. Vault syncs every $MINUTES minute(s) (log: /tmp/vaultsync.log)"
   echo "  To stop: launchctl unload $PLIST"
   exit 0
 fi
