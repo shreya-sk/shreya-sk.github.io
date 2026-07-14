@@ -1,7 +1,6 @@
-import { useState, useRef, useEffect } from 'react';
-import { FileText, ChevronRight } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { ChevronRight } from 'lucide-react';
 import { BlogPost } from '../types/blog';
-import fileIcon from '../assets/file-icon.png';
 
 interface TreeNode {
   name: string;
@@ -67,146 +66,82 @@ const buildTree = (posts: BlogPost[]): TreeNode[] => {
   return root;
 };
 
-// Recursive TreeNode component with hover-intent
+// Recursive tree node — expands on click only, no hover behaviour
 const TreeNodeComponent = ({
   node,
   level = 0,
   selectedPath,
   onFileSelect,
   expandedDirs,
-  hoveredPath,
   onToggleDir,
-  onHoverIntent,
-  onHoverLeave,
-  onExpandedDepthChange,
 }: {
   node: TreeNode;
   level?: number;
   selectedPath: string | null;
   onFileSelect: (post: BlogPost) => void;
   expandedDirs: Set<string>;
-  hoveredPath: string | null;
   onToggleDir: (path: string) => void;
-  onHoverIntent: (path: string) => void;
-  onHoverLeave: () => void;
-  onExpandedDepthChange?: (depth: number, isExpanding: boolean) => void;
 }) => {
   const isSelected = selectedPath === node.path;
   const hasChildren = node.children && node.children.length > 0;
-
-  // Compute visibility: locked OR preview
-  const isLockedOpen = expandedDirs.has(node.path);
-  const isPreviewOpen = hoveredPath === node.path;
-  const isOpen = isLockedOpen || isPreviewOpen;
+  const isOpen = expandedDirs.has(node.path);
+  const isFolder = node.type === 'folder';
 
   const handleClick = () => {
     if (node.type === 'file' && node.post) {
       onFileSelect(node.post);
-    } else if (node.type === 'folder') {
+    } else if (isFolder) {
       onToggleDir(node.path);
     }
   };
 
-  // Track expansion depth
-  useEffect(() => {
-    if (isOpen && hasChildren) {
-      onExpandedDepthChange?.(level, true);
-    } else if (!isOpen && hasChildren) {
-      onExpandedDepthChange?.(level, false);
-    }
-  }, [isOpen, hasChildren, level, onExpandedDepthChange]);
-
   return (
-    <div className="relative">
-      {/* Node item - pill-like design */}
+    <div>
       <div
         className={`
-          group relative flex items-center gap-2 px-3 py-2
-          transition-colors cursor-pointer
-          ${isSelected
-            ? 'bg-accent/10 border-l-2 border-accent'
-            : isPreviewOpen && !isLockedOpen
-              ? 'bg-muted'
-              : 'hover:bg-muted'
-          }
+          flex items-center gap-1.5 px-3 py-2 cursor-pointer select-none transition-colors
+          ${isSelected ? 'bg-accent/10 border-l-2 border-accent' : 'border-l-2 border-transparent hover:bg-muted'}
         `}
-        style={{ marginLeft: `${level * 8}px` }}
+        style={{ paddingLeft: `${12 + level * 14}px` }}
         onClick={handleClick}
-        onMouseEnter={() => hasChildren && onHoverIntent(node.path)}
-        onMouseLeave={onHoverLeave}
       >
-        {/* Icon */}
-        {node.type === 'folder' ? (
-          <img
-            src={fileIcon}
-            alt="folder"
-            className={`h-4 w-4 transition-all duration-200 ${
-              isOpen ? 'scale-110' : ''
+        {/* Chevron marks folders; files get a plain dash marker */}
+        {isFolder ? (
+          <ChevronRight
+            className={`h-3.5 w-3.5 shrink-0 transition-transform ${
+              isOpen ? 'rotate-90 text-accent' : 'text-foreground/40'
             }`}
           />
         ) : (
-          <FileText
-            className={`h-4 w-4 transition-all duration-200 ${
-              isSelected ? 'text-accent' : 'text-foreground/60'
-            }`}
-          />
+          <span className="w-3.5 shrink-0 text-foreground/30 font-mono text-xs leading-none">–</span>
         )}
 
-        {/* Name */}
         <span
-          className={`font-mono text-xs flex-1 truncate transition-colors ${
+          className={`font-mono text-xs flex-1 truncate ${
             isSelected
               ? 'text-accent font-medium'
-              : isOpen
-                ? 'text-foreground font-medium'
+              : isFolder
+                ? 'text-foreground uppercase tracking-wide'
                 : 'text-foreground/80'
           }`}
         >
           {node.name}
         </span>
-
-        {/* Chevron for folders */}
-        {hasChildren && (
-          <ChevronRight
-            className={`
-              h-3.5 w-3.5 transition-transform duration-200
-              ${isOpen
-                ? 'rotate-90 text-primary'
-                : 'text-foreground/40'
-              }
-            `}
-          />
-        )}
       </div>
 
-      {/* Children - liquid expand with height animation */}
-      {hasChildren && (
-        <div
-          className={`
-            overflow-hidden transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]
-            ${isOpen
-              ? 'max-h-[600px] opacity-100 mt-1'
-              : 'max-h-0 opacity-0 mt-0'
-            }
-          `}
-        >
-          <div className="space-y-1 pl-2">
-            {node.children!.map((child) => (
-              <TreeNodeComponent
-                key={child.path}
-                node={child}
-                level={level + 1}
-                selectedPath={selectedPath}
-                onFileSelect={onFileSelect}
-                expandedDirs={expandedDirs}
-                hoveredPath={hoveredPath}
-                onToggleDir={onToggleDir}
-                onHoverIntent={onHoverIntent}
-                onHoverLeave={onHoverLeave}
-                onExpandedDepthChange={onExpandedDepthChange}
-              />
-            ))}
-          </div>
+      {hasChildren && isOpen && (
+        <div>
+          {node.children!.map((child) => (
+            <TreeNodeComponent
+              key={child.path}
+              node={child}
+              level={level + 1}
+              selectedPath={selectedPath}
+              onFileSelect={onFileSelect}
+              expandedDirs={expandedDirs}
+              onToggleDir={onToggleDir}
+            />
+          ))}
         </div>
       )}
     </div>
@@ -216,10 +151,6 @@ const TreeNodeComponent = ({
 const SidebarTree = ({ posts, selectedPath, onFileSelect }: SidebarTreeProps) => {
   const tree = buildTree(posts);
   const [expandedDirs, setExpandedDirs] = useState<Set<string>>(new Set());
-  const [hoveredPath, setHoveredPath] = useState<string | null>(null);
-  const [maxExpandedDepth, setMaxExpandedDepth] = useState(0);
-  const hoverTimer = useRef<NodeJS.Timeout | null>(null);
-  const expandedDepthsRef = useRef<Set<number>>(new Set());
 
   // Auto-select "Hey, there!" on first load
   useEffect(() => {
@@ -231,60 +162,20 @@ const SidebarTree = ({ posts, selectedPath, onFileSelect }: SidebarTreeProps) =>
     }
   }, [posts, selectedPath, onFileSelect]);
 
-  // Toggle locked state (click)
   const toggleDir = (path: string) => {
-    setExpandedDirs(prev => {
+    setExpandedDirs((prev) => {
       const next = new Set(prev);
-      if (next.has(path)) {
-        next.delete(path);
-      } else {
-        next.add(path);
-      }
+      if (next.has(path)) next.delete(path);
+      else next.add(path);
       return next;
     });
   };
 
-  // Hover intent with delay (preview)
-  const handleHoverIntent = (path: string) => {
-    if (hoverTimer.current) clearTimeout(hoverTimer.current);
-
-    hoverTimer.current = setTimeout(() => {
-      setHoveredPath(path);
-    }, 140); // <- the cream
-  };
-
-  // Cancel hover preview
-  const handleHoverLeave = () => {
-    if (hoverTimer.current) clearTimeout(hoverTimer.current);
-    setHoveredPath(null);
-  };
-
-  const handleExpandedDepthChange = (depth: number, isExpanding: boolean) => {
-    if (isExpanding) {
-      expandedDepthsRef.current.add(depth);
-    } else {
-      expandedDepthsRef.current.delete(depth);
-    }
-
-    // Calculate max depth currently expanded
-    const depths = Array.from(expandedDepthsRef.current);
-    const newMaxDepth = depths.length > 0 ? Math.max(...depths) : 0;
-    setMaxExpandedDepth(newMaxDepth);
-  };
-
-  // Calculate dynamic width based on expansion depth
-  const baseWidth = 270;
-  const widthPerLevel = 100;
-  const calculatedWidth = baseWidth + (maxExpandedDepth * widthPerLevel);
-
   return (
-    <div
-      className="h-full overflow-y-auto overflow-x-hidden custom-scrollbar transition-all duration-200 ease-out flex flex-col justify-center"
-      style={{ width: `${calculatedWidth}px` }}
-    >
-      <div className="p-4 space-y-2">
-        <div className="mb-4 px-2">
-          <h2 className="text-xs font-semibold text-foreground/50 uppercase tracking-widest">
+    <div className="h-full w-[300px] overflow-y-auto overflow-x-hidden custom-scrollbar">
+      <div className="py-3">
+        <div className="mb-3 px-3 pb-2 border-b border-foreground/20">
+          <h2 className="font-mono text-xs text-foreground/50 uppercase tracking-widest">
             Notes
           </h2>
         </div>
@@ -296,11 +187,7 @@ const SidebarTree = ({ posts, selectedPath, onFileSelect }: SidebarTreeProps) =>
             selectedPath={selectedPath}
             onFileSelect={onFileSelect}
             expandedDirs={expandedDirs}
-            hoveredPath={hoveredPath}
             onToggleDir={toggleDir}
-            onHoverIntent={handleHoverIntent}
-            onHoverLeave={handleHoverLeave}
-            onExpandedDepthChange={handleExpandedDepthChange}
           />
         ))}
       </div>

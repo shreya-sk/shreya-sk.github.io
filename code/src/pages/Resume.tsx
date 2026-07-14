@@ -15,7 +15,7 @@ const LinkChip = ({
     href={href}
     target={href.startsWith('http') ? '_blank' : undefined}
     rel="noopener noreferrer"
-    className={`inline-flex items-center gap-2 px-4 py-2.5 font-extrabold text-[13px] uppercase transition-colors ${
+    className={`inline-flex items-center gap-2 px-4 py-2.5 font-bold text-[13px] uppercase transition-colors ${
       primary
         ? 'bg-accent text-accent-foreground border border-accent hover:bg-accent/85'
         : 'border border-foreground/20 hover:border-accent hover:text-accent'
@@ -27,8 +27,8 @@ const LinkChip = ({
 
 const SectionHeading = ({ title, index }: { title: string; index: string }) => (
   <div className="flex items-baseline justify-between mb-8">
-    <h2 className="font-extrabold uppercase tracking-tighter text-2xl md:text-3xl">{title}</h2>
-    <span className="font-mono text-xs uppercase tracking-wide text-muted-foreground">{index}</span>
+    <h2 className="font-bold uppercase tracking-tighter text-2xl md:text-3xl">{title}</h2>
+    <span className="font-mono text-sm uppercase tracking-wide text-muted-foreground">{index}</span>
   </div>
 );
 
@@ -70,14 +70,14 @@ const Resume = () => {
       {/* HERO / IDENTITY */}
       <section className="border-b-2 border-foreground/90">
         <div className="container px-6 py-16 max-w-5xl mx-auto">
-          <div className="font-mono text-[11px] uppercase tracking-wide text-accent mb-4">
+          <div className="font-mono text-[13px] uppercase tracking-wide text-accent mb-4">
             Shreya · Resume
           </div>
-          <h1 className="font-extrabold uppercase tracking-tighter leading-[1.05] text-4xl md:text-6xl mb-3">
+          <h1 className="font-bold uppercase tracking-tighter leading-[1.05] text-4xl md:text-6xl mb-3">
             Automation, DevOps
             <br />& Infrastructure
           </h1>
-          <div className="font-mono text-[13px] uppercase tracking-wide text-muted-foreground mb-5">
+          <div className="font-mono text-[15px] uppercase tracking-wide text-muted-foreground mb-5">
             Sonic Healthcare · Aug 2022 – Current
           </div>
           <p className="text-lg leading-relaxed max-w-xl text-foreground/80 mb-8">
@@ -89,8 +89,7 @@ const Resume = () => {
             <LinkChip href="/resume.pdf" primary>
               <Download className="h-3.5 w-3.5" /> Resume PDF
             </LinkChip>
-            {/* TODO: replace with your LinkedIn profile URL */}
-            <LinkChip href="https://www.linkedin.com/in/shreya-sk">
+            <LinkChip href="https://www.linkedin.com/in/shreyak19">
               <Linkedin className="h-3.5 w-3.5" /> LinkedIn
             </LinkChip>
             <LinkChip href="https://github.com/shreya-sk">
@@ -113,13 +112,13 @@ const Resume = () => {
                 key={w.title}
                 className="group grid md:grid-cols-[200px_1fr] gap-4 md:gap-8 py-8 border-b border-foreground/20 last:border-b-0"
               >
-                <div className="font-mono text-[11px] uppercase tracking-wide text-muted-foreground">
+                <div className="font-mono text-[13px] uppercase tracking-wide text-muted-foreground">
                   {w.org[0]}
                   <br />
                   {w.org[1]}
                 </div>
                 <div>
-                  <div className="font-extrabold text-xl tracking-tight mb-2.5 group-hover:text-accent transition-colors">
+                  <div className="font-bold text-xl tracking-tight mb-2.5 group-hover:text-accent transition-colors">
                     {w.title}
                   </div>
                   <p className="text-[15px] leading-relaxed text-foreground/80 max-w-2xl">
@@ -148,7 +147,7 @@ const Resume = () => {
           <div className="grid md:grid-cols-3 border-t border-l border-foreground/20">
             {SKILLS.map((s) => (
               <div key={s.label} className="p-6 border-r border-b border-foreground/20">
-                <div className="font-mono text-[11px] uppercase tracking-widest text-accent mb-3">
+                <div className="font-mono text-[13px] uppercase tracking-widest text-accent mb-3">
                   {s.label}
                 </div>
                 <p className="text-[15px] leading-relaxed">{s.items}</p>
@@ -178,12 +177,12 @@ const Resume = () => {
 
       {/* FOOTER CTA */}
       <section className="container px-6 py-12 max-w-5xl mx-auto text-center">
-        <p className="font-mono text-[13px] uppercase tracking-wide text-muted-foreground mb-5">
+        <p className="font-mono text-[15px] uppercase tracking-wide text-muted-foreground mb-5">
           Want the full picture?
         </p>
         <Link
           to="/blog"
-          className="font-extrabold uppercase text-lg hover:text-accent transition-colors"
+          className="font-bold uppercase text-lg hover:text-accent transition-colors"
         >
           See the notes, TIL log & gists →
         </Link>

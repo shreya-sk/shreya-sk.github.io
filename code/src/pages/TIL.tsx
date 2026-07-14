@@ -3,6 +3,28 @@ import WeekCalendar, { getWeekStart, getWeekDays, formatDateKey, DAY_NAMES } fro
 import { useTILEntries } from "@/hooks/useTILEntries";
 import { TILEntry } from "@/types/blog";
 
+// Strip markdown syntax + the filename heading so entries read as plain text
+const cleanTILContent = (raw: string): string => {
+  return raw
+    .replace(/^---[\s\S]*?---\s*/, '') // frontmatter
+    .split('\n')
+    .map((l) =>
+      l
+        .replace(/^\s{0,3}#{1,6}\s+/, '') // heading markers
+        .replace(/^\s{0,3}>\s?/, '') // blockquote markers
+        .replace(/^\s{0,3}[-*+]\s+/, '• ') // bullets
+    )
+    // drop date-only lines (the note's filename H1, e.g. "14-07-2026")
+    .filter((l) => !/^\d{1,2}\s*-\s*\d{1,2}\s*-\s*\d{4}$/.test(l.trim()))
+    .join('\n')
+    .replace(/\*\*([^*]+)\*\*/g, '$1') // bold
+    .replace(/\*([^*]+)\*/g, '$1') // italics
+    .replace(/`([^`]+)`/g, '$1') // inline code
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1') // links → text
+    .replace(/\n{3,}/g, '\n\n') // collapse extra blank lines
+    .trim();
+};
+
 const TIL = () => {
   const [selectedWeek, setSelectedWeek] = useState(new Date());
   const { data: tilEntries = [], isLoading, error } = useTILEntries();
@@ -100,7 +122,7 @@ const TIL = () => {
                           key={entry.id}
                           className="text-base leading-relaxed mb-4 last:mb-0 whitespace-pre-line"
                         >
-                          {entry.content || 'No content available'}
+                          {cleanTILContent(entry.content || '') || 'No content available'}
                         </p>
                       ))
                     ) : (
