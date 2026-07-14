@@ -36,6 +36,10 @@ export async function getAllMarkdownFiles(): Promise<MarkdownFile[]> {
 
       // Extract metadata
       const cleanPath = path.replace('../../../obsidian/', '');
+
+      // Skip non-note files: Excalidraw drawings and stray empty-named ".md"
+      const base = cleanPath.split('/').pop() || '';
+      if (cleanPath.endsWith('.excalidraw.md') || base === '.md') continue;
       const slug = cleanPath.replace('.md', '').toLowerCase().replace(/\s+/g, '-');
       const title = extractTitle(content) || extractTitleFromPath(cleanPath);
       const category = extractCategory(cleanPath);

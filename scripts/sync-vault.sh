@@ -1,11 +1,10 @@
 #!/bin/bash
 # Two-way sync: "Shreya's Life" (local Obsidian vault, iCloud)  ⇄  obsidian/ in shreya-sk.github.io
 #
-# What one run does:
-#   1. git pull            — grab browser-editor commits from GitHub
-#   2. repo  → vault       — newer notes from the site land in local Obsidian
-#   3. vault → repo        — newer local notes land in the repo
-#   4. commit + push       — site rebuilds with your local writing
+# PUBLISHED  : Learning/* (mapped to site root: Learning/DevOps → DevOps),
+#              Notes/, Attachments/, root-level notes (Welcome.md, …)
+# PRIVATE    : Journal/, Books/, Templates/, Work/  — never leave the vault
+# REPO-ONLY  : Daily - TIL/, Hey, there!.md, test-note.md — never enter the vault
 #
 # Newer file wins in both directions. Deletions do NOT propagate (safety) —
 # delete in both places if you really want something gone.
@@ -19,7 +18,17 @@ set -euo pipefail
 VAULT="$HOME/Library/Mobile Documents/iCloud~md~obsidian/Documents/Shreya's Life"
 REPO="$HOME/Desktop/shreya-sk.github.io"
 DEST="$REPO/obsidian"
-EXCLUDES=(--exclude '.obsidian/' --exclude '.trash/' --exclude '.DS_Store' --exclude '.git/')
+
+# Junk that never syncs in either direction
+COMMON=(--exclude '.obsidian/' --exclude '.trash/' --exclude '.DS_Store'
+        --exclude '.git/' --exclude '*.excalidraw.md' --exclude 'Excalidraw*/'
+        --exclude '.md')  # stray empty-named ".md" files
+
+# Private vault folders — never published
+PRIVATE=(--exclude 'Journal/' --exclude 'Books/' --exclude 'Templates/' --exclude 'Work/')
+
+# Site-only content — never written into the vault
+REPO_ONLY=(--exclude 'Daily - TIL/' --exclude 'Hey, there!.md' --exclude 'test-note.md')
 
 # ---- optional: install a launchd agent that runs this every 10 minutes ----
 if [[ "${1:-}" == "--install-agent" ]]; then
@@ -56,18 +65,36 @@ cd "$REPO"
 
 echo "⇣ Pulling latest from GitHub…"
 git pull --rebase --autostash
-
 mkdir -p "$DEST"
 
-echo "⇄ Syncing (newer file wins)…"
-rsync -au "${EXCLUDES[@]}" "$DEST/" "$VAULT/"   # site → local Obsidian
-rsync -au "${EXCLUDES[@]}" "$VAULT/" "$DEST/"   # local Obsidian → site
+echo "⇄ vault → site…"
+# Learning/* lands at the site root (keeps current site layout)
+[ -d "$VAULT/Learning" ] && rsync -au "${COMMON[@]}" "${PRIVATE[@]}" "$VAULT/Learning/" "$DEST/"
+# Notes/ and Attachments/ sync as-is
+for d in Notes Attachments; do
+  [ -d "$VAULT/$d" ] && rsync -au "${COMMON[@]}" "$VAULT/$d/" "$DEST/$d/"
+done
+# Root-level notes (Welcome.md, …)
+rsync -au "${COMMON[@]}" --include='/*.md' --exclude='*' "$VAULT/" "$DEST/"
+
+echo "⇄ site → vault…"
+# Notes/, Attachments/ back to vault root
+for d in Notes Attachments; do
+  [ -d "$DEST/$d" ] && rsync -au "${COMMON[@]}" "$DEST/$d/" "$VAULT/$d/"
+done
+# Root-level site notes back to vault root (minus site-only files)
+rsync -au "${COMMON[@]}" "${REPO_ONLY[@]}" --include='/*.md' --exclude='*' "$DEST/" "$VAULT/"
+# Everything else at the site root maps back into vault Learning/
+mkdir -p "$VAULT/Learning"
+rsync -au "${COMMON[@]}" "${REPO_ONLY[@]}" "${PRIVATE[@]}" \
+  --exclude 'Notes/' --exclude 'Attachments/' --exclude '/*.md' \
+  "$DEST/" "$VAULT/Learning/"
 
 if [ -n "$(git status --porcelain -- obsidian)" ]; then
   git add obsidian
   git commit -m "vault sync: $(date '+%Y-%m-%d %H:%M')"
   git push
-  echo "✔ Pushed local vault changes — site will redeploy."
+  echo "✔ Pushed vault changes — site will redeploy."
 else
   echo "✔ Already in sync — nothing to push."
 fi
