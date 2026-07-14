@@ -81,7 +81,7 @@ const Index = () => {
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center gap-3">
                 <BookOpen className="h-5 w-5 text-accent" />
-                <h2 className="text-xl font-extrabold uppercase tracking-tight">currently learning</h2>
+                <h2 className="text-xl font-extrabold uppercase tracking-tight">digging into</h2>
               </div>
               <Link
                 to="/blog"
