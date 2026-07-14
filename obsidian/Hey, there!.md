@@ -6,4 +6,6 @@ This is my Obsidian vault, living on the internet. Everything I'm learning gets 
 
 Nothing here is polished or final. Notes grow, split, and get reworked as I understand things better. That's the point.
 
+Ideas that are still forming — half-thoughts, hunches, things I don't understand *yet* — live in the [[Seedbox]]. When a seed grows into something real, it graduates into the garden proper. Everything else here is somewhere on that journey from seed to note.
+
 Use the tree to wander, or start at the [[DevOps MOC]] — it's a good first door.
