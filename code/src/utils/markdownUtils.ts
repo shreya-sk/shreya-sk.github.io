@@ -286,6 +286,17 @@ export const processMarkdownContent = (content: string): string => {
   // Fix any UTF-8 mojibake issues first
   processed = fixMojibake(processed);
 
+  // Remove the note's own H1 — the page header already renders the title,
+  // so leaving it in shows the heading twice
+  processed = processed.replace(/^\s*#\s+[^\n]+\n+/, '');
+
+  // Remove Obsidian breadcrumb nav lines (e.g. "← [[Notes/HOME|Home]] · [[Docker MOC]]")
+  // — they point at private vault folders and are broken on the site
+  processed = processed
+    .split('\n')
+    .filter((line) => !/^\s*(\\?←|&larr;)/.test(line.trim()))
+    .join('\n');
+
   // Convert Obsidian-specific syntax to standard markdown
   processed = convertWikiLinks(processed);  // Convert wiki links before images
   processed = convertObsidianImages(processed);

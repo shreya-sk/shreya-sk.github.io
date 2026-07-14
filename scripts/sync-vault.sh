@@ -1,13 +1,16 @@
 #!/bin/bash
 # Two-way sync: "Shreya's Life" (local Obsidian vault, iCloud)  ⇄  obsidian/ in shreya-sk.github.io
 #
-# PUBLISHED  : Learning/* (mapped to site root: Learning/DevOps → DevOps),
-#              Notes/, Attachments/, root-level notes (Welcome.md, …)
-# PRIVATE    : Journal/, Books/, Templates/, Work/  — never leave the vault
+# PUBLISHED  : Learning/* ONLY — mapped to the site root (Learning/DevOps → DevOps)
+# PRIVATE    : everything else — Journal/, Books/, Notes/, Attachments/,
+#              Templates/, Work/, Welcome*.md, and any future top-level folder.
+#              Nothing outside Learning/ ever leaves the vault.
 # REPO-ONLY  : Daily - TIL/, Hey, there!.md, test-note.md — never enter the vault
 #
-# Newer file wins in both directions. Deletions do NOT propagate (safety) —
-# delete in both places if you really want something gone.
+# Also generates obsidian/recent.json — the most recently modified notes,
+# which the homepage "currently on" section renders.
+#
+# Newer file wins in both directions. Deletions do NOT propagate (safety).
 #
 # Usage:
 #   bash scripts/sync-vault.sh                  # run one sync now
@@ -19,16 +22,13 @@ VAULT="$HOME/Library/Mobile Documents/iCloud~md~obsidian/Documents/Shreya's Life
 REPO="$HOME/Desktop/shreya-sk.github.io"
 DEST="$REPO/obsidian"
 
-# Junk that never syncs in either direction
 COMMON=(--exclude '.obsidian/' --exclude '.trash/' --exclude '.DS_Store'
-        --exclude '.git/' --exclude '*.excalidraw.md' --exclude 'Excalidraw*/'
-        --exclude '.md')  # stray empty-named ".md" files
+        --exclude '.git/' --exclude '.claude/' --exclude '*.excalidraw.md'
+        --exclude 'Excalidraw*/' --exclude '.md'
+        --exclude 'Learning/'   # guards against the nested Learning/Learning duplicate
+        --exclude 'DKT.md' --exclude '*.py')  # personal notes / scripts stay private
 
-# Private vault folders — never published
-PRIVATE=(--exclude 'Journal/' --exclude 'Books/' --exclude 'Templates/' --exclude 'Work/')
-
-# Site-only content — never written into the vault
-REPO_ONLY=(--exclude 'Daily - TIL/' --exclude 'Hey, there!.md' --exclude 'test-note.md')
+REPO_ONLY=(--exclude 'Daily - TIL/' --exclude 'Hey, there!.md' --exclude 'test-note.md' --exclude 'recent.json')
 
 # ---- optional: install a launchd agent that runs this every 10 minutes ----
 if [[ "${1:-}" == "--install-agent" ]]; then
@@ -60,35 +60,46 @@ EOF
 fi
 
 # ---- one sync pass ----
-[ -d "$VAULT" ] || { echo "✖ Vault not found: $VAULT"; exit 1; }
+[ -d "$VAULT/Learning" ] || { echo "✖ Vault Learning folder not found: $VAULT/Learning"; exit 1; }
 cd "$REPO"
 
 echo "⇣ Pulling latest from GitHub…"
 git pull --rebase --autostash
 mkdir -p "$DEST"
 
-echo "⇄ vault → site…"
-# Learning/* lands at the site root (keeps current site layout)
-[ -d "$VAULT/Learning" ] && rsync -au "${COMMON[@]}" "${PRIVATE[@]}" "$VAULT/Learning/" "$DEST/"
-# Notes/ and Attachments/ sync as-is
-for d in Notes Attachments; do
-  [ -d "$VAULT/$d" ] && rsync -au "${COMMON[@]}" "$VAULT/$d/" "$DEST/$d/"
-done
-# Root-level notes (Welcome.md, …)
-rsync -au "${COMMON[@]}" --include='/*.md' --exclude='*' "$VAULT/" "$DEST/"
+echo "⇄ vault Learning → site…"
+rsync -au "${COMMON[@]}" "$VAULT/Learning/" "$DEST/"
 
-echo "⇄ site → vault…"
-# Notes/, Attachments/ back to vault root
-for d in Notes Attachments; do
-  [ -d "$DEST/$d" ] && rsync -au "${COMMON[@]}" "$DEST/$d/" "$VAULT/$d/"
-done
-# Root-level site notes back to vault root (minus site-only files)
-rsync -au "${COMMON[@]}" "${REPO_ONLY[@]}" --include='/*.md' --exclude='*' "$DEST/" "$VAULT/"
-# Everything else at the site root maps back into vault Learning/
-mkdir -p "$VAULT/Learning"
-rsync -au "${COMMON[@]}" "${REPO_ONLY[@]}" "${PRIVATE[@]}" \
-  --exclude 'Notes/' --exclude 'Attachments/' --exclude '/*.md' \
-  "$DEST/" "$VAULT/Learning/"
+echo "⇄ site → vault Learning…"
+rsync -au "${COMMON[@]}" "${REPO_ONLY[@]}" "$DEST/" "$VAULT/Learning/"
+
+echo "🗂  Building recent.json (for the homepage 'currently on' section)…"
+python3 - "$DEST" << 'PY'
+import json, os, sys
+
+dest = sys.argv[1]
+skip_dirs = {'Daily - TIL', '.claude'}
+skip_files = {'Hey, there!.md', 'test-note.md'}
+entries = []
+for root, dirs, names in os.walk(dest):
+    rel_root = os.path.relpath(root, dest)
+    top = rel_root.split(os.sep)[0]
+    if top in skip_dirs:
+        dirs[:] = []
+        continue
+    for n in names:
+        if not n.endswith('.md') or n.endswith('.excalidraw.md') or n == '.md':
+            continue
+        rel = os.path.normpath(os.path.join(rel_root, n)).lstrip('./')
+        if rel in skip_files:
+            continue
+        entries.append((os.path.getmtime(os.path.join(root, n)), rel))
+
+entries.sort(reverse=True)
+with open(os.path.join(dest, 'recent.json'), 'w') as f:
+    json.dump([p for _, p in entries[:8]], f, indent=2)
+print(f"   {min(len(entries), 8)} recent notes recorded")
+PY
 
 if [ -n "$(git status --porcelain -- obsidian)" ]; then
   git add obsidian

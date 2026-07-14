@@ -5,13 +5,19 @@ import BlogCard from "@/components/BlogCard";
 import { useGitHubPosts } from "@/hooks/useGitHubPosts";
 import { useGists } from "@/hooks/useGists";
 import { useTILEntries } from "@/hooks/useTILEntries";
+import { useQuery } from "@tanstack/react-query";
+import { fetchRecentPosts } from "@/services/localMarkdownService";
 
 const Index = () => {
   const { data: posts, isLoading } = useGitHubPosts();
   const { data: gists = [] } = useGists();
   const { data: tilEntries = [] } = useTILEntries();
-
-  const recentPosts = posts?.slice(0, 2) || [];
+  // "currently on" = most recently worked-on notes (via recent.json from vault sync)
+  const { data: recentPosts = [] } = useQuery({
+    queryKey: ["recent-posts"],
+    queryFn: () => fetchRecentPosts(2),
+    staleTime: 5 * 60 * 1000,
+  });
 
   const totalPosts = posts?.length || 0;
   const totalGists = gists.length || 0;
@@ -81,7 +87,7 @@ const Index = () => {
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center gap-3">
                 <BookOpen className="h-5 w-5 text-accent" />
-                <h2 className="text-xl font-extrabold uppercase tracking-tight">digging into</h2>
+                <h2 className="text-xl font-extrabold uppercase tracking-tight">currently on</h2>
               </div>
               <Link
                 to="/blog"
