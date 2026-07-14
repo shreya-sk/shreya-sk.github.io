@@ -70,9 +70,19 @@ export class VaultSyncEngine {
 
   // ---------- clone / init ----------
 
+  private get repoKey(): string {
+    const s = this.settings;
+    return `${s.owner}/${s.repo}#${s.branch}/${s.basePath}`;
+  }
+
   /** Load cached meta from LightningFS, or perform an initial clone. */
   async init(): Promise<void> {
     this.meta = await vfs.readMeta();
+    if (this.meta && this.meta.repoKey !== this.repoKey) {
+      // Settings point at a different repo than the cache — start clean.
+      await vfs.wipe();
+      this.meta = null;
+    }
     if (this.meta) {
       this.emitTree();
       // refresh in background
@@ -90,7 +100,7 @@ export class VaultSyncEngine {
       const entries = await this.client.getTree(treeSha);
       const files: VaultMeta['files'] = {};
       for (const e of entries) files[e.path] = { sha: e.sha, dirty: false };
-      this.meta = { headSha, treeSha, files, lastSync: Date.now() };
+      this.meta = { headSha, treeSha, files, lastSync: Date.now(), repoKey: this.repoKey };
       await vfs.writeMeta(this.meta);
       this.emitTree();
       this.setState('idle', `Cloned ${entries.length} files`);

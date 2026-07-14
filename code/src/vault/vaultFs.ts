@@ -80,6 +80,26 @@ export async function appendConflicts(entries: ConflictEntry[]): Promise<void> {
 
 /** Wipe everything (used when switching repos / logging out). */
 export async function wipe(): Promise<void> {
-  // LightningFS supports wipe via constructor option; easiest reliable reset:
-  new LightningFS('obsidian-vault-fs', { wipe: true });
+  const rmrf = async (dir: string): Promise<void> => {
+    let names: string[];
+    try {
+      names = await P.readdir(dir);
+    } catch {
+      return;
+    }
+    for (const name of names) {
+      const p = `${dir}/${name}`;
+      const st = await P.stat(p).catch(() => null);
+      if (st?.type === 'dir') {
+        await rmrf(p);
+        await P.rmdir(p).catch(() => undefined);
+      } else {
+        await P.unlink(p).catch(() => undefined);
+      }
+    }
+  };
+  await rmrf(FILES_ROOT);
+  await P.rmdir(FILES_ROOT).catch(() => undefined);
+  await P.unlink(META).catch(() => undefined);
+  await P.unlink(CONFLICTS).catch(() => undefined);
 }

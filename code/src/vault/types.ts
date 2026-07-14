@@ -25,6 +25,7 @@ export interface VaultMeta {
   treeSha: string;                    // remote root tree sha at last sync
   files: Record<string, FileMeta>;    // keyed by vault-relative path
   lastSync: number;                   // epoch ms
+  repoKey?: string;                   // owner/repo#branch/basePath this cache belongs to
 }
 
 export interface ConflictEntry {
