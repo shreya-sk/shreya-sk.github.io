@@ -1,3 +1,4 @@
+import { usePageMeta } from "@/hooks/usePageMeta";
 import Hero from "@/components/Hero";
 import { ArrowRight, BookOpen } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -9,6 +10,7 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchRecentPosts } from "@/services/localMarkdownService";
 
 const Index = () => {
+  usePageMeta(undefined, "Shreya's digital garden — DevOps notes, TIL log, gists and more.");
   const { data: posts, isLoading } = useGitHubPosts();
   const { data: gists = [] } = useGists();
   const { data: tilEntries = [] } = useTILEntries();

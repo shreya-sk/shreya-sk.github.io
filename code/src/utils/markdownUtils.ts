@@ -202,11 +202,12 @@ export const convertObsidianImages = (content: string): string => {
   }
 
   // Match Obsidian image syntax: ![[path]] or ![[path|alt]]
+  // Images are published flat to public/attachments/ by scripts/sync-vault.sh
+  // (only images actually referenced by published notes are copied there).
   return content.replace(/!\[\[([^\]|]+)(?:\|([^\]]+))?\]\]/g, (match, path, alt) => {
-    const altText = alt || path.split('/').pop()?.replace(/\.[^.]+$/, '') || 'image';
-    // Remove ../ and prepend /obsidian/ to make it accessible from public folder
-    const normalizedPath = path.replace(/^\.\.\//, '');
-    return `![${altText}](/obsidian/${normalizedPath})`;
+    const filename = path.split('/').pop() || path;
+    const altText = alt || filename.replace(/\.[^.]+$/, '') || 'image';
+    return `![${altText}](/attachments/${encodeURIComponent(filename)})`;
   });
 };
 

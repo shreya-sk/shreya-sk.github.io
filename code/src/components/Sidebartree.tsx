@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { ChevronRight } from 'lucide-react';
 import { BlogPost } from '../types/blog';
 
@@ -15,16 +15,6 @@ interface SidebarTreeProps {
   selectedPath: string | null;
   onFileSelect: (post: BlogPost) => void;
 }
-
-// Find the "Hey, there!" post for default selection
-const findDefaultPost = (posts: BlogPost[]): BlogPost | null => {
-  const heyTherePost = posts.find(
-    (post) =>
-      post.title.toLowerCase().includes('hey') ||
-      post.path.toLowerCase().includes('hey, there')
-  );
-  return heyTherePost || (posts.length > 0 ? posts[0] : null);
-};
 
 // Build hierarchical tree structure from flat posts array
 const buildTree = (posts: BlogPost[]): TreeNode[] => {
@@ -152,16 +142,6 @@ const SidebarTree = ({ posts, selectedPath, onFileSelect }: SidebarTreeProps) =>
   const tree = buildTree(posts);
   const [expandedDirs, setExpandedDirs] = useState<Set<string>>(new Set());
 
-  // Auto-select "Hey, there!" on first load
-  useEffect(() => {
-    if (posts.length > 0 && !selectedPath) {
-      const defaultPost = findDefaultPost(posts);
-      if (defaultPost) {
-        onFileSelect(defaultPost);
-      }
-    }
-  }, [posts, selectedPath, onFileSelect]);
-
   const toggleDir = (path: string) => {
     setExpandedDirs((prev) => {
       const next = new Set(prev);
@@ -172,7 +152,7 @@ const SidebarTree = ({ posts, selectedPath, onFileSelect }: SidebarTreeProps) =>
   };
 
   return (
-    <div className="h-full w-[300px] overflow-y-auto overflow-x-hidden custom-scrollbar">
+    <div className="h-full w-full overflow-y-auto overflow-x-hidden custom-scrollbar">
       <div className="py-3">
         <div className="mb-3 px-3 pb-2 border-b border-foreground/20">
           <h2 className="font-mono text-xs text-foreground/50 uppercase tracking-widest">

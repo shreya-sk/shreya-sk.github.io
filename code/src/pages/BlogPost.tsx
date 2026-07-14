@@ -4,6 +4,7 @@ import { Calendar, Clock, ArrowLeft, Folder } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { fetchPostBySlug } from "@/services/localMarkdownService";
+import { usePageMeta } from "@/hooks/usePageMeta";
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeHighlight from 'rehype-highlight';
@@ -18,6 +19,8 @@ const BlogPost = () => {
     queryFn: () => fetchPostBySlug(slug || ''),
     enabled: !!slug,
   });
+
+  usePageMeta(post?.title, post ? `${post.title} — notes from Shreya's digital garden.` : undefined);
 
   if (isLoading) {
     return (

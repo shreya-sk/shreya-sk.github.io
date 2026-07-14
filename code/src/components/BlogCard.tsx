@@ -1,6 +1,6 @@
 import { Calendar, Clock, ArrowRight, Folder } from "lucide-react";
 import { Link } from "react-router-dom";
-import { BlogPost } from "@/services/githubService";
+import { BlogPost } from "@/types/blog";
 import { cleanForExcerpt } from "@/utils/markdownUtils";
 
 interface BlogCardProps {

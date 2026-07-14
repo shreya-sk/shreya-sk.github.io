@@ -4,7 +4,8 @@ import remarkGfm from 'remark-gfm';
 import rehypeHighlight from 'rehype-highlight';
 import rehypeRaw from 'rehype-raw';
 import { Calendar, Clock } from 'lucide-react';
-import { BlogPost } from '@/services/githubService';
+import { Link } from 'react-router-dom';
+import { BlogPost } from '@/types/blog';
 import 'highlight.js/styles/github-dark.css';
 
 interface MarkdownRendererProps {
@@ -73,6 +74,20 @@ const MarkdownRenderer = ({ post }: MarkdownRendererProps) => {
           <ReactMarkdown
             remarkPlugins={[remarkGfm]}
             rehypePlugins={[rehypeHighlight, rehypeRaw]}
+            components={{
+              // Internal links (wikilinks → /blog?note=…) navigate in-app,
+              // external links open in a new tab
+              a: ({ href, children, ...props }) =>
+                href?.startsWith('/') ? (
+                  <Link to={href} {...props}>
+                    {children}
+                  </Link>
+                ) : (
+                  <a href={href} target="_blank" rel="noopener noreferrer" {...props}>
+                    {children}
+                  </a>
+                ),
+            }}
           >
             {post.content}
           </ReactMarkdown>

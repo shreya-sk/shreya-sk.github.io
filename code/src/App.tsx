@@ -7,18 +7,26 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import Header from "./components/Header";
 import Index from "./pages/Index";
-import NotesLayout from "./pages/Noteslayout";
-import BlogPost from "./pages/BlogPost";
-import TIL from "./pages/TIL";
-import Gists from "./pages/Gists";
-import GistDetail from "./pages/GistDetail";
-import Resume from "./pages/Resume";
-import NotFound from "./pages/NotFound";
 
-// Vault editor is code-split so CodeMirror/LightningFS never weigh down the blog
+// Every non-home route is code-split: the heavy markdown/highlighting stack
+// loads only when a reader opens that page, and CodeMirror/LightningFS only
+// on /editor. Keeps the first-visit bundle small.
+const NotesLayout = lazy(() => import("./pages/Noteslayout"));
+const BlogPost = lazy(() => import("./pages/BlogPost"));
+const TIL = lazy(() => import("./pages/TIL"));
+const Gists = lazy(() => import("./pages/Gists"));
+const GistDetail = lazy(() => import("./pages/GistDetail"));
+const Resume = lazy(() => import("./pages/Resume"));
+const NotFound = lazy(() => import("./pages/NotFound"));
 const VaultEditor = lazy(() => import("./pages/VaultEditor"));
 
 const queryClient = new QueryClient();
+
+const PageFallback = () => (
+  <div className="min-h-[60vh] flex items-center justify-center">
+    <p className="text-muted-foreground text-sm font-mono">loading…</p>
+  </div>
+);
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -28,30 +36,19 @@ const App = () => (
       <BrowserRouter>
         <div className="min-h-screen bg-background">
           <Header />
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/blog" element={<NotesLayout />} />
-            <Route path="/blog/*" element={<BlogPost />} />
-            <Route path="/til" element={<TIL />} />
-            <Route path="/gists" element={<Gists />} />
-            <Route path="/gists/:gistId" element={<GistDetail />} />
-            <Route path="/resume" element={<Resume />} />
-            <Route
-              path="/editor"
-              element={
-                <Suspense
-                  fallback={
-                    <div className="min-h-[60vh] flex items-center justify-center text-sm text-muted-foreground">
-                      Loading editor…
-                    </div>
-                  }
-                >
-                  <VaultEditor />
-                </Suspense>
-              }
-            />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+          <Suspense fallback={<PageFallback />}>
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/blog" element={<NotesLayout />} />
+              <Route path="/blog/*" element={<BlogPost />} />
+              <Route path="/til" element={<TIL />} />
+              <Route path="/gists" element={<Gists />} />
+              <Route path="/gists/:gistId" element={<GistDetail />} />
+              <Route path="/resume" element={<Resume />} />
+              <Route path="/editor" element={<VaultEditor />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </Suspense>
         </div>
       </BrowserRouter>
     </TooltipProvider>

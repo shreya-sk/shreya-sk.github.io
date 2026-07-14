@@ -73,6 +73,51 @@ rsync -au "${COMMON[@]}" "$VAULT/Learning/" "$DEST/"
 echo "⇄ site → vault Learning…"
 rsync -au "${COMMON[@]}" "${REPO_ONLY[@]}" "$DEST/" "$VAULT/Learning/"
 
+echo "🖼  Publishing images referenced by published notes → public/attachments/…"
+python3 - "$DEST" "$VAULT" "$REPO/public/attachments" << 'PY'
+import os, re, shutil, sys
+
+dest, vault, outdir = sys.argv[1], sys.argv[2], sys.argv[3]
+IMG_EXT = {'.png', '.jpg', '.jpeg', '.gif', '.webp', '.svg'}
+
+# 1. Collect image filenames referenced by published notes: ![[...]]
+refs = set()
+for root, dirs, names in os.walk(dest):
+    if 'Daily - TIL' in root:
+        continue
+    for n in names:
+        if not n.endswith('.md'):
+            continue
+        with open(os.path.join(root, n), encoding='utf-8', errors='ignore') as f:
+            for m in re.finditer(r'!\[\[([^\]|]+)(?:\|[^\]]*)?\]\]', f.read()):
+                fn = os.path.basename(m.group(1).strip())
+                if os.path.splitext(fn)[1].lower() in IMG_EXT:
+                    refs.add(fn)
+
+# 2. Index every image in the vault (Attachments/, Learning/, anywhere)
+index = {}
+for root, dirs, names in os.walk(vault):
+    if '.obsidian' in root or '.trash' in root:
+        continue
+    for n in names:
+        if os.path.splitext(n)[1].lower() in IMG_EXT:
+            index.setdefault(n, os.path.join(root, n))
+
+# 3. Copy only referenced images, flat, newer-wins
+os.makedirs(outdir, exist_ok=True)
+copied = missing = 0
+for fn in sorted(refs):
+    src = index.get(fn)
+    if not src:
+        missing += 1
+        continue
+    dst = os.path.join(outdir, fn)
+    if not os.path.exists(dst) or os.path.getmtime(src) > os.path.getmtime(dst):
+        shutil.copy2(src, dst)
+        copied += 1
+print(f"   {len(refs)} referenced · {copied} copied · {missing} not found in vault")
+PY
+
 echo "🗂  Building recent.json (for the homepage 'currently on' section)…"
 python3 - "$DEST" << 'PY'
 import json, os, sys
@@ -101,8 +146,8 @@ with open(os.path.join(dest, 'recent.json'), 'w') as f:
 print(f"   {min(len(entries), 8)} recent notes recorded")
 PY
 
-if [ -n "$(git status --porcelain -- obsidian)" ]; then
-  git add obsidian
+if [ -n "$(git status --porcelain -- obsidian public/attachments)" ]; then
+  git add obsidian public/attachments
   git commit -m "vault sync: $(date '+%Y-%m-%d %H:%M')"
   git push
   echo "✔ Pushed vault changes — site will redeploy."

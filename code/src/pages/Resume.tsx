@@ -1,3 +1,4 @@
+import { usePageMeta } from "@/hooks/usePageMeta";
 import { Link } from "react-router-dom";
 import { Download, Github, Linkedin, Mail } from "lucide-react";
 
@@ -65,6 +66,7 @@ const CERTS = [
 ];
 
 const Resume = () => {
+  usePageMeta('resume', 'Shreya — Automation, DevOps & Infrastructure. CKA certified. Sonic Healthcare.');
   return (
     <div className="min-h-screen sage-gradient">
       {/* HERO / IDENTITY */}

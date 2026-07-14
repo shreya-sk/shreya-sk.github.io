@@ -1,3 +1,4 @@
+import { usePageMeta } from "@/hooks/usePageMeta";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Search, Code, Calendar } from "lucide-react";
@@ -5,6 +6,7 @@ import { useGists } from "../hooks/useGists";
 import { extractFirstHeading, type Gist } from "../services/gistsService";
 
 const Gists = () => {
+  usePageMeta('gists', 'Code snippets — too short for a blog, too long for TIL.');
   const [searchTerm, setSearchTerm] = useState("");
   const { data: gists = [], isLoading, error } = useGists();
 

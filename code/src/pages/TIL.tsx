@@ -1,3 +1,4 @@
+import { usePageMeta } from "@/hooks/usePageMeta";
 import { useState, useMemo } from "react";
 import WeekCalendar, { getWeekStart, getWeekDays, formatDateKey, DAY_NAMES } from "@/components/WeekCalendar";
 import { useTILEntries } from "@/hooks/useTILEntries";
@@ -26,6 +27,7 @@ const cleanTILContent = (raw: string): string => {
 };
 
 const TIL = () => {
+  usePageMeta('TIL', 'Today I Learned — a weekly log of small learnings.');
   const [selectedWeek, setSelectedWeek] = useState(new Date());
   const { data: tilEntries = [], isLoading, error } = useTILEntries();
 
