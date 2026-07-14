@@ -41,14 +41,14 @@ const TILCard = ({ item }: TILCardProps) => {
   const { day, date } = formatDate(item.date);
 
   return (
-    <article className="journal-card rounded-2xl p-4 group hover:scale-[1.01] transition-all border-l-4 border-l-secondary/40 hover:border-l-secondary">
+    <article className="journal-card p-4 group transition-colors border-l-4 border-l-accent/40 hover:border-l-accent">
       <div className="flex gap-3">
         {/* Date column - styled like a journal tab */}
         <div className="flex-shrink-0 w-16 journal-date-tab">
-          <div className="text-xs font-bold text-secondary uppercase tracking-wide">
+          <div className="font-mono text-xs font-medium text-accent uppercase tracking-wide">
             {day}
           </div>
-          <div className="text-xs text-foreground/60 mt-0.5">
+          <div className="font-mono text-xs text-foreground/60 mt-0.5">
             {date}
           </div>
         </div>

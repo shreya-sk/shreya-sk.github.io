@@ -46,9 +46,8 @@ const TIL = () => {
   if (isLoading) {
     return (
       <div className="min-h-screen sage-gradient flex items-center justify-center">
-        <div className="text-center space-y-4">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
-          <p className="text-foreground/60 text-sm">loading journal entries...</p>
+        <div className="text-center">
+          <p className="text-muted-foreground text-sm font-mono">loading journal entries...</p>
         </div>
       </div>
     );
@@ -72,10 +71,10 @@ const TIL = () => {
     <div className="min-h-screen sage-gradient">
       <div className="h-screen px-4 py-4">
         {/* Single unified glass surface */}
-        <div className="relative h-full liquid-glass-content rounded-3xl overflow-hidden shadow-2xl">
-          {/* Week calendar pill floating on the left side of the surface */}
+        <div className="relative h-full liquid-glass-content overflow-hidden">
+          {/* Week calendar panel on the left side of the surface */}
           <aside className="absolute left-6 top-1/2 -translate-y-1/2 z-10">
-            <div className="liquid-glass-pill rounded-3xl overflow-hidden shadow-2xl" style={{ width: '320px' }}>
+            <div className="liquid-glass-pill overflow-hidden" style={{ width: '320px' }}>
               <WeekCalendar
                 selectedWeek={selectedWeek}
                 onWeekChange={setSelectedWeek}
@@ -89,10 +88,10 @@ const TIL = () => {
             <div className="max-w-4xl mx-auto">
               <div className="mb-8 md:ml-24"> 
 
-                <h1 className="text-3xl font-bold mb-2 bg-gradient-to-r from-secondary to-accent bg-clip-text text-transparent">
-                  my weekly learnings
+                <h1 className="text-3xl font-extrabold uppercase tracking-tighter mb-2">
+                  my weekly learnings<span className="text-accent">;</span>
                 </h1>
-                <p className="text-foreground/60 text-sm">
+                <p className="font-mono text-xs uppercase tracking-wide text-muted-foreground">
                   {filteredEntries.length} {filteredEntries.length === 1 ? 'entry' : 'entries'} this week
                 </p>
               </div>
@@ -103,7 +102,7 @@ const TIL = () => {
                     <TILCard key={entry.id} item={entry} />
                   ))
                 ) : (
-                  <div className="text-center py-16 minimal-card rounded-3xl">
+                  <div className="text-center py-16 minimal-card">
                     <p className="text-foreground/60 text-sm">
                       no journal entries for this week
                     </p>

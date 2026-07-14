@@ -22,8 +22,7 @@ const GistDetail = () => {
       <div className="container px-4 py-8 sage-gradient min-h-screen">
         <div className="mx-auto max-w-3xl">
           <div className="text-center py-12">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-accent mx-auto mb-4"></div>
-            <p className="text-muted-foreground text-sm">Loading...</p>
+            <p className="text-muted-foreground text-sm font-mono">loading...</p>
           </div>
         </div>
       </div>
@@ -79,12 +78,12 @@ const GistDetail = () => {
           Back to Snippets
         </Link>
 
-        <article className="minimal-card rounded-3xl p-8 md:p-12">
+        <article className="minimal-card p-8 md:p-12">
           <header className="mb-8">
-            <h1 className="text-3xl font-bold mb-4 break-words">{title}</h1>
+            <h1 className="text-3xl font-extrabold uppercase tracking-tighter mb-4 break-words">{title}</h1>
 
             <div className="flex flex-wrap items-center gap-3 mb-6">
-              <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-accent/10 text-accent text-sm">
+              <div className="flex items-center gap-2 px-3 py-1.5 bg-accent/10 text-accent font-mono text-xs uppercase tracking-wide">
                 <Calendar className="h-3.5 w-3.5" />
                 <span>{createdDate}</span>
               </div>
@@ -92,7 +91,7 @@ const GistDetail = () => {
                 href={gist.html_url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-muted/50 text-foreground/70 hover:bg-muted text-sm transition-colors"
+                className="flex items-center gap-2 px-3 py-1.5 bg-muted text-foreground/70 hover:text-accent font-mono text-xs uppercase tracking-wide transition-colors"
               >
                 <ExternalLink className="h-3.5 w-3.5" />
                 <span>View on GitHub</span>
@@ -109,7 +108,7 @@ const GistDetail = () => {
                     <FileText className="h-4 w-4 text-accent" />
                     <h2 className="text-lg font-semibold text-foreground">{file.filename}</h2>
                     {file.language && (
-                      <span className="text-xs px-2 py-0.5 rounded-full bg-accent/10 text-accent font-medium">
+                      <span className="text-xs px-2 py-0.5 bg-accent/10 text-accent font-mono uppercase">
                         {file.language}
                       </span>
                     )}

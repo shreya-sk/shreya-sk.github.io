@@ -122,12 +122,12 @@ const TreeNodeComponent = ({
       <div
         className={`
           group relative flex items-center gap-2 px-3 py-2
-          rounded-full transition-all duration-200 ease-out cursor-pointer
+          transition-colors cursor-pointer
           ${isSelected
-            ? 'bg-gradient-to-r from-primary/25 to-secondary/20 shadow-lg scale-[1.02]'
+            ? 'bg-accent/10 border-l-2 border-accent'
             : isPreviewOpen && !isLockedOpen
-              ? 'bg-white/5 backdrop-blur-sm shadow-md scale-[1.005]'
-              : 'bg-white/20 hover:bg-white/30'
+              ? 'bg-muted'
+              : 'hover:bg-muted'
           }
         `}
         style={{ marginLeft: `${level * 8}px` }}
@@ -147,16 +147,16 @@ const TreeNodeComponent = ({
         ) : (
           <FileText
             className={`h-4 w-4 transition-all duration-200 ${
-              isSelected ? 'text-primary scale-110' : 'text-foreground/60'
+              isSelected ? 'text-accent' : 'text-foreground/60'
             }`}
           />
         )}
 
         {/* Name */}
         <span
-          className={`text-xs flex-1 truncate transition-all duration-200 ${
+          className={`font-mono text-xs flex-1 truncate transition-colors ${
             isSelected
-              ? 'text-primary font-semibold'
+              ? 'text-accent font-medium'
               : isOpen
                 ? 'text-foreground font-medium'
                 : 'text-foreground/80'

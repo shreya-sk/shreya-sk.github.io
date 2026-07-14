@@ -68,7 +68,7 @@ const WeekCalendar = ({ selectedWeek, onWeekChange, entryCounts }: WeekCalendarP
         <div className="flex items-center justify-between mb-4">
           <button
             onClick={() => navigateWeek('prev')}
-            className="p-2 rounded-full hover:bg-white/30 transition-all duration-200"
+            className="p-2 hover:text-accent hover:bg-muted transition-colors"
             aria-label="Previous week"
           >
             <ChevronLeft className="h-5 w-5 text-foreground/70" />
@@ -76,7 +76,7 @@ const WeekCalendar = ({ selectedWeek, onWeekChange, entryCounts }: WeekCalendarP
 
           <button
             onClick={() => navigateWeek('next')}
-            className="p-2 rounded-full hover:bg-white/30 transition-all duration-200"
+            className="p-2 hover:text-accent hover:bg-muted transition-colors"
             aria-label="Next week"
           >
             <ChevronRight className="h-5 w-5 text-foreground/70" />
@@ -100,19 +100,19 @@ const WeekCalendar = ({ selectedWeek, onWeekChange, entryCounts }: WeekCalendarP
             <div
               key={dateKey}
               className={`
-                relative p-3 rounded-2xl transition-all duration-200
+                relative p-3 transition-colors
                 ${count > 0
-                  ? 'bg-gradient-to-r from-primary/20 to-secondary/15 hover:from-primary/30 hover:to-secondary/25 cursor-pointer shadow-md'
-                  : 'bg-white/10 hover:bg-white/20'
+                  ? 'bg-accent/5 hover:bg-accent/10 cursor-pointer'
+                  : 'hover:bg-muted'
                 }
-                ${isToday ? 'ring-2 ring-primary/40' : ''}
+                ${isToday ? 'border-2 border-accent' : 'border border-foreground/20'}
               `}
             >
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <div className={`
-                    text-xs font-semibold uppercase tracking-wide
-                    ${count > 0 ? 'text-primary' : 'text-foreground/50'}
+                    font-mono text-xs uppercase tracking-wide
+                    ${count > 0 ? 'text-accent' : 'text-foreground/50'}
                   `}>
                     {dayNames[index]}
                   </div>
@@ -126,10 +126,10 @@ const WeekCalendar = ({ selectedWeek, onWeekChange, entryCounts }: WeekCalendarP
 
                 {count > 0 && (
                   <div className="flex items-center gap-2">
-                    <span className="text-xs text-foreground/60">
+                    <span className="font-mono text-[11px] uppercase tracking-wide text-foreground/60">
                       {count} {count === 1 ? 'entry' : 'entries'}
                     </span>
-                    <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+                    <div className="w-2 h-2 bg-accent" />
                   </div>
                 )}
               </div>

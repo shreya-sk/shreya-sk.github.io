@@ -50,22 +50,22 @@ const MarkdownRenderer = ({ post }: MarkdownRendererProps) => {
       <article className="max-w-4xl mx-auto px-8 py-12">
         {/* Header */}
         <header className="mb-8 space-y-4">
-          <h1 className="text-4xl font-bold tracking-tight bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
+          <h1 className="text-4xl font-extrabold uppercase tracking-tighter">
             {post.title}
           </h1>
-          
+
           <div className="flex flex-wrap items-center gap-3">
-            <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 text-primary text-xs font-medium">
-              <Calendar className="h-3.5 w-3.5" />
+            <div className="flex items-center gap-2 px-2 py-0.5 border border-foreground/20 text-accent font-mono text-[11px] uppercase tracking-wide">
+              <Calendar className="h-3 w-3" />
               <time dateTime={post.date}>{post.date}</time>
             </div>
-            <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-muted/50 text-muted-foreground text-xs">
-              <Clock className="h-3.5 w-3.5" />
+            <div className="flex items-center gap-2 px-2 py-0.5 border border-foreground/20 text-muted-foreground font-mono text-[11px] uppercase tracking-wide">
+              <Clock className="h-3 w-3" />
               <span>{readTime}</span>
             </div>
           </div>
 
-          <div className="h-px bg-gradient-to-r from-transparent via-border to-transparent" />
+          <div className="h-0.5 bg-foreground/90" />
         </header>
 
         {/* Content */}

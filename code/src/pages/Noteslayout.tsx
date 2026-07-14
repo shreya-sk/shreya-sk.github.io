@@ -13,9 +13,8 @@ const NotesLayout = () => {
   if (isLoading) {
     return (
       <div className="min-h-screen sage-gradient flex items-center justify-center">
-        <div className="text-center space-y-4">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
-          <p className="text-foreground/60 text-sm">Loading your notes...</p>
+        <div className="text-center">
+          <p className="text-muted-foreground text-sm font-mono">loading your notes...</p>
         </div>
       </div>
     );
@@ -39,10 +38,10 @@ const NotesLayout = () => {
     <div className="min-h-screen sage-gradient">
       <div className="h-screen px-4 py-4">
         {/* Single unified glass surface */}
-        <div className="relative h-full liquid-glass-content rounded-3xl overflow-hidden shadow-2xl">
-          {/* Dynamic pill floating on the left side of the surface */}
+        <div className="relative h-full liquid-glass-content overflow-hidden">
+          {/* Notes tree panel on the left side of the surface */}
           <aside className="absolute left-6 top-1/2 -translate-y-1/2 z-10">
-            <div className="liquid-glass-pill rounded-3xl overflow-hidden shadow-2xl">
+            <div className="liquid-glass-pill overflow-hidden">
               <SidebarTree
                 posts={posts}
                 selectedPath={selectedPost?.path || null}

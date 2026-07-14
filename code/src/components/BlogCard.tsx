@@ -27,24 +27,24 @@ const BlogCard = ({ post }: BlogCardProps) => {
   }
 
   return (
-    <article className="group relative rounded-2xl p-4 minimal-card border-l-4 border-l-primary/40 hover:border-l-primary transition-all">
+    <article className="group relative p-4 border border-foreground/20 hover:bg-accent/5 transition-colors">
       <div className="space-y-2.5">
-        <div className="flex items-center gap-3 text-xs text-muted-foreground">
-          <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-primary/10">
-            <Folder className="h-3 w-3 text-primary" />
-            <span className="font-medium text-primary">{post.folder}</span>
+        <div className="flex items-center gap-3 font-mono text-[11px] uppercase tracking-wide text-muted-foreground">
+          <div className="flex items-center gap-1.5 px-2 py-0.5 border border-foreground/20 text-accent">
+            <Folder className="h-3 w-3" />
+            <span>{post.folder}</span>
           </div>
           <div className="flex items-center gap-1">
             <Calendar className="h-3 w-3" />
-            <time dateTime={post.date} className="text-xs">{post.date}</time>
+            <time dateTime={post.date}>{post.date}</time>
           </div>
           <div className="flex items-center gap-1">
             <Clock className="h-3 w-3" />
-            <span className="text-xs">{readTime}</span>
+            <span>{readTime}</span>
           </div>
         </div>
-        
-        <h3 className="text-lg font-medium leading-snug group-hover:text-primary transition-colors line-clamp-2">
+
+        <h3 className="text-lg font-extrabold tracking-tight leading-snug group-hover:text-accent transition-colors line-clamp-2">
           <Link to={`/blog/${post.slug}`} className="after:absolute after:inset-0">
             {displayTitle}
           </Link>
@@ -54,7 +54,7 @@ const BlogCard = ({ post }: BlogCardProps) => {
           {excerpt}
         </p>
 
-        <div className="flex items-center text-xs font-medium text-primary/80 group-hover:text-primary transition-colors">
+        <div className="flex items-center font-mono text-[11px] uppercase tracking-wide text-accent transition-colors">
           read more
           <ArrowRight className="ml-1.5 h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
         </div>
