@@ -4,6 +4,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { lazy, Suspense } from "react";
 import Header from "./components/Header";
 import Index from "./pages/Index";
 import NotesLayout from "./pages/Noteslayout";
@@ -12,6 +13,9 @@ import TIL from "./pages/TIL";
 import Gists from "./pages/Gists";
 import GistDetail from "./pages/GistDetail";
 import NotFound from "./pages/NotFound";
+
+// Vault editor is code-split so CodeMirror/LightningFS never weigh down the blog
+const VaultEditor = lazy(() => import("./pages/VaultEditor"));
 
 const queryClient = new QueryClient();
 
@@ -30,6 +34,20 @@ const App = () => (
             <Route path="/til" element={<TIL />} />
             <Route path="/gists" element={<Gists />} />
             <Route path="/gists/:gistId" element={<GistDetail />} />
+            <Route
+              path="/editor"
+              element={
+                <Suspense
+                  fallback={
+                    <div className="min-h-[60vh] flex items-center justify-center text-sm text-muted-foreground">
+                      Loading editor…
+                    </div>
+                  }
+                >
+                  <VaultEditor />
+                </Suspense>
+              }
+            />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>

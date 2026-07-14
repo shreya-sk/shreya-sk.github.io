@@ -573,3 +573,27 @@
   }
 }
 
+
+/* ---- Obsidian vault editor preview styles ---- */
+.obsidian-preview .obsidian-wikilink {
+  color: hsl(var(--primary));
+  text-decoration: underline dotted;
+  cursor: pointer;
+}
+.obsidian-preview .obsidian-embed {
+  display: inline-block;
+  background: hsl(var(--primary) / 0.08);
+  border: 1px dashed hsl(var(--primary) / 0.4);
+  border-radius: 6px;
+  padding: 0 6px;
+  font-style: italic;
+}
+.obsidian-preview .obsidian-callout-badge {
+  display: inline-block;
+  background: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+  border-radius: 4px;
+  padding: 0 6px;
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+}
