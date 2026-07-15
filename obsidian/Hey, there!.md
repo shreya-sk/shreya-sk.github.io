@@ -1,11 +1,9 @@
 # Hey, there!
 
-Welcome to my digital garden — a public declutter of my brain.
+You've found my digital diary - a public declutter of my brain.
 
-This is my Obsidian vault, living on the internet. Everything I'm learning gets filed here as I go: **DevOps** (Kubernetes, Docker, Kong, Ansible, GoLang), **security**, **NLP**, and — because brains refuse to stay in one lane — **anatomy & physiology** too.
+I'm Shreya, a DevOps engineer. This is my actual Obsidian vault, synced straight to the web. Everything I'm learning lands here: **Kubernetes, Docker, Kong, Ansible**, some **NLP**, and - because brains refuse to stay in one lane - **anatomy & physiology** too.
 
-Nothing here is polished or final. Notes grow, split, and get reworked as I understand things better. That's the point.
+Fair warning: nothing here is polished. Notes grow, split, and get reworked as I understand things better. Half-formed ideas live in the [[Seedbox]] until they're ready.
 
-Ideas that are still forming — half-thoughts, hunches, things I don't understand *yet* — live in the [[Seedbox]]. When a seed grows into something real, it graduates into the garden proper. Everything else here is somewhere on that journey from seed to note.
-
-Use the tree to wander, or start at the [[DevOps MOC]] — it's a good first door.
+Wander with the tree, or start at the [[DevOps MOC]].

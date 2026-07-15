@@ -20,7 +20,7 @@ const BlogPost = () => {
     enabled: !!slug,
   });
 
-  usePageMeta(post?.title, post ? `${post.title} — notes from Shreya's digital garden.` : undefined);
+  usePageMeta(post?.title, post ? `${post.title} - notes from Shreya's digital diary.` : undefined);
 
   if (isLoading) {
     return (

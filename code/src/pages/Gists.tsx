@@ -6,7 +6,7 @@ import { useGists } from "../hooks/useGists";
 import { extractFirstHeading, type Gist } from "../services/gistsService";
 
 const Gists = () => {
-  usePageMeta('gists', 'Code snippets — too short for a blog, too long for TIL.');
+  usePageMeta('gists', 'Code snippets - too short for a blog, too long for TIL.');
   const [searchTerm, setSearchTerm] = useState("");
   const { data: gists = [], isLoading, error } = useGists();
 
@@ -33,9 +33,19 @@ const Gists = () => {
     return (
       <div className="container px-6 py-14 sage-gradient min-h-screen">
         <div className="mx-auto max-w-6xl">
-          <div className="text-center py-12">
-            <p className="text-destructive mb-2 text-sm font-mono">Failed to load gists</p>
-            <p className="text-muted-foreground text-xs font-mono">Check console for details</p>
+          <div className="text-center py-12 space-y-3">
+            <p className="text-destructive text-sm font-mono">couldn't load gists</p>
+            <p className="text-muted-foreground text-xs font-mono max-w-sm mx-auto">
+              GitHub limits anonymous API requests to 60/hour - it resets shortly.
+            </p>
+            <a
+              href="https://gist.github.com/shreya-sk"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-4 py-2 border border-foreground/90 font-bold text-[13px] uppercase hover:border-accent hover:text-accent transition-colors"
+            >
+              view all on github
+            </a>
           </div>
         </div>
       </div>

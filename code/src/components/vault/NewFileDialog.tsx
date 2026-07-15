@@ -1,4 +1,4 @@
-// "New note" dialog — pick/confirm the folder, name the note.
+// "New note" dialog - pick/confirm the folder, name the note.
 
 import { useEffect, useState } from 'react';
 import {

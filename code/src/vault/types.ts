@@ -1,7 +1,7 @@
 // Shared types for the browser vault editor
 
 export interface VaultSettings {
-  token: string;      // GitHub PAT — stored ONLY in localStorage
+  token: string;      // GitHub PAT - stored ONLY in localStorage
   owner: string;      // repo owner, e.g. "shreya-sk"
   repo: string;       // vault repo, e.g. "obsidian-vault"
   branch: string;     // e.g. "main"

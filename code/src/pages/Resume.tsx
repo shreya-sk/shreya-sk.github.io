@@ -37,24 +37,24 @@ const WORK = [
   {
     org: ['Sonic Healthcare', 'DevOps'],
     title: 'CI/CD & release pipeline ownership',
-    body: 'Own CI/CD pipelines and release management across the SIT environment using Ansible and Octopus Deploy — reducing manual release steps and giving the team a repeatable path from commit to environment.',
+    body: 'Own CI/CD pipelines and release management across the SIT environment using Ansible and Octopus Deploy - reducing manual release steps and giving the team a repeatable path from commit to environment.',
   },
   {
     org: ['Personal', 'Project'],
     title: 'Git-backed Obsidian vault editor',
-    body: "A password-locked, in-browser editor that clones this site's Obsidian vault straight from GitHub — CodeMirror editing, a client-side git sync engine with pull/push and conflict detection, and encrypted unlock, all running without a backend.",
+    body: "A password-locked, in-browser editor that clones this site's Obsidian vault straight from GitHub - CodeMirror editing, a client-side git sync engine with pull/push and conflict detection, and encrypted unlock, all running without a backend.",
     link: { to: '/editor', label: '/editor' },
   },
   {
     org: ['Stemlook', 'Ops'],
     title: 'Airtable-based operations system',
-    body: 'Designed and manage the operations backbone for a multi-site education business — enrolment, scheduling, and parent communications in one system.',
+    body: 'Designed and manage the operations backbone for a multi-site education business - enrolment, scheduling, and parent communications in one system.',
   },
 ];
 
 const SKILLS: Array<{ label: string; items: string }> = [
   { label: 'Infra & orchestration', items: 'Kubernetes, Docker, Kong, Ansible, Linux' },
-  { label: 'CI/CD & delivery', items: 'Octopus Deploy, GitHub Actions, release management' },
+  { label: 'CI/CD & delivery', items: 'Azure DevOps, Octopus Deploy, GitHub Actions, release management' },
   { label: 'Support & ITSM', items: 'ServiceNow ticketing, incident & request management' },
   { label: 'Security', items: 'Snyk, SonarQube, BeagleSecurity' },
   { label: 'Languages', items: 'Go, Python, Caché ObjectScript' },
@@ -66,7 +66,7 @@ const CERTS = [
 ];
 
 const Resume = () => {
-  usePageMeta('resume', 'Shreya — Automation, DevOps & Infrastructure. CKA certified. Sonic Healthcare.');
+  usePageMeta('resume', 'Shreya - Automation, DevOps & Infrastructure. CKA certified. Sonic Healthcare.');
   return (
     <div className="min-h-screen sage-gradient">
       {/* HERO / IDENTITY */}

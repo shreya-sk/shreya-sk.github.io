@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ChevronRight } from 'lucide-react';
 import { BlogPost } from '../types/blog';
 
@@ -56,7 +56,7 @@ const buildTree = (posts: BlogPost[]): TreeNode[] => {
   return root;
 };
 
-// Recursive tree node — expands on click only, no hover behaviour
+// Recursive tree node - expands on click only, no hover behaviour
 const TreeNodeComponent = ({
   node,
   level = 0,
@@ -120,7 +120,7 @@ const TreeNodeComponent = ({
       </div>
 
       {hasChildren && isOpen && (
-        <div>
+        <div className="animate-in fade-in slide-in-from-top-1 duration-200">
           {node.children!.map((child) => (
             <TreeNodeComponent
               key={child.path}
@@ -141,6 +141,23 @@ const TreeNodeComponent = ({
 const SidebarTree = ({ posts, selectedPath, onFileSelect }: SidebarTreeProps) => {
   const tree = buildTree(posts);
   const [expandedDirs, setExpandedDirs] = useState<Set<string>>(new Set());
+
+  // When a note is opened (tree click, wikilink, or deep link), make sure
+  // every ancestor folder is expanded so the selection is visible.
+  useEffect(() => {
+    if (!selectedPath) return;
+    const parts = selectedPath.split('/').slice(0, -1);
+    if (!parts.length) return;
+    setExpandedDirs((prev) => {
+      const next = new Set(prev);
+      let acc = '';
+      for (const part of parts) {
+        acc = acc ? `${acc}/${part}` : part;
+        next.add(acc);
+      }
+      return next;
+    });
+  }, [selectedPath]);
 
   const toggleDir = (path: string) => {
     setExpandedDirs((prev) => {

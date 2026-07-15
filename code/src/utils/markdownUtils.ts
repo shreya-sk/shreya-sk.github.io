@@ -130,8 +130,8 @@ export const convertWikiLinks = (content: string): string => {
     return '';
   }
 
-  // Match [[path/to/file|display text]] or [[file]]
-  return content.replace(/\[\[([^\]|]+)(?:\|([^\]]+))?\]\]/g, (match, path, displayText) => {
+  // Match [[path/to/file|display text]] or [[file]] — but NOT image embeds ![[...]]
+  return content.replace(/(?<!!)\[\[([^\]|]+)(?:\|([^\]]+))?\]\]/g, (match, path, displayText) => {
     // Remove ../ and .md extension
     const cleanPath = path.replace(/^\.\.\//, '').replace(/\.md$/, '');
 
@@ -287,20 +287,26 @@ export const processMarkdownContent = (content: string): string => {
   // Fix any UTF-8 mojibake issues first
   processed = fixMojibake(processed);
 
-  // Remove the note's own H1 — the page header already renders the title,
+  // Remove the note's own H1 - the page header already renders the title,
   // so leaving it in shows the heading twice
   processed = processed.replace(/^\s*#\s+[^\n]+\n+/, '');
 
   // Remove Obsidian breadcrumb nav lines (e.g. "← [[Notes/HOME|Home]] · [[Docker MOC]]")
-  // — they point at private vault folders and are broken on the site
+  // - they point at private vault folders and are broken on the site
   processed = processed
     .split('\n')
     .filter((line) => !/^\s*(\\?←|&larr;)/.test(line.trim()))
     .join('\n');
 
+  // Remove Dataview / DataviewJS blocks - they're Obsidian plugin scripts
+  // that only execute inside Obsidian; on the web they'd render as raw code
+  processed = processed.replace(/```dataviewjs?\s[\s\S]*?```/g, '');
+
   // Convert Obsidian-specific syntax to standard markdown
-  processed = convertWikiLinks(processed);  // Convert wiki links before images
+  // Images FIRST: ![[img.png]] must be converted before the wikilink pass,
+  // otherwise the wikilink regex eats the [[...]] and breaks every embed
   processed = convertObsidianImages(processed);
+  processed = convertWikiLinks(processed);
   processed = convertObsidianCallouts(processed);
 
   // Clean up problematic invisible characters but keep emojis

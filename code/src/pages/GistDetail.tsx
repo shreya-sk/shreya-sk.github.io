@@ -41,9 +41,20 @@ const GistDetail = () => {
             Back to Snippets
           </Link>
 
-          <div className="text-center py-12">
-            <p className="text-destructive mb-2 text-sm">Gist not found</p>
-            <p className="text-muted-foreground text-xs">The gist couldn't be loaded.</p>
+          <div className="text-center py-12 space-y-3">
+            <p className="text-destructive text-sm font-mono">couldn't load this gist</p>
+            <p className="text-muted-foreground text-xs font-mono max-w-sm mx-auto">
+              GitHub limits anonymous API requests to 60/hour - if you've been browsing,
+              that's probably it. It resets shortly.
+            </p>
+            <a
+              href={`https://gist.github.com/shreya-sk/${gistId ?? ''}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-4 py-2 border border-foreground/90 font-bold text-[13px] uppercase hover:border-accent hover:text-accent transition-colors"
+            >
+              <ExternalLink className="h-3.5 w-3.5" /> view on github
+            </a>
           </div>
         </div>
       </div>

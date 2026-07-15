@@ -27,7 +27,7 @@ const cleanTILContent = (raw: string): string => {
 };
 
 const TIL = () => {
-  usePageMeta('TIL', 'Today I Learned — a weekly log of small learnings.');
+  usePageMeta('TIL', 'Today I Learned - a weekly log of small learnings.');
   const [selectedWeek, setSelectedWeek] = useState(new Date());
   const { data: tilEntries = [], isLoading, error } = useTILEntries();
 

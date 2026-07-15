@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-const SITE_NAME = "shreya's digital garden";
+const SITE_NAME = "shreya's digital diary";
 
 /**
  * Per-page <title> + meta description for a client-rendered SPA.

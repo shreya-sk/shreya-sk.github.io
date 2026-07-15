@@ -4,7 +4,7 @@
 // not send CORS headers, so a browser clone requires routing your PAT through
 // a third-party CORS proxy. The Git Data API (refs/trees/blobs/commits) is
 // CORS-enabled, so this client implements the same git plumbing —
-// blob → tree → commit → ref update — with the PAT never leaving
+// blob → tree → commit → ref update - with the PAT never leaving
 // browser → api.github.com.
 
 import { VaultSettings, TreeEntry } from './types';

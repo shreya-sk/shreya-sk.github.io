@@ -10,7 +10,7 @@ import { BlogPost } from '@/types/blog';
 /**
  * Resolve a wikilink target (e.g. "Learning/DevOps/Docker MOC", "Docker MOC")
  * to a published post. Vault paths keep a "Learning/" prefix that doesn't
- * exist on the site, and links often use just the note name — so we try
+ * exist on the site, and links often use just the note name - so we try
  * exact path, then suffix, then bare note-name match.
  */
 function resolveNote(posts: BlogPost[], target: string): BlogPost | null {
@@ -29,7 +29,7 @@ function resolveNote(posts: BlogPost[], target: string): BlogPost | null {
 }
 
 const NotesLayout = () => {
-  usePageMeta('learning', 'Notes on DevOps, Kubernetes, Docker, Kong and more — synced from an Obsidian vault.');
+  usePageMeta('learning', 'Notes on DevOps, Kubernetes, Docker, Kong and more - synced from an Obsidian vault.');
   const { data: posts = [], isLoading, error } = useGitHubPosts();
   const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
   const [treeOpen, setTreeOpen] = useState(false); // mobile drawer

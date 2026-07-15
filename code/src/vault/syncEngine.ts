@@ -79,7 +79,7 @@ export class VaultSyncEngine {
   async init(): Promise<void> {
     this.meta = await vfs.readMeta();
     if (this.meta && this.meta.repoKey !== this.repoKey) {
-      // Settings point at a different repo than the cache — start clean.
+      // Settings point at a different repo than the cache - start clean.
       await vfs.wipe();
       this.meta = null;
     }
@@ -212,7 +212,7 @@ export class VaultSyncEngine {
           changed.push(path);
         } else if (local.sha !== remoteSha) {
           if (local.dirty) {
-            // CONFLICT — 'ours': keep the active browser buffer, log it,
+            // CONFLICT - 'ours': keep the active browser buffer, log it,
             // stamp an inline alert into the note.
             const entry: ConflictEntry = {
               path,
@@ -224,7 +224,7 @@ export class VaultSyncEngine {
             const buf = await vfs.readCached(path);
             if (buf !== null && !buf.startsWith('> [!warning] Sync conflict')) {
               const stamp =
-                `> [!warning] Sync conflict — ${new Date().toISOString()}\n` +
+                `> [!warning] Sync conflict - ${new Date().toISOString()}\n` +
                 `> This note changed on the remote while you were editing. ` +
                 `Your browser version was kept (ours). Remote blob: ${remoteSha.slice(0, 7)}\n\n`;
               await vfs.writeCached(path, stamp + buf);

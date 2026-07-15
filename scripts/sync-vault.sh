@@ -30,6 +30,10 @@ COMMON=(--exclude '.obsidian/' --exclude '.trash/' --exclude '.DS_Store'
 
 REPO_ONLY=(--exclude 'Daily - TIL/' --exclude 'Hey, there!.md' --exclude 'test-note.md' --exclude 'recent.json')
 
+# Nav/ is published (MOCs help readers navigate) — except these personal files
+NAV_PRIVATE=(--exclude 'Task MOC.md' --exclude 'Meeting MOC.md' --exclude 'HOME.md'
+             --exclude 'Books.md' --exclude '*.base')
+
 # ---- optional: install a launchd agent ------------------------------------
 # Usage: --install-agent [minutes]   (default 10; e.g. 60 = hourly, 1440 = daily)
 # Note: while the Mac sleeps the agent pauses; it runs once on wake to catch up.
@@ -74,8 +78,12 @@ mkdir -p "$DEST"
 echo "⇄ vault Learning → site…"
 rsync -au "${COMMON[@]}" "$VAULT/Learning/" "$DEST/"
 
-echo "⇄ site → vault Learning…"
-rsync -au "${COMMON[@]}" "${REPO_ONLY[@]}" "$DEST/" "$VAULT/Learning/"
+echo "⇄ vault Nav → site…"
+[ -d "$VAULT/Nav" ] && rsync -au "${COMMON[@]}" "${NAV_PRIVATE[@]}" "$VAULT/Nav/" "$DEST/Nav/"
+
+echo "⇄ site → vault…"
+rsync -au "${COMMON[@]}" "${REPO_ONLY[@]}" --exclude 'Nav/' "$DEST/" "$VAULT/Learning/"
+[ -d "$DEST/Nav" ] && rsync -au "${COMMON[@]}" "$DEST/Nav/" "$VAULT/Nav/"
 
 echo "🖼  Publishing images referenced by published notes → public/attachments/…"
 python3 - "$DEST" "$VAULT" "$REPO/public/attachments" << 'PY'
@@ -124,10 +132,10 @@ PY
 
 echo "🗂  Building recent.json (for the homepage 'currently on' section)…"
 python3 - "$DEST" << 'PY'
-import json, os, sys
+import datetime, json, os, sys
 
 dest = sys.argv[1]
-skip_dirs = {'Daily - TIL', '.claude'}
+skip_dirs = {'Daily - TIL', '.claude', 'Nav'}
 skip_files = {'Hey, there!.md', 'test-note.md'}
 entries = []
 for root, dirs, names in os.walk(dest):
@@ -146,7 +154,10 @@ for root, dirs, names in os.walk(dest):
 
 entries.sort(reverse=True)
 with open(os.path.join(dest, 'recent.json'), 'w') as f:
-    json.dump([p for _, p in entries[:8]], f, indent=2)
+    json.dump({
+        'generated': datetime.datetime.now(datetime.timezone.utc).isoformat(),
+        'files': [p for _, p in entries[:8]],
+    }, f, indent=2)
 print(f"   {min(len(entries), 8)} recent notes recorded")
 PY
 

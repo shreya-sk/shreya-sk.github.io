@@ -6,7 +6,7 @@ const Hero = () => {
     <section className="relative sage-gradient border-b-2 border-foreground/90 py-16 md:py-20">
       <div className="container px-4">
         <div className="mx-auto max-w-5xl">
-          <div className="flex flex-col md:flex-row items-center md:items-end gap-8 md:gap-14">
+          <div className="flex flex-col md:flex-row items-center gap-8 md:gap-14">
             {/* Profile Picture */}
             <div className="flex-shrink-0">
               <img
@@ -15,7 +15,7 @@ const Hero = () => {
                 className="w-32 h-32 md:w-44 md:h-44 rounded-none object-cover"
               />
               <div className="mt-3 flex items-center justify-center md:justify-start gap-2 font-mono text-[11px] uppercase tracking-wide text-muted-foreground">
-                <span className="text-accent">●</span> synced from obsidian
+                <span className="text-accent">●</span> powered by obsidian
               </div>
             </div>
 
@@ -27,8 +27,16 @@ const Hero = () => {
                 shreya<span className="text-accent">;</span>
               </h1>
 
+              <p className="mb-2 text-lg md:text-xl font-semibold text-foreground">
+                DevOps Engineer building calmer systems.
+              </p>
+
+              <p className="mb-3 font-mono text-xs md:text-sm uppercase tracking-wide text-accent">
+                Kubernetes · Docker · Ansible · Azure DevOps
+              </p>
+
               <p className="mb-8 font-mono text-sm max-w-xl mx-auto md:mx-0 text-muted-foreground">
-                an organised corner of an otherwise overflowing brain.
+                organised chaos.
               </p>
 
               <div className="flex flex-wrap gap-4 justify-center md:justify-start items-center">
@@ -47,6 +55,10 @@ const Hero = () => {
                   today i learned
                 </Link>
               </div>
+
+              <p className="mt-6 font-mono text-[11px] uppercase tracking-wide text-muted-foreground">
+                @ sonic healthcare · ITIL &amp; CKA certified · first class honours, computational data science (2024)
+              </p>
             </div>
           </div>
         </div>

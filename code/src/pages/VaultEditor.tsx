@@ -1,4 +1,4 @@
-// /editor — live browser editor for the Obsidian vault.
+// /editor - live browser editor for the Obsidian vault.
 // Left: reactive file tree · Center: CodeMirror 6 · Right: Git sync dashboard.
 
 import { useEffect, useMemo, useState } from 'react';

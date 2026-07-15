@@ -47,7 +47,7 @@ const WeekCalendar = ({ selectedWeek, onWeekChange, entryCounts }: WeekCalendarP
     const weekEnd = new Date(weekStart);
     weekEnd.setDate(weekStart.getDate() + 6);
     const fmt = (date: Date) => date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-    return `${fmt(weekStart)} — ${fmt(weekEnd)}`;
+    return `${fmt(weekStart)} - ${fmt(weekEnd)}`;
   };
 
   const weekStart = getWeekStart(selectedWeek);

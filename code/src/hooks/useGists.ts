@@ -6,7 +6,10 @@ export const useGists = () => {
   return useQuery({
     queryKey: ['gists'],
     queryFn: fetchGists,
-    staleTime: 5 * 60 * 1000, // 5 minutes
-    gcTime: 10 * 60 * 1000, // 10 minutes (formerly cacheTime)
+    // Long cache: GitHub allows only 60 anonymous API calls/hour per IP,
+    // so refetching aggressively just burns the visitor's quota
+    staleTime: 60 * 60 * 1000, // 1 hour
+    gcTime: 2 * 60 * 60 * 1000, // 2 hours
+    retry: 1,
   });
 };

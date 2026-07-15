@@ -124,7 +124,7 @@ export default function SyncPanel({ syncState, dirtyPaths, conflictLog, onPull, 
               <li key={i} className="text-xs bg-destructive/10 rounded px-2 py-1.5">
                 <span className="font-mono block truncate">{c.path}</span>
                 <span className="text-muted-foreground">
-                  {new Date(c.at).toLocaleString()} — kept your version
+                  {new Date(c.at).toLocaleString()} - kept your version
                 </span>
               </li>
             ))}

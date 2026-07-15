@@ -28,7 +28,7 @@ export default function UnlockScreen({ blob, onUnlocked, onUseToken }: UnlockScr
       saveSettings(settings);
       onUnlocked(settings);
     } catch {
-      setError('Wrong password — try again.');
+      setError('Wrong password - try again.');
     } finally {
       setBusy(false);
     }
@@ -43,7 +43,7 @@ export default function UnlockScreen({ blob, onUnlocked, onUseToken }: UnlockScr
         <div>
           <h1 className="text-lg font-semibold">Unlock your vault</h1>
           <p className="text-sm text-muted-foreground">
-            Enter your password — you'll only do this once per device.
+            Enter your password - you'll only do this once per device.
           </p>
         </div>
         <Input
