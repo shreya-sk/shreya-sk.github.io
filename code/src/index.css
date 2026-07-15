@@ -207,7 +207,15 @@
   .markdown-content blockquote p { @apply mb-2 last:mb-0 not-italic; }
   .markdown-content blockquote strong { @apply font-semibold not-italic block mb-2 text-base; }
 
-  .markdown-content table { @apply w-full mb-4 border-collapse; }
+  /* Wide tables scroll inside their own container instead of overflowing the page */
+  .markdown-content table {
+    @apply w-full mb-4 border-collapse block overflow-x-auto;
+    scrollbar-width: thin;
+  }
+  .markdown-content table th,
+  .markdown-content table td { @apply whitespace-normal; min-width: 100px; }
+  /* Long inline tokens (URLs, k8s resource names) wrap instead of pushing width */
+  .markdown-content :not(pre) > code { word-break: break-word; }
   .markdown-content thead { @apply bg-muted/40; }
   .markdown-content th { @apply px-4 py-2 text-left font-semibold border border-border/30; }
   .markdown-content td { @apply px-4 py-2 border border-border/30; }

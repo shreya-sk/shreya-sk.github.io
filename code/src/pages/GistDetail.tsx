@@ -133,7 +133,8 @@ const GistDetail = () => {
                       rehypePlugins={[rehypeHighlight, rehypeRaw]}
                       className="leading-relaxed"
                     >
-                      {file.content || ''}
+                      {/* strip the leading H1 - the page header already shows the title */}
+                      {(file.content || '').replace(/^\s*#\s+[^\n]+\n+/, '')}
                     </ReactMarkdown>
                   ) : (
                     <pre className="bg-muted/50 border border-border/50 rounded-lg p-4 overflow-x-auto">
