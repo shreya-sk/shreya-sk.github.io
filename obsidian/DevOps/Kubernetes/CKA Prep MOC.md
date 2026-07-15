@@ -4,7 +4,7 @@ up: "[[Kubernetes MOC]]"
 tags: [moc, area/devops, topic/kubernetes]
 ---
 
-← [[Notes/HOME|Home]] &nbsp;·&nbsp; [[Kubernetes MOC]]
+← [[HOME|Home]] &nbsp;·&nbsp; [[Kubernetes MOC]]
 
 # CKA Prep MOC
 

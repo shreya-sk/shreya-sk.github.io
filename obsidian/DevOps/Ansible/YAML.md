@@ -6,7 +6,7 @@ tags: [area/devops, topic/ansible]
 status: seed
 ---
 
-← [[Notes/HOME|Home]] &nbsp;·&nbsp; [[Ansible MOC]]
+← [[HOME|Home]] &nbsp;·&nbsp; [[Ansible MOC]]
 
 ```{Yaml}
 # KEY VALUE

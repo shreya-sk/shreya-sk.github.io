@@ -11,7 +11,7 @@ tags:
 status: evergreen
 ---
 
-← [[Notes/HOME|Home]] &nbsp;·&nbsp; [[Anatomy & Physiology MOC]]
+← [[HOME|Home]] &nbsp;·&nbsp; [[Anatomy & Physiology MOC]]
 
 # NASM A&P — Master Glossary
 

@@ -10,7 +10,7 @@ tags:
 status: seed
 ---
 
-← [[Notes/HOME|Home]]
+← [[HOME|Home]]
 
 # {{title}}
 

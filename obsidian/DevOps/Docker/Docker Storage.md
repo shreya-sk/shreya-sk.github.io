@@ -7,7 +7,7 @@ tags:
 status: seed
 ---
 
-← [[Notes/HOME|Home]] &nbsp;·&nbsp; [[Docker MOC]]
+← [[HOME|Home]] &nbsp;·&nbsp; [[Docker MOC]]
 
 #docker #devops #container
 

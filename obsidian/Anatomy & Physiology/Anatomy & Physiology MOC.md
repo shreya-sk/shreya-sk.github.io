@@ -14,7 +14,7 @@ status: evergreen
 created: 2026-04-20
 ---
 
-← [[Notes/HOME|Home]] &nbsp;·&nbsp; [[Notes/Learning MOC|Learning]]
+← [[HOME|Home]] &nbsp;·&nbsp; [[Learning MOC|Learning]]
 
 # Anatomy & Physiology — Map of Content
 

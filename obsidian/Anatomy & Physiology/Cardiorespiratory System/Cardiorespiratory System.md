@@ -26,7 +26,7 @@ related:
   - "[[../Pilates Applications|Pilates Applications]]"
 ---
 
-← [[Notes/HOME|Home]] &nbsp;·&nbsp; [[Anatomy & Physiology MOC]]
+← [[HOME|Home]] &nbsp;·&nbsp; [[Anatomy & Physiology MOC]]
 
 # The Cardiorespiratory System
 

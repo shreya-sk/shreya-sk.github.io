@@ -4,7 +4,7 @@ up: "[[Learning/DevOps/DevOps MOC]]"
 tags: [moc, area/devops]
 ---
 
-← [[Notes/HOME|Home]] &nbsp;·&nbsp; [[Notes/Learning MOC|Learning]] &nbsp;·&nbsp; [[Learning/DevOps/DevOps MOC|DevOps]]
+← [[HOME|Home]] &nbsp;·&nbsp; [[Learning MOC|Learning]] &nbsp;·&nbsp; [[Learning/DevOps/DevOps MOC|DevOps]]
 
 # Prerequisites
 

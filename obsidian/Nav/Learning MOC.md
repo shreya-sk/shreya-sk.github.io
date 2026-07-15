@@ -1,73 +1,25 @@
 ---
-banner: Attachments/home.png
-banner_y: 0.5
-cssclasses:
-  - moc-page
+banner: "Attachments/home3.jpeg"
+banner_y: 0.4
+cssclasses: [moc-page]
 type: moc
-up: "[[Learning MOC]]"
-tags:
-  - moc
-  - area/devops
+tags: [moc]
 ---
 
-← [[HOME|Home]] &nbsp;·&nbsp; [[Learning MOC|Learning]] &nbsp;&nbsp;|&nbsp;&nbsp; [[Learning/DevOps/Docker/Docker MOC|Docker]] &nbsp;·&nbsp; [[Learning/DevOps/Kubernetes/Kubernetes MOC|Kubernetes]] &nbsp;·&nbsp; [[Learning/DevOps/GoLang/GoLang MOC|GoLang]] &nbsp;·&nbsp; [[Learning/DevOps/Ansible/Ansible MOC|Ansible]] &nbsp;·&nbsp; [[Learning/DevOps/Pre-requisites Devops/Prerequisites MOC|Prerequisites]]
+← [[HOME|Home]] &nbsp;&nbsp;|&nbsp;&nbsp; [[Learning/DevOps/DevOps MOC|DevOps]] &nbsp;·&nbsp; [[Learning/NLP - ABSA/Dashboard|NLP / ABSA]] &nbsp;·&nbsp; [[Learning/Kong/Kong API Gateway - Overview|Kong]] &nbsp;·&nbsp; [[Anatomy & Physiology MOC | Anatomy & Physiology]]
 
-# DevOps
-
-> Top-level index for all DevOps learning. Each topic has its own MOC.
-
----
-
-## 🗺️ Start Here — Reading Order
-
-> [!note] New to DevOps? Follow this path.
-> Each step builds on the last. Don't skip prerequisites — they're the reason things make sense later.
-
-| Step | Topic | Where to start | Why first |
-|---|---|---|---|
-| 1 | **Prerequisites** | [[Pre-requisites Devops/Prerequisites MOC\|Prerequisites MOC]] | Everything else assumes Linux + networking knowledge |
-| 2 | **Containers Overview** | [[Containers - Overview]] | Mental model for why containers exist before touching Docker |
-| 3 | **Docker** | [[Docker/Docker MOC\|Docker MOC]] | Containers in practice — the tool you'll use daily |
-| 4 | **12-Factor App** | [[12 Factor App - Method]] | Architecture principles that explain how to design containerised apps |
-| 5 | **Ansible** | [[Ansible/Ansible MOC\|Ansible MOC]] | Automate infrastructure once you understand what you're provisioning |
-| 6 | **GoLang** | [[GoLang/GoLang MOC\|GoLang MOC]] | Language used in Kubernetes internals + writing DevOps tooling |
-| 7 | **Kubernetes** | [[Kubernetes/Kubernetes MOC\|Kubernetes MOC]] | Orchestrate containers at scale — the hardest topic, needs all prior context |
-
-> [!tip] Already know Linux?
-> Skip to Step 2. If you know Docker too, jump straight to [[12 Factor App - Method]] then [[Ansible/Ansible MOC|Ansible]].
-
----
+# Learning
 
 ```dataviewjs
-// ── Dynamic Topics ──────────────────────────────────
-const mocs = dv.pages('"Learning/DevOps"')
-  .where(p => p.type === "moc" && p.file.name !== "DevOps MOC");
-
-const topicsEl = dv.container.createEl("div");
-topicsEl.style.cssText = "margin-bottom: 20px; font-size: 0.88em; color: var(--text-muted);";
-const boldEl = topicsEl.createEl("strong", { text: "Topics" });
-boldEl.style.cssText = "color: var(--text-normal);";
-topicsEl.createEl("span", { text: "\u00a0\u00a0" });
-
-mocs.array().forEach((p, i) => {
-  const a = topicsEl.createEl("a", { text: p.file.name.replace(/ MOC$/, ""), cls: "internal-link" });
-  a.setAttribute("data-href", p.file.path);
-  a.setAttribute("href", p.file.path);
-  a.style.cssText = "color: var(--text-muted); text-decoration: none;";
-  if (i < mocs.length - 1) {
-    topicsEl.createEl("span", { text: " | " }).style.cssText = "color: var(--text-faint);";
-  }
-});
+const pages = dv.pages('"Learning"')
+  .where(p => p.file.name !== "" && p.file.name !== ".");
 
 // ── Build tree ──────────────────────────────────────
-const pages = dv.pages('"Learning/DevOps"')
-  .where(p => p.file.name !== "" && p.type !== "moc");
-
 function makeNode() { return { files: [], dirs: {} }; }
 const root = makeNode();
 
 for (const page of pages) {
-  const rel = page.file.path.replace(/^Learning\/DevOps\//, "");
+  const rel = page.file.path.replace(/^Learning\//, "");
   const parts = rel.split("/");
   let node = root;
   for (let i = 0; i < parts.length - 1; i++) {
@@ -95,8 +47,8 @@ input.style.cssText = `
   outline: none;
   box-sizing: border-box;
 `;
-input.addEventListener("focus", () => input.style.borderColor = "var(--text-faint)");
-input.addEventListener("blur",  () => input.style.borderColor = "var(--background-modifier-border)");
+input.addEventListener("focus",  () => input.style.borderColor = "var(--text-faint)");
+input.addEventListener("blur",   () => input.style.borderColor = "var(--background-modifier-border)");
 
 // ── Tree ────────────────────────────────────────────
 const treeEl = dv.container.createEl("div");
@@ -117,6 +69,7 @@ function renderDir(container, node, name, depth, ancestors) {
   details.setAttribute("open", "");
 
   if (depth === 1) {
+    // Top-level: bold heading style
     details.style.cssText = "margin-top: 20px;";
     const summary = details.createEl("summary");
     summary.style.cssText = "display:flex; align-items:baseline; gap:8px; margin-bottom:8px; padding-bottom:5px; border-bottom:1px solid var(--background-modifier-border); cursor:pointer; list-style:none;";
@@ -131,10 +84,11 @@ function renderDir(container, node, name, depth, ancestors) {
     content.style.cssText = "margin-left: 6px;";
     const newAnc = [...ancestors, details];
     for (const page of node.files) renderFile(content, page, newAnc);
-    for (const [dn, dnode] of Object.entries(node.dirs)) renderDir(content, dnode, dn, depth + 1, newAnc);
+    for (const [dn, dv_] of Object.entries(node.dirs)) renderDir(content, dv_, dn, depth + 1, newAnc);
   } else {
+    // Nested: subtle collapsible
     details.style.cssText = "margin: 4px 0;";
-    details.removeAttribute("open");
+    details.removeAttribute("open"); // nested closed by default
     const summary = details.createEl("summary");
     summary.style.cssText = "cursor:pointer; color:var(--text-muted); font-size:0.88em; padding:2px 0; list-style:none; display:flex; align-items:center; gap:6px;";
     const arrow = summary.createEl("span");
@@ -148,7 +102,7 @@ function renderDir(container, node, name, depth, ancestors) {
     content.style.cssText = "margin-left: 16px; margin-top: 4px;";
     const newAnc = [...ancestors, details];
     for (const page of node.files) renderFile(content, page, newAnc);
-    for (const [dn, dnode] of Object.entries(node.dirs)) renderDir(content, dnode, dn, depth + 1, newAnc);
+    for (const [dn, dv_] of Object.entries(node.dirs)) renderDir(content, dv_, dn, depth + 1, newAnc);
   }
 }
 
@@ -163,6 +117,7 @@ input.addEventListener("input", () => {
   if (!q) {
     allFileEls.forEach(({ el, ancestors }) => {
       el.style.display = "";
+      // restore: top-level open, nested closed
       ancestors.forEach((d, i) => i === 0 ? d.setAttribute("open","") : d.removeAttribute("open"));
     });
     return;
@@ -176,16 +131,3 @@ input.addEventListener("input", () => {
   });
 });
 ```
-
----
-
-## 🌱 Seeds — Needs Attention
-
-> [!seed]
-> ```dataview
-> LIST
-> FROM "Learning/DevOps"
-> WHERE status = "seed"
-> AND type != "moc"
-> SORT file.mtime ASC
-> ```

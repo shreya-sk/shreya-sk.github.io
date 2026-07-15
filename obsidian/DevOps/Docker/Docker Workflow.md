@@ -7,7 +7,7 @@ tags: [area/devops, type/note]
 status: seed
 ---
 
-← [[Notes/HOME|Home]] &nbsp;·&nbsp; [[Docker MOC]]
+← [[HOME|Home]] &nbsp;·&nbsp; [[Docker MOC]]
 
 # Docker Workflow
 

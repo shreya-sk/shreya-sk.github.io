@@ -28,7 +28,7 @@ related:
   - "[[../Nervous System/Nervous System|Nervous System]]"
 ---
 
-← [[Notes/HOME|Home]] &nbsp;·&nbsp; [[Anatomy & Physiology MOC]]
+← [[HOME|Home]] &nbsp;·&nbsp; [[Anatomy & Physiology MOC]]
 
 # Biomechanics & Kinesiology
 

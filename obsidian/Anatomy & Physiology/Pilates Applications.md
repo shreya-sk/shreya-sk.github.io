@@ -20,7 +20,7 @@ related:
   - "[[Biomechanics & Kinesiology/Biomechanics & Kinesiology|Biomechanics & Kinesiology]]"
 ---
 
-← [[Notes/HOME|Home]] &nbsp;·&nbsp; [[Anatomy & Physiology MOC]]
+← [[HOME|Home]] &nbsp;·&nbsp; [[Anatomy & Physiology MOC]]
 
 # Pilates Applications — NASM A&P
 
