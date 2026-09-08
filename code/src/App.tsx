@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import Header from "./components/Header";
+import Footer from "./components/Footer";
 import Index from "./pages/Index";
 
 // Every non-home route is code-split: the heavy markdown/highlighting stack
@@ -34,7 +35,7 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <div className="min-h-screen bg-background">
+        <div className="min-h-screen bg-background flex flex-col">
           <Header />
           <Suspense fallback={<PageFallback />}>
             <Routes>
@@ -49,6 +50,7 @@ const App = () => (
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Suspense>
+          <Footer />
         </div>
       </BrowserRouter>
     </TooltipProvider>

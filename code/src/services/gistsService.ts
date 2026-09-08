@@ -34,28 +34,18 @@ export const extractFirstHeading = (content: string): string | null => {
 };
 
 export const fetchGists = async (): Promise<Gist[]> => {
-  try {
-    console.log('Fetching gists from:', `${GITHUB_API_BASE}/users/${GITHUB_USERNAME}/gists`);
+  const response = await fetch(
+    `${GITHUB_API_BASE}/users/${GITHUB_USERNAME}/gists`,
+    { headers: getHeaders() }
+  );
 
-    const response = await fetch(
-      `${GITHUB_API_BASE}/users/${GITHUB_USERNAME}/gists`,
-      { headers: getHeaders() }
-    );
-
-    if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}));
-      console.error('GitHub Gists API Error:', response.status, errorData);
-      throw new Error(`Failed to fetch gists: ${response.status}`);
-    }
-
-    const gists: Gist[] = await response.json();
-    console.log(`Found ${gists.length} gists`);
-
-    return gists;
-  } catch (error) {
-    console.error('Error fetching gists:', error);
-    return [];
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({}));
+    console.error('GitHub Gists API Error:', response.status, errorData);
+    throw new Error(`Failed to fetch gists: ${response.status}`);
   }
+
+  return response.json();
 };
 
 export const fetchGistContent = async (gistId: string): Promise<Gist | null> => {

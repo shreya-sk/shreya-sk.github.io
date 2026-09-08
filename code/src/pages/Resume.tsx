@@ -50,6 +50,11 @@ const WORK = [
     body: 'Deployed Bruno and Playwright as reusable testing infrastructure, giving teams a consistent, self-serve path for API contract tests and end-to-end automation.',
   },
   {
+    org: ['Sonic Healthcare', 'ITSM & Support'],
+    title: 'SLA compliance & knowledge base overhaul',
+    body: 'Authored a Confluence knowledge hub so other teams could self-serve common fixes faster, and built team-level dashboards for monthly SLA reporting - cutting the breach rate from 38% to 4%.',
+  },
+  {
     org: ['Personal', 'Project'],
     title: 'Git-backed Obsidian vault editor',
     body: "A password-locked, in-browser editor that clones this site's Obsidian vault straight from GitHub - CodeMirror editing, a client-side git sync engine with pull/push and conflict detection, and encrypted unlock, all running without a backend.",

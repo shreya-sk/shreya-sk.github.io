@@ -4,8 +4,8 @@ import NowBar from "@/components/NowBar";
 
 const BUILT: Array<[string, string, string]> = [
   ["01", "Migrated production workloads from VMware Tanzu to Kubernetes", "sonic · current"],
-  ["02", "Reusable Helm & Ansible deployment patterns for release pipelines", "sonic · current"],
-  ["03", "CI/CD & release management across teams - Azure DevOps, Octopus, Ansible", "sonic · current"],
+  ["02", "Own CI/CD & release pipelines across teams - Azure DevOps, Octopus, Ansible", "sonic · current"],
+  ["03", "Self-managed observability & test infrastructure - Langfuse, Bruno, Playwright", "sonic · current"],
   ["04", "This website - a two-way Obsidian ↔ GitHub sync pipeline with a client-side git editor in the browser", "2026"],
   ["05", "Airtable operations system for a multi-site education business", "ongoing"],
   ["06", "Research in Aspect-Based Sentiment Analysis (NLP)", "2024"],
