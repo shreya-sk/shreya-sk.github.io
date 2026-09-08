@@ -1,5 +1,7 @@
 import { usePageMeta } from "@/hooks/usePageMeta";
 import { useState, useMemo } from "react";
+import { Link } from "react-router-dom";
+import { Pencil } from "lucide-react";
 import WeekCalendar, { getWeekStart, getWeekDays, formatDateKey, DAY_NAMES } from "@/components/WeekCalendar";
 import { useTILEntries } from "@/hooks/useTILEntries";
 import { TILEntry } from "@/types/blog";
@@ -120,12 +122,18 @@ const TIL = () => {
                   <div>
                     {dayEntries.length > 0 ? (
                       dayEntries.map((entry) => (
-                        <p
-                          key={entry.id}
-                          className="text-base leading-relaxed mb-4 last:mb-0 whitespace-pre-line"
-                        >
-                          {cleanTILContent(entry.content || '') || 'No content available'}
-                        </p>
+                        <div key={entry.id} className="group flex items-start gap-2 mb-4 last:mb-0">
+                          <p className="text-base leading-relaxed whitespace-pre-line flex-1">
+                            {cleanTILContent(entry.content || '') || 'No content available'}
+                          </p>
+                          <Link
+                            to={`/editor?path=${encodeURIComponent(`Learning/${entry.path}`)}`}
+                            className="shrink-0 mt-1 text-muted-foreground opacity-0 group-hover:opacity-100 hover:text-accent transition-all"
+                            title="Edit this entry in the vault editor"
+                          >
+                            <Pencil className="h-3.5 w-3.5" />
+                          </Link>
+                        </div>
                       ))
                     ) : (
                       <p className="italic text-muted-foreground">snooze day</p>
