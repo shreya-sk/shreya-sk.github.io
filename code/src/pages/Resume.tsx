@@ -40,15 +40,20 @@ const WORK = [
     body: 'Own CI/CD pipelines and release management across the SIT environment using Ansible and Octopus Deploy - reducing manual release steps and giving the team a repeatable path from commit to environment.',
   },
   {
+    org: ['Sonic Healthcare', 'DevOps'],
+    title: 'Self-managed LLM observability platform',
+    body: "Deployed Langfuse on Kubernetes for a clinical trials platform - architecting Postgres, Valkey and ClickHouse on our operator-based patterns after ruling out the chart's deprecated bundled images, then templating the Helm values for Ansible-driven rollout.",
+  },
+  {
+    org: ['Sonic Healthcare', 'DevOps'],
+    title: 'Shared API & E2E test infrastructure',
+    body: 'Deployed Bruno and Playwright as reusable testing infrastructure, giving teams a consistent, self-serve path for API contract tests and end-to-end automation.',
+  },
+  {
     org: ['Personal', 'Project'],
     title: 'Git-backed Obsidian vault editor',
     body: "A password-locked, in-browser editor that clones this site's Obsidian vault straight from GitHub - CodeMirror editing, a client-side git sync engine with pull/push and conflict detection, and encrypted unlock, all running without a backend.",
     link: { to: '/editor', label: '/editor' },
-  },
-  {
-    org: ['Stemlook', 'Ops'],
-    title: 'Airtable-based operations system',
-    body: 'Designed and manage the operations backbone for a multi-site education business - enrolment, scheduling, and parent communications in one system.',
   },
 ];
 
