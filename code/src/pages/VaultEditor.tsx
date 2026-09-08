@@ -2,6 +2,7 @@
 // Left: reactive file tree · Center: CodeMirror 6 · Right: Git sync dashboard.
 
 import { useEffect, useMemo, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { Settings, PanelRight, FolderTree } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useVault } from '@/vault/useVault';
@@ -19,6 +20,7 @@ import { toast } from 'sonner';
 
 export default function VaultEditor() {
   const vault = useVault();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [lockBlob, setLockBlob] = useState<LockBlob | null | 'loading'>('loading');
   const [forceTokenEntry, setForceTokenEntry] = useState(false);
@@ -54,6 +56,25 @@ export default function VaultEditor() {
   useEffect(() => {
     readConflicts().then(setConflictLog);
   }, [vault.newConflicts, vault.syncState.lastSync]);
+
+  // Deep link from a blog post / TIL entry's Edit button: /editor?path=<vault path>
+  useEffect(() => {
+    const target = searchParams.get('path');
+    if (!target || !paths.length) return;
+    if (!paths.includes(target)) {
+      toast.error(`“${target}” hasn't synced into the vault yet`);
+      setSearchParams((p) => {
+        p.delete('path');
+        return p;
+      }, { replace: true });
+      return;
+    }
+    vault.openFile(target).catch((e) => toast.error(e.message));
+    setSearchParams((p) => {
+      p.delete('path');
+      return p;
+    }, { replace: true });
+  }, [searchParams, paths, vault.openFile, setSearchParams]);
 
   // If no saved credentials, look for a password-locked blob shipped with the site
   useEffect(() => {

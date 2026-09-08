@@ -5,7 +5,7 @@
 # PRIVATE    : everything else — Journal/, Books/, Notes/, Attachments/,
 #              Templates/, Work/, Welcome*.md, and any future top-level folder.
 #              Nothing outside Learning/ ever leaves the vault.
-# REPO-ONLY  : Daily - TIL/, Hey, there!.md, test-note.md — never enter the vault
+# REPO-ONLY  : Hey, there!.md, test-note.md — never enter the vault
 #
 # Also generates obsidian/recent.json — the most recently modified notes,
 # which the homepage "currently on" section renders.
@@ -28,7 +28,7 @@ COMMON=(--exclude '.obsidian/' --exclude '.trash/' --exclude '.DS_Store'
         --exclude 'Learning/'   # guards against the nested Learning/Learning duplicate
         --exclude 'DKT.md' --exclude '*.py')  # personal notes / scripts stay private
 
-REPO_ONLY=(--exclude 'Daily - TIL/' --exclude 'Hey, there!.md' --exclude 'test-note.md' --exclude 'recent.json')
+REPO_ONLY=(--exclude 'Hey, there!.md' --exclude 'test-note.md' --exclude 'recent.json')
 
 # Nav/ is published (MOCs help readers navigate) — except these personal files
 NAV_PRIVATE=(--exclude 'Task MOC.md' --exclude 'Meeting MOC.md' --exclude 'HOME.md'

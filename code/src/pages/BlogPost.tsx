@@ -1,6 +1,6 @@
 
 import { useParams } from "react-router-dom";
-import { Calendar, Clock, ArrowLeft, Folder } from "lucide-react";
+import { Calendar, Clock, ArrowLeft, Folder, Pencil } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { fetchPostBySlug } from "@/services/localMarkdownService";
@@ -60,13 +60,23 @@ const BlogPost = () => {
   return (
     <div className="container px-4 py-8 sage-gradient min-h-screen">
       <div className="mx-auto max-w-3xl">
-        <Link
-          to="/blog"
-          className="inline-flex items-center text-muted-foreground hover:text-primary mb-8 transition-all hover:gap-3 gap-2 font-medium"
-        >
-          <ArrowLeft className="h-4 w-4" />
-          Back to Blog
-        </Link>
+        <div className="flex items-center justify-between mb-8">
+          <Link
+            to="/blog"
+            className="inline-flex items-center text-muted-foreground hover:text-primary transition-all hover:gap-3 gap-2 font-medium"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            Back to Blog
+          </Link>
+          <Link
+            to={`/editor?path=${encodeURIComponent(`Learning/${post.path}`)}`}
+            className="inline-flex items-center gap-1.5 text-muted-foreground hover:text-accent transition-colors font-mono text-xs uppercase tracking-wide"
+            title="Edit this note in the vault editor"
+          >
+            <Pencil className="h-3.5 w-3.5" />
+            Edit
+          </Link>
+        </div>
 
         <article className="minimal-card p-8 md:p-12">
           <header className="mb-8">
