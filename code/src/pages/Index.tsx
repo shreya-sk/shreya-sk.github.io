@@ -47,9 +47,8 @@ const Index = () => {
                     <div className="font-mono text-[11px] uppercase tracking-wide text-accent mb-3">how I think</div>
                     <ul className="space-y-2.5 text-base text-foreground/90">
                       <li className="flex items-start gap-2"><span className="text-accent">·</span><span>everything needs a system</span></li>
-                      <li className="flex items-start gap-2"><span className="text-accent">·</span><span>clarity beats cleverness</span></li>
-                      <li className="flex items-start gap-2"><span className="text-accent">·</span><span>if it's messy, I organize it</span></li>
-                      <li className="flex items-start gap-2"><span className="text-accent">·</span><span>if it's confusing, I map it</span></li>
+                      <li className="flex items-start gap-2"><span className="text-accent">·</span><span>no two systems are designed the same way - I map as I learn</span></li>
+                      <li className="flex items-start gap-2"><span className="text-accent">·</span><span>the more I understand, the more I can simplify</span></li>
                     </ul>
                   </div>
 
