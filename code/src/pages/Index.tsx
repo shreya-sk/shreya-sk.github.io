@@ -103,6 +103,13 @@ const Index = () => {
                   ))}
                 </div>
               </div>
+
+              {/* closing note */}
+              <div className="mt-10 pt-8 border-t border-foreground/20 text-center">
+                <p className="font-mono text-sm text-muted-foreground">
+                  same creative instinct, whether it's a studio or a cluster.
+                </p>
+              </div>
             </div>
 
             {/* ---- floating now bar ---- */}
