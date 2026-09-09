@@ -1,7 +1,7 @@
 import { usePageMeta } from "@/hooks/usePageMeta";
 import { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
-import { Pencil } from "lucide-react";
+import { Pencil, Plus } from "lucide-react";
 import WeekCalendar, { getWeekStart, getWeekDays, formatDateKey, DAY_NAMES } from "@/components/WeekCalendar";
 import { useTILEntries } from "@/hooks/useTILEntries";
 import { TILEntry } from "@/types/blog";
@@ -28,6 +28,13 @@ const cleanTILContent = (raw: string): string => {
     .trim();
 };
 
+// Vault filename convention for a daily TIL note, e.g. 09-09-2026.md
+const tilFilename = (date: Date): string => {
+  const d = String(date.getDate()).padStart(2, '0');
+  const m = String(date.getMonth() + 1).padStart(2, '0');
+  return `${d}-${m}-${date.getFullYear()}.md`;
+};
+
 const TIL = () => {
   usePageMeta('TIL', 'Today I Learned - a weekly log of small learnings.');
   const [selectedWeek, setSelectedWeek] = useState(new Date());
@@ -46,6 +53,7 @@ const TIL = () => {
 
   const weekStart = getWeekStart(selectedWeek);
   const weekDays = getWeekDays(weekStart);
+  const todayKey = formatDateKey(new Date());
 
   // Group this week's entries by day
   const entriesByDay = useMemo(() => {
@@ -128,13 +136,20 @@ const TIL = () => {
                           </p>
                           <Link
                             to={`/editor?path=${encodeURIComponent(`Learning/${entry.path}`)}`}
-                            className="shrink-0 mt-1 text-muted-foreground opacity-0 group-hover:opacity-100 hover:text-accent transition-all"
+                            className="shrink-0 mt-1 text-muted-foreground/50 hover:text-accent transition-colors"
                             title="Edit this entry in the vault editor"
                           >
                             <Pencil className="h-3.5 w-3.5" />
                           </Link>
                         </div>
                       ))
+                    ) : key <= todayKey ? (
+                      <Link
+                        to={`/editor?path=${encodeURIComponent(`Learning/Daily - TIL/${tilFilename(day)}`)}&create=1`}
+                        className="inline-flex items-center gap-1.5 italic text-muted-foreground hover:text-accent transition-colors"
+                      >
+                        <Plus className="h-3.5 w-3.5" /> add entry
+                      </Link>
                     ) : (
                       <p className="italic text-muted-foreground">snooze day</p>
                     )}

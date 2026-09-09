@@ -58,23 +58,36 @@ export default function VaultEditor() {
   }, [vault.newConflicts, vault.syncState.lastSync]);
 
   // Deep link from a blog post / TIL entry's Edit button: /editor?path=<vault path>
+  // A TIL "add entry" link also passes create=1, so a not-yet-existing file
+  // (e.g. today's TIL note) gets created instead of erroring.
   useEffect(() => {
     const target = searchParams.get('path');
+    const shouldCreate = searchParams.get('create') === '1';
     if (!target || !paths.length) return;
+
+    const clearParams = () =>
+      setSearchParams(
+        (p) => {
+          p.delete('path');
+          p.delete('create');
+          return p;
+        },
+        { replace: true }
+      );
+
     if (!paths.includes(target)) {
-      toast.error(`“${target}” hasn't synced into the vault yet`);
-      setSearchParams((p) => {
-        p.delete('path');
-        return p;
-      }, { replace: true });
+      if (shouldCreate) {
+        const name = target.split('/').pop()?.replace(/\.md$/i, '') || 'Untitled';
+        vault.createFile(target, `# ${name}\n\n`).catch((e) => toast.error(e.message));
+      } else {
+        toast.error(`“${target}” hasn't synced into the vault yet`);
+      }
+      clearParams();
       return;
     }
     vault.openFile(target).catch((e) => toast.error(e.message));
-    setSearchParams((p) => {
-      p.delete('path');
-      return p;
-    }, { replace: true });
-  }, [searchParams, paths, vault.openFile, setSearchParams]);
+    clearParams();
+  }, [searchParams, paths, vault.openFile, vault.createFile, setSearchParams]);
 
   // If no saved credentials, look for a password-locked blob shipped with the site
   useEffect(() => {
