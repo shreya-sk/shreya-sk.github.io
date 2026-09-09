@@ -1,13 +1,13 @@
 {
-  "generated": "2026-09-09T02:59:38.641760+00:00",
+  "generated": "2026-09-09T03:33:35.044834+00:00",
   "files": [
-    "Anatomy & Physiology/Anatomy & Physiology MOC.md",
-    "DevOps/Pre-requisites Devops/Prerequisites MOC.md",
-    "DevOps/Kubernetes/Kubernetes MOC.md",
-    "DevOps/Kubernetes/CKA Prep MOC.md",
-    "DevOps/Kubernetes/CKA - Cheat Sheet.md",
-    "DevOps/GoLang/GoLang MOC.md",
-    "DevOps/Docker/Setup Docker.md",
-    "DevOps/Docker/FAQs.md"
+    "Seedbox/YAML.md",
+    "Seedbox/YAML - k8s.md",
+    "Seedbox/Shell Scripting.md",
+    "Seedbox/Pointers.md",
+    "Seedbox/Networking (ON LINUX).md",
+    "Seedbox/Micro-services.md",
+    "Seedbox/LINUX.md",
+    "Seedbox/Kernal.md"
   ]
 }
