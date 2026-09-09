@@ -15,7 +15,7 @@ const Hero = () => {
                 className="w-32 h-32 md:w-44 md:h-44 rounded-none object-cover"
               />
               <div className="mt-3 flex items-center justify-center md:justify-start gap-2 font-mono text-[11px] uppercase tracking-wide text-muted-foreground">
-                <span className="text-accent">●</span> powered by obsidian
+                <span className="text-accent">●</span> sycned from obsidian
               </div>
             </div>
 
