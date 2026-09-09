@@ -30,6 +30,7 @@ const LinkChip = ({
 interface CaseStudy {
   n: string;
   title: string;
+  teaser: string;
   context: string;
   problem: string;
   whatIDid: string;
@@ -40,20 +41,22 @@ interface CaseStudy {
 const CASE_STUDIES: CaseStudy[] = [
   {
     n: "01",
-    title: "Onboarding 50+ application pipelines onto the shared delivery framework",
+    title: "Onboarding 50+ pipelines",
+    teaser: "~10 product teams, five environments, one framework.",
     context:
       "Sonic's DevOps team runs a central CI/CD framework - Ansible-driven, deploying through Azure DevOps and Octopus onto on-prem Kubernetes - so digital product teams don't each invent their own delivery path.",
     problem:
       "Dozens of application pipelines still sat outside it: inconsistent stages, hand-maintained configs, no common quality or security gates, and every platform change meant touching each pipeline by hand.",
     whatIDid:
       "Onboarded 50+ pipelines. For each: mapped the existing build and release, expressed it in the framework's Ansible roles and Octopus steps, added the standard gates, and cut over with the owning team. Wrote the onboarding runbook the team now uses.",
-    stack: ["Ansible", "Azure DevOps / TFS", "Octopus Deploy", "Kubernetes", "Docker", "Helm", "ArgoCD", "Harbor"],
+    stack: ["Ansible", "Azure DevOps", "Octopus Deploy", "Kubernetes", "Docker", "Helm", "ArgoCD", "Harbor"],
     outcome:
       "50+ pipelines standardised across ~10 product teams and five environments (dev, UAT, QC, ET, prod) in Sydney and Brisbane. Framework changes now roll out once, not per pipeline.",
   },
   {
     n: "02",
-    title: "Extending the Go tool that generates pipeline configuration",
+    title: "Extending the Go config tool",
+    teaser: "StatefulSet + Angular-aware Node images. Setup ~70% faster.",
     context:
       "The team has a Go CLI, originally designed by a colleague, that renders Ansible inventories, Azure DevOps YAML and Kubernetes manifests from a small per-application spec - so configuration is generated, not hand-copied.",
     problem:
@@ -66,7 +69,8 @@ const CASE_STUDIES: CaseStudy[] = [
   },
   {
     n: "03",
-    title: "Self-managed LLM observability for Sonic Clinical Trials (Langfuse)",
+    title: "Langfuse for Sonic Clinical Trials",
+    teaser: "Self-managed LLM observability on our own operators, not Bitnami.",
     context:
       "Sonic Clinical Trials needed observability for an AI workflow. Langfuse's open-source edition covered the use case, deployed self-managed into our Kubernetes.",
     problem:
@@ -79,7 +83,8 @@ const CASE_STUDIES: CaseStudy[] = [
   },
   {
     n: "04",
-    title: "Moving every product from VMware Tanzu to VKS",
+    title: "Tanzu → VKS, every product",
+    teaser: "35 products re-targeted and cut over without breaking the framework.",
     context:
       "Sonic's infrastructure team stood up vSphere Kubernetes Service (VKS) clusters to replace the Tanzu (TKG) estate. The DevOps team's job was to get every product across without breaking the framework that deploys it.",
     problem:
@@ -88,11 +93,12 @@ const CASE_STUDIES: CaseStudy[] = [
       "Migrated products end-to-end: updated each application's Ansible inventory, Helm values and ArgoCD target for VKS, deployed through the standard pipeline, validated with the owning team, cut over. The StatefulSet support in the Go tool (02) came out of this work, so stateful products could be generated rather than hand-migrated.",
     stack: ["Kubernetes (Tanzu → VKS)", "Helm", "ArgoCD", "Ansible", "Azure DevOps", "Octopus Deploy", "Harbor"],
     outcome:
-      "All 35 products now deploy to VKS across the full estate through the same framework, with the infrastructure and DevOps teams' responsibilities cleanly split: they built the clusters, we moved the applications.",
+      "All 35 products now deploy to VKS across the full estate through the same framework. Responsibilities were cleanly split: infrastructure built the clusters, DevOps moved the applications.",
   },
   {
     n: "05",
-    title: "Bringing legacy Angular/IIS and .NET apps into automated delivery without rewrites",
+    title: "Legacy .NET into automated delivery",
+    teaser: "Docker artefact extraction. No rewrite, same gates.",
     context:
       "A set of older Angular/IIS and .NET applications sat outside the framework because it assumed containerised, Kubernetes-native workloads.",
     problem:
@@ -105,7 +111,8 @@ const CASE_STUDIES: CaseStudy[] = [
   },
   {
     n: "06",
-    title: "Security and code-quality scanning as a pipeline default",
+    title: "Scanning as a pipeline default",
+    teaser: "SonarQube + Snyk everywhere; legacy .NET finally scannable.",
     context:
       "SonarQube and Snyk existed, but coverage was uneven: modern services mostly had it, legacy .NET had none, and project configuration lived in people's heads.",
     problem:
@@ -118,7 +125,8 @@ const CASE_STUDIES: CaseStudy[] = [
   },
   {
     n: "07",
-    title: "Shared framework components and test infrastructure",
+    title: "Shared components & test infra",
+    teaser: "Python filter plugin, Bruno, Playwright - build once, reuse.",
     context:
       "Product teams kept re-solving the same small problems inside their own pipelines, and building their own API and E2E test setups.",
     problem:
@@ -131,7 +139,8 @@ const CASE_STUDIES: CaseStudy[] = [
   },
   {
     n: "08",
-    title: "Incident response and support-team dashboards",
+    title: "Incident response & SLA dashboards",
+    teaser: "100+ incidents. Breach rate 38% → 4%.",
     context:
       "The DevOps team carries L2 incident response for the CI/CD estate in ServiceNow.",
     problem:
@@ -250,6 +259,7 @@ const PipelineDiagram = () => (
         <rect x="760" y="20" width="130" height="50" />
         <rect x="918" y="20" width="90" height="50" />
       </g>
+      
       <g className="text-foreground" fontFamily="'JetBrains Mono', monospace" fontSize="12" textAnchor="middle" fill="currentColor">
         <text x="45" y="49">commit</text>
         <text x="183" y="49">Azure DevOps</text>
@@ -298,18 +308,23 @@ const CaseStudyGridCard = ({ cs, onOpen }: { cs: CaseStudy; onOpen: () => void }
   <button
     type="button"
     onClick={onOpen}
-    className="group flex flex-col text-left border border-foreground/20 hover:border-accent transition-colors px-4 py-4 min-h-[200px]"
+    className="group flex flex-col text-left border border-foreground/20 hover:border-accent transition-colors px-4 py-4"
   >
     <span className="font-mono text-[11px] text-accent mb-2">{cs.n}</span>
     <h3 className="font-bold text-sm leading-snug tracking-tight mb-2">{cs.title}</h3>
-    <p className="text-[13px] leading-relaxed text-muted-foreground line-clamp-3 flex-1">
-      {cs.outcome}
-    </p>
-    <div className="flex items-center justify-between mt-3 pt-1">
-      <span className="font-mono text-[10px] uppercase tracking-wide text-muted-foreground">
-        {cs.stack.length} technologies
-      </span>
-      <span className="inline-flex items-center gap-0.5 font-mono text-[10px] uppercase tracking-wide text-accent">
+    <p className="text-[13px] leading-relaxed text-muted-foreground flex-1">{cs.teaser}</p>
+    <div className="flex items-center justify-between mt-3 pt-1 gap-2">
+      <div className="flex gap-1 overflow-hidden">
+        {cs.stack.slice(0, 3).map((s) => (
+          <span
+            key={s}
+            className="font-mono text-[10px] px-1.5 py-0.5 border border-foreground/15 text-muted-foreground whitespace-nowrap"
+          >
+            {s}
+          </span>
+        ))}
+      </div>
+      <span className="inline-flex items-center gap-0.5 font-mono text-[10px] uppercase tracking-wide text-accent shrink-0">
         Expand
         <ArrowUpRight className="h-3 w-3 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
       </span>
@@ -369,14 +384,7 @@ const Work = () => {
             Sonic Healthcare · Aug 2022 – Current
           </div>
           <p className="text-lg leading-relaxed max-w-[68ch] text-foreground/80 mb-8">
-            I'm a DevOps engineer at Sonic Healthcare - a global pathology, radiology and
-            primary-care group. Since 2022 I've been on the team that runs the shared CI/CD
-            framework Sonic's digital product teams deploy through. Half the job is platform
-            work: onboarding pipelines, extending the Go and Ansible tooling, moving every
-            product from Tanzu to VKS, putting security scanning where it wasn't. The other half
-            is being the person product teams come to - a new package to deploy, a Postgres to
-            stand up, a scan to add, a release that's stuck. Before the title change I was a
-            software engineer on the same team.
+            I'm a DevOps engineer at Sonic Healthcare, a global pathology, radiology and primary-care group. Since 2022 I've been on the team behind the shared CI/CD framework Sonic's product teams deploy through — onboarding pipelines, extending the Go and Ansible tooling, moving every product from Tanzu to VKS, and making security scanning the default. The other half is support: L2 incident response for the delivery estate in ServiceNow, knowledge articles so teams can fix common issues themselves, and the everyday requests — a Postgres, a package, a scan, an unstuck release.
           </p>
           <div className="flex flex-wrap gap-3 mb-6">
             <LinkChip href="/resume.pdf" primary>
