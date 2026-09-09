@@ -7,6 +7,8 @@ status: evergreen
 
 ← [[Nav/HOME|Home]] &nbsp;·&nbsp; [[Kubernetes MOC]]
 
+# CKA Cheat Sheet
+
 ## Essential Setup & Aliases
 ```bash
 # Must-have aliases (add to ~/.bashrc in exam)

@@ -10,6 +10,8 @@ status: seed
 
 ← [[Nav/HOME|Home]] &nbsp;·&nbsp; [[Docker MOC]]
 
+# Docker Storage
+
 #docker #devops #container
 
 > [!info] Related Notes

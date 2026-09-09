@@ -7,6 +7,8 @@ status: evergreen
 
 ← [[Nav/HOME|Home]] &nbsp;·&nbsp; [[Docker MOC]]
 
+# Docker FAQs
+
 Some questions I encountered while learnind docker! The answers are compiled from chatgpt, docker documentation and nigel poulton online videos (pluralsight)
 
 ---

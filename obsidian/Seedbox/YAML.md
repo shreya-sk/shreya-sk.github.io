@@ -7,6 +7,8 @@ status: seed
 
 ← [[Nav/HOME|Home]] &nbsp;·&nbsp; [[Ansible MOC]]
 
+# YAML Basics
+
 ```{Yaml}
 # KEY VALUE
 Fruit: Apple

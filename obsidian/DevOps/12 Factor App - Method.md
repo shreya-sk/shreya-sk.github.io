@@ -11,7 +11,9 @@ status: evergreen
 
 ← [[Nav/HOME|Home]] &nbsp;·&nbsp; [[DevOps MOC]]
 
-# Ideally
+# 12-Factor App Overview
+
+## Ideally
 If your application is independent of server/hosting, it can be hosted anywhere (GCP, Azure, AWS, on-prem). App is not cuopled with the infrastructure - app is "Portable" - able to run the same app on diff env, without changing source code
 
 So an App should:

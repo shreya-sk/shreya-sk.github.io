@@ -1,9 +1,6 @@
 ---
-created:
-  "{ date:YYYY-MM-DD }":
 source: KodeKloud
 up: "[[DevOps MOC]]"
-related: []
 tags:
   - devops
   - type/note
@@ -13,7 +10,7 @@ status: seed
 
 ← [[Nav/HOME|Home]]
 
-# {{title}}
+# Linux Kernel
 
 > [!abstract] Summary
 > *One sentence — what is this and why does it matter?*
