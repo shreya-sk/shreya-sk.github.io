@@ -1,5 +1,5 @@
 import { usePageMeta } from "@/hooks/usePageMeta";
-import { Download, Mail, Linkedin, Github, ExternalLink } from "lucide-react";
+import { Download, Mail, Linkedin, Github, ExternalLink, ChevronDown } from "lucide-react";
 
 // Chip-style external link, matching the flat design system
 const LinkChip = ({
@@ -31,7 +31,7 @@ interface CaseStudy {
   context: string;
   problem: string;
   whatIDid: string;
-  stack: string;
+  stack: string[];
   outcome: string;
 }
 
@@ -45,7 +45,7 @@ const CASE_STUDIES: CaseStudy[] = [
       "Dozens of application pipelines were still bespoke: inconsistent stages, hand-maintained configs, no common security gates, and every upgrade to the platform meant touching each one by hand.",
     whatIDid:
       "Migrated and onboarded 50+ pipelines onto the framework. For each: mapped the existing build/release, translated it into the framework's Ansible roles and Octopus steps, added the standard quality and security stages, and cut over with the owning team. Wrote the onboarding runbook other engineers now use.",
-    stack: "Ansible · Azure DevOps / TFS · Octopus Deploy · Kubernetes (Tanzu) · Docker · Helm · ArgoCD · Harbor",
+    stack: ["Ansible", "Azure DevOps / TFS", "Octopus Deploy", "Kubernetes (Tanzu)", "Docker", "Helm", "ArgoCD", "Harbor"],
     outcome:
       "50+ pipelines standardised across ~10 product teams and five environments - dev, UAT, QC, ET and prod - spanning our Brisbane and Sydney sites. Framework-level changes now roll out once instead of per pipeline.",
   },
@@ -58,7 +58,7 @@ const CASE_STUDIES: CaseStudy[] = [
       "Copy-paste configs drifted, took hours per pipeline, and made platform upgrades a find-and-replace exercise across the estate.",
     whatIDid:
       "Co-maintain the team's Go CLI that renders Ansible, Azure DevOps and Kubernetes configuration from versioned templates. Added StatefulSet deployment support and dynamic Node image selection by Angular version, and handle ongoing upgrades and fixes to the tool.",
-    stack: "Go · Go templates · YAML · Ansible · Azure DevOps · Kubernetes (Tanzu)",
+    stack: ["Go", "Go templates", "YAML", "Ansible", "Azure DevOps", "Kubernetes (Tanzu)"],
     outcome:
       "Pipeline setup time cut ~70%. Upgrades and new features become a template change plus a re-render, rather than a fresh round of manual edits across every pipeline.",
   },
@@ -71,7 +71,7 @@ const CASE_STUDIES: CaseStudy[] = [
       "Langfuse isn't one app - it needs four backing services (Postgres, ClickHouse, Redis/Valkey, S3-compatible blob storage), and the chart's bundled \"quick install\" path for all four uses Bitnami images. Bitnami restructured their registry in August 2025 and the chart now pulls from a \"bitnamilegacy\" path that doesn't exist in our Harbor registry at all - and even the older \"bitnami\" path is missing ClickHouse and Minio entirely. The quick-start option was a dead end before it started.",
     whatIDid:
       "Skipped the chart's bundled backing services entirely. Provisioned Postgres and Valkey the way we already do everywhere else - CRD-based operators, the same pattern SIMS runs on - so that part had no real blocker. For ClickHouse, evaluated and deployed an instance through the ClickHouse Kubernetes Operator (a cluster-wide install, so it's now available to future projects too). Wired up S3-compatible blob storage against credentials the business team provided, gave Langfuse its own dedicated web address (a shared-domain path prefix breaks other observability UIs we run, so this avoided that outright), and converted the vendor's Helm values into a template our Ansible pipeline renders and deploys.",
-    stack: "Langfuse · Kubernetes · Helm · Ansible · PostgreSQL (operator) · Valkey (operator) · ClickHouse Kubernetes Operator · S3-compatible storage · HashiCorp Vault",
+    stack: ["Langfuse", "Kubernetes", "Helm", "Ansible", "PostgreSQL (operator)", "Valkey (operator)", "ClickHouse Operator", "S3-compatible storage", "HashiCorp Vault"],
     outcome:
       "Langfuse running self-managed in its own namespace, all four backing services on infrastructure patterns we already operate and trust rather than deprecated bundled images. The ClickHouse Operator install is now available cluster-wide for any future project that needs it.",
   },
@@ -84,7 +84,7 @@ const CASE_STUDIES: CaseStudy[] = [
       "35 products across dev, UAT, QC, ET and prod, in Sydney and Brisbane, each with their own configs, secrets, storage and ingress - and none of them could just be copied over. Every one had to be re-deployed through the framework against the new target, verified, and cut over with the owning team.",
     whatIDid:
       "Migrated products end-to-end: updated each application's framework config (Ansible inventories, Helm values, Azure DevOps and ArgoCD targets) for VKS, deployed through the standard pipeline, validated the deployment with the product team, and cut over. Extended the Go templating tool with StatefulSet support during this work so stateful products could be generated rather than hand-migrated.",
-    stack: "Kubernetes (Tanzu → VKS) · Helm · ArgoCD · Ansible · Azure DevOps · Octopus Deploy · Harbor",
+    stack: ["Kubernetes (Tanzu → VKS)", "Helm", "ArgoCD", "Ansible", "Azure DevOps", "Octopus Deploy", "Harbor"],
     outcome:
       "All 35 products now deploy to VKS across five environments and two sites via the same framework.",
   },
@@ -97,7 +97,7 @@ const CASE_STUDIES: CaseStudy[] = [
       "Rewriting them wasn't on anyone's roadmap, but leaving them out meant manual deployments and no shared security gates.",
     whatIDid:
       "Built a Docker-based artefact-extraction path so legacy builds produce framework-compatible artefacts, enabling automated Octopus deployments to their existing IIS targets - no platform rewrite required. Separately, stood up a dedicated build VM with the exact toolchain these projects needed so they could be scanned and built by the shared agents.",
-    stack: "Docker · Octopus Deploy · IIS · Windows build agents · Azure DevOps",
+    stack: ["Docker", "Octopus Deploy", "IIS", "Windows build agents", "Azure DevOps"],
     outcome:
       "The legacy applications now deploy through the same automated path as modern services, with the same gates.",
   },
@@ -110,7 +110,7 @@ const CASE_STUDIES: CaseStudy[] = [
       "Security and code-quality findings weren't consistently surfaced before deployment - a compliance gap in a regulated healthcare environment (ISO 27001 / NIST-aligned controls).",
     whatIDid:
       "Integrated SonarQube and Snyk as standard stages across the microservices estate. Extended SonarQube scanning to legacy .NET projects - including the build-VM work above so the scanner had a compliant toolchain - and enabled it across 5 Sonic product teams, with coverage of the legacy .NET estate continuing to expand. Took ownership of SonarQube project configuration and moved pipeline secrets into HashiCorp Vault.",
-    stack: "SonarQube · Snyk · HashiCorp Vault · Azure DevOps · .NET · Ansible",
+    stack: ["SonarQube", "Snyk", "HashiCorp Vault", "Azure DevOps", ".NET", "Ansible"],
     outcome:
       "Scanning is now part of the pipeline definition, not a per-team decision. Sonar coverage spans 5 product teams' legacy .NET projects so far, with more being onboarded on an ongoing basis. Secrets no longer live in pipeline variables.",
   },
@@ -121,7 +121,7 @@ const CASE_STUDIES: CaseStudy[] = [
     problem: "Duplicate logic, inconsistent behaviour, and no single place to fix a bug.",
     whatIDid:
       "Wrote framework-level components adopted across projects - including a Node image-detection task and custom Python logic packaged as an Ansible filter plugin - so behaviour is defined once in the framework. Also deployed Bruno and Playwright as shared testing infrastructure, giving teams a consistent, self-serve path for API contract tests and end-to-end automation.",
-    stack: "Python · Ansible · Node · Bruno · Playwright · Azure DevOps",
+    stack: ["Python", "Ansible", "Node", "Bruno", "Playwright", "Azure DevOps"],
     outcome:
       "Adopted across the pipeline estate; one fix propagates everywhere. Teams now have a shared, self-serve path for API and E2E testing instead of building their own.",
   },
@@ -132,7 +132,7 @@ const CASE_STUDIES: CaseStudy[] = [
     problem: "SLA compliance and backlog were being tracked manually, and the support team had no forward view of load.",
     whatIDid:
       "Provide L2 incident response (ITIL v5) - triaging incoming tickets, rerouting them to the right product team, and writing knowledge-base articles that let other teams resolve common issues themselves. Built SLA-compliance and backlog-prediction dashboards in Grafana over ServiceNow data, now used by the support team.",
-    stack: "ServiceNow · Grafana · SQL · Python",
+    stack: ["ServiceNow", "Grafana", "SQL", "Python"],
     outcome:
       "100+ incidents handled to date. SLA breach rate down from 38% to 4% after the knowledge-base and dashboard work; support team now has a live SLA view and a predicted backlog instead of tracking compliance by hand.",
   },
@@ -179,12 +179,121 @@ const EDUCATION = [
   },
 ];
 
+const STATS: Array<{ value: string; label: string }> = [
+  { value: "50+", label: "pipelines" },
+  { value: "5 × 2", label: "environments · sites" },
+  { value: "Tanzu → VKS", label: "every product" },
+  { value: "38% → 4%", label: "SLA breaches" },
+  { value: "100+", label: "incidents" },
+];
+
 const Field = ({ label, children }: { label: string; children: React.ReactNode }) => (
   <div className="grid grid-cols-1 sm:grid-cols-[110px_1fr] gap-1 sm:gap-4 py-2.5">
     <div className="font-mono text-[11px] uppercase tracking-widest text-accent shrink-0">
       {label}
     </div>
     <div className="text-[15px] leading-relaxed text-foreground/85">{children}</div>
+  </div>
+);
+
+const StackChips = ({ items }: { items: string[] }) => (
+  <div className="flex flex-wrap gap-1.5">
+    {items.map((s) => (
+      <span
+        key={s}
+        className="font-mono text-[11px] px-2 py-0.5 border border-foreground/20 text-foreground/80"
+      >
+        {s}
+      </span>
+    ))}
+  </div>
+);
+
+// Simple horizontal flow diagram: commit -> Azure DevOps -> Go templating tool
+// -> Ansible -> Octopus/ArgoCD -> VKS, with the security stages hanging off
+// the CI stage. Plain SVG, no colour beyond the site's accent.
+const PipelineDiagram = () => (
+  <div className="overflow-x-auto mb-10 -mx-1 px-1">
+    <svg viewBox="0 0 920 210" className="min-w-[720px] w-full" style={{ maxWidth: 920 }}>
+      <defs>
+        <marker id="wf-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="currentColor" />
+        </marker>
+      </defs>
+
+      {/* main flow connectors */}
+      <g className="text-foreground/40" stroke="currentColor" strokeWidth="1.5">
+        <line x1="90" y1="45" x2="116" y2="45" markerEnd="url(#wf-arrow)" />
+        <line x1="248" y1="45" x2="274" y2="45" markerEnd="url(#wf-arrow)" />
+        <line x1="436" y1="45" x2="462" y2="45" markerEnd="url(#wf-arrow)" />
+        <line x1="574" y1="45" x2="600" y2="45" markerEnd="url(#wf-arrow)" />
+        <line x1="742" y1="45" x2="768" y2="45" markerEnd="url(#wf-arrow)" />
+      </g>
+
+      {/* main nodes */}
+      <g className="text-foreground" stroke="currentColor" strokeWidth="1.5" fill="none">
+        <rect x="0" y="20" width="90" height="50" />
+        <rect x="118" y="20" width="130" height="50" />
+        <rect x="276" y="20" width="160" height="50" />
+        <rect x="464" y="20" width="110" height="50" />
+        <rect x="602" y="20" width="140" height="50" />
+        <rect x="770" y="20" width="90" height="50" />
+      </g>
+      <g className="text-foreground" fontFamily="'JetBrains Mono', monospace" fontSize="12" textAnchor="middle" fill="currentColor">
+        <text x="45" y="49">commit</text>
+        <text x="183" y="49">Azure DevOps</text>
+        <text x="356" y="43">Go templating</text>
+        <text x="356" y="58">tool</text>
+        <text x="519" y="49">Ansible</text>
+        <text x="672" y="43">Octopus /</text>
+        <text x="672" y="58">ArgoCD</text>
+        <text x="815" y="49">VKS</text>
+      </g>
+
+      {/* branch: security stages hang off Azure DevOps */}
+      <g className="text-accent" stroke="currentColor" strokeWidth="1.5" fill="none">
+        <path d="M183,70 V100 H90 V148" markerEnd="url(#wf-arrow)" />
+        <path d="M183,100 V148" markerEnd="url(#wf-arrow)" />
+        <path d="M183,100 H276 V148" markerEnd="url(#wf-arrow)" />
+      </g>
+      <g className="text-foreground" stroke="currentColor" strokeWidth="1.5" fill="none">
+        <rect x="45" y="150" width="90" height="40" />
+        <rect x="138" y="150" width="90" height="40" />
+        <rect x="231" y="150" width="90" height="40" />
+      </g>
+      <g className="text-foreground" fontFamily="'JetBrains Mono', monospace" fontSize="11" textAnchor="middle" fill="currentColor">
+        <text x="90" y="174">SonarQube</text>
+        <text x="183" y="174">Snyk</text>
+        <text x="276" y="174">Vault</text>
+      </g>
+    </svg>
+  </div>
+);
+
+const CaseStudyCard = ({ cs }: { cs: CaseStudy }) => (
+  <div className="border-t border-foreground/20 pt-6">
+    <div className="flex items-baseline gap-3 mb-3">
+      <span className="font-mono text-xs text-accent shrink-0">{cs.n}</span>
+      <h3 className="font-bold text-lg md:text-xl tracking-tight leading-snug">{cs.title}</h3>
+    </div>
+
+    <div className="bg-accent/10 border-l-2 border-accent px-4 py-3 mb-4">
+      <p className="text-[15px] leading-relaxed font-medium text-foreground/90">{cs.outcome}</p>
+    </div>
+
+    <StackChips items={cs.stack} />
+
+    <details className="group mt-4">
+      <summary className="cursor-pointer list-none [&::-webkit-details-marker]:hidden inline-flex items-center gap-1 font-mono text-[11px] uppercase tracking-wide text-accent hover:underline">
+        Read more
+        <ChevronDown className="h-3 w-3 transition-transform group-open:rotate-180" />
+      </summary>
+      <div className="divide-y divide-foreground/10 mt-3">
+        <Field label="Context">{cs.context}</Field>
+        <Field label="Problem">{cs.problem}</Field>
+        <Field label="What I did">{cs.whatIDid}</Field>
+      </div>
+    </details>
   </div>
 );
 
@@ -210,11 +319,14 @@ const Work = () => {
             Sonic Healthcare · Aug 2022 – Current
           </div>
           <p className="text-lg leading-relaxed max-w-[68ch] text-foreground/80 mb-8">
-            I'm a DevOps engineer at Sonic Healthcare, one of the world's largest pathology
-            groups. Since 2022 I've worked on the shared CI/CD framework product teams deploy
-            through - onboarding pipelines, extending the tooling around them, migrating every
-            product from Tanzu to VKS, and putting security scanning where it wasn't before.
-            Before the title change I was a software engineer on the same team.
+            I'm a DevOps engineer at Sonic Healthcare - a global pathology, radiology and
+            primary-care group. Since 2022 I've been on the team that runs the shared CI/CD
+            framework Sonic's digital product teams deploy through. Half the job is platform
+            work: onboarding pipelines, extending the Go and Ansible tooling, moving every
+            product from Tanzu to VKS, putting security scanning where it wasn't. The other half
+            is being the person product teams come to - a new package to deploy, a Postgres to
+            stand up, a scan to add, a release that's stuck. Before the title change I was a
+            software engineer on the same team.
           </p>
           <div className="flex flex-wrap gap-3 mb-6">
             <LinkChip href="/resume.pdf" primary>
@@ -234,6 +346,24 @@ const Work = () => {
             Everything under Enterprise work is proprietary to Sonic Healthcare - described, not
             shown. Code I can share is under Open source &amp; side projects.
           </p>
+        </div>
+      </section>
+
+      {/* Numbers strip - the first visual break, right after the hero */}
+      <section className="border-b-2 border-foreground/90">
+        <div className="container px-6 py-8 max-w-5xl mx-auto">
+          <div className="grid grid-cols-2 sm:grid-cols-5 gap-6 sm:gap-4">
+            {STATS.map((s) => (
+              <div key={s.label}>
+                <div className="font-extrabold text-xl md:text-2xl tracking-tight text-foreground">
+                  {s.value}
+                </div>
+                <div className="font-mono text-[11px] uppercase tracking-wide text-muted-foreground mt-1">
+                  {s.label}
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -262,23 +392,11 @@ const Work = () => {
             </div>
           </div>
 
-          <div className="space-y-14 mb-20">
+          <PipelineDiagram />
+
+          <div className="space-y-10 mb-20">
             {CASE_STUDIES.map((cs) => (
-              <div key={cs.n} className="border-t border-foreground/20 pt-6">
-                <div className="flex items-baseline gap-3 mb-4">
-                  <span className="font-mono text-xs text-accent shrink-0">{cs.n}</span>
-                  <h3 className="font-bold text-lg md:text-xl tracking-tight leading-snug">
-                    {cs.title}
-                  </h3>
-                </div>
-                <div className="divide-y divide-foreground/10">
-                  <Field label="Context">{cs.context}</Field>
-                  <Field label="Problem">{cs.problem}</Field>
-                  <Field label="What I did">{cs.whatIDid}</Field>
-                  <Field label="Stack">{cs.stack}</Field>
-                  <Field label="Outcome">{cs.outcome}</Field>
-                </div>
-              </div>
+              <CaseStudyCard key={cs.n} cs={cs} />
             ))}
           </div>
 
@@ -315,9 +433,7 @@ const Work = () => {
               <p className="text-[15px] leading-relaxed text-foreground/70 italic mb-2">
                 The kind of tooling I build for myself: understand the protocol, skip the dependency.
               </p>
-              <p className="font-mono text-[11px] uppercase tracking-wide text-muted-foreground">
-                React · TypeScript · GitHub Git Data API
-              </p>
+              <StackChips items={["React", "TypeScript", "GitHub Git Data API"]} />
             </div>
 
             <div className="border-t border-foreground/20 pt-6">
