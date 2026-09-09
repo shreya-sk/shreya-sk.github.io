@@ -23,7 +23,7 @@ const CASE_STUDIES: CaseStudy[] = [
       "Migrated and onboarded 50+ pipelines onto the framework. For each: mapped the existing build/release, translated it into the framework's Ansible roles and Octopus steps, added the standard quality and security stages, and cut over with the owning team. Wrote the onboarding runbook other engineers now use.",
     stack: "Ansible · Azure DevOps / TFS · Octopus Deploy · Kubernetes (Tanzu) · Docker · Helm · ArgoCD · Harbor",
     outcome:
-      "50+ pipelines standardised across the teams that own them. Framework-level changes now roll out once instead of per pipeline.",
+      "50+ pipelines standardised across 50+ product teams and five environments - dev, UAT, QC, ET and prod - spanning our Brisbane and Sydney sites. Framework-level changes now roll out once instead of per pipeline.",
   },
   {
     n: "02",
@@ -59,10 +59,10 @@ const CASE_STUDIES: CaseStudy[] = [
     problem:
       "Security and code-quality findings weren't consistently surfaced before deployment - a compliance gap in a regulated healthcare environment (ISO 27001 / NIST-aligned controls).",
     whatIDid:
-      "Integrated SonarQube and Snyk as standard stages across the microservices estate. Extended SonarQube scanning to legacy .NET projects - including the build-VM work above so the scanner had a compliant toolchain - and enabled it across Sonic product teams. Took ownership of SonarQube project configuration and moved pipeline secrets into HashiCorp Vault.",
+      "Integrated SonarQube and Snyk as standard stages across the microservices estate. Extended SonarQube scanning to legacy .NET projects - including the build-VM work above so the scanner had a compliant toolchain - and enabled it across 5 Sonic product teams, with coverage of the legacy .NET estate continuing to expand. Took ownership of SonarQube project configuration and moved pipeline secrets into HashiCorp Vault.",
     stack: "SonarQube · Snyk · HashiCorp Vault · Azure DevOps · .NET · Ansible",
     outcome:
-      "Scanning is now part of the pipeline definition, not a per-team decision. Additional projects covered, more product teams onboarded to Sonar, and secrets no longer live in pipeline variables.",
+      "Scanning is now part of the pipeline definition, not a per-team decision. Sonar coverage spans 5 product teams' legacy .NET projects so far, with more being onboarded on an ongoing basis. Secrets no longer live in pipeline variables.",
   },
   {
     n: "05",
@@ -80,9 +80,51 @@ const CASE_STUDIES: CaseStudy[] = [
     context: "The platform team carries incident response for the CI/CD estate in ServiceNow.",
     problem: "SLA compliance and backlog were being tracked manually, and the support team had no forward view of load.",
     whatIDid:
-      "Provide L2 incident response (ITIL v5). Built SLA-compliance and backlog-prediction dashboards in Grafana over ServiceNow data, now used by the support team.",
+      "Provide L2 incident response (ITIL v5) - triaging incoming tickets, rerouting them to the right product team, and writing knowledge-base articles that let other teams resolve common issues themselves. Built SLA-compliance and backlog-prediction dashboards in Grafana over ServiceNow data, now used by the support team.",
     stack: "ServiceNow · Grafana · SQL · Python",
-    outcome: "Support team has a live SLA view and a predicted backlog instead of tracking compliance by hand.",
+    outcome:
+      "100+ incidents handled to date. SLA breach rate down from 38% to 4% after the knowledge-base and dashboard work; support team now has a live SLA view and a predicted backlog instead of tracking compliance by hand.",
+  },
+];
+
+interface Cert {
+  name: string;
+  issuer: string;
+  date: string;
+  verify?: { label: string; href: string };
+  scheduled?: boolean;
+}
+
+const CERTS: Cert[] = [
+  {
+    name: "Certified Kubernetes Administrator (CKA)",
+    issuer: "CNCF / The Linux Foundation",
+    date: "Completed 9 Jun 2026",
+    verify: { label: "Verify · ID LF-t9t8suj4ra", href: "https://training.linuxfoundation.org/certification/verify" },
+  },
+  {
+    name: "ITIL Foundation, Version 5",
+    issuer: "PeopleCert",
+    date: "Effective 9 Jun 2026 · renews Jun 2029",
+  },
+  {
+    name: "AWS Certified Solutions Architect - Associate",
+    issuer: "AWS",
+    date: "Scheduled Oct 2026",
+    scheduled: true,
+  },
+];
+
+const EDUCATION = [
+  {
+    degree: "Bachelor of Advanced Computing (Honours), First Class",
+    school: "University of Sydney, 2024",
+    detail:
+      "Major: Computational Data Science · Minor: Cognitive Psychology. Thesis on multi-aspect sentiment analysis with BERT and contrastive learning.",
+  },
+  {
+    degree: "IB Diploma",
+    school: "Neerja Modi School, 2020",
   },
 ];
 
@@ -203,6 +245,60 @@ const Work = () => {
                 to ISO 27001 controls, boto3 drift and cost scripts.
               </p>
             </div>
+          </div>
+
+          {/* Certifications */}
+          <div className="mb-8">
+            <h2 className="font-bold uppercase tracking-tighter text-xl md:text-2xl">
+              Certifications
+            </h2>
+          </div>
+          <div className="space-y-5 mb-14">
+            {CERTS.map((c) => (
+              <div key={c.name} className="border-t border-foreground/20 pt-4">
+                <div className="flex items-baseline justify-between gap-3">
+                  <span className="font-semibold text-[15px]">{c.name}</span>
+                  {c.scheduled && (
+                    <span className="font-mono text-[11px] uppercase tracking-wide text-accent shrink-0">
+                      scheduled
+                    </span>
+                  )}
+                </div>
+                <div className="font-mono text-[11px] uppercase tracking-wide text-muted-foreground mt-1">
+                  {c.issuer} · {c.date}
+                </div>
+                {c.verify && (
+                  <a
+                    href={c.verify.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 font-mono text-[11px] text-accent hover:underline mt-1"
+                  >
+                    {c.verify.label}
+                  </a>
+                )}
+              </div>
+            ))}
+          </div>
+
+          {/* Education */}
+          <div className="mb-8">
+            <h2 className="font-bold uppercase tracking-tighter text-xl md:text-2xl">
+              Education
+            </h2>
+          </div>
+          <div className="space-y-5 mb-20">
+            {EDUCATION.map((e) => (
+              <div key={e.degree} className="border-t border-foreground/20 pt-4">
+                <div className="font-semibold text-[15px]">{e.degree}</div>
+                <div className="font-mono text-[11px] uppercase tracking-wide text-muted-foreground mt-1">
+                  {e.school}
+                </div>
+                {e.detail && (
+                  <p className="text-[15px] leading-relaxed text-foreground/85 mt-2">{e.detail}</p>
+                )}
+              </div>
+            ))}
           </div>
 
           {/* Contact CTA */}

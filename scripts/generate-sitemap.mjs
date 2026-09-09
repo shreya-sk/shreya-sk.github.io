@@ -12,7 +12,7 @@ const ROOT = dirname(dirname(fileURLToPath(import.meta.url)));
 const VAULT = join(ROOT, 'obsidian');
 const SITE = 'https://shreya-sk.github.io';
 
-const staticRoutes = ['/', '/blog', '/til', '/gists', '/resume'];
+const staticRoutes = ['/', '/blog', '/til', '/work', '/resume'];
 
 function* walk(dir) {
   for (const name of readdirSync(dir)) {
@@ -33,8 +33,10 @@ try {
     const base = rel.split('/').pop();
     if (!rel.endsWith('.md') || rel.endsWith('.excalidraw.md') || base === '.md') continue;
     if (base === 'Hey, there!.md' || base === 'recent.json') continue;
-    const slug = rel.replace(/\.md$/, '').toLowerCase().replace(/\s+/g, '-');
-    noteRoutes.push(`/blog/${slug.split('/').map(encodeURIComponent).join('/')}`);
+    // Notes are read via /blog?note=<path> (Noteslayout's deep-link param),
+    // not a /blog/<slug> path segment - that route doesn't exist.
+    const notePath = rel.replace(/\.md$/, '');
+    noteRoutes.push(`/blog?note=${encodeURIComponent(notePath)}`);
   }
 } catch (err) {
   console.warn('sitemap: could not walk obsidian/:', err.message);
