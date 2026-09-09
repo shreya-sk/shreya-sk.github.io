@@ -28,7 +28,7 @@ const Hero = () => {
               </h1>
 
               <p className="mb-2 text-lg md:text-xl font-semibold text-foreground">
-                DevOps Engineer who can't leave a messy system alone.
+                DevOps Engineer building calmer systems.
               </p>
 
               <p className="mb-3 font-mono text-xs md:text-sm uppercase tracking-wide text-accent">
@@ -36,7 +36,7 @@ const Hero = () => {
               </p>
 
               <p className="mb-8 font-mono text-sm max-w-xl mx-auto md:mx-0 text-muted-foreground">
-                organised chaos.
+                same creative instinct, whether it's a studio or a cluster.
               </p>
 
               <div className="flex flex-wrap gap-4 justify-center md:justify-start items-center">
@@ -57,7 +57,7 @@ const Hero = () => {
               </div>
 
               <p className="mt-6 font-mono text-[11px] uppercase tracking-wide text-muted-foreground">
-                @ sonic healthcare · ITIL &amp; CKA certified · first class honours, computational data science (2024)
+                DevOps Engineer · Sonic Healthcare · ITIL &amp; CKA certified · first class honours, computational data science (2024)
               </p>
             </div>
           </div>

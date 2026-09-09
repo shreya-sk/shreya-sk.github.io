@@ -39,7 +39,7 @@ const Index = () => {
                     <div className="font-mono text-[11px] uppercase tracking-wide text-accent mb-3">what I do</div>
                     <p className="text-base leading-relaxed text-foreground/90">
                       I'm a DevOps Engineer working with <strong className="font-semibold">Kubernetes, Docker, Azure DevOps, Ansible</strong> and
-                      platform tooling. I like understanding how things fit together end-to-end, then writing it down so I'm not stuck relearning it from scratch next time.
+                      platform tooling. No two systems are designed the same way, so I document as I go - the more I map, the easier the next one gets.
                     </p>
                   </div>
 
