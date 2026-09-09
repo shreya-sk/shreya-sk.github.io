@@ -196,7 +196,7 @@ const Resume = () => {
           to="/blog"
           className="font-bold uppercase text-lg hover:text-accent transition-colors"
         >
-          See the notes, TIL log & gists →
+          See the notes & TIL log →
         </Link>
       </section>
     </div>

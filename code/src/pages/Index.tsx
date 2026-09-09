@@ -12,7 +12,7 @@ const BUILT: Array<[string, string, string]> = [
 ];
 
 const Index = () => {
-  usePageMeta(undefined, "Shreya's digital diary - DevOps notes, TIL log, gists and more.");
+  usePageMeta(undefined, "Shreya's digital diary - DevOps notes, TIL log, and more.");
 
   return (
     <div className="min-h-screen sage-gradient">

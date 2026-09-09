@@ -14,9 +14,8 @@ import Index from "./pages/Index";
 // on /editor. Keeps the first-visit bundle small.
 const NotesLayout = lazy(() => import("./pages/Noteslayout"));
 const TIL = lazy(() => import("./pages/TIL"));
-const Gists = lazy(() => import("./pages/Gists"));
-const GistDetail = lazy(() => import("./pages/GistDetail"));
 const Resume = lazy(() => import("./pages/Resume"));
+const Work = lazy(() => import("./pages/Work"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const VaultEditor = lazy(() => import("./pages/VaultEditor"));
 
@@ -41,9 +40,8 @@ const App = () => (
               <Route path="/" element={<Index />} />
               <Route path="/blog" element={<NotesLayout />} />
               <Route path="/til" element={<TIL />} />
-              <Route path="/gists" element={<Gists />} />
-              <Route path="/gists/:gistId" element={<GistDetail />} />
               <Route path="/resume" element={<Resume />} />
+              <Route path="/work" element={<Work />} />
               <Route path="/editor" element={<VaultEditor />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
