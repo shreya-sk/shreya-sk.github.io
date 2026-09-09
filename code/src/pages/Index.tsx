@@ -47,8 +47,9 @@ const Index = () => {
                     <div className="font-mono text-[11px] uppercase tracking-wide text-accent mb-3">how I think</div>
                     <ul className="space-y-2.5 text-base text-foreground/90">
                       <li className="flex items-start gap-2"><span className="text-accent">·</span><span>everything needs a system</span></li>
-                      <li className="flex items-start gap-2"><span className="text-accent">·</span><span>no two systems are designed the same way - I map as I learn</span></li>
-                      <li className="flex items-start gap-2"><span className="text-accent">·</span><span>the more I understand, the more I can simplify</span></li>
+                      <li className="flex items-start gap-2"><span className="text-accent">·</span><span>no two systems are designed the same way</span></li>
+                      <li className="flex items-start gap-2"><span className="text-accent">·</span><span>so I map as I learn</span></li>
+                      <li className="flex items-start gap-2"><span className="text-accent">·</span><span>I document so I don't have to relearn</span></li>
                     </ul>
                   </div>
 
@@ -67,7 +68,7 @@ const Index = () => {
                   <div className="font-mono text-[11px] uppercase tracking-wide text-accent mb-3">why this site exists</div>
                   <p className="text-xl leading-relaxed max-w-3xl">
                     This is my <strong className="font-semibold">public notebook</strong> - a place to document
-                    what I learn, explore ideas, and untangle complex things.
+                    what I learn, explore ideas, and untangle complicated things.
                   </p>
                 </div>
               </div>
@@ -106,7 +107,7 @@ const Index = () => {
               {/* closing note */}
               <div className="mt-10 pt-8 border-t border-foreground/20 text-center">
                 <p className="font-mono text-sm text-muted-foreground">
-                  same creative instinct, whether it's a studio or a cluster.
+                  making complicated things easier to reason about.
                 </p>
               </div>
             </div>
