@@ -1,3 +1,5 @@
+← [[Nav/HOME|Home]] &nbsp;·&nbsp; [[Learning MOC|Learning]]
+
 #devops #API 
 > [!note] Related Notes
 > 

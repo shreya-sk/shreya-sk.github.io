@@ -10,7 +10,7 @@ topics:
   - regional-interdependence
 up: "[[../Anatomy & Physiology MOC|Anatomy & Physiology MOC]]"
 tags:
-  - area/learning
+  - learning
   - topic/anatomy-physiology
   - topic/kinetic-chain
   - course/nasm
@@ -23,7 +23,7 @@ related:
   - "[[../Biomechanics & Kinesiology/Biomechanics & Kinesiology|Biomechanics & Kinesiology]]"
 ---
 
-← [[HOME|Home]] &nbsp;·&nbsp; [[Anatomy & Physiology MOC]]
+← [[Nav/HOME|Home]] &nbsp;·&nbsp; [[Anatomy & Physiology MOC]]
 
 # The Kinetic Chain
 

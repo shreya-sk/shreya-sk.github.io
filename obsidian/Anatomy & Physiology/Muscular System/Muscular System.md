@@ -12,7 +12,7 @@ topics:
   - excitation-contraction
 up: "[[../Anatomy & Physiology MOC|Anatomy & Physiology MOC]]"
 tags:
-  - area/learning
+  - learning
   - topic/anatomy-physiology
   - topic/muscular-system
   - course/nasm
@@ -25,7 +25,7 @@ related:
   - "[[../Biomechanics & Kinesiology/Biomechanics & Kinesiology|Biomechanics & Kinesiology]]"
 ---
 
-← [[HOME|Home]] &nbsp;·&nbsp; [[Anatomy & Physiology MOC]]
+← [[Nav/HOME|Home]] &nbsp;·&nbsp; [[Anatomy & Physiology MOC]]
 
 # The Muscular System
 

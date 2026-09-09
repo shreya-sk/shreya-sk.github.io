@@ -1,10 +1,10 @@
 ---
 type: moc
 up: "[[Kubernetes MOC]]"
-tags: [moc, area/devops, topic/kubernetes]
+tags: [moc, devops, topic/kubernetes]
 ---
 
-← [[HOME|Home]] &nbsp;·&nbsp; [[Kubernetes MOC]]
+← [[Nav/HOME|Home]] &nbsp;·&nbsp; [[Kubernetes MOC]]
 
 # CKA Prep MOC
 

@@ -7,10 +7,10 @@ type: moc
 up: "[[Learning MOC]]"
 tags:
   - moc
-  - area/devops
+  - devops
 ---
 
-← [[HOME|Home]] &nbsp;·&nbsp; [[Learning MOC|Learning]] &nbsp;&nbsp;|&nbsp;&nbsp; [[Learning/DevOps/Docker/Docker MOC|Docker]] &nbsp;·&nbsp; [[Learning/DevOps/Kubernetes/Kubernetes MOC|Kubernetes]] &nbsp;·&nbsp; [[Learning/DevOps/GoLang/GoLang MOC|GoLang]] &nbsp;·&nbsp; [[Learning/DevOps/Ansible/Ansible MOC|Ansible]] &nbsp;·&nbsp; [[Learning/DevOps/Pre-requisites Devops/Prerequisites MOC|Prerequisites]]
+← [[Nav/HOME|Home]] &nbsp;·&nbsp; [[Learning MOC|Learning]] &nbsp;&nbsp;|&nbsp;&nbsp; [[Learning/DevOps/Docker/Docker MOC|Docker]] &nbsp;·&nbsp; [[Learning/DevOps/Kubernetes/Kubernetes MOC|Kubernetes]] &nbsp;·&nbsp; [[Learning/DevOps/GoLang/GoLang MOC|GoLang]] &nbsp;·&nbsp; [[Learning/DevOps/Ansible/Ansible MOC|Ansible]] &nbsp;·&nbsp; [[Learning/DevOps/Pre-requisites Devops/Prerequisites MOC|Prerequisites]]
 
 # DevOps
 

@@ -6,7 +6,7 @@ type: moc
 tags: [moc]
 ---
 
-← [[HOME|Home]] &nbsp;&nbsp;|&nbsp;&nbsp; [[Learning/DevOps/DevOps MOC|DevOps]] &nbsp;·&nbsp; [[Learning/NLP - ABSA/Dashboard|NLP / ABSA]] &nbsp;·&nbsp; [[Learning/Kong/Kong API Gateway - Overview|Kong]] &nbsp;·&nbsp; [[Anatomy & Physiology MOC | Anatomy & Physiology]]
+← [[Nav/HOME|Home]] &nbsp;&nbsp;|&nbsp;&nbsp; [[Learning/DevOps/DevOps MOC|DevOps]] &nbsp;·&nbsp; [[Learning/NLP - ABSA/Dashboard|NLP / ABSA]] &nbsp;·&nbsp; [[Learning/Kong/Kong API Gateway - Overview|Kong]] &nbsp;·&nbsp; [[Anatomy & Physiology MOC | Anatomy & Physiology]]
 
 # Learning
 

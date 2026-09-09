@@ -14,7 +14,7 @@ topics:
   - squat-analysis
 up: "[[../Anatomy & Physiology MOC|Anatomy & Physiology MOC]]"
 tags:
-  - area/learning
+  - learning
   - topic/anatomy-physiology
   - topic/biomechanics
   - topic/kinesiology
@@ -28,7 +28,7 @@ related:
   - "[[../Nervous System/Nervous System|Nervous System]]"
 ---
 
-← [[HOME|Home]] &nbsp;·&nbsp; [[Anatomy & Physiology MOC]]
+← [[Nav/HOME|Home]] &nbsp;·&nbsp; [[Anatomy & Physiology MOC]]
 
 # Biomechanics & Kinesiology
 

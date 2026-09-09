@@ -1,6 +1,11 @@
 ---
 author: Shreya Kothari
+up: "[[Kubernetes MOC]]"
+tags: [devops, topic/kubernetes]
+status: evergreen
 ---
+
+← [[Nav/HOME|Home]] &nbsp;·&nbsp; [[Kubernetes MOC]]
 
 ## 🚀 Essential Setup & Aliases
 ```bash

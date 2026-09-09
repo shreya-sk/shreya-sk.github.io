@@ -1,6 +1,12 @@
 ---
 author: Shreya Kothari
+up: "[[Docker MOC]]"
+tags: [devops, topic/docker]
+status: evergreen
 ---
+
+← [[Nav/HOME|Home]] &nbsp;·&nbsp; [[Docker MOC]]
+
 > [!info] Related Notes
 > [[Docker Basics]]
 

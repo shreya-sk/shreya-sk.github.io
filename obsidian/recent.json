@@ -1,13 +1,13 @@
 {
-  "generated": "2026-07-15T01:37:14.807097+00:00",
+  "generated": "2026-09-09T02:59:38.641760+00:00",
   "files": [
-    "Seedbox/Seedbox.md",
-    "NLP - ABSA/Documentation/Writing - Main Points.md",
-    "NLP - ABSA/Documentation/Updated publication readiness eval.md",
-    "NLP - ABSA/Documentation/Updated plan of action.md",
-    "NLP - ABSA/Documentation/Training and inference guide.md",
-    "NLP - ABSA/Documentation/Training & Evaluation.md",
-    "NLP - ABSA/Documentation/Strategy.md",
-    "NLP - ABSA/Documentation/Required changes.md"
+    "Anatomy & Physiology/Anatomy & Physiology MOC.md",
+    "DevOps/Pre-requisites Devops/Prerequisites MOC.md",
+    "DevOps/Kubernetes/Kubernetes MOC.md",
+    "DevOps/Kubernetes/CKA Prep MOC.md",
+    "DevOps/Kubernetes/CKA - Cheat Sheet.md",
+    "DevOps/GoLang/GoLang MOC.md",
+    "DevOps/Docker/Setup Docker.md",
+    "DevOps/Docker/FAQs.md"
   ]
 }

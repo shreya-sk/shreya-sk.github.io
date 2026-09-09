@@ -1,10 +1,10 @@
 ---
 type: moc
 up: "[[Learning/DevOps/DevOps MOC]]"
-tags: [moc, area/devops, topic/kubernetes]
+tags: [moc, devops, topic/kubernetes]
 ---
 
-← [[HOME|Home]] &nbsp;·&nbsp; [[Learning MOC|Learning]] &nbsp;·&nbsp; [[Learning/DevOps/DevOps MOC|DevOps]]
+← [[Nav/HOME|Home]] &nbsp;·&nbsp; [[Learning MOC|Learning]] &nbsp;·&nbsp; [[Learning/DevOps/DevOps MOC|DevOps]]
 
 # Kubernetes
 

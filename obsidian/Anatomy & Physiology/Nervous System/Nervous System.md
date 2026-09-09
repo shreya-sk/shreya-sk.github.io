@@ -13,7 +13,7 @@ topics:
   - neuromuscular
 up: "[[../Anatomy & Physiology MOC|Anatomy & Physiology MOC]]"
 tags:
-  - area/learning
+  - learning
   - topic/anatomy-physiology
   - topic/nervous-system
   - course/nasm
@@ -26,7 +26,7 @@ related:
   - "[[../Pilates Applications|Pilates Applications]]"
 ---
 
-← [[HOME|Home]] &nbsp;·&nbsp; [[Anatomy & Physiology MOC]]
+← [[Nav/HOME|Home]] &nbsp;·&nbsp; [[Anatomy & Physiology MOC]]
 
 # The Nervous System
 

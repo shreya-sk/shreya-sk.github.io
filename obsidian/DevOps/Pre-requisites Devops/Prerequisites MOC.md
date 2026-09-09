@@ -1,10 +1,10 @@
 ---
 type: moc
 up: "[[Learning/DevOps/DevOps MOC]]"
-tags: [moc, area/devops]
+tags: [moc, devops]
 ---
 
-← [[HOME|Home]] &nbsp;·&nbsp; [[Learning MOC|Learning]] &nbsp;·&nbsp; [[Learning/DevOps/DevOps MOC|DevOps]]
+← [[Nav/HOME|Home]] &nbsp;·&nbsp; [[Learning MOC|Learning]] &nbsp;·&nbsp; [[Learning/DevOps/DevOps MOC|DevOps]]
 
 # Prerequisites
 

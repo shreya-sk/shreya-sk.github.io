@@ -14,7 +14,7 @@ topics:
   - exercise-adaptations
 up: "[[../Anatomy & Physiology MOC|Anatomy & Physiology MOC]]"
 tags:
-  - area/learning
+  - learning
   - topic/anatomy-physiology
   - topic/cardiorespiratory
   - course/nasm
@@ -26,7 +26,7 @@ related:
   - "[[../Pilates Applications|Pilates Applications]]"
 ---
 
-← [[HOME|Home]] &nbsp;·&nbsp; [[Anatomy & Physiology MOC]]
+← [[Nav/HOME|Home]] &nbsp;·&nbsp; [[Anatomy & Physiology MOC]]
 
 # The Cardiorespiratory System
 

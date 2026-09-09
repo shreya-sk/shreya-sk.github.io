@@ -1,10 +1,18 @@
 ---
 author: Shreya Kothari
+up: "[[Docker MOC]]"
+tags: [devops, topic/docker]
+status: evergreen
 ---
+
+← [[Nav/HOME|Home]] &nbsp;·&nbsp; [[Docker MOC]]
+
 Some questions I encountered while learnind docker! The answers are compiled from chatgpt, docker documentation and nigel poulton online videos (pluralsight)
 
 ---
 # Q: Why do multi-container apps exist? Users only visit one port..
+
+> See [[Docker Networking]] for how ports and networks work between containers.
 
 ### 🔹 **Why do we need two containers?**
 
@@ -99,14 +107,14 @@ services:
 When you run:
 
 ```bash
-docker-compose up
+docker-compose up    # see [[Compose file]] for full compose reference
 ```
 
 ➡️ All 3 containers run **together on one machine** (your laptop or a server). They **talk to each other**.
 
 ---
 
-### 🐳 **Docker Swarm**
+### 🐳 **Docker Swarm** ([[Docker Swarm]])
 
 Now imagine your pizza app got **super popular**, and one machine isn’t enough.
 

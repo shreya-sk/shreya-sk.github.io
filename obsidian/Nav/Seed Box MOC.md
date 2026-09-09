@@ -1,9 +1,17 @@
 ---
-banner: "Attachments/home2.jpeg"
+banner: Attachments/home2.jpeg
 banner_y: 0.3
-cssclasses: [moc-page]
-type: moc
-tags: [moc]
+cssclasses:
+  - moc-page
+  - meeting-note
+type: meeting
+tags:
+  - moc
+  - type/meeting
+date: <% tp.date.now("YYYY-MM-DD") %>
+up: "[[Meeting MOC]]"
+attendees: []
+project: Work/
 ---
 ```dataviewjs
 const root = dv.container;
@@ -20,7 +28,7 @@ hLeft.createEl("span", { text: "Seed Box" }).style.cssText =
   "font-size:1.5em; font-weight:300; letter-spacing:1px; color:var(--text-normal);";
 
 const homeA = hdr.createEl("a", { text: "← Home", cls: "internal-link" });
-homeA.setAttribute("data-href", "Notes/HOME"); homeA.setAttribute("href", "Notes/HOME");
+homeA.setAttribute("data-href", "Nav/HOME"); homeA.setAttribute("href", "Nav/HOME");
 homeA.style.cssText = "color:var(--text-faint); text-decoration:none; font-size:0.8em; padding-bottom:4px;";
 
 // ── info callout ─────────────────────────────────────────────
@@ -30,7 +38,7 @@ info.style.cssText = `
   background:rgba(120,120,128,0.07); border:1px solid rgba(120,120,128,0.15);
   font-size:0.82em; color:var(--text-muted); line-height:1.6;
 `;
-info.innerHTML = "Set <code>status: seed</code> in a note's frontmatter to collect it here. Change to <code>status: evergreen</code> when it matures.";
+info.innerHTML = "Tag any note <code>#seedbox</code> to collect it here (Auto Note Mover files it into Seedbox/ automatically). Set <code>status: evergreen</code> in frontmatter once it matures.";
 
 function makeSection(num, label) {
   const sec = root.createEl("div");
@@ -47,14 +55,14 @@ function makeSection(num, label) {
 }
 
 // ── 01 Seeds in Progress ─────────────────────────────────────
-const seeds = dv.pages()
-  .where(p => p.status === "seed" && !p.file.path.includes("Templates/"))
+const seeds = dv.pages("#seedbox")
+  .where(p => !p.file.path.includes("Templates/"))
   .sort(p => p.file.mtime, "asc");
 
 const ul1 = makeSection("01", `Seeds in Progress  ·  ${seeds.length}`);
 
 if (seeds.length === 0) {
-  ul1.createEl("li", { text: "No seeds yet — add status: seed to any note." })
+  ul1.createEl("li", { text: "No seeds yet — tag any note #seedbox." })
     .style.cssText = "padding:12px 0; font-size:0.86em; color:var(--text-faint); font-style:italic;";
 } else {
   for (const p of seeds) {

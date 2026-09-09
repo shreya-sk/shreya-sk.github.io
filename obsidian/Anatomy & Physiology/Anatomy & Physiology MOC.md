@@ -2,10 +2,10 @@
 title: Anatomy & Physiology MOC
 type: moc
 course: NASM
-up: "[[Learning/.md|Learning]]"
+up: "[[Nav/Learning MOC|Learning]]"
 tags:
   - moc
-  - area/learning
+  - learning
   - topic/anatomy-physiology
   - course/nasm
   - pilates
@@ -14,7 +14,7 @@ status: evergreen
 created: 2026-04-20
 ---
 
-← [[HOME|Home]] &nbsp;·&nbsp; [[Learning MOC|Learning]]
+← [[Nav/HOME|Home]] &nbsp;·&nbsp; [[Learning MOC|Learning]]
 
 # Anatomy & Physiology — Map of Content
 
