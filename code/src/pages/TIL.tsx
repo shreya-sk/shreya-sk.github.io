@@ -2,6 +2,12 @@ import { usePageMeta } from "@/hooks/usePageMeta";
 import { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { Pencil, Plus } from "lucide-react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import rehypeHighlight from "rehype-highlight";
+import rehypeRaw from "rehype-raw";
+import "highlight.js/styles/github-dark.css";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import WeekCalendar, { getWeekStart, getWeekDays, formatDateKey, DAY_NAMES } from "@/components/WeekCalendar";
 import { useTILEntries } from "@/hooks/useTILEntries";
 import { TILEntry } from "@/types/blog";
@@ -35,9 +41,20 @@ const tilFilename = (date: Date): string => {
   return `${d}-${m}-${date.getFullYear()}.md`;
 };
 
+// entry.date is an ISO "YYYY-MM-DD" string - format it for the modal title
+const formatFullDate = (isoDate: string): string => {
+  const [y, m, d] = isoDate.split('-').map(Number);
+  return new Date(y, m - 1, d).toLocaleDateString('en-US', {
+    weekday: 'long',
+    month: 'long',
+    day: 'numeric',
+  });
+};
+
 const TIL = () => {
   usePageMeta('TIL', 'Today I Learned - a weekly log of small learnings.');
   const [selectedWeek, setSelectedWeek] = useState(new Date());
+  const [expandedEntry, setExpandedEntry] = useState<TILEntry | null>(null);
   const { data: tilEntries = [], isLoading, error } = useTILEntries();
 
   // Calculate entry counts per day for the calendar
@@ -131,11 +148,15 @@ const TIL = () => {
                     {dayEntries.length > 0 ? (
                       dayEntries.map((entry) => (
                         <div key={entry.id} className="group flex items-start gap-2 mb-4 last:mb-0">
-                          <p className="text-base leading-relaxed whitespace-pre-line flex-1">
+                          <button
+                            type="button"
+                            onClick={() => setExpandedEntry(entry)}
+                            className="text-left flex-1 text-base leading-relaxed whitespace-pre-line line-clamp-3 hover:text-accent transition-colors"
+                          >
                             {cleanTILContent(entry.content || '') || 'No content available'}
-                          </p>
+                          </button>
                           <Link
-                            to={`/editor?path=${encodeURIComponent(`Learning/${entry.path}`)}`}
+                            to={`/editor?path=${encodeURIComponent(`obsidian/${entry.path}`)}`}
                             className="shrink-0 mt-1 text-muted-foreground/50 hover:text-accent transition-colors"
                             title="Edit this entry in the vault editor"
                           >
@@ -145,7 +166,7 @@ const TIL = () => {
                       ))
                     ) : key <= todayKey ? (
                       <Link
-                        to={`/editor?path=${encodeURIComponent(`Learning/Daily - TIL/${tilFilename(day)}`)}&create=1`}
+                        to={`/editor?path=${encodeURIComponent(`obsidian/Daily - TIL/${tilFilename(day)}`)}&create=1`}
                         className="inline-flex items-center gap-1.5 italic text-muted-foreground hover:text-accent transition-colors"
                       >
                         <Plus className="h-3.5 w-3.5" /> add entry
@@ -160,6 +181,24 @@ const TIL = () => {
           </div>
         </div>
       </div>
+
+      <Dialog open={!!expandedEntry} onOpenChange={(open) => !open && setExpandedEntry(null)}>
+        <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto rounded-xl">
+          <DialogHeader>
+            <DialogTitle className="font-mono text-sm uppercase tracking-wide text-accent">
+              {expandedEntry && formatFullDate(expandedEntry.date)}
+            </DialogTitle>
+          </DialogHeader>
+          <div className="markdown-content leading-relaxed">
+            <ReactMarkdown
+              remarkPlugins={[remarkGfm]}
+              rehypePlugins={[rehypeHighlight, rehypeRaw]}
+            >
+              {expandedEntry?.content || ''}
+            </ReactMarkdown>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

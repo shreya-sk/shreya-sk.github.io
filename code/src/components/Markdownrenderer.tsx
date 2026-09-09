@@ -65,7 +65,7 @@ const MarkdownRenderer = ({ post }: MarkdownRendererProps) => {
               <span>{readTime}</span>
             </div>
             <Link
-              to={`/editor?path=${encodeURIComponent(`Learning/${post.path}`)}`}
+              to={`/editor?path=${encodeURIComponent(`obsidian/${post.path}`)}`}
               className="flex items-center gap-1.5 px-2 py-0.5 border border-foreground/20 text-muted-foreground hover:text-accent hover:border-accent font-mono text-[11px] uppercase tracking-wide transition-colors"
               title="Edit this note in the vault editor"
             >
