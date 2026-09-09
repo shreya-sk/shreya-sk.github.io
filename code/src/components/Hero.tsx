@@ -45,10 +45,10 @@ const Hero = () => {
                 </Link>
 
                 <Link
-                  to="/til"
+                  to="/work"
                   className="inline-flex items-center justify-center px-5 py-2.5 text-sm font-extrabold uppercase border border-foreground/90 text-foreground hover:text-accent hover:border-accent transition-colors"
                 >
-                  today i learned
+                  my work
                 </Link>
               </div>
 
