@@ -1,1 +1,0 @@
-- Automate daily backups, automate installation and patching of software, monitor system
