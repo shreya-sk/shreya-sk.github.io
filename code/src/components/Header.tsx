@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { BookOpen, Lightbulb, Home, Code, FileUser, Menu, X } from "lucide-react";
+import { BookOpen, Lightbulb, Home, Briefcase, FileUser, Menu, X } from "lucide-react";
 
 const Header = () => {
   const location = useLocation();
@@ -10,10 +10,10 @@ const Header = () => {
 
   const navLinks = [
     { path: "/", icon: Home, label: "home" },
+    { path: "/work", icon: Briefcase, label: "work" },
+    { path: "/resume", icon: FileUser, label: "resume" },
     { path: "/blog", icon: BookOpen, label: "learning" },
     { path: "/til", icon: Lightbulb, label: "TIL" },
-    { path: "/gists", icon: Code, label: "gists" },
-    { path: "/resume", icon: FileUser, label: "resume" }
   ];
 
   return (

@@ -7,7 +7,6 @@ import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import { useTILEntries } from '@/hooks/useTILEntries';
-import { useGists } from '@/hooks/useGists';
 import { useGitHubPosts } from '@/hooks/useGitHubPosts';
 import { fetchRecentPosts, getLastSynced } from '@/services/localMarkdownService';
 import { getWeekStart, getWeekDays, formatDateKey } from '@/components/WeekCalendar';
@@ -22,7 +21,6 @@ function timeAgo(iso: string): string {
 
 const NowBar = () => {
   const { data: tilEntries = [] } = useTILEntries();
-  const { data: gists = [] } = useGists();
   const { data: posts = [] } = useGitHubPosts();
   const { data: recent = [] } = useQuery({
     queryKey: ['recent-posts-rail'],
@@ -109,8 +107,6 @@ const NowBar = () => {
       <div className="font-mono text-[11px] uppercase tracking-wide text-muted-foreground space-y-1.5">
         <div>
           <Link to="/blog" className="hover:text-accent transition-colors">{posts.length} notes</Link>
-          {' · '}
-          <Link to="/gists" className="hover:text-accent transition-colors">{gists.length} gists</Link>
           {' · '}
           <Link to="/til" className="hover:text-accent transition-colors">{tilEntries.length} learnings</Link>
         </div>
