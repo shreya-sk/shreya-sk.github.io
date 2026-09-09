@@ -22,7 +22,7 @@ So each node, have docker installed, and they can communicate over reliable netw
 
 ![[../assets/Pasted image 20250413170723.png]]
 
-## ✅ Desired State in Docker Swarm
+## Desired State in Docker Swarm
 
 - Docker Swarm keeps track of the **desired state** of your services.
 - This means: you tell it **what you want** (e.g., "I want 3 replicas of this service"), and it ensures that this is true **at all times**.
@@ -47,15 +47,15 @@ docker service create \
   nginx
 ```
 This creates a service called `myweb` with **3 running containers (replicas)** of NGINX.
-### 🔍 Check the service
+### Check the service
 
 `docker service ls docker service ps myweb`
 
-### ⬆️ Scale up or down
+### Scale up or down
 
 `docker service scale myweb=5  # scale to 5 replicas`
 
-## 🔄 Self-Healing (Auto-Recovery)
+## Self-Healing (Auto-Recovery)
 
 Docker Swarm constantly monitors the system and ensures the **desired state** is met.
 

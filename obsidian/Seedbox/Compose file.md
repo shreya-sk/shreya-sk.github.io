@@ -11,7 +11,7 @@ The `compose.yaml` (or `docker-compose.yaml`) file is a configuration file used 
 
 > [!note] Everything in compose file is called as "Desired state"
 ---
-### 🔹 **What is `compose.yaml`?**
+### **What is `compose.yaml`?**
 
 It's a YAML-formatted file that defines how Docker containers should run together. It includes configurations like:
 

@@ -7,11 +7,11 @@ status: seed
 
 ← [[Nav/HOME|Home]] &nbsp;·&nbsp; [[DevOps MOC]]
 
-# 🚀 Containers, Docker and Kubernetes: A Simple Guide
+# Containers, Docker and Kubernetes: A Simple Guide
 
-## 📜 The Evolution of Application Hosting
+## The Evolution of Application Hosting
 
-### 🏢 Traditional Approach: One App, One Server
+### Traditional Approach: One App, One Server
 
 In the beginning, businesses ran applications on dedicated physical servers - one application per server.
 
@@ -25,7 +25,7 @@ In the beginning, businesses ran applications on dedicated physical servers - on
 - 🗑️ Wasted resources (servers often used only 10-20% of capacity)
 - 🏗️ Physical space requirements
 
-### 🖥️ Virtualization: Multiple VMs on One Server
+### Virtualization: Multiple VMs on One Server
 
 To improve efficiency, virtualization technology allowed multiple Virtual Machines (VMs) on a single physical server.
 
@@ -43,7 +43,7 @@ To improve efficiency, virtualization technology allowed multiple Virtual Machin
 - ❌ Administrative overhead for patching/updating multiple OS instances
 - ❌ Still not optimal resource usage
 
-### 📦 Containers: Lightweight Application Packaging
+### Containers: Lightweight Application Packaging
 
 Containers revolutionized application deployment by allowing multiple applications to share the same OS.
 
@@ -60,7 +60,7 @@ Containers revolutionized application deployment by allowing multiple applicatio
 
 ---
 
-## 📦 What Are Containers?
+## What Are Containers?
 
 A container is a standardized package that includes everything an application needs to run:
 
@@ -71,7 +71,7 @@ A container is a standardized package that includes everything an application ne
 
 > [!TIP] **Analogy**: A container is like a shipping container in global trade - standardized, portable, and can be moved anywhere without worrying what's inside. It works the same way regardless of where you deploy it.
 
-### 🔍 Container Demo Example
+### Container Demo Example
 
 1. **Download an image** (the application template):
     
@@ -97,16 +97,16 @@ A container is a standardized package that includes everything an application ne
 
 ---
 
-## 🐳 Docker: Making Containers Easy
+## Docker: Making Containers Easy
 
-### 🏢 Docker, Inc. (The Company)
+### Docker, Inc. (The Company)
 
 - Originally called dotCloud (a platform-as-a-service company)
 - Created container technology for internal use
 - Realized containers could revolutionize software development
 - Name origin: "docker" = dock + worker (like stevedores who load and unload cargo ships)
 
-### 🔧 Docker (The Technology)
+### Docker (The Technology)
 
 Docker is an open-source platform that simplifies creating and running containers.
 
@@ -120,7 +120,7 @@ Docker is an open-source platform that simplifies creating and running container
 - 🔄 **Docker Compose**: Tool for running multi-container applications
 - 🏪 **Docker Hub**: Public registry for sharing container images
 
-### 🔄 Docker Workflow
+### Docker Workflow
 
 1. **Build** an image from your application code:
     
@@ -143,9 +143,9 @@ Docker is an open-source platform that simplifies creating and running container
 
 ---
 
-## ☸️ Kubernetes: Container Orchestration
+## Kubernetes: Container Orchestration
 
-### 📜 History
+### History
 
 - Developed at Google based on their internal container system (Borg)
 - Released as open-source in 2014
@@ -155,7 +155,7 @@ Docker is an open-source platform that simplifies creating and running container
 
 > [!TIP] **Analogy**: If Docker containers are like shipping containers, and Docker is like the cranes and ships that move individual containers, Kubernetes is like the entire port operation system - coordinating thousands of containers, deciding where they go, monitoring their status, and ensuring everything runs smoothly.
 
-### 🎯 What Does Kubernetes Do?
+### What Does Kubernetes Do?
 
 Kubernetes is a container orchestration platform that:
 
@@ -168,7 +168,7 @@ Kubernetes is a container orchestration platform that:
 
 > [!IMPORTANT] **Analogy**: Kubernetes acts like an intelligent traffic control system. You tell it, "I need 5 instances of my payment service running at all times," and Kubernetes makes it happen. If a server crashes, it automatically moves containers to healthy servers. If traffic increases, it scales up the number of containers to handle the load.
 
-### 🔑 Key Kubernetes Concepts
+### Key Kubernetes Concepts
 
 - **Pod**: Smallest deployable unit (one or more containers)
 - **Deployment**: Manages a set of identical pods
@@ -177,7 +177,7 @@ Kubernetes is a container orchestration platform that:
 - **Namespace**: Virtual cluster for resource isolation
 - **PersistentVolume**: Storage that survives pod restarts
 
-### ⚙️ How Kubernetes Works
+### How Kubernetes Works
 
 1. You submit a desired state: "I want 3 replicas of my web app running"
 2. Kubernetes constantly monitors the current state
@@ -185,9 +185,9 @@ Kubernetes is a container orchestration platform that:
 
 ---
 
-## 🔄 Stateless vs. Stateful Applications
+## Stateless vs. Stateful Applications
 
-### 🌐 Stateless Applications
+### Stateless Applications
 
 - Don't store data between requests
 - Examples: Web servers, API gateways
@@ -196,7 +196,7 @@ Kubernetes is a container orchestration platform that:
 
 > [!NOTE] **Analogy**: Stateless apps are like vending machines - they provide the same service to anyone who uses them, don't remember previous interactions, and can be easily added or removed based on demand.
 
-### 💾 Stateful Applications
+### Stateful Applications
 
 - Need to remember data between requests
 - Examples: Databases, file storage
@@ -207,7 +207,7 @@ Kubernetes is a container orchestration platform that:
 
 ---
 
-## 📊 Practical Comparisons
+## Practical Comparisons
 
 |Feature|Traditional Server|Virtual Machine|Container|
 |:-:|:-:|:-:|:-:|
@@ -220,9 +220,9 @@ Kubernetes is a container orchestration platform that:
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
-### 🐳 Learning Docker
+### Learning Docker
 
 1. Install Docker Desktop
 2. Pull a simple image: `docker pull hello-world`
@@ -232,7 +232,7 @@ Kubernetes is a container orchestration platform that:
 
 > [!TIP] Start with small, simple containers to understand the basics before moving to more complex applications.
 
-### ☸️ Learning Kubernetes
+### Learning Kubernetes
 
 1. Start with Minikube for local development
 2. Deploy a simple application
@@ -244,7 +244,7 @@ Kubernetes is a container orchestration platform that:
 
 ---
 
-## 📋 Common Docker Commands
+## Common Docker Commands
 
 |Command|Description|
 |---|---|
@@ -257,7 +257,7 @@ Kubernetes is a container orchestration platform that:
 |`docker rm [container]`|Remove a container|
 |`docker rmi [image]`|Remove an image|
 
-## 📋 Common Kubernetes Commands
+## Common Kubernetes Commands
 
 |Command|Description|
 |---|---|
@@ -271,7 +271,7 @@ Kubernetes is a container orchestration platform that:
 
 ---
 
-## 🌐 Real-World Application
+## Real-World Application
 
 > [!IMPORTANT] Modern applications typically combine Docker and Kubernetes:
 
@@ -289,7 +289,7 @@ This approach enables organizations to:
 
 ---
 
-## 📚 Further Learning Resources
+## Further Learning Resources
 
 > [!TIP] **Recommended resources for deepening your knowledge:**
 

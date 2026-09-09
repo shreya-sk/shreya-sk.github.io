@@ -109,7 +109,7 @@ Think of it like `psql` for PostgreSQL, or `redis-cli` for Redis.
 
 ---
 
-### ⚠️ The version gotcha — always trips people up
+### The version gotcha — always trips people up
 
 There are **two API versions** with completely different commands:
 
@@ -129,7 +129,7 @@ ETCDCTL_API=3 etcdctl snapshot save ...
 
 ---
 
-### 🔐 The cert flags — required on every command
+### The cert flags — required on every command
 
 etcd uses TLS. Every `etcdctl` command must authenticate with 3 cert files:
 

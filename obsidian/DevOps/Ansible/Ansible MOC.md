@@ -12,7 +12,7 @@ tags: [moc, devops, topic/ansible]
 
 ---
 
-## 🗺️ Start Here — Reading Order
+## Start Here — Reading Order
 
 > [!note] New to Ansible?
 > Assumes you know Linux and SSH basics ([[../Pre-requisites Devops/LINUX|Linux notes]]). Ansible automates tasks you'd otherwise run manually on remote servers.
@@ -60,7 +60,7 @@ input.addEventListener("input", () => {
 
 ---
 
-## 🌱 Seeds
+## Seeds
 
 > [!seed]
 > ```dataview

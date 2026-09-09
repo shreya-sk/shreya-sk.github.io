@@ -12,7 +12,7 @@ tags: [moc, devops]
 
 ---
 
-## 🗺️ Start Here — Reading Order
+## Start Here — Reading Order
 
 > [!note] These are the foundations. Don't skip them.
 > Every DevOps tool runs on Linux. Every script uses shell. Every service needs networking.
@@ -62,7 +62,7 @@ input.addEventListener("input", () => {
 
 ---
 
-## 🌱 Seeds
+## Seeds
 
 > [!seed]
 > ```dataview

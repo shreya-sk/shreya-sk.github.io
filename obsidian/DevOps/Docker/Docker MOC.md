@@ -12,7 +12,7 @@ tags: [moc, devops, topic/docker]
 
 ---
 
-## 🗺️ Start Here — Reading Order
+## Start Here — Reading Order
 
 > [!note] New to Docker? Start here.
 > Assumes you know basic Linux commands. Read [[../Containers - Overview|Containers - Overview]] first if you've never used containers.
@@ -70,7 +70,7 @@ input.addEventListener("input", () => {
 
 ---
 
-## 🌱 Seeds
+## Seeds
 
 > [!seed]
 > ```dataview

@@ -8,7 +8,7 @@ status: seed
 ← [[Nav/HOME|Home]] &nbsp;·&nbsp; [[Ansible MOC]]
 
  #ansible #devops #cicd 
-#  🥸 Getting Started with Ansible 
+# Getting Started with Ansible
 ## What is Ansible?
 Analogy: think of Ansible as a smart remote control for our servers. Instead of manually logging into each server to install software or change settings, Ansible lets you write simple instructions that it follows automatically.
 ## Ansible Tasks

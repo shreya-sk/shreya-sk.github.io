@@ -18,7 +18,7 @@ tags:
 
 ---
 
-## 🗺️ Start Here — Reading Order
+## Start Here — Reading Order
 
 > [!note] New to DevOps? Follow this path.
 > Each step builds on the last. Don't skip prerequisites — they're the reason things make sense later.
@@ -179,7 +179,7 @@ input.addEventListener("input", () => {
 
 ---
 
-## 🌱 Seeds — Needs Attention
+## Seeds — Needs Attention
 
 > [!seed]
 > ```dataview

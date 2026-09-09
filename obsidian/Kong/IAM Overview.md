@@ -1,11 +1,14 @@
+---
+tags: [sonic, devops, infrastructure, IAM, kubernetes, helm, ansible]
+aliases: [sonic infrastructure, IAM deployment, sonic networks]
+---
+
 ← [[Nav/HOME|Home]] &nbsp;·&nbsp; [[Learning MOC|Learning]]
 
-## tags: [sonic, devops, infrastructure, IAM, kubernetes, helm, ansible] aliases: [sonic infrastructure, IAM deployment, sonic networks]
-
-# 🧠 Sonic Healthcare DevOps Overview
+# Sonic Healthcare DevOps Overview
 
 ---
-## 🔐 InterSystems API Manager (IAM)
+## InterSystems API Manager (IAM)
 
 **Purpose:** Sonic uses InterSystems API Manager (IAM) for routing and securing API traffic within Kubernetes environments using Kong Gateway. Each IAM instance is tied to a specific application (like QXR, ABC, etc.).
 
@@ -35,7 +38,7 @@ helm upgrade iam-dp-qxr oci://harbor-int.au.int.sonichealthcare/intersystems/hel
 
 ---
 
-## 🌐 Network Layout
+## Network Layout
 
 Sonic maintains Kubernetes clusters across four primary locations:
 
@@ -52,7 +55,7 @@ DMZ clusters serve applications needing limited exposure to the internet or exte
 
 ---
 
-## 🧪 Environments (DEV, QC, UAT, PROD)
+## Environments (DEV, QC, UAT, PROD)
 
 |Environment|Purpose|
 |---|---|
@@ -66,7 +69,7 @@ Developers might say “this is pre-prod only” to mean it won’t go into UAT/
 
 ---
 
-## ⚙️ Automation: Ansible & Pipelines
+## Automation: Ansible & Pipelines
 
 ### Setup Env Pipeline
 
@@ -92,7 +95,7 @@ Developers might say “this is pre-prod only” to mean it won’t go into UAT/
 
 ---
 
-## 🧱 Supporting Concepts
+## Supporting Concepts
 
 ### What is a DMZ?
 
@@ -112,7 +115,7 @@ Developers might say “this is pre-prod only” to mean it won’t go into UAT/
 
 ---
 
-## 🔐 IAM (General Definition)
+## IAM (General Definition)
 
 > **IAM = Identity and Access Management** In Sonic’s case, it refers to a secured API Gateway layer (using Kong) that is customized for each entity/project to ensure isolation and network compliance.
 

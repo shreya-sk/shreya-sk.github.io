@@ -14,7 +14,7 @@ Some questions I encountered while learnind docker! The answers are compiled fro
 
 > See [[Docker Networking]] for how ports and networks work between containers.
 
-### 🔹 **Why do we need two containers?**
+### **Why do we need two containers?**
 
 Think of containers as **isolated environments**—each one runs a specific part of your app.
 **Most real-world applications are made up of multiple components**, such as:
@@ -33,7 +33,7 @@ Each of these components can live in its own container because:
     
 > 💡 **Analogy**: Imagine a restaurant. The kitchen, cashier, and delivery service are all parts of the system, but you wouldn't stuff all of them into one room. Each has its own space (container) and function.
 
-### 🔹 **What is a multi-container app?**
+### **What is a multi-container app?**
 
 A **multi-container app** is an application that runs multiple containers to deliver a complete experience.
 
@@ -46,7 +46,7 @@ A **multi-container app** is an application that runs multiple containers to del
 These containers work **together**, forming one logical application.
 
 
-### 🔹 **Why would people visit apps on two separate ports?**
+### **Why would people visit apps on two separate ports?**
 
 Usually, **users don’t directly access multiple ports**—but developers do when testing, and internal services do when communicating.
 
@@ -88,7 +88,7 @@ Your app has 3 parts (3 containers):
 
 ---
 
-### ✅ **Multi-Container App**
+### **Multi-Container App**
 
 This is like running **all 3 parts on your laptop**.
 
@@ -114,7 +114,7 @@ docker-compose up    # see [[Compose file]] for full compose reference
 
 ---
 
-### 🐳 **Docker Swarm** ([[Docker Swarm]])
+### **Docker Swarm** ([[Docker Swarm]])
 
 Now imagine your pizza app got **super popular**, and one machine isn’t enough.
 
@@ -138,7 +138,7 @@ docker service create --name web --replicas 5 pizza-web
 
 ---
 
-### 🔄 Key Difference:
+### Key Difference:
 
 | **Multi-container App**                        | **Docker Swarm**                                         |
 | ---------------------------------------------- | -------------------------------------------------------- |

@@ -9,18 +9,18 @@ status: seed
 
 #devops #golang #gopher 
 # GoLang
-## 🔎 Resources
+## Resources
  - Official GO Landing page: https://pkg.go.dev/
  - Learn GO: https://go.dev/learn/
  - Markdown Icons: https://gist.github.com/rxaviers/7360908
  - Getting started: ???
 
-## ⚙️ Dev Tools
+## Dev Tools
 - Goland, VSCode, Vim etc.
 - Gopls (official language server) - Provides IDE-like features for any editor that supports Language Server Protocol (LSP)
   - Code completion, Find references, Formatting, Error diagnostics in real-time, Quick fixes and refactoring, Hover documentation
 
-## 💻 Use Cases (& Frameworks) for GO
+## Use Cases (& Frameworks) for GO
 
 ### 1. Cloud and network services
 
@@ -39,7 +39,7 @@ status: seed
 - Kubernetes (System that build, deploys, and scales containerized apps)
 - Terraform (cloud infrastructue management platform)
 
-## 🏁 Getting Started with Go
+## Getting Started with Go
 
 ### Installation
 1. Download Go: https://go.dev/dl/
@@ -47,7 +47,7 @@ status: seed
    - Add to PATH if needed (usually automatic with installer)
 3. Configure Your Editor:
    - Install Go extension, ensure it supports gopls
-## 🗂️ Modules and Packages in Go
+## Modules and Packages in Go
 > [!TIP] 
 A **Module** is like a whole project (like a book), 
 **packages** are like chapters in that book and

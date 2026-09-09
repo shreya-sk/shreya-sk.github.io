@@ -39,7 +39,7 @@ The human body operates as a single integrated **[[Kinetic Chain/Kinetic Chain|K
 
 ---
 
-## 🗺️ Start Here — Reading Order
+## Start Here — Reading Order
 
 > [!note] New to anatomy & physiology? Follow this path.
 > Starts with the big picture, then builds each system layer by layer. Each note links forward to the next.

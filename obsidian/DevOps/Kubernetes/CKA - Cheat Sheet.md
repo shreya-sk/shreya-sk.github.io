@@ -7,7 +7,7 @@ status: evergreen
 
 ← [[Nav/HOME|Home]] &nbsp;·&nbsp; [[Kubernetes MOC]]
 
-## 🚀 Essential Setup & Aliases
+## Essential Setup & Aliases
 ```bash
 # Must-have aliases (add to ~/.bashrc in exam)
 alias k=kubectl
@@ -26,7 +26,7 @@ kubectl config set-context --current --namespace=<ns>  # Set default namespace
 
 ---
 
-## 📦 Pod Management
+## Pod Management
 ```bash
 # Basic pod operations
 kubectl run nginx --image=nginx                # Create single pod
@@ -51,7 +51,7 @@ kubectl cp <pod-name>:/tmp/file.txt ./file.txt # Copy file from pod
 
 ---
 
-## 🔄 Deployments & ReplicaSets
+## Deployments & ReplicaSets
 ```bash
 # Deployment lifecycle
 kubectl create deployment nginx --image=nginx  # Create deployment
@@ -73,7 +73,7 @@ kubectl patch deployment nginx -p '{"spec":{"replicas":3}}'  # Patch specific fi
 
 ---
 
-## 🌐 Services & Networking
+## Services & Networking
 ```bash
 # Service creation
 kubectl expose pod nginx --port=80 --target-port=80  # ClusterIP service
@@ -92,7 +92,7 @@ kubectl exec -it tmp-shell -- nslookup kubernetes.default  # DNS testing
 
 ---
 
-## 🗂️ ConfigMaps & Secrets
+## ConfigMaps & Secrets
 ```bash
 # ConfigMap operations
 kubectl create configmap app-config --from-literal=key1=value1 --from-literal=key2=value2
@@ -118,7 +118,7 @@ kubectl get secrets -o yaml                    # View all secrets (base64 encode
 
 ---
 
-## 🏠 Namespace Management
+## Namespace Management
 ```bash
 kubectl get namespaces                         # List all namespaces
 kubectl create namespace development           # Create namespace
@@ -155,7 +155,7 @@ kubectl delete job pi-calc                    # Clean up completed job
 
 ---
 
-## 💾 Persistent Volumes & Claims
+## Persistent Volumes & Claims
 ```bash
 # PV & PVC operations
 kubectl get pv,pvc                            # View volumes and claims
@@ -179,7 +179,7 @@ EOF
 
 ---
 
-## 🔐 RBAC & Security
+## RBAC & Security
 ```bash
 # View RBAC resources
 kubectl get roles,rolebindings -A             # All roles and bindings
@@ -200,7 +200,7 @@ kubectl auth can-i '*' '*' --as=system:serviceaccount:kube-system:default  # Tes
 
 ---
 
-## 🛡️ Network Policies
+## Network Policies
 ```bash
 # Get network policies
 kubectl get networkpolicies -A               # View all network policies
@@ -241,7 +241,7 @@ EOF
 
 ---
 
-## 🏥 Cluster Maintenance & Troubleshooting
+## Cluster Maintenance & Troubleshooting
 ```bash
 # Node management
 kubectl get nodes -o wide                     # Node status and info
@@ -264,7 +264,7 @@ kubectl top pods --containers                 # Container-level resource usage
 
 ---
 
-## 💾 ETCD Backup & Restore (Critical!)
+## ETCD Backup & Restore (Critical!)
 ```bash
 # ETCD backup (memorize this!)
 ETCDCTL_API=3 etcdctl snapshot save /backup/etcd-snapshot-$(date +%Y%m%d-%H%M%S).db \
@@ -289,7 +289,7 @@ ETCDCTL_API=3 etcdctl snapshot restore /backup/etcd-snapshot.db \
 
 ---
 
-## 🔧 Advanced Debugging & Utilities
+## Advanced Debugging & Utilities
 ```bash
 # Advanced pod filtering
 kubectl get pods --field-selector=status.phase=Failed        # Failed pods only
@@ -319,7 +319,7 @@ kubectl run curl --image=curlimages/curl -it --rm -- /bin/sh # HTTP debugging
 
 ---
 
-## 🎯 Exam-Specific Tips & Tricks
+## Exam-Specific Tips & Tricks
 
 ### Time-Saving Commands
 ```bash
@@ -375,7 +375,7 @@ kubectl run limited-pod --image=nginx --requests='cpu=100m,memory=128Mi' --limit
 
 **🏆 Remember**: Speed comes from practice, not just knowing commands. Practice these scenarios until they become automatic!>)](<# 🎯 Complete CKA `kubectl` Cheat Sheet
 
-## 🚀 Essential Setup & Aliases
+## Essential Setup & Aliases
 ```bash
 # Must-have aliases (add to ~/.bashrc in exam)
 alias k=kubectl
@@ -394,7 +394,7 @@ kubectl config set-context --current --namespace=<ns>  # Set default namespace
 
 ---
 
-## 📦 Pod Management
+## Pod Management
 ```bash
 # Basic pod operations
 kubectl run nginx --image=nginx                # Create single pod
@@ -419,7 +419,7 @@ kubectl cp <pod-name>:/tmp/file.txt ./file.txt # Copy file from pod
 
 ---
 
-## 🔄 Deployments & ReplicaSets
+## Deployments & ReplicaSets
 ```bash
 # Deployment lifecycle
 kubectl create deployment nginx --image=nginx  # Create deployment
@@ -441,7 +441,7 @@ kubectl patch deployment nginx -p '{"spec":{"replicas":3}}'  # Patch specific fi
 
 ---
 
-## 🌐 Services & Networking
+## Services & Networking
 ```bash
 # Service creation
 kubectl expose pod nginx --port=80 --target-port=80  # ClusterIP service
@@ -460,7 +460,7 @@ kubectl exec -it tmp-shell -- nslookup kubernetes.default  # DNS testing
 
 ---
 
-## 🗂️ ConfigMaps & Secrets
+## ConfigMaps & Secrets
 ```bash
 # ConfigMap operations
 kubectl create configmap app-config --from-literal=key1=value1 --from-literal=key2=value2
@@ -486,7 +486,7 @@ kubectl get secrets -o yaml                    # View all secrets (base64 encode
 
 ---
 
-## 🏠 Namespace Management
+## Namespace Management
 ```bash
 kubectl get namespaces                         # List all namespaces
 kubectl create namespace development           # Create namespace
@@ -523,7 +523,7 @@ kubectl delete job pi-calc                    # Clean up completed job
 
 ---
 
-## 💾 Persistent Volumes & Claims
+## Persistent Volumes & Claims
 ```bash
 # PV & PVC operations
 kubectl get pv,pvc                            # View volumes and claims
@@ -547,7 +547,7 @@ EOF
 
 ---
 
-## 🔐 RBAC & Security
+## RBAC & Security
 ```bash
 # View RBAC resources
 kubectl get roles,rolebindings -A             # All roles and bindings
@@ -568,7 +568,7 @@ kubectl auth can-i '*' '*' --as=system:serviceaccount:kube-system:default  # Tes
 
 ---
 
-## 🛡️ Network Policies
+## Network Policies
 ```bash
 # Get network policies
 kubectl get networkpolicies -A               # View all network policies
@@ -609,7 +609,7 @@ EOF
 
 ---
 
-## 🏥 Cluster Maintenance & Troubleshooting
+## Cluster Maintenance & Troubleshooting
 ```bash
 # Node management
 kubectl get nodes -o wide                     # Node status and info
@@ -632,7 +632,7 @@ kubectl top pods --containers                 # Container-level resource usage
 
 ---
 
-## 💾 ETCD Backup & Restore (Critical!)
+## ETCD Backup & Restore (Critical!)
 ```bash
 # ETCD backup (memorize this!)
 ETCDCTL_API=3 etcdctl snapshot save /backup/etcd-snapshot-$(date +%Y%m%d-%H%M%S).db \
@@ -657,7 +657,7 @@ ETCDCTL_API=3 etcdctl snapshot restore /backup/etcd-snapshot.db \
 
 ---
 
-## 🔧 Advanced Debugging & Utilities
+## Advanced Debugging & Utilities
 ```bash
 # Advanced pod filtering
 kubectl get pods --field-selector=status.phase=Failed        # Failed pods only
@@ -687,7 +687,7 @@ kubectl run curl --image=curlimages/curl -it --rm -- /bin/sh # HTTP debugging
 
 ---
 
-## 🎯 Exam-Specific Tips & Tricks
+## Exam-Specific Tips & Tricks
 
 ### Time-Saving Commands
 ```bash
@@ -743,7 +743,7 @@ kubectl run limited-pod --image=nginx --requests='cpu=100m,memory=128Mi' --limit
 
 **🏆 Remember**: Speed comes from practice, not just knowing commands. Practice these scenarios until they become automatic!>)](<# 🎯 Complete CKA `kubectl` Cheat Sheet
 
-## 🚀 Essential Setup & Aliases
+## Essential Setup & Aliases
 ```bash
 # Must-have aliases (add to ~/.bashrc in exam)
 alias k=kubectl
@@ -762,7 +762,7 @@ kubectl config set-context --current --namespace=<ns>  # Set default namespace
 
 ---
 
-## 📦 Pod Management
+## Pod Management
 ```bash
 # Basic pod operations
 kubectl run nginx --image=nginx                # Create single pod
@@ -787,7 +787,7 @@ kubectl cp <pod-name>:/tmp/file.txt ./file.txt # Copy file from pod
 
 ---
 
-## 🔄 Deployments & ReplicaSets
+## Deployments & ReplicaSets
 ```bash
 # Deployment lifecycle
 kubectl create deployment nginx --image=nginx  # Create deployment
@@ -809,7 +809,7 @@ kubectl patch deployment nginx -p '{"spec":{"replicas":3}}'  # Patch specific fi
 
 ---
 
-## 🌐 Services & Networking
+## Services & Networking
 ```bash
 # Service creation
 kubectl expose pod nginx --port=80 --target-port=80  # ClusterIP service
@@ -828,7 +828,7 @@ kubectl exec -it tmp-shell -- nslookup kubernetes.default  # DNS testing
 
 ---
 
-## 🗂️ ConfigMaps & Secrets
+## ConfigMaps & Secrets
 ```bash
 # ConfigMap operations
 kubectl create configmap app-config --from-literal=key1=value1 --from-literal=key2=value2
@@ -854,7 +854,7 @@ kubectl get secrets -o yaml                    # View all secrets (base64 encode
 
 ---
 
-## 🏠 Namespace Management
+## Namespace Management
 ```bash
 kubectl get namespaces                         # List all namespaces
 kubectl create namespace development           # Create namespace
@@ -891,7 +891,7 @@ kubectl delete job pi-calc                    # Clean up completed job
 
 ---
 
-## 💾 Persistent Volumes & Claims
+## Persistent Volumes & Claims
 ```bash
 # PV & PVC operations
 kubectl get pv,pvc                            # View volumes and claims
@@ -915,7 +915,7 @@ EOF
 
 ---
 
-## 🔐 RBAC & Security
+## RBAC & Security
 ```bash
 # View RBAC resources
 kubectl get roles,rolebindings -A             # All roles and bindings
@@ -936,7 +936,7 @@ kubectl auth can-i '*' '*' --as=system:serviceaccount:kube-system:default  # Tes
 
 ---
 
-## 🛡️ Network Policies
+## Network Policies
 ```bash
 # Get network policies
 kubectl get networkpolicies -A               # View all network policies
@@ -977,7 +977,7 @@ EOF
 
 ---
 
-## 🏥 Cluster Maintenance & Troubleshooting
+## Cluster Maintenance & Troubleshooting
 ```bash
 # Node management
 kubectl get nodes -o wide                     # Node status and info
@@ -1000,7 +1000,7 @@ kubectl top pods --containers                 # Container-level resource usage
 
 ---
 
-## 💾 ETCD Backup & Restore (Critical!)
+## ETCD Backup & Restore (Critical!)
 ```bash
 # ETCD backup (memorize this!)
 ETCDCTL_API=3 etcdctl snapshot save /backup/etcd-snapshot-$(date +%Y%m%d-%H%M%S).db \
@@ -1025,7 +1025,7 @@ ETCDCTL_API=3 etcdctl snapshot restore /backup/etcd-snapshot.db \
 
 ---
 
-## 🔧 Advanced Debugging & Utilities
+## Advanced Debugging & Utilities
 ```bash
 # Advanced pod filtering
 kubectl get pods --field-selector=status.phase=Failed        # Failed pods only
@@ -1055,7 +1055,7 @@ kubectl run curl --image=curlimages/curl -it --rm -- /bin/sh # HTTP debugging
 
 ---
 
-## 🎯 Exam-Specific Tips & Tricks
+## Exam-Specific Tips & Tricks
 
 ### Time-Saving Commands
 ```bash

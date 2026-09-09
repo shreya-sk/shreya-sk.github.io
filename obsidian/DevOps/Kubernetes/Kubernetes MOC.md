@@ -10,12 +10,12 @@ tags: [moc, devops, topic/kubernetes]
 
 > All Kubernetes notes. Currently studying for CKA — see [[CKA Prep MOC]] for the exam study guide.
 
-## 🎯 Active Goal
+## Active Goal
 [[CKA Prep MOC]]
 
 ---
 
-## 🗺️ Start Here — Reading Order
+## Start Here — Reading Order
 
 > [!note] New to Kubernetes?
 > Assumes you already understand [[../Docker/Docker MOC|Docker]] and containers. Kubernetes orchestrates containers — if you don't know what a container is, start there.
@@ -65,7 +65,7 @@ input.addEventListener("input", () => {
 
 ---
 
-## 🌱 Seeds
+## Seeds
 
 > [!seed]
 > ```dataview

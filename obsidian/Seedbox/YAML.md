@@ -1,4 +1,3 @@
-
 ---
 author: Shreya Kothari
 up: "[[Ansible MOC]]"

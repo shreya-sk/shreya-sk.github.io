@@ -12,7 +12,7 @@ tags: [moc, devops, topic/golang]
 
 ---
 
-## 🗺️ Start Here — Reading Order
+## Start Here — Reading Order
 
 > [!note] New to Go?
 > Assumes you can read basic code in any language. Go is used heavily in DevOps tooling (Docker, Kubernetes, Terraform are all written in Go).
@@ -62,7 +62,7 @@ input.addEventListener("input", () => {
 
 ---
 
-## 🌱 Seeds
+## Seeds
 
 > [!seed]
 > ```dataview
