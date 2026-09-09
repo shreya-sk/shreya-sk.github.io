@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { BookOpen, Lightbulb, Home, Briefcase, FileUser, Menu, X } from "lucide-react";
+import { BookOpen, Lightbulb, Home, Briefcase, Download, Menu, X } from "lucide-react";
 
 const Header = () => {
   const location = useLocation();
@@ -11,7 +11,6 @@ const Header = () => {
   const navLinks = [
     { path: "/", icon: Home, label: "home" },
     { path: "/work", icon: Briefcase, label: "work" },
-    { path: "/resume", icon: FileUser, label: "resume" },
     { path: "/blog", icon: BookOpen, label: "learning" },
     { path: "/til", icon: Lightbulb, label: "TIL" },
   ];
@@ -24,29 +23,41 @@ const Header = () => {
           <span>digital diary</span>
         </Link>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center space-x-8">
-          {navLinks.map(({ path, label }) => (
-            <Link
-              key={path}
-              to={path}
-              className={`font-mono text-xs uppercase tracking-wide transition-colors ${
-                isActive(path) ? 'text-accent' : 'text-foreground hover:text-accent'
-              }`}
-            >
-              {label}
-            </Link>
-          ))}
-        </nav>
+        <div className="flex items-center gap-6">
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex items-center space-x-8">
+            {navLinks.map(({ path, label }) => (
+              <Link
+                key={path}
+                to={path}
+                className={`font-mono text-xs uppercase tracking-wide transition-colors ${
+                  isActive(path) ? 'text-accent' : 'text-foreground hover:text-accent'
+                }`}
+              >
+                {label}
+              </Link>
+            ))}
+          </nav>
 
-        {/* Mobile Hamburger Button */}
-        <button
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-          className="md:hidden p-2 text-foreground hover:text-accent transition-colors"
-          aria-label="Toggle menu"
-        >
-          {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-        </button>
+          {/* Resume PDF - standalone button, not a page */}
+          <a
+            href="/resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 font-bold text-xs uppercase tracking-wide bg-accent text-accent-foreground hover:bg-accent/85 transition-colors"
+          >
+            <Download className="h-3.5 w-3.5" /> Resume PDF
+          </a>
+
+          {/* Mobile Hamburger Button */}
+          <button
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            className="md:hidden p-2 text-foreground hover:text-accent transition-colors"
+            aria-label="Toggle menu"
+          >
+            {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile Menu */}

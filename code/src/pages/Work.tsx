@@ -1,5 +1,29 @@
 import { usePageMeta } from "@/hooks/usePageMeta";
-import { Mail, Linkedin, Github, ExternalLink } from "lucide-react";
+import { Download, Mail, Linkedin, Github, ExternalLink } from "lucide-react";
+
+// Chip-style external link, matching the flat design system
+const LinkChip = ({
+  href,
+  children,
+  primary = false,
+}: {
+  href: string;
+  children: React.ReactNode;
+  primary?: boolean;
+}) => (
+  <a
+    href={href}
+    target={href.startsWith('http') ? '_blank' : undefined}
+    rel="noopener noreferrer"
+    className={`inline-flex items-center gap-2 px-4 py-2.5 font-bold text-[13px] uppercase transition-colors ${
+      primary
+        ? 'bg-accent text-accent-foreground border border-accent hover:bg-accent/85'
+        : 'border border-foreground/20 hover:border-accent hover:text-accent'
+    }`}
+  >
+    {children}
+  </a>
+);
 
 interface CaseStudy {
   n: string;
@@ -23,7 +47,7 @@ const CASE_STUDIES: CaseStudy[] = [
       "Migrated and onboarded 50+ pipelines onto the framework. For each: mapped the existing build/release, translated it into the framework's Ansible roles and Octopus steps, added the standard quality and security stages, and cut over with the owning team. Wrote the onboarding runbook other engineers now use.",
     stack: "Ansible · Azure DevOps / TFS · Octopus Deploy · Kubernetes (Tanzu) · Docker · Helm · ArgoCD · Harbor",
     outcome:
-      "50+ pipelines standardised across 50+ product teams and five environments - dev, UAT, QC, ET and prod - spanning our Brisbane and Sydney sites. Framework-level changes now roll out once instead of per pipeline.",
+      "50+ pipelines standardised across ~10 product teams and five environments - dev, UAT, QC, ET and prod - spanning our Brisbane and Sydney sites. Framework-level changes now roll out once instead of per pipeline.",
   },
   {
     n: "02",
@@ -33,13 +57,39 @@ const CASE_STUDIES: CaseStudy[] = [
     problem:
       "Copy-paste configs drifted, took hours per pipeline, and made platform upgrades a find-and-replace exercise across the estate.",
     whatIDid:
-      "Designed and built a CLI in Go that takes a small per-application spec and renders the full set of Ansible, Azure DevOps and Tanzu configuration from versioned templates. Added validation so a bad spec fails at generation time, not at deploy time. Re-rendering from templates is now how upgrades propagate.",
-    stack: "Go · Go templates · YAML · Ansible · Azure DevOps · Tanzu",
+      "Co-maintain the team's Go CLI that renders Ansible, Azure DevOps and Kubernetes configuration from versioned templates. Added StatefulSet deployment support and dynamic Node image selection by Angular version, and handle ongoing upgrades and fixes to the tool.",
+    stack: "Go · Go templates · YAML · Ansible · Azure DevOps · Kubernetes (Tanzu)",
     outcome:
-      "Pipeline setup and management time cut ~50%. Upgrades and new features become a template change plus a re-render, rather than a fresh round of manual edits across every pipeline.",
+      "Pipeline setup time cut ~70%. Upgrades and new features become a template change plus a re-render, rather than a fresh round of manual edits across every pipeline.",
   },
   {
     n: "03",
+    title: "Self-managed LLM observability platform (Langfuse)",
+    context:
+      "SCT (Sonic Clinical Trials) needed observability for an AI workflow - Langfuse, deployed self-managed into Kubernetes. The open-source edition covers our use case, so no enterprise license was needed.",
+    problem:
+      "Langfuse isn't one app - it needs four backing services (Postgres, ClickHouse, Redis/Valkey, S3-compatible blob storage), and the chart's bundled \"quick install\" path for all four uses Bitnami images. Bitnami restructured their registry in August 2025 and the chart now pulls from a \"bitnamilegacy\" path that doesn't exist in our Harbor registry at all - and even the older \"bitnami\" path is missing ClickHouse and Minio entirely. The quick-start option was a dead end before it started.",
+    whatIDid:
+      "Skipped the chart's bundled backing services entirely. Provisioned Postgres and Valkey the way we already do everywhere else - CRD-based operators, the same pattern SIMS runs on - so that part had no real blocker. For ClickHouse, evaluated and deployed an instance through the ClickHouse Kubernetes Operator (a cluster-wide install, so it's now available to future projects too). Wired up S3-compatible blob storage against credentials the business team provided, gave Langfuse its own dedicated web address (a shared-domain path prefix breaks other observability UIs we run, so this avoided that outright), and converted the vendor's Helm values into a template our Ansible pipeline renders and deploys.",
+    stack: "Langfuse · Kubernetes · Helm · Ansible · PostgreSQL (operator) · Valkey (operator) · ClickHouse Kubernetes Operator · S3-compatible storage · HashiCorp Vault",
+    outcome:
+      "Langfuse running self-managed in its own namespace, all four backing services on infrastructure patterns we already operate and trust rather than deprecated bundled images. The ClickHouse Operator install is now available cluster-wide for any future project that needs it.",
+  },
+  {
+    n: "04",
+    title: "Moving every product from VMware Tanzu to VKS",
+    context:
+      "Sonic's infrastructure team stood up new vSphere Kubernetes Service (VKS) clusters to replace the Tanzu (TKG) estate. The DevOps team's job was to get every product from the old clusters to the new ones without breaking the shared CI/CD framework that deploys them.",
+    problem:
+      "35 products across dev, UAT, QC, ET and prod, in Sydney and Brisbane, each with their own configs, secrets, storage and ingress - and none of them could just be copied over. Every one had to be re-deployed through the framework against the new target, verified, and cut over with the owning team.",
+    whatIDid:
+      "Migrated products end-to-end: updated each application's framework config (Ansible inventories, Helm values, Azure DevOps and ArgoCD targets) for VKS, deployed through the standard pipeline, validated the deployment with the product team, and cut over. Extended the Go templating tool with StatefulSet support during this work so stateful products could be generated rather than hand-migrated.",
+    stack: "Kubernetes (Tanzu → VKS) · Helm · ArgoCD · Ansible · Azure DevOps · Octopus Deploy · Harbor",
+    outcome:
+      "All 35 products now deploy to VKS across five environments and two sites via the same framework.",
+  },
+  {
+    n: "05",
     title: "Bringing legacy .NET applications into Kubernetes-based delivery without rewrites",
     context:
       "A set of older Angular/IIS and .NET applications sat outside the framework because it assumed containerised, Kubernetes-native workloads.",
@@ -52,7 +102,7 @@ const CASE_STUDIES: CaseStudy[] = [
       "The legacy applications now deploy through the same automated path as modern services, with the same gates.",
   },
   {
-    n: "04",
+    n: "06",
     title: "Security scanning across the microservices estate and legacy .NET",
     context:
       "SonarQube and Snyk existed, but coverage was uneven: modern services mostly had it, legacy .NET projects had none, and project configuration lived in people's heads.",
@@ -65,17 +115,18 @@ const CASE_STUDIES: CaseStudy[] = [
       "Scanning is now part of the pipeline definition, not a per-team decision. Sonar coverage spans 5 product teams' legacy .NET projects so far, with more being onboarded on an ongoing basis. Secrets no longer live in pipeline variables.",
   },
   {
-    n: "05",
-    title: "Reusable framework components and a Python Ansible filter plugin",
+    n: "07",
+    title: "Reusable framework components and shared test infrastructure",
     context: "Teams kept re-solving the same small problems inside their pipelines.",
     problem: "Duplicate logic, inconsistent behaviour, and no single place to fix a bug.",
     whatIDid:
-      "Wrote framework-level components adopted across projects - including a Node image-detection task and custom Python logic packaged as an Ansible filter plugin - so behaviour is defined once in the framework.",
-    stack: "Python · Ansible · Node · Azure DevOps",
-    outcome: "Adopted across the pipeline estate; one fix propagates everywhere.",
+      "Wrote framework-level components adopted across projects - including a Node image-detection task and custom Python logic packaged as an Ansible filter plugin - so behaviour is defined once in the framework. Also deployed Bruno and Playwright as shared testing infrastructure, giving teams a consistent, self-serve path for API contract tests and end-to-end automation.",
+    stack: "Python · Ansible · Node · Bruno · Playwright · Azure DevOps",
+    outcome:
+      "Adopted across the pipeline estate; one fix propagates everywhere. Teams now have a shared, self-serve path for API and E2E testing instead of building their own.",
   },
   {
-    n: "06",
+    n: "08",
     title: "Incident response and support-team dashboards",
     context: "The platform team carries incident response for the CI/CD estate in ServiceNow.",
     problem: "SLA compliance and backlog were being tracked manually, and the support team had no forward view of load.",
@@ -120,7 +171,7 @@ const EDUCATION = [
     degree: "Bachelor of Advanced Computing (Honours), First Class",
     school: "University of Sydney, 2024",
     detail:
-      "Major: Computational Data Science · Minor: Cognitive Psychology. Thesis on multi-aspect sentiment analysis with BERT and contrastive learning.",
+      "Major: Computational Data Science · Minor: Cognitive Psychology. Honours thesis: MASCoT - multi-aspect sentiment analysis using BERT and contrastive learning (87% accuracy, Honours Class I).",
   },
   {
     degree: "IB Diploma",
@@ -138,16 +189,50 @@ const Field = ({ label, children }: { label: string; children: React.ReactNode }
 );
 
 const Work = () => {
-  usePageMeta("work", "Case studies from Sonic Healthcare's shared CI/CD framework, plus open-source projects.");
+  usePageMeta(
+    "work",
+    "DevOps engineer in Sydney. I standardise how a large healthcare enterprise builds, scans and ships software - CI/CD, Kubernetes, IaC, pipeline security."
+  );
 
   return (
     <div className="min-h-screen sage-gradient">
+      {/* HERO / IDENTITY - lifted from the old /resume page */}
+      <section className="border-b-2 border-foreground/90">
+        <div className="container px-6 py-16 max-w-5xl mx-auto">
+          <div className="font-mono text-[13px] uppercase tracking-wide text-accent mb-4">
+            Shreya · Work
+          </div>
+          <h1 className="font-bold uppercase tracking-tighter leading-[1.05] text-4xl md:text-6xl mb-3">
+            Automation, DevOps
+            <br />& Infrastructure
+          </h1>
+          <div className="font-mono text-[15px] uppercase tracking-wide text-muted-foreground mb-5">
+            Sonic Healthcare · Aug 2022 – Current
+          </div>
+          <p className="text-lg leading-relaxed max-w-xl text-foreground/80 mb-8">
+            Building CI/CD pipelines, Kubernetes infrastructure, and automation. CKA and ITIL v5
+            certified.
+          </p>
+          <div className="flex flex-wrap gap-3">
+            <LinkChip href="/resume.pdf" primary>
+              <Download className="h-3.5 w-3.5" /> Resume PDF
+            </LinkChip>
+            <LinkChip href="https://www.linkedin.com/in/shreyak19">
+              <Linkedin className="h-3.5 w-3.5" /> LinkedIn
+            </LinkChip>
+            <LinkChip href="https://github.com/shreya-sk">
+              <Github className="h-3.5 w-3.5" /> GitHub
+            </LinkChip>
+            <LinkChip href="mailto:shreyakothari1901@gmail.com">
+              <Mail className="h-3.5 w-3.5" /> Email
+            </LinkChip>
+          </div>
+        </div>
+      </section>
+
       <div className="container px-6 py-16 md:py-20">
         <div className="mx-auto max-w-[720px]">
           {/* Intro */}
-          <h1 className="font-bold uppercase tracking-tighter text-4xl md:text-6xl mb-6">
-            Work
-          </h1>
           <p className="text-lg leading-relaxed text-foreground/85 mb-4">
             I'm a DevOps engineer at Sonic Healthcare, one of the world's largest pathology and
             diagnostics groups. Since 2022 I've worked on the shared CI/CD framework that product
@@ -240,9 +325,9 @@ const Work = () => {
                 GitHub repo linked here once published (Sep–Oct 2026)
               </p>
               <p className="text-[15px] leading-relaxed text-foreground/85">
-                Production-shaped AWS platform: Terraform (VPC/EKS/IAM), GitHub Actions with OIDC
-                to AWS, ArgoCD app-of-apps, kube-prometheus-stack with SLOs, Kyverno policies mapped
-                to ISO 27001 controls, boto3 drift and cost scripts.
+                Production-shaped AWS platform: Terraform (VPC/EKS/IAM), ArgoCD app-of-apps,
+                kube-prometheus-stack with SLOs, Kyverno policies mapped to ISO 27001 controls,
+                boto3 drift and cost scripts.
               </p>
             </div>
           </div>

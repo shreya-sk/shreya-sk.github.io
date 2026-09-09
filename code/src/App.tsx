@@ -3,7 +3,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -14,7 +14,6 @@ import Index from "./pages/Index";
 // on /editor. Keeps the first-visit bundle small.
 const NotesLayout = lazy(() => import("./pages/Noteslayout"));
 const TIL = lazy(() => import("./pages/TIL"));
-const Resume = lazy(() => import("./pages/Resume"));
 const Work = lazy(() => import("./pages/Work"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const VaultEditor = lazy(() => import("./pages/VaultEditor"));
@@ -40,8 +39,8 @@ const App = () => (
               <Route path="/" element={<Index />} />
               <Route path="/blog" element={<NotesLayout />} />
               <Route path="/til" element={<TIL />} />
-              <Route path="/resume" element={<Resume />} />
               <Route path="/work" element={<Work />} />
+              <Route path="/resume" element={<Navigate to="/work" replace />} />
               <Route path="/editor" element={<VaultEditor />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
