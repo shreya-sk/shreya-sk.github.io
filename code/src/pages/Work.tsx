@@ -209,12 +209,13 @@ const StackChips = ({ items }: { items: string[] }) => (
   </div>
 );
 
-// Simple horizontal flow diagram: commit -> Azure DevOps -> Go templating tool
-// -> Ansible -> Octopus/ArgoCD -> VKS, with the security stages hanging off
-// the CI stage. Plain SVG, no colour beyond the site's accent.
+// Flow diagram: commit -> Azure DevOps -> Go build tool -> Harbor -> Ansible
+// -> Octopus -> VKS, with build-time scanning hanging off Azure DevOps and
+// deploy-time secrets hanging off Ansible. Plain SVG, no colour beyond the
+// site's accent.
 const PipelineDiagram = () => (
   <div className="overflow-x-auto mb-10 -mx-1 px-1">
-    <svg viewBox="0 0 920 210" className="min-w-[720px] w-full" style={{ maxWidth: 920 }}>
+    <svg viewBox="0 0 1020 225" className="min-w-[860px] w-full" style={{ maxWidth: 1020 }}>
       <defs>
         <marker id="wf-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
           <path d="M0,0 L10,5 L0,10 z" fill="currentColor" />
@@ -225,46 +226,61 @@ const PipelineDiagram = () => (
       <g className="text-foreground/40" stroke="currentColor" strokeWidth="1.5">
         <line x1="90" y1="45" x2="116" y2="45" markerEnd="url(#wf-arrow)" />
         <line x1="248" y1="45" x2="274" y2="45" markerEnd="url(#wf-arrow)" />
-        <line x1="436" y1="45" x2="462" y2="45" markerEnd="url(#wf-arrow)" />
-        <line x1="574" y1="45" x2="600" y2="45" markerEnd="url(#wf-arrow)" />
-        <line x1="742" y1="45" x2="768" y2="45" markerEnd="url(#wf-arrow)" />
+        <line x1="456" y1="45" x2="482" y2="45" markerEnd="url(#wf-arrow)" />
+        <line x1="604" y1="45" x2="630" y2="45" markerEnd="url(#wf-arrow)" />
+        <line x1="732" y1="45" x2="758" y2="45" markerEnd="url(#wf-arrow)" />
+        <line x1="890" y1="45" x2="916" y2="45" markerEnd="url(#wf-arrow)" />
       </g>
 
       {/* main nodes */}
       <g className="text-foreground" stroke="currentColor" strokeWidth="1.5" fill="none">
         <rect x="0" y="20" width="90" height="50" />
         <rect x="118" y="20" width="130" height="50" />
-        <rect x="276" y="20" width="160" height="50" />
-        <rect x="464" y="20" width="110" height="50" />
-        <rect x="602" y="20" width="140" height="50" />
-        <rect x="770" y="20" width="90" height="50" />
+        <rect x="276" y="20" width="180" height="50" />
+        <rect x="484" y="20" width="120" height="50" />
+        <rect x="632" y="20" width="100" height="50" />
+        <rect x="760" y="20" width="130" height="50" />
+        <rect x="918" y="20" width="90" height="50" />
       </g>
       <g className="text-foreground" fontFamily="'JetBrains Mono', monospace" fontSize="12" textAnchor="middle" fill="currentColor">
         <text x="45" y="49">commit</text>
         <text x="183" y="49">Azure DevOps</text>
-        <text x="356" y="43">Go templating</text>
-        <text x="356" y="58">tool</text>
-        <text x="519" y="49">Ansible</text>
-        <text x="672" y="43">Octopus /</text>
-        <text x="672" y="58">ArgoCD</text>
-        <text x="815" y="49">VKS</text>
+        <text x="366" y="42">Go build tool</text>
+        <text x="366" y="56" fontSize="9">(scaffold + validate)</text>
+        <text x="544" y="42">Harbor</text>
+        <text x="544" y="57" fontSize="11">(registry)</text>
+        <text x="682" y="49">Ansible</text>
+        <text x="825" y="42">Octopus</text>
+        <text x="825" y="56" fontSize="9">(or build.yaml)</text>
+        <text x="963" y="49">VKS</text>
       </g>
 
-      {/* branch: security stages hang off Azure DevOps */}
+      {/* branch: build-time quality & security gates hang off Azure DevOps */}
       <g className="text-accent" stroke="currentColor" strokeWidth="1.5" fill="none">
         <path d="M183,70 V100 H90 V148" markerEnd="url(#wf-arrow)" />
         <path d="M183,100 V148" markerEnd="url(#wf-arrow)" />
         <path d="M183,100 H276 V148" markerEnd="url(#wf-arrow)" />
       </g>
+      {/* branch: deploy-time secrets hang off Ansible */}
+      <g className="text-accent" stroke="currentColor" strokeWidth="1.5" fill="none">
+        <path d="M682,70 V148" markerEnd="url(#wf-arrow)" />
+      </g>
+
       <g className="text-foreground" stroke="currentColor" strokeWidth="1.5" fill="none">
         <rect x="45" y="150" width="90" height="40" />
         <rect x="138" y="150" width="90" height="40" />
         <rect x="231" y="150" width="90" height="40" />
+        <rect x="637" y="150" width="90" height="40" />
       </g>
       <g className="text-foreground" fontFamily="'JetBrains Mono', monospace" fontSize="11" textAnchor="middle" fill="currentColor">
         <text x="90" y="174">SonarQube</text>
-        <text x="183" y="174">Snyk</text>
-        <text x="276" y="174">Vault</text>
+        <text x="183" y="174">Trivy</text>
+        <text x="276" y="174">Snyk</text>
+        <text x="682" y="174">Vault</text>
+      </g>
+      <g className="text-muted-foreground" fontFamily="'JetBrains Mono', monospace" fontSize="9" textAnchor="middle" fill="currentColor">
+        <text x="183" y="207">BUILD-TIME QUALITY &amp; SECURITY GATES</text>
+        <text x="682" y="207">DEPLOY-TIME SECRETS</text>
       </g>
     </svg>
   </div>
