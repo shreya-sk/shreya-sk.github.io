@@ -195,8 +195,13 @@ export const processMarkdownContent = (content: string): string => {
   processed = fixMojibake(processed);
 
   // Remove the note's own H1 - the page header already renders the title,
-  // so leaving it in shows the heading twice
-  processed = processed.replace(/^\s*#\s+[^\n]+\n+/, '');
+  // so leaving it in shows the heading twice. Not anchored to the very
+  // start of the file: notes commonly have a breadcrumb line and/or an
+  // Obsidian inline-tags line (e.g. "#ansible #devops") before the H1,
+  // which would otherwise block a start-anchored match entirely. The
+  // [ \t]+ after # (vs \s+) also keeps this from matching "#tag" lines,
+  // which have no space after the hash.
+  processed = processed.replace(/^[ \t]*#[ \t]+[^\n]+\n+/m, '');
 
   // Remove Obsidian breadcrumb nav lines (e.g. "← [[Notes/HOME|Home]] · [[Docker MOC]]")
   // - they point at private vault folders and are broken on the site
