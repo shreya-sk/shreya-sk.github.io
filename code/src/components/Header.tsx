@@ -10,10 +10,10 @@ const Header = () => {
 
   const navLinks = [
     { path: "/", icon: Home, label: "home" },
+    { path: "/work", icon: Briefcase, label: "work" },
+    { path: "/resume", icon: FileUser, label: "resume" },
     { path: "/blog", icon: BookOpen, label: "learning" },
     { path: "/til", icon: Lightbulb, label: "TIL" },
-    { path: "/work", icon: Briefcase, label: "work" },
-    { path: "/resume", icon: FileUser, label: "resume" }
   ];
 
   return (
