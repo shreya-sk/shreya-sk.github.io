@@ -279,21 +279,5 @@ export async function fetchRecentPosts(limit = 2): Promise<BlogPost[]> {
   return ranked.slice(0, limit);
 }
 
-/**
- * Fetch a single post by slug (matches githubService's fetchPostBySlug
- * interface, but reads from the bundled obsidian/ vault instead)
- */
-export async function fetchPostBySlug(slug: string): Promise<BlogPost | null> {
-  const posts = await fetchMarkdownFiles();
-  const decoded = decodeURIComponent(slug).toLowerCase();
-  return (
-    posts.find(
-      (p) =>
-        p.slug === decoded ||
-        p.path.replace(/\.md$/, '').toLowerCase().replace(/\s+/g, '-') === decoded
-    ) ?? null
-  );
-}
-
 // Re-export BlogPost type for convenience
 export type { BlogPost } from '@/types/blog';

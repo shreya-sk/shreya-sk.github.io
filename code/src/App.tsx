@@ -13,7 +13,6 @@ import Index from "./pages/Index";
 // loads only when a reader opens that page, and CodeMirror/LightningFS only
 // on /editor. Keeps the first-visit bundle small.
 const NotesLayout = lazy(() => import("./pages/Noteslayout"));
-const BlogPost = lazy(() => import("./pages/BlogPost"));
 const TIL = lazy(() => import("./pages/TIL"));
 const Gists = lazy(() => import("./pages/Gists"));
 const GistDetail = lazy(() => import("./pages/GistDetail"));
@@ -41,7 +40,6 @@ const App = () => (
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/blog" element={<NotesLayout />} />
-              <Route path="/blog/*" element={<BlogPost />} />
               <Route path="/til" element={<TIL />} />
               <Route path="/gists" element={<Gists />} />
               <Route path="/gists/:gistId" element={<GistDetail />} />
