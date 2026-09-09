@@ -196,9 +196,9 @@ const Work = () => {
 
   return (
     <div className="min-h-screen sage-gradient">
-      {/* HERO / IDENTITY - lifted from the old /resume page */}
+      {/* HERO / IDENTITY - lifted from the old /resume page, bio merged in */}
       <section className="border-b-2 border-foreground/90">
-        <div className="container px-6 py-16 max-w-5xl mx-auto">
+        <div className="container px-6 pt-16 pb-16 max-w-5xl mx-auto">
           <div className="font-mono text-[13px] uppercase tracking-wide text-accent mb-4">
             Shreya · Work
           </div>
@@ -209,11 +209,14 @@ const Work = () => {
           <div className="font-mono text-[15px] uppercase tracking-wide text-muted-foreground mb-5">
             Sonic Healthcare · Aug 2022 – Current
           </div>
-          <p className="text-lg leading-relaxed max-w-xl text-foreground/80 mb-8">
-            Building CI/CD pipelines, Kubernetes infrastructure, and automation. CKA and ITIL v5
-            certified.
+          <p className="text-lg leading-relaxed max-w-[68ch] text-foreground/80 mb-8">
+            I'm a DevOps engineer at Sonic Healthcare, one of the world's largest pathology
+            groups. Since 2022 I've worked on the shared CI/CD framework product teams deploy
+            through - onboarding pipelines, extending the tooling around them, migrating every
+            product from Tanzu to VKS, and putting security scanning where it wasn't before.
+            Before the title change I was a software engineer on the same team.
           </p>
-          <div className="flex flex-wrap gap-3">
+          <div className="flex flex-wrap gap-3 mb-6">
             <LinkChip href="/resume.pdf" primary>
               <Download className="h-3.5 w-3.5" /> Resume PDF
             </LinkChip>
@@ -227,27 +230,30 @@ const Work = () => {
               <Mail className="h-3.5 w-3.5" /> Email
             </LinkChip>
           </div>
+          <p className="font-mono text-xs text-muted-foreground max-w-[68ch]">
+            Everything under Enterprise work is proprietary to Sonic Healthcare - described, not
+            shown. Code I can share is under Open source &amp; side projects.
+          </p>
         </div>
       </section>
 
-      <div className="container px-6 py-16 md:py-20">
+      <div className="container px-6 pt-12 pb-16 md:pb-20">
         <div className="mx-auto max-w-[720px]">
-          {/* Intro */}
-          <p className="text-lg leading-relaxed text-foreground/85 mb-4">
-            I'm a DevOps engineer at Sonic Healthcare, one of the world's largest pathology and
-            diagnostics groups. Since 2022 I've worked on the shared CI/CD framework that product
-            teams across the enterprise deploy through - onboarding pipelines, writing the tooling
-            around them, and putting security scanning where it wasn't before. Before the title
-            change I was a software engineer on the same team, so I've been on both sides of the
-            pipeline.
-          </p>
-          <p className="font-mono text-xs text-muted-foreground mb-16">
-            Everything under Enterprise work is proprietary to Sonic Healthcare - described here,
-            not shown. Code I can share is under Open source &amp; side projects.
-          </p>
+          {/* Jump-to row */}
+          <nav className="flex flex-wrap gap-x-3 gap-y-1 font-mono text-[11px] uppercase tracking-wide text-muted-foreground mb-10">
+            <a href="#enterprise-work" className="hover:text-accent transition-colors">Enterprise work</a>
+            <span aria-hidden="true">·</span>
+            <a href="#open-source" className="hover:text-accent transition-colors">Open source</a>
+            <span aria-hidden="true">·</span>
+            <a href="#certifications" className="hover:text-accent transition-colors">Certs</a>
+            <span aria-hidden="true">·</span>
+            <a href="#education" className="hover:text-accent transition-colors">Education</a>
+            <span aria-hidden="true">·</span>
+            <a href="#contact" className="hover:text-accent transition-colors">Contact</a>
+          </nav>
 
           {/* Enterprise work */}
-          <div className="mb-8">
+          <div id="enterprise-work" className="mb-8 scroll-mt-24">
             <h2 className="font-bold uppercase tracking-tighter text-xl md:text-2xl">
               Enterprise work
             </h2>
@@ -277,7 +283,7 @@ const Work = () => {
           </div>
 
           {/* Open source & side projects */}
-          <div className="mb-8">
+          <div id="open-source" className="mb-8 scroll-mt-24">
             <h2 className="font-bold uppercase tracking-tighter text-xl md:text-2xl">
               Open source &amp; side projects
             </h2>
@@ -333,7 +339,7 @@ const Work = () => {
           </div>
 
           {/* Certifications */}
-          <div className="mb-8">
+          <div id="certifications" className="mb-8 scroll-mt-24">
             <h2 className="font-bold uppercase tracking-tighter text-xl md:text-2xl">
               Certifications
             </h2>
@@ -367,7 +373,7 @@ const Work = () => {
           </div>
 
           {/* Education */}
-          <div className="mb-8">
+          <div id="education" className="mb-8 scroll-mt-24">
             <h2 className="font-bold uppercase tracking-tighter text-xl md:text-2xl">
               Education
             </h2>
@@ -387,7 +393,7 @@ const Work = () => {
           </div>
 
           {/* Contact CTA */}
-          <div className="border-t border-foreground/20 pt-10 text-center">
+          <div id="contact" className="border-t border-foreground/20 pt-10 text-center scroll-mt-24">
             <p className="font-mono text-sm uppercase tracking-wide text-muted-foreground mb-5">
               Want to talk about any of this?
             </p>
