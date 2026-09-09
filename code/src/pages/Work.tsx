@@ -40,105 +40,111 @@ interface CaseStudy {
 const CASE_STUDIES: CaseStudy[] = [
   {
     n: "01",
-    title: "Onboarding 50+ application pipelines onto a shared Ansible/Kubernetes deployment framework",
+    title: "Onboarding 50+ application pipelines onto the shared delivery framework",
     context:
-      "Sonic runs a central CI/CD framework - Ansible-driven, deploying to on-prem Kubernetes (VMware Tanzu) via Azure DevOps and Octopus Deploy - so product teams don't each invent their own delivery path.",
+      "Sonic's DevOps team runs a central CI/CD framework - Ansible-driven, deploying through Azure DevOps and Octopus onto on-prem Kubernetes - so digital product teams don't each invent their own delivery path.",
     problem:
-      "Dozens of application pipelines were still bespoke: inconsistent stages, hand-maintained configs, no common security gates, and every upgrade to the platform meant touching each one by hand.",
+      "Dozens of application pipelines still sat outside it: inconsistent stages, hand-maintained configs, no common quality or security gates, and every platform change meant touching each pipeline by hand.",
     whatIDid:
-      "Migrated and onboarded 50+ pipelines onto the framework. For each: mapped the existing build/release, translated it into the framework's Ansible roles and Octopus steps, added the standard quality and security stages, and cut over with the owning team. Wrote the onboarding runbook other engineers now use.",
-    stack: ["Ansible", "Azure DevOps / TFS", "Octopus Deploy", "Kubernetes (Tanzu)", "Docker", "Helm", "ArgoCD", "Harbor"],
+      "Onboarded 50+ pipelines. For each: mapped the existing build and release, expressed it in the framework's Ansible roles and Octopus steps, added the standard gates, and cut over with the owning team. Wrote the onboarding runbook the team now uses.",
+    stack: ["Ansible", "Azure DevOps / TFS", "Octopus Deploy", "Kubernetes", "Docker", "Helm", "ArgoCD", "Harbor"],
     outcome:
-      "50+ pipelines standardised across ~10 product teams and five environments - dev, UAT, QC, ET and prod - spanning our Brisbane and Sydney sites. Framework-level changes now roll out once instead of per pipeline.",
+      "50+ pipelines standardised across ~10 product teams and five environments (dev, UAT, QC, ET, prod) in Sydney and Brisbane. Framework changes now roll out once, not per pipeline.",
   },
   {
     n: "02",
-    title: "Go templating tool that generates pipeline configuration",
+    title: "Extending the Go tool that generates pipeline configuration",
     context:
-      "Every onboarding produced near-identical Ansible inventories, Azure DevOps YAML and Tanzu manifests, hand-edited from copies of the last one.",
+      "The team has a Go CLI, originally designed by a colleague, that renders Ansible inventories, Azure DevOps YAML and Kubernetes manifests from a small per-application spec - so configuration is generated, not hand-copied.",
     problem:
-      "Copy-paste configs drifted, took hours per pipeline, and made platform upgrades a find-and-replace exercise across the estate.",
+      "New deployment shapes kept arriving that the tool couldn't express - stateful workloads, and Angular front-ends whose Node build image has to match their Angular version. Each gap sent teams back to manual edits.",
     whatIDid:
-      "Co-maintain the team's Go CLI that renders Ansible, Azure DevOps and Kubernetes configuration from versioned templates. Added StatefulSet deployment support and dynamic Node image selection by Angular version, and handle ongoing upgrades and fixes to the tool.",
-    stack: ["Go", "Go templates", "YAML", "Ansible", "Azure DevOps", "Kubernetes (Tanzu)"],
+      "Co-maintain the tool. Added StatefulSet deployment support (persistent volumes, ordered rollout) and dynamic Node image selection keyed off the app's Angular version, plus ongoing upgrades and fixes. Helped move it from one person's tool to something the team owns.",
+    stack: ["Go", "Go templates", "YAML", "Ansible", "Azure DevOps", "Kubernetes"],
     outcome:
-      "Pipeline setup time cut ~70%. Upgrades and new features become a template change plus a re-render, rather than a fresh round of manual edits across every pipeline.",
+      "Pipeline setup time cut ~70%. New deployment shapes are a template change and a re-render, not a fresh round of hand edits across the estate.",
   },
   {
     n: "03",
-    title: "Self-managed LLM observability platform (Langfuse)",
+    title: "Self-managed LLM observability for Sonic Clinical Trials (Langfuse)",
     context:
-      "SCT (Sonic Clinical Trials) needed observability for an AI workflow - Langfuse, deployed self-managed into Kubernetes. The open-source edition covers our use case, so no enterprise license was needed.",
+      "Sonic Clinical Trials needed observability for an AI workflow. Langfuse's open-source edition covered the use case, deployed self-managed into our Kubernetes.",
     problem:
-      "Langfuse isn't one app - it needs four backing services (Postgres, ClickHouse, Redis/Valkey, S3-compatible blob storage), and the chart's bundled \"quick install\" path for all four uses Bitnami images. Bitnami restructured their registry in August 2025 and the chart now pulls from a \"bitnamilegacy\" path that doesn't exist in our Harbor registry at all - and even the older \"bitnami\" path is missing ClickHouse and Minio entirely. The quick-start option was a dead end before it started.",
+      "Langfuse isn't one app - it needs Postgres, ClickHouse, Redis/Valkey and S3-compatible blob storage. The chart's bundled quick-install for all four uses Bitnami images, and after Bitnami's August 2025 registry restructure the chart pulls from a path that doesn't exist in our Harbor registry at all. The quick-start was a dead end before it started.",
     whatIDid:
-      "Skipped the chart's bundled backing services entirely. Provisioned Postgres and Valkey the way we already do everywhere else - CRD-based operators, the same pattern SIMS runs on - so that part had no real blocker. For ClickHouse, evaluated and deployed an instance through the ClickHouse Kubernetes Operator (a cluster-wide install, so it's now available to future projects too). Wired up S3-compatible blob storage against credentials the business team provided, gave Langfuse its own dedicated web address (a shared-domain path prefix breaks other observability UIs we run, so this avoided that outright), and converted the vendor's Helm values into a template our Ansible pipeline renders and deploys.",
-    stack: ["Langfuse", "Kubernetes", "Helm", "Ansible", "PostgreSQL (operator)", "Valkey (operator)", "ClickHouse Operator", "S3-compatible storage", "HashiCorp Vault"],
+      "Skipped the bundled backing services. Provisioned Postgres and Valkey through the CRD-based operators we already run for other products. Evaluated and deployed the ClickHouse Kubernetes Operator cluster-wide. Wired up S3-compatible storage, gave Langfuse its own hostname (a shared-domain path prefix breaks other observability UIs we run), and converted the vendor's Helm values into a template the Ansible pipeline renders and deploys.",
+    stack: ["Langfuse", "Kubernetes", "Helm", "Ansible", "PostgreSQL operator", "Valkey operator", "ClickHouse Operator", "S3-compatible storage", "HashiCorp Vault"],
     outcome:
-      "Langfuse running self-managed in its own namespace, all four backing services on infrastructure patterns we already operate and trust rather than deprecated bundled images. The ClickHouse Operator install is now available cluster-wide for any future project that needs it.",
+      "Langfuse running self-managed on infrastructure patterns we already operate, not deprecated bundled images. The ClickHouse Operator is now available cluster-wide for future projects.",
   },
   {
     n: "04",
     title: "Moving every product from VMware Tanzu to VKS",
     context:
-      "Sonic's infrastructure team stood up new vSphere Kubernetes Service (VKS) clusters to replace the Tanzu (TKG) estate. The DevOps team's job was to get every product from the old clusters to the new ones without breaking the shared CI/CD framework that deploys them.",
+      "Sonic's infrastructure team stood up vSphere Kubernetes Service (VKS) clusters to replace the Tanzu (TKG) estate. The DevOps team's job was to get every product across without breaking the framework that deploys it.",
     problem:
-      "35 products across dev, UAT, QC, ET and prod, in Sydney and Brisbane, each with their own configs, secrets, storage and ingress - and none of them could just be copied over. Every one had to be re-deployed through the framework against the new target, verified, and cut over with the owning team.",
+      "35 products, each with its own config, secrets, storage and ingress - and none could simply be copied. Every one had to be re-targeted, redeployed through the framework, verified with its product team, and cut over.",
     whatIDid:
-      "Migrated products end-to-end: updated each application's framework config (Ansible inventories, Helm values, Azure DevOps and ArgoCD targets) for VKS, deployed through the standard pipeline, validated the deployment with the product team, and cut over. Extended the Go templating tool with StatefulSet support during this work so stateful products could be generated rather than hand-migrated.",
+      "Migrated products end-to-end: updated each application's Ansible inventory, Helm values and ArgoCD target for VKS, deployed through the standard pipeline, validated with the owning team, cut over. The StatefulSet support in the Go tool (02) came out of this work, so stateful products could be generated rather than hand-migrated.",
     stack: ["Kubernetes (Tanzu → VKS)", "Helm", "ArgoCD", "Ansible", "Azure DevOps", "Octopus Deploy", "Harbor"],
     outcome:
-      "All 35 products now deploy to VKS across five environments and two sites via the same framework.",
+      "All 35 products now deploy to VKS across the full estate through the same framework, with the infrastructure and DevOps teams' responsibilities cleanly split: they built the clusters, we moved the applications.",
   },
   {
     n: "05",
-    title: "Bringing legacy .NET applications into Kubernetes-based delivery without rewrites",
+    title: "Bringing legacy Angular/IIS and .NET apps into automated delivery without rewrites",
     context:
       "A set of older Angular/IIS and .NET applications sat outside the framework because it assumed containerised, Kubernetes-native workloads.",
     problem:
-      "Rewriting them wasn't on anyone's roadmap, but leaving them out meant manual deployments and no shared security gates.",
+      "Rewriting them wasn't on anyone's roadmap, but leaving them out meant manual deployments and none of the shared gates.",
     whatIDid:
-      "Built a Docker-based artefact-extraction path so legacy builds produce framework-compatible artefacts, enabling automated Octopus deployments to their existing IIS targets - no platform rewrite required. Separately, stood up a dedicated build VM with the exact toolchain these projects needed so they could be scanned and built by the shared agents.",
-    stack: ["Docker", "Octopus Deploy", "IIS", "Windows build agents", "Azure DevOps"],
+      "Built a Docker-based artefact-extraction path so legacy builds produce framework-compatible artefacts, enabling automated Octopus deployments to their existing IIS targets - no platform rewrite required.",
+    stack: ["Docker", "Octopus Deploy", "IIS", "Azure DevOps", "Ansible"],
     outcome:
-      "The legacy applications now deploy through the same automated path as modern services, with the same gates.",
+      "Legacy applications now deploy through the same automated path as modern services, with the same gates.",
   },
   {
     n: "06",
-    title: "Security scanning across the microservices estate and legacy .NET",
+    title: "Security and code-quality scanning as a pipeline default",
     context:
-      "SonarQube and Snyk existed, but coverage was uneven: modern services mostly had it, legacy .NET projects had none, and project configuration lived in people's heads.",
+      "SonarQube and Snyk existed, but coverage was uneven: modern services mostly had it, legacy .NET had none, and project configuration lived in people's heads.",
     problem:
-      "Security and code-quality findings weren't consistently surfaced before deployment - a compliance gap in a regulated healthcare environment (ISO 27001 / NIST-aligned controls).",
+      "Findings weren't consistently surfaced before deployment - a compliance gap in a regulated healthcare environment working to ISO 27001 / NIST-aligned controls. Legacy .NET couldn't even be scanned: the shared agents didn't have the toolchain.",
     whatIDid:
-      "Integrated SonarQube and Snyk as standard stages across the microservices estate. Extended SonarQube scanning to legacy .NET projects - including the build-VM work above so the scanner had a compliant toolchain - and enabled it across 5 Sonic product teams, with coverage of the legacy .NET estate continuing to expand. Took ownership of SonarQube project configuration and moved pipeline secrets into HashiCorp Vault.",
-    stack: ["SonarQube", "Snyk", "HashiCorp Vault", "Azure DevOps", ".NET", "Ansible"],
+      "Made SonarQube and Snyk standard stages across the microservices estate. Stood up a dedicated build VM with the full legacy .NET toolchain so older projects could be built and scanned by the shared agents, and enabled Sonar for them across five product teams. Took ownership of SonarQube project configuration and moved pipeline secrets into HashiCorp Vault.",
+    stack: ["SonarQube", "Snyk", "HashiCorp Vault", "Azure DevOps", ".NET", "Windows build agents", "Ansible"],
     outcome:
-      "Scanning is now part of the pipeline definition, not a per-team decision. Sonar coverage spans 5 product teams' legacy .NET projects so far, with more being onboarded on an ongoing basis. Secrets no longer live in pipeline variables.",
+      "Scanning is part of the pipeline definition, not a per-team decision. Legacy .NET coverage spans five product teams and is still growing. Secrets no longer live in pipeline variables.",
   },
   {
     n: "07",
-    title: "Reusable framework components and shared test infrastructure",
-    context: "Teams kept re-solving the same small problems inside their pipelines.",
-    problem: "Duplicate logic, inconsistent behaviour, and no single place to fix a bug.",
+    title: "Shared framework components and test infrastructure",
+    context:
+      "Product teams kept re-solving the same small problems inside their own pipelines, and building their own API and E2E test setups.",
+    problem:
+      "Duplicate logic, inconsistent behaviour, no single place to fix a bug - and every team paying the setup cost for testing separately.",
     whatIDid:
-      "Wrote framework-level components adopted across projects - including a Node image-detection task and custom Python logic packaged as an Ansible filter plugin - so behaviour is defined once in the framework. Also deployed Bruno and Playwright as shared testing infrastructure, giving teams a consistent, self-serve path for API contract tests and end-to-end automation.",
-    stack: ["Python", "Ansible", "Node", "Bruno", "Playwright", "Azure DevOps"],
+      "Wrote custom Python logic packaged as an Ansible filter plugin so behaviour is defined once in the framework. Deployed Bruno and Playwright as shared test infrastructure, giving teams a self-serve path for API contract tests and end-to-end automation.",
+    stack: ["Python", "Ansible", "Bruno", "Playwright", "Azure DevOps"],
     outcome:
-      "Adopted across the pipeline estate; one fix propagates everywhere. Teams now have a shared, self-serve path for API and E2E testing instead of building their own.",
+      "One fix propagates everywhere. Teams get API and E2E testing off the shelf instead of building their own.",
   },
   {
     n: "08",
     title: "Incident response and support-team dashboards",
-    context: "The platform team carries incident response for the CI/CD estate in ServiceNow.",
-    problem: "SLA compliance and backlog were being tracked manually, and the support team had no forward view of load.",
+    context:
+      "The DevOps team carries L2 incident response for the CI/CD estate in ServiceNow.",
+    problem:
+      "SLA compliance and backlog were tracked by hand, and the support team had no forward view of load.",
     whatIDid:
-      "Provide L2 incident response (ITIL v5) - triaging incoming tickets, rerouting them to the right product team, and writing knowledge-base articles that let other teams resolve common issues themselves. Built SLA-compliance and backlog-prediction dashboards in Grafana over ServiceNow data, now used by the support team.",
+      "Triage incoming tickets, route them to the right product team, and write knowledge-base articles so other teams resolve common issues themselves (ITIL v5). Built SLA-compliance and backlog-prediction dashboards in Grafana over ServiceNow data.",
     stack: ["ServiceNow", "Grafana", "SQL", "Python"],
     outcome:
-      "100+ incidents handled to date. SLA breach rate down from 38% to 4% after the knowledge-base and dashboard work; support team now has a live SLA view and a predicted backlog instead of tracking compliance by hand.",
+      "100+ incidents handled. SLA breach rate down from 38% to 4% after the knowledge-base and dashboard work; the support team now has a live SLA view and a predicted backlog.",
   },
 ];
+
+
 
 interface Cert {
   name: string;
@@ -182,11 +188,11 @@ const EDUCATION = [
 ];
 
 const STATS: Array<{ value: string; label: string }> = [
-  { value: "50+", label: "pipelines" },
-  { value: "5 × 2", label: "environments · sites" },
-  { value: "Tanzu → VKS", label: "every product" },
-  { value: "38% → 4%", label: "SLA breaches" },
-  { value: "100+", label: "incidents" },
+  { value: "50+", label: "pipelines onboarded" },
+  { value: "35", label: "products moved Tanzu → VKS" },
+  { value: "~70%", label: "faster pipeline setup" },
+  { value: "38% → 4%", label: "SLA breach rate" },
+  { value: "100+", label: "incidents handled" },
 ];
 
 const Field = ({ label, children }: { label: string; children: React.ReactNode }) => (
