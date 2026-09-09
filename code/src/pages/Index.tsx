@@ -39,7 +39,7 @@ const Index = () => {
                     <div className="font-mono text-[11px] uppercase tracking-wide text-accent mb-3">what I do</div>
                     <p className="text-base leading-relaxed text-foreground/90">
                       I'm a DevOps Engineer working with <strong className="font-semibold">Kubernetes, Docker, Azure DevOps, Ansible</strong> and
-                      platform tooling. I like understanding how things fit together end-to-end, then making them <strong className="font-semibold">calmer, clearer</strong>, and easier to reason about.
+                      platform tooling. No two systems are designed the same way, so I document as I go - the more I map, the easier the next one gets.
                     </p>
                   </div>
 
@@ -47,9 +47,9 @@ const Index = () => {
                     <div className="font-mono text-[11px] uppercase tracking-wide text-accent mb-3">how I think</div>
                     <ul className="space-y-2.5 text-base text-foreground/90">
                       <li className="flex items-start gap-2"><span className="text-accent">·</span><span>everything needs a system</span></li>
-                      <li className="flex items-start gap-2"><span className="text-accent">·</span><span>clarity beats cleverness</span></li>
-                      <li className="flex items-start gap-2"><span className="text-accent">·</span><span>if it's messy, I organize it</span></li>
-                      <li className="flex items-start gap-2"><span className="text-accent">·</span><span>if it's confusing, I map it</span></li>
+                      <li className="flex items-start gap-2"><span className="text-accent">·</span><span>no two systems are designed the same way</span></li>
+                      <li className="flex items-start gap-2"><span className="text-accent">·</span><span>so I map as I learn</span></li>
+                      <li className="flex items-start gap-2"><span className="text-accent">·</span><span>I document so I don't have to relearn</span></li>
                     </ul>
                   </div>
 
@@ -68,7 +68,7 @@ const Index = () => {
                   <div className="font-mono text-[11px] uppercase tracking-wide text-accent mb-3">why this site exists</div>
                   <p className="text-xl leading-relaxed max-w-3xl">
                     This is my <strong className="font-semibold">public notebook</strong> - a place to document
-                    what I learn, explore ideas, and untangle complex things.
+                    what I learn, explore ideas, and untangle complicated things.
                   </p>
                 </div>
               </div>
@@ -102,6 +102,13 @@ const Index = () => {
                     </div>
                   ))}
                 </div>
+              </div>
+
+              {/* closing note */}
+              <div className="mt-10 pt-8 border-t border-foreground/20 text-center">
+                <p className="font-mono text-sm text-muted-foreground">
+                  same creative instinct, whether it's a studio or a cluster.
+                </p>
               </div>
             </div>
 
