@@ -1,5 +1,7 @@
+import { useState } from "react";
 import { usePageMeta } from "@/hooks/usePageMeta";
-import { Download, Mail, Linkedin, Github, ExternalLink, ChevronDown } from "lucide-react";
+import { Download, Mail, Linkedin, Github, ExternalLink, ArrowUpRight } from "lucide-react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
 // Chip-style external link, matching the flat design system
 const LinkChip = ({
@@ -286,31 +288,56 @@ const PipelineDiagram = () => (
   </div>
 );
 
-const CaseStudyCard = ({ cs }: { cs: CaseStudy }) => (
-  <div className="border-t border-foreground/20 pt-6">
-    <div className="flex items-baseline gap-3 mb-3">
-      <span className="font-mono text-xs text-accent shrink-0">{cs.n}</span>
-      <h3 className="font-bold text-lg md:text-xl tracking-tight leading-snug">{cs.title}</h3>
+const CaseStudyGridCard = ({ cs, onOpen }: { cs: CaseStudy; onOpen: () => void }) => (
+  <button
+    type="button"
+    onClick={onOpen}
+    className="group flex flex-col text-left border border-foreground/20 hover:border-accent transition-colors px-4 py-4 min-h-[200px]"
+  >
+    <span className="font-mono text-[11px] text-accent mb-2">{cs.n}</span>
+    <h3 className="font-bold text-sm leading-snug tracking-tight mb-2">{cs.title}</h3>
+    <p className="text-[13px] leading-relaxed text-muted-foreground line-clamp-3 flex-1">
+      {cs.outcome}
+    </p>
+    <div className="flex items-center justify-between mt-3 pt-1">
+      <span className="font-mono text-[10px] uppercase tracking-wide text-muted-foreground">
+        {cs.stack.length} technologies
+      </span>
+      <span className="inline-flex items-center gap-0.5 font-mono text-[10px] uppercase tracking-wide text-accent">
+        Expand
+        <ArrowUpRight className="h-3 w-3 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+      </span>
     </div>
+  </button>
+);
 
-    <div className="bg-accent/10 border-l-2 border-accent px-4 py-3 mb-4">
-      <p className="text-[15px] leading-relaxed font-medium text-foreground/90">{cs.outcome}</p>
-    </div>
+const CaseStudyModal = ({ cs, onClose }: { cs: CaseStudy | null; onClose: () => void }) => (
+  <Dialog open={!!cs} onOpenChange={(open) => !open && onClose()}>
+    <DialogContent className="max-w-2xl max-h-[85vh] overflow-y-auto rounded-xl">
+      {cs && (
+        <>
+          <DialogHeader>
+            <div className="font-mono text-xs text-accent mb-1">{cs.n}</div>
+            <DialogTitle className="text-left font-bold text-xl md:text-2xl tracking-tight leading-snug">
+              {cs.title}
+            </DialogTitle>
+          </DialogHeader>
 
-    <StackChips items={cs.stack} />
+          <div className="bg-accent/10 border-l-2 border-accent px-4 py-3">
+            <p className="text-[15px] leading-relaxed font-medium text-foreground/90">{cs.outcome}</p>
+          </div>
 
-    <details className="group mt-4">
-      <summary className="cursor-pointer list-none [&::-webkit-details-marker]:hidden inline-flex items-center gap-1 font-mono text-[11px] uppercase tracking-wide text-accent hover:underline">
-        Read more
-        <ChevronDown className="h-3 w-3 transition-transform group-open:rotate-180" />
-      </summary>
-      <div className="divide-y divide-foreground/10 mt-3">
-        <Field label="Context">{cs.context}</Field>
-        <Field label="Problem">{cs.problem}</Field>
-        <Field label="What I did">{cs.whatIDid}</Field>
-      </div>
-    </details>
-  </div>
+          <StackChips items={cs.stack} />
+
+          <div className="divide-y divide-foreground/10">
+            <Field label="Context">{cs.context}</Field>
+            <Field label="Problem">{cs.problem}</Field>
+            <Field label="What I did">{cs.whatIDid}</Field>
+          </div>
+        </>
+      )}
+    </DialogContent>
+  </Dialog>
 );
 
 const Work = () => {
@@ -318,6 +345,7 @@ const Work = () => {
     "work",
     "DevOps engineer in Sydney. I standardise how a large healthcare enterprise builds, scans and ships software - CI/CD, Kubernetes, IaC, pipeline security."
   );
+  const [openCase, setOpenCase] = useState<CaseStudy | null>(null);
 
   return (
     <div className="min-h-screen sage-gradient">
@@ -397,8 +425,11 @@ const Work = () => {
             <span aria-hidden="true">·</span>
             <a href="#contact" className="hover:text-accent transition-colors">Contact</a>
           </nav>
+        </div>
 
-          {/* Enterprise work */}
+        {/* Enterprise work - wider column than the reading sections below, so the
+            case-study grid has room to breathe */}
+        <div className="mx-auto max-w-5xl">
           <div id="enterprise-work" className="mb-8 scroll-mt-24">
             <h2 className="font-bold uppercase tracking-tighter text-xl md:text-2xl">
               Enterprise work
@@ -410,14 +441,18 @@ const Work = () => {
 
           <PipelineDiagram />
 
-          <div className="space-y-10 mb-20">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-4">
             {CASE_STUDIES.map((cs) => (
-              <CaseStudyCard key={cs.n} cs={cs} />
+              <CaseStudyGridCard key={cs.n} cs={cs} onOpen={() => setOpenCase(cs)} />
             ))}
           </div>
 
+          <CaseStudyModal cs={openCase} onClose={() => setOpenCase(null)} />
+        </div>
+
+        <div className="mx-auto max-w-[720px]">
           {/* Open source & side projects */}
-          <div id="open-source" className="mb-8 scroll-mt-24">
+          <div id="open-source" className="mb-8 mt-16 scroll-mt-24">
             <h2 className="font-bold uppercase tracking-tighter text-xl md:text-2xl">
               Open source &amp; side projects
             </h2>
