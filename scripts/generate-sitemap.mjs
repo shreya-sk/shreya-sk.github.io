@@ -12,7 +12,7 @@ const ROOT = dirname(dirname(fileURLToPath(import.meta.url)));
 const VAULT = join(ROOT, 'obsidian');
 const SITE = 'https://shreya-sk.github.io';
 
-const staticRoutes = ['/', '/blog', '/til', '/work', '/resume'];
+const staticRoutes = ['/', '/blog', '/til', '/work'];
 
 function* walk(dir) {
   for (const name of readdirSync(dir)) {

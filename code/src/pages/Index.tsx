@@ -2,15 +2,6 @@ import { usePageMeta } from "@/hooks/usePageMeta";
 import Hero from "@/components/Hero";
 import NowBar from "@/components/NowBar";
 
-const BUILT: Array<[string, string, string]> = [
-  ["01", "Migrated production workloads from VMware Tanzu to Kubernetes", "sonic · current"],
-  ["02", "Own CI/CD & release pipelines across teams - Azure DevOps, Octopus, Ansible", "sonic · current"],
-  ["03", "Self-managed observability & test infrastructure - Langfuse, Bruno, Playwright", "sonic · current"],
-  ["04", "This website - a two-way Obsidian ↔ GitHub sync pipeline with a client-side git editor in the browser", "2026"],
-  ["05", "Airtable operations system for a multi-site education business", "ongoing"],
-  ["06", "Research in generative Aspect-Based Sentiment Analysis - RoBERTa, attention, contrastive learning, 89% accuracy score over SOTA models", "2024"],
-];
-
 const Index = () => {
   usePageMeta(undefined, "Shreya's digital diary - DevOps notes, TIL log, and more.");
 
@@ -25,7 +16,7 @@ const Index = () => {
               {/* ---- main column ---- */}
               <div>
                 {/* 01 / Profile */}
-                <div className="mb-14">
+                <div>
                   <div className="mb-12 flex items-baseline justify-between">
                     <h2 className="text-2xl sm:text-3xl md:text-5xl font-extrabold uppercase tracking-tighter whitespace-nowrap">
                       getting to know me
@@ -71,37 +62,6 @@ const Index = () => {
                       This is my <strong className="font-semibold">public notebook</strong> - a place to document
                       what I learn, explore ideas, and untangle complicated things.
                     </p>
-                  </div>
-                </div>
-
-                {/* 02 / Impact */}
-                <div>
-                  <div className="mb-10 flex items-baseline justify-between">
-                    <h2 className="text-2xl sm:text-3xl md:text-5xl font-extrabold uppercase tracking-tighter whitespace-nowrap">
-                      things I've built
-                    </h2>
-                    <span className="font-mono text-xs uppercase tracking-wide text-muted-foreground hidden md:block">
-                      02 / Impact
-                    </span>
-                  </div>
-
-                  <div className="border-t border-foreground/20">
-                    {BUILT.map(([n, item, tag]) => (
-                      <div
-                        key={n}
-                        className="flex items-baseline gap-4 py-4 border-b border-foreground/20"
-                      >
-                        <span className="font-mono text-xs text-accent shrink-0">{n}</span>
-                        <span className="text-base leading-relaxed flex-1">{item}</span>
-                        <span
-                          className={`font-mono text-[11px] uppercase tracking-wide shrink-0 ${
-                            tag.includes('current') ? 'text-accent' : 'text-muted-foreground'
-                          }`}
-                        >
-                          {tag}
-                        </span>
-                      </div>
-                    ))}
                   </div>
                 </div>
               </div>
