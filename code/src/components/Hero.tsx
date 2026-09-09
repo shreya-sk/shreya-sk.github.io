@@ -28,7 +28,7 @@ const Hero = () => {
               </h1>
 
               <p className="mb-2 text-lg md:text-xl font-semibold text-foreground">
-                DevOps Engineer building calmer systems.
+                DevOps Engineer who can't leave a messy system alone.
               </p>
 
               <p className="mb-3 font-mono text-xs md:text-sm uppercase tracking-wide text-accent">
