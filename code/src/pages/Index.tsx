@@ -107,7 +107,7 @@ const Index = () => {
               {/* closing note */}
               <div className="mt-10 pt-8 border-t border-foreground/20 text-center">
                 <p className="font-mono text-sm text-muted-foreground">
-                  making complicated things easier to reason about.
+                  same creative instinct, whether it's a studio or a cluster.
                 </p>
               </div>
             </div>
