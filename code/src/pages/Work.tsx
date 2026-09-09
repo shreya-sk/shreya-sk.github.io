@@ -1,5 +1,7 @@
+import { useState } from "react";
 import { usePageMeta } from "@/hooks/usePageMeta";
-import { Download, Mail, Linkedin, Github, ExternalLink, ChevronDown } from "lucide-react";
+import { Download, Mail, Linkedin, Github, ExternalLink, ArrowUpRight } from "lucide-react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
 // Chip-style external link, matching the flat design system
 const LinkChip = ({
@@ -209,12 +211,13 @@ const StackChips = ({ items }: { items: string[] }) => (
   </div>
 );
 
-// Simple horizontal flow diagram: commit -> Azure DevOps -> Go templating tool
-// -> Ansible -> Octopus/ArgoCD -> VKS, with the security stages hanging off
-// the CI stage. Plain SVG, no colour beyond the site's accent.
+// Flow diagram: commit -> Azure DevOps -> Go build tool -> Harbor -> Ansible
+// -> Octopus -> VKS, with build-time scanning hanging off Azure DevOps and
+// deploy-time secrets hanging off Ansible. Plain SVG, no colour beyond the
+// site's accent.
 const PipelineDiagram = () => (
   <div className="overflow-x-auto mb-10 -mx-1 px-1">
-    <svg viewBox="0 0 920 210" className="min-w-[720px] w-full" style={{ maxWidth: 920 }}>
+    <svg viewBox="0 0 1020 225" className="min-w-[860px] w-full" style={{ maxWidth: 1020 }}>
       <defs>
         <marker id="wf-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
           <path d="M0,0 L10,5 L0,10 z" fill="currentColor" />
@@ -225,76 +228,116 @@ const PipelineDiagram = () => (
       <g className="text-foreground/40" stroke="currentColor" strokeWidth="1.5">
         <line x1="90" y1="45" x2="116" y2="45" markerEnd="url(#wf-arrow)" />
         <line x1="248" y1="45" x2="274" y2="45" markerEnd="url(#wf-arrow)" />
-        <line x1="436" y1="45" x2="462" y2="45" markerEnd="url(#wf-arrow)" />
-        <line x1="574" y1="45" x2="600" y2="45" markerEnd="url(#wf-arrow)" />
-        <line x1="742" y1="45" x2="768" y2="45" markerEnd="url(#wf-arrow)" />
+        <line x1="456" y1="45" x2="482" y2="45" markerEnd="url(#wf-arrow)" />
+        <line x1="604" y1="45" x2="630" y2="45" markerEnd="url(#wf-arrow)" />
+        <line x1="732" y1="45" x2="758" y2="45" markerEnd="url(#wf-arrow)" />
+        <line x1="890" y1="45" x2="916" y2="45" markerEnd="url(#wf-arrow)" />
       </g>
 
       {/* main nodes */}
       <g className="text-foreground" stroke="currentColor" strokeWidth="1.5" fill="none">
         <rect x="0" y="20" width="90" height="50" />
         <rect x="118" y="20" width="130" height="50" />
-        <rect x="276" y="20" width="160" height="50" />
-        <rect x="464" y="20" width="110" height="50" />
-        <rect x="602" y="20" width="140" height="50" />
-        <rect x="770" y="20" width="90" height="50" />
+        <rect x="276" y="20" width="180" height="50" />
+        <rect x="484" y="20" width="120" height="50" />
+        <rect x="632" y="20" width="100" height="50" />
+        <rect x="760" y="20" width="130" height="50" />
+        <rect x="918" y="20" width="90" height="50" />
       </g>
       <g className="text-foreground" fontFamily="'JetBrains Mono', monospace" fontSize="12" textAnchor="middle" fill="currentColor">
         <text x="45" y="49">commit</text>
         <text x="183" y="49">Azure DevOps</text>
-        <text x="356" y="43">Go templating</text>
-        <text x="356" y="58">tool</text>
-        <text x="519" y="49">Ansible</text>
-        <text x="672" y="43">Octopus /</text>
-        <text x="672" y="58">ArgoCD</text>
-        <text x="815" y="49">VKS</text>
+        <text x="366" y="42">Go build tool</text>
+        <text x="366" y="56" fontSize="9">(scaffold + validate)</text>
+        <text x="544" y="42">Harbor</text>
+        <text x="544" y="57" fontSize="11">(registry)</text>
+        <text x="682" y="49">Ansible</text>
+        <text x="825" y="42">Octopus</text>
+        <text x="825" y="56" fontSize="9">(or build.yaml)</text>
+        <text x="963" y="49">VKS</text>
       </g>
 
-      {/* branch: security stages hang off Azure DevOps */}
+      {/* branch: build-time quality & security gates hang off Azure DevOps */}
       <g className="text-accent" stroke="currentColor" strokeWidth="1.5" fill="none">
         <path d="M183,70 V100 H90 V148" markerEnd="url(#wf-arrow)" />
         <path d="M183,100 V148" markerEnd="url(#wf-arrow)" />
         <path d="M183,100 H276 V148" markerEnd="url(#wf-arrow)" />
       </g>
+      {/* branch: deploy-time secrets hang off Ansible */}
+      <g className="text-accent" stroke="currentColor" strokeWidth="1.5" fill="none">
+        <path d="M682,70 V148" markerEnd="url(#wf-arrow)" />
+      </g>
+
       <g className="text-foreground" stroke="currentColor" strokeWidth="1.5" fill="none">
         <rect x="45" y="150" width="90" height="40" />
         <rect x="138" y="150" width="90" height="40" />
         <rect x="231" y="150" width="90" height="40" />
+        <rect x="637" y="150" width="90" height="40" />
       </g>
       <g className="text-foreground" fontFamily="'JetBrains Mono', monospace" fontSize="11" textAnchor="middle" fill="currentColor">
         <text x="90" y="174">SonarQube</text>
-        <text x="183" y="174">Snyk</text>
-        <text x="276" y="174">Vault</text>
+        <text x="183" y="174">Trivy</text>
+        <text x="276" y="174">Snyk</text>
+        <text x="682" y="174">Vault</text>
+      </g>
+      <g className="text-muted-foreground" fontFamily="'JetBrains Mono', monospace" fontSize="9" textAnchor="middle" fill="currentColor">
+        <text x="183" y="207">BUILD-TIME QUALITY &amp; SECURITY GATES</text>
+        <text x="682" y="207">DEPLOY-TIME SECRETS</text>
       </g>
     </svg>
   </div>
 );
 
-const CaseStudyCard = ({ cs }: { cs: CaseStudy }) => (
-  <div className="border-t border-foreground/20 pt-6">
-    <div className="flex items-baseline gap-3 mb-3">
-      <span className="font-mono text-xs text-accent shrink-0">{cs.n}</span>
-      <h3 className="font-bold text-lg md:text-xl tracking-tight leading-snug">{cs.title}</h3>
+const CaseStudyGridCard = ({ cs, onOpen }: { cs: CaseStudy; onOpen: () => void }) => (
+  <button
+    type="button"
+    onClick={onOpen}
+    className="group flex flex-col text-left border border-foreground/20 hover:border-accent transition-colors px-4 py-4 min-h-[200px]"
+  >
+    <span className="font-mono text-[11px] text-accent mb-2">{cs.n}</span>
+    <h3 className="font-bold text-sm leading-snug tracking-tight mb-2">{cs.title}</h3>
+    <p className="text-[13px] leading-relaxed text-muted-foreground line-clamp-3 flex-1">
+      {cs.outcome}
+    </p>
+    <div className="flex items-center justify-between mt-3 pt-1">
+      <span className="font-mono text-[10px] uppercase tracking-wide text-muted-foreground">
+        {cs.stack.length} technologies
+      </span>
+      <span className="inline-flex items-center gap-0.5 font-mono text-[10px] uppercase tracking-wide text-accent">
+        Expand
+        <ArrowUpRight className="h-3 w-3 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+      </span>
     </div>
+  </button>
+);
 
-    <div className="bg-accent/10 border-l-2 border-accent px-4 py-3 mb-4">
-      <p className="text-[15px] leading-relaxed font-medium text-foreground/90">{cs.outcome}</p>
-    </div>
+const CaseStudyModal = ({ cs, onClose }: { cs: CaseStudy | null; onClose: () => void }) => (
+  <Dialog open={!!cs} onOpenChange={(open) => !open && onClose()}>
+    <DialogContent className="max-w-2xl max-h-[85vh] overflow-y-auto rounded-xl">
+      {cs && (
+        <>
+          <DialogHeader>
+            <div className="font-mono text-xs text-accent mb-1">{cs.n}</div>
+            <DialogTitle className="text-left font-bold text-xl md:text-2xl tracking-tight leading-snug">
+              {cs.title}
+            </DialogTitle>
+          </DialogHeader>
 
-    <StackChips items={cs.stack} />
+          <div className="bg-accent/10 border-l-2 border-accent px-4 py-3">
+            <p className="text-[15px] leading-relaxed font-medium text-foreground/90">{cs.outcome}</p>
+          </div>
 
-    <details className="group mt-4">
-      <summary className="cursor-pointer list-none [&::-webkit-details-marker]:hidden inline-flex items-center gap-1 font-mono text-[11px] uppercase tracking-wide text-accent hover:underline">
-        Read more
-        <ChevronDown className="h-3 w-3 transition-transform group-open:rotate-180" />
-      </summary>
-      <div className="divide-y divide-foreground/10 mt-3">
-        <Field label="Context">{cs.context}</Field>
-        <Field label="Problem">{cs.problem}</Field>
-        <Field label="What I did">{cs.whatIDid}</Field>
-      </div>
-    </details>
-  </div>
+          <StackChips items={cs.stack} />
+
+          <div className="divide-y divide-foreground/10">
+            <Field label="Context">{cs.context}</Field>
+            <Field label="Problem">{cs.problem}</Field>
+            <Field label="What I did">{cs.whatIDid}</Field>
+          </div>
+        </>
+      )}
+    </DialogContent>
+  </Dialog>
 );
 
 const Work = () => {
@@ -302,6 +345,7 @@ const Work = () => {
     "work",
     "DevOps engineer in Sydney. I standardise how a large healthcare enterprise builds, scans and ships software - CI/CD, Kubernetes, IaC, pipeline security."
   );
+  const [openCase, setOpenCase] = useState<CaseStudy | null>(null);
 
   return (
     <div className="min-h-screen sage-gradient">
@@ -381,8 +425,11 @@ const Work = () => {
             <span aria-hidden="true">·</span>
             <a href="#contact" className="hover:text-accent transition-colors">Contact</a>
           </nav>
+        </div>
 
-          {/* Enterprise work */}
+        {/* Enterprise work - wider column than the reading sections below, so the
+            case-study grid has room to breathe */}
+        <div className="mx-auto max-w-5xl">
           <div id="enterprise-work" className="mb-8 scroll-mt-24">
             <h2 className="font-bold uppercase tracking-tighter text-xl md:text-2xl">
               Enterprise work
@@ -394,14 +441,18 @@ const Work = () => {
 
           <PipelineDiagram />
 
-          <div className="space-y-10 mb-20">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-4">
             {CASE_STUDIES.map((cs) => (
-              <CaseStudyCard key={cs.n} cs={cs} />
+              <CaseStudyGridCard key={cs.n} cs={cs} onOpen={() => setOpenCase(cs)} />
             ))}
           </div>
 
+          <CaseStudyModal cs={openCase} onClose={() => setOpenCase(null)} />
+        </div>
+
+        <div className="mx-auto max-w-[720px]">
           {/* Open source & side projects */}
-          <div id="open-source" className="mb-8 scroll-mt-24">
+          <div id="open-source" className="mb-8 mt-16 scroll-mt-24">
             <h2 className="font-bold uppercase tracking-tighter text-xl md:text-2xl">
               Open source &amp; side projects
             </h2>
