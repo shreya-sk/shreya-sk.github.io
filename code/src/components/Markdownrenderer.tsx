@@ -3,7 +3,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeHighlight from 'rehype-highlight';
 import rehypeRaw from 'rehype-raw';
-import { Calendar, Clock } from 'lucide-react';
+import { Calendar, Clock, Pencil } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { BlogPost } from '@/types/blog';
 import 'highlight.js/styles/github-dark.css';
@@ -64,6 +64,14 @@ const MarkdownRenderer = ({ post }: MarkdownRendererProps) => {
               <Clock className="h-3 w-3" />
               <span>{readTime}</span>
             </div>
+            <Link
+              to={`/editor?path=${encodeURIComponent(`Learning/${post.path}`)}`}
+              className="flex items-center gap-1.5 px-2 py-0.5 border border-foreground/20 text-muted-foreground hover:text-accent hover:border-accent font-mono text-[11px] uppercase tracking-wide transition-colors"
+              title="Edit this note in the vault editor"
+            >
+              <Pencil className="h-3 w-3" />
+              <span>edit</span>
+            </Link>
           </div>
 
           <div className="h-0.5 bg-foreground/90" />
