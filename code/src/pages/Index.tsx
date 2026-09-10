@@ -20,7 +20,10 @@ const Index = () => {
                   <div className="mb-12 flex items-baseline justify-between">
                     <h2 className="text-2xl sm:text-3xl md:text-5xl font-extrabold uppercase tracking-tighter whitespace-nowrap">
                       getting to know me
-                  
+                    </h2>
+                    <span className="font-mono text-xs uppercase tracking-wide text-muted-foreground hidden md:block">
+                      01 / Profile
+                    </span>
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-3">
