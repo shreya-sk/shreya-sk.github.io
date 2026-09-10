@@ -53,7 +53,7 @@ const Hero = () => {
               </div>
 
               <p className="mt-6 font-mono text-[11px] uppercase tracking-wide text-muted-foreground">
-                DevOps Engineer - Sonic Healthcare · ITIL &amp; CKA certified · first class honours, computational data science (2024)
+                Sonic Healthcare · ITIL &amp; CKA certified · first class honours, computational data science (2024)
               </p>
             </div>
           </div>
