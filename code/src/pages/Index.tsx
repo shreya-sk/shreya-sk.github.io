@@ -49,14 +49,12 @@ const Index = () => {
                     <div className="pt-8 md:pt-0 md:pl-8">
                       <div className="font-mono text-[11px] uppercase tracking-wide text-accent mb-3">outside work</div>
                       <ul className="space-y-2.5 text-base leading-relaxed text-foreground/90">
-                          <li>· pilates instructor</li>
-                          <li>· tennis & running</li>
-                          <li>· half-marathon training</li>
-                          <li>· crime & psychological thrillers</li>
-                          <li>· building little side projects</li>
-                          <li>· being outdoors!</li>
-                          
-                    
+                        <li className="flex items-start gap-2"><span className="text-accent">·</span><span>pilates instructor</span></li>
+                        <li className="flex items-start gap-2"><span className="text-accent">·</span><span>tennis &amp; running</span></li>
+                        <li className="flex items-start gap-2"><span className="text-accent">·</span><span>half-marathon training</span></li>
+                        <li className="flex items-start gap-2"><span className="text-accent">·</span><span>crime &amp; psychological thrillers</span></li>
+                        <li className="flex items-start gap-2"><span className="text-accent">·</span><span>building little side projects</span></li>
+                        <li className="flex items-start gap-2"><span className="text-accent">·</span><span>being outdoors!</span></li>
                       </ul>
                     </div>
                   </div>
