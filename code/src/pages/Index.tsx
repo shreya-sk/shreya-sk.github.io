@@ -20,10 +20,7 @@ const Index = () => {
                   <div className="mb-12 flex items-baseline justify-between">
                     <h2 className="text-2xl sm:text-3xl md:text-5xl font-extrabold uppercase tracking-tighter whitespace-nowrap">
                       getting to know me
-                    </h2>
-                    <span className="font-mono text-xs uppercase tracking-wide text-muted-foreground hidden md:block">
-                      01 / Profile
-                    </span>
+                  
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-3">
@@ -52,10 +49,14 @@ const Index = () => {
                     <div className="pt-8 md:pt-0 md:pl-8">
                       <div className="font-mono text-[11px] uppercase tracking-wide text-accent mb-3">outside work</div>
                       <ul className="space-y-2.5 text-base leading-relaxed text-foreground/90">
-                        <li className="flex items-start gap-2"><span className="text-accent">·</span><span>pilates instructor</span></li>
-                        <li className="flex items-start gap-2"><span className="text-accent">·</span><span>tennis &amp; running</span></li>
-                        <li className="flex items-start gap-2"><span className="text-accent">·</span><span>crime thrillers</span></li>
-                        <li className="flex items-start gap-2"><span className="text-accent">·</span><span>documenting everything - recipes to book reviews</span></li>
+                          <li>· pilates instructor</li>
+                          <li>· tennis & running</li>
+                          <li>· half-marathon training</li>
+                          <li>· crime & psychological thrillers</li>
+                          <li>· building little side projects</li>
+                          <li>· being outdoors!</li>
+                          
+                    
                       </ul>
                     </div>
                   </div>
