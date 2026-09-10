@@ -183,16 +183,17 @@ const CERTS: Cert[] = [
   },
 ];
 
-const EDUCATION = [
+const EDUCATION: Array<{ degree: string; school: string; detail?: React.ReactNode }> = [
   {
     degree: "Bachelor of Advanced Computing (Honours), First Class",
     school: "University of Sydney, 2024",
-    detail:
-      "Major: Computational Data Science · Minor: Cognitive Psychology. Honours thesis: MASCoT - multi-aspect sentiment analysis using BERT and contrastive learning (87% accuracy, Honours Class I).",
-  },
-  {
-    degree: "IB Diploma",
-    school: "Neerja Modi School, 2020",
+    detail: (
+      <>
+        <strong>Major:</strong> Computational Data Science · <strong>Minor:</strong> Cognitive
+        Psychology. <strong>Honours thesis:</strong> MASCoT - multi-aspect sentiment analysis using
+        BERT and contrastive learning (87% accuracy, <strong>Honours Class I</strong>).
+      </>
+    ),
   },
 ];
 
@@ -384,7 +385,7 @@ const Work = () => {
             Sonic Healthcare · Aug 2022 – Current
           </div>
           <p className="text-lg leading-relaxed max-w-[68ch] text-foreground/80 mb-8">
-            I'm a DevOps engineer at Sonic Healthcare, a global pathology, radiology and primary-care group. Since 2022 I've been on the team behind the shared CI/CD framework Sonic's product teams deploy through — onboarding pipelines, extending the Go and Ansible tooling, moving every product from Tanzu to VKS, and making security scanning the default. The other half is support: L2 incident response for the delivery estate in ServiceNow, knowledge articles so teams can fix common issues themselves, and the everyday requests — a Postgres, a package, a scan, an unstuck release.
+            I'm a DevOps engineer at Sonic Healthcare, a global pathology, radiology and primary-care group. I joined in 2022 in a software engineering and process-focused role; as the team's responsibilities shifted, so did mine, and I grew into more DevOps-focused work. Today I'm part of the team behind the shared CI/CD framework Sonic's product teams deploy through — onboarding pipelines, extending the Go and Ansible tooling, moving every product from Tanzu to VKS, and making security scanning the default. The other half is support: L2 incident response for the delivery estate in ServiceNow, knowledge articles so teams can fix common issues themselves, and the everyday requests — a Postgres, a package, a scan, an unstuck release.
           </p>
           <div className="flex flex-wrap gap-3 mb-6">
             <LinkChip href="/resume.pdf" primary>
@@ -426,21 +427,6 @@ const Work = () => {
       </section>
 
       <div className="container px-6 pt-12 pb-16 md:pb-20">
-        <div className="mx-auto max-w-[720px]">
-          {/* Jump-to row */}
-          <nav className="flex flex-wrap gap-x-3 gap-y-1 font-mono text-[11px] uppercase tracking-wide text-muted-foreground mb-10">
-            <a href="#enterprise-work" className="hover:text-accent transition-colors">Enterprise work</a>
-            <span aria-hidden="true">·</span>
-            <a href="#open-source" className="hover:text-accent transition-colors">Open source</a>
-            <span aria-hidden="true">·</span>
-            <a href="#certifications" className="hover:text-accent transition-colors">Certs</a>
-            <span aria-hidden="true">·</span>
-            <a href="#education" className="hover:text-accent transition-colors">Education</a>
-            <span aria-hidden="true">·</span>
-            <a href="#contact" className="hover:text-accent transition-colors">Contact</a>
-          </nav>
-        </div>
-
         {/* Enterprise work - wider column than the reading sections below, so the
             case-study grid has room to breathe */}
         <div className="mx-auto max-w-5xl">
@@ -466,13 +452,13 @@ const Work = () => {
 
         <div className="mx-auto max-w-[720px]">
           {/* Open source & side projects */}
-          <div id="open-source" className="mb-8 mt-16 scroll-mt-24">
+          <div id="open-source" className="mb-8 mt-10 scroll-mt-24">
             <h2 className="font-bold uppercase tracking-tighter text-xl md:text-2xl">
               Open source &amp; side projects
             </h2>
           </div>
 
-          <div className="space-y-10 mb-20">
+          <div className="space-y-8 mb-12">
             <div className="border-t border-foreground/20 pt-6">
               <div className="flex items-baseline justify-between gap-3 mb-1">
                 <h3 className="font-bold text-lg tracking-tight">
@@ -525,7 +511,7 @@ const Work = () => {
               Certifications
             </h2>
           </div>
-          <div className="space-y-5 mb-14">
+          <div className="space-y-5 mb-10">
             {CERTS.map((c) => (
               <div key={c.name} className="border-t border-foreground/20 pt-4">
                 <div className="flex items-baseline justify-between gap-3">
@@ -559,7 +545,7 @@ const Work = () => {
               Education
             </h2>
           </div>
-          <div className="space-y-5 mb-20">
+          <div className="space-y-5 mb-12">
             {EDUCATION.map((e) => (
               <div key={e.degree} className="border-t border-foreground/20 pt-4">
                 <div className="font-semibold text-[15px]">{e.degree}</div>
