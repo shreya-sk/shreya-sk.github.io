@@ -93,6 +93,25 @@
     box-shadow: none;
   }
 
+  /* Soft ambient glow behind the hero profile photo - a quiet "live" signal
+     (syncing from Obsidian) instead of a literal badge. Pink/purple accent,
+     blurred, slowly drifting. */
+  .profile-glow {
+    position: absolute;
+    inset: -22px;
+    border-radius: 9999px;
+    background: radial-gradient(circle at 40% 35%, hsl(var(--accent) / 0.85), transparent 70%);
+    filter: blur(18px);
+    animation: profile-glow-drift 6s ease-in-out infinite;
+  }
+  @keyframes profile-glow-drift {
+    0%, 100% { transform: scale(1) translate(0, 0); opacity: 0.55; }
+    50% { transform: scale(1.18) translate(3px, -3px); opacity: 0.85; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .profile-glow { animation: none; opacity: 0.6; }
+  }
+
   /* Journal card â€” flattened to a ruled row, no paper texture */
   .journal-card {
     background: hsl(var(--background));

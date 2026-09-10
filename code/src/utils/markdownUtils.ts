@@ -182,6 +182,26 @@ export const convertObsidianCallouts = (content: string): string => {
 };
 
 /**
+ * A one-line preview of a TIL note: strips frontmatter plus the note's date
+ * heading ("# 08-09-2026") and bold title line ("**CRON JOBS**") - both are
+ * titles, not the body - so a truncated/clamped preview reads as one
+ * sentence instead of a title smashed into the paragraph that follows it.
+ */
+export const tilPreviewText = (raw = '', maxLength = 120): string => {
+  let lines = raw
+    .replace(/^---[\s\S]*?---\s*/, '')
+    .split('\n')
+    .filter((l) => l.trim().length > 0);
+  while (
+    lines.length > 1 &&
+    (/^#{1,6}\s/.test(lines[0]) || /^\*\*[^*]+\*\*$/.test(lines[0].trim()))
+  ) {
+    lines = lines.slice(1);
+  }
+  return lines.join(' ').replace(/[#>*`]/g, '').trim().slice(0, maxLength);
+};
+
+/**
  * Process full content for display (strip frontmatter, convert Obsidian syntax, keep emojis)
  */
 export const processMarkdownContent = (content: string): string => {

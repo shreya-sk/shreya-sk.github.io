@@ -8,15 +8,15 @@ const Hero = () => {
         <div className="mx-auto max-w-5xl">
           <div className="flex flex-col md:flex-row items-center gap-8 md:gap-14">
             {/* Profile Picture */}
-            <div className="flex-shrink-0">
+            <div className="relative flex-shrink-0 w-32 md:w-44">
+              <div className="profile-glow" aria-hidden="true" />
               <img
                 src="/profile.png"
                 alt="Shreya"
-                className="w-32 h-32 md:w-44 md:h-44 rounded-none object-cover"
+                title="Synced from Obsidian"
+                className="relative w-32 h-32 md:w-44 md:h-44 rounded-none object-cover"
               />
-              <div className="mt-3 flex items-center justify-center md:justify-start gap-2 font-mono text-[11px] uppercase tracking-wide text-muted-foreground">
-                <span className="text-accent">●</span> sycned from obsidian
-              </div>
+              <span className="sr-only">Synced from Obsidian</span>
             </div>
 
             {/* Content */}
