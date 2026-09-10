@@ -54,8 +54,10 @@ const Index = () => {
                       <ul className="space-y-2.5 text-base leading-relaxed text-foreground/90">
                         <li className="flex items-start gap-2"><span className="text-accent">·</span><span>pilates instructor</span></li>
                         <li className="flex items-start gap-2"><span className="text-accent">·</span><span>tennis &amp; running</span></li>
-                        <li className="flex items-start gap-2"><span className="text-accent">·</span><span>crime thrillers</span></li>
-                        <li className="flex items-start gap-2"><span className="text-accent">·</span><span>documenting everything - recipes to book reviews</span></li>
+                        <li className="flex items-start gap-2"><span className="text-accent">·</span><span>half-marathon training</span></li>
+                        <li className="flex items-start gap-2"><span className="text-accent">·</span><span>crime &amp; psychological thrillers</span></li>
+                        <li className="flex items-start gap-2"><span className="text-accent">·</span><span>building little side projects</span></li>
+                        <li className="flex items-start gap-2"><span className="text-accent">·</span><span>being outdoors!</span></li>
                       </ul>
                     </div>
                   </div>
