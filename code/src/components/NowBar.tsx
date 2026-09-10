@@ -9,7 +9,8 @@ import { useQuery } from '@tanstack/react-query';
 import { useTILEntries } from '@/hooks/useTILEntries';
 import { useGitHubPosts } from '@/hooks/useGitHubPosts';
 import { fetchRecentPosts, getLastSynced } from '@/services/localMarkdownService';
-import { getWeekStart, getWeekDays, formatDateKey } from '@/components/WeekCalendar';
+import { getWeekStart, getWeekDays, formatDateKey, DAY_NAMES } from '@/components/WeekCalendar';
+import { tilPreviewText } from '@/utils/markdownUtils';
 
 function timeAgo(iso: string): string {
   const mins = Math.max(1, Math.round((Date.now() - new Date(iso).getTime()) / 60000));
@@ -32,7 +33,11 @@ const NowBar = () => {
     const days = getWeekDays(getWeekStart(new Date()));
     const counts: Record<string, number> = {};
     tilEntries.forEach((e) => e.date && (counts[e.date] = (counts[e.date] || 0) + 1));
-    return days.map((d) => ({ key: formatDateKey(d), count: counts[formatDateKey(d)] || 0 }));
+    return days.map((d) => ({
+      key: formatDateKey(d),
+      count: counts[formatDateKey(d)] || 0,
+      dayName: DAY_NAMES[d.getDay()],
+    }));
   }, [tilEntries]);
 
   const weekCount = week.reduce((s, d) => s + d.count, 0);
@@ -57,21 +62,31 @@ const NowBar = () => {
           </span>
         </div>
         <div className="flex gap-1.5 mb-2.5">
-          {week.map((d) => (
-            <span
-              key={d.key}
-              className={`h-2.5 flex-1 ${d.count > 0 ? 'bg-accent' : 'bg-muted'}`}
-            />
-          ))}
+          {week.map((d) => {
+            const isLatestDay = latestTIL && d.key === latestTIL.date;
+            return (
+              <span
+                key={d.key}
+                className={`h-4 flex-1 flex items-center justify-center ${d.count > 0 ? 'bg-accent' : 'bg-muted'}`}
+              >
+                {isLatestDay && (
+                  <span className="font-mono text-[7px] font-bold uppercase leading-none text-white">
+                    {d.dayName.slice(0, 3)}
+                  </span>
+                )}
+              </span>
+            );
+          })}
         </div>
         {latestTIL && (
-          <p className="text-sm leading-snug text-foreground/80 line-clamp-2 group-hover:text-accent transition-colors">
-            {latestTIL.content
-              ?.replace(/^---[\s\S]*?---\s*/, '')
-              .replace(/[#>*`]/g, '')
-              .trim()
-              .slice(0, 120)}
-          </p>
+          <div className="relative">
+            <p
+              className="text-sm leading-snug text-foreground/80 line-clamp-2 group-hover:text-accent transition-colors [mask-image:linear-gradient(to_bottom,black_60%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_bottom,black_60%,transparent_100%)]"
+            >
+              <span className="font-mono text-[11px] font-bold text-accent">TIL:</span>{' '}
+              {tilPreviewText(latestTIL.content || '')}
+            </p>
+          </div>
         )}
       </Link>
 

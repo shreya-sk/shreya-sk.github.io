@@ -29,15 +29,19 @@ const Index = () => {
                   <div className="grid grid-cols-1 md:grid-cols-3">
                     <div className="pb-8 md:pb-0 md:pr-8 border-b md:border-b-0 md:border-r border-foreground/20">
                       <div className="font-mono text-[11px] uppercase tracking-wide text-accent mb-3">what I do</div>
-                      <p className="text-base leading-relaxed text-foreground/90">
-                        I'm a DevOps Engineer working with <strong className="font-semibold">Kubernetes, Docker, Azure DevOps, Ansible</strong> and
-                        platform tooling. No two systems are designed the same way, so I document as I go - the more I map, the easier the next one gets.
-                      </p>
+                      <ul className="space-y-2.5 text-base leading-relaxed text-foreground/90">
+                        <li className="flex items-start gap-2"><span className="text-accent">·</span><span>build and maintain delivery platforms</span></li>
+                        <li className="flex items-start gap-2"><span className="text-accent">·</span><span>automate the repetitive bits</span></li>
+                        <li className="flex items-start gap-2"><span className="text-accent">·</span><span>make infrastructure easier to work with</span></li>
+                        <li className="flex items-start gap-2"><span className="text-accent">·</span><span>debug things when they inevitably break</span></li>
+                        <li className="flex items-start gap-2"><span className="text-accent">·</span><span>document what I learn along the way</span></li>
+                      </ul>
                     </div>
 
                     <div className="py-8 md:py-0 md:px-8 border-b md:border-b-0 md:border-r border-foreground/20">
                       <div className="font-mono text-[11px] uppercase tracking-wide text-accent mb-3">how I think</div>
-                      <ul className="space-y-2.5 text-base text-foreground/90">
+                      <ul className="space-y-2.5 text-base leading-relaxed text-foreground/90">
+                        <li className="flex items-start gap-2"><span className="text-accent">·</span><span>every problem is fixable if you understand it</span></li>
                         <li className="flex items-start gap-2"><span className="text-accent">·</span><span>everything needs a system</span></li>
                         <li className="flex items-start gap-2"><span className="text-accent">·</span><span>no two systems are designed the same way</span></li>
                         <li className="flex items-start gap-2"><span className="text-accent">·</span><span>so I map as I learn</span></li>
@@ -47,20 +51,20 @@ const Index = () => {
 
                     <div className="pt-8 md:pt-0 md:pl-8">
                       <div className="font-mono text-[11px] uppercase tracking-wide text-accent mb-3">outside work</div>
-                      <ul className="space-y-2.5 text-base text-foreground/90">
+                      <ul className="space-y-2.5 text-base leading-relaxed text-foreground/90">
                         <li className="flex items-start gap-2"><span className="text-accent">·</span><span>pilates instructor</span></li>
-                        <li className="flex items-start gap-2"><span className="text-accent">·</span><span>half-marathon training</span></li>
-                        <li className="flex items-start gap-2"><span className="text-accent">·</span><span>weekend STEM educator</span></li>
-                        <li className="flex items-start gap-2"><span className="text-accent">·</span><span>documenting absolutely everything</span></li>
+                        <li className="flex items-start gap-2"><span className="text-accent">·</span><span>tennis &amp; running</span></li>
+                        <li className="flex items-start gap-2"><span className="text-accent">·</span><span>crime thrillers</span></li>
+                        <li className="flex items-start gap-2"><span className="text-accent">·</span><span>documenting everything - recipes to book reviews</span></li>
                       </ul>
                     </div>
                   </div>
 
                   <div className="mt-12 pt-10 border-t border-foreground/20">
                     <div className="font-mono text-[11px] uppercase tracking-wide text-accent mb-3">why this site exists</div>
-                    <p className="text-xl leading-relaxed max-w-3xl">
+                    <p className="text-base leading-relaxed max-w-3xl text-foreground/90">
                       This is my <strong className="font-semibold">public notebook</strong> - a place to document
-                      what I learn, explore ideas, and untangle complicated things.
+                      what I learn &amp; build, explore ideas, and untangle complicated things.
                     </p>
                   </div>
                 </div>

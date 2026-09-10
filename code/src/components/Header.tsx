@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { BookOpen, Lightbulb, Home, Briefcase, Download, Menu, X } from "lucide-react";
+import { BookOpen, Lightbulb, Home, Briefcase, Download, Menu, X, Mail, Linkedin, Github } from "lucide-react";
 
 const Header = () => {
   const location = useLocation();
@@ -38,6 +38,35 @@ const Header = () => {
               </Link>
             ))}
           </nav>
+
+          {/* Quick contact - always visible, so reaching me doesn't require scrolling to the footer */}
+          <div className="hidden md:flex items-center gap-3 pl-3 border-l border-foreground/20">
+            <a
+              href="mailto:shreyakothari1901@gmail.com"
+              aria-label="Email"
+              className="text-foreground/70 hover:text-accent transition-colors"
+            >
+              <Mail className="h-4 w-4" />
+            </a>
+            <a
+              href="https://www.linkedin.com/in/shreyak19"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn"
+              className="text-foreground/70 hover:text-accent transition-colors"
+            >
+              <Linkedin className="h-4 w-4" />
+            </a>
+            <a
+              href="https://github.com/shreya-sk"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="GitHub"
+              className="text-foreground/70 hover:text-accent transition-colors"
+            >
+              <Github className="h-4 w-4" />
+            </a>
+          </div>
 
           {/* Resume PDF - standalone button, not a page */}
           <a
@@ -78,6 +107,17 @@ const Header = () => {
               </Link>
             ))}
           </nav>
+          <div className="flex items-center gap-5 px-1 pt-2 pb-1 border-t border-foreground/20 mt-1">
+            <a href="mailto:shreyakothari1901@gmail.com" aria-label="Email" className="text-foreground/70 hover:text-accent transition-colors">
+              <Mail className="h-4 w-4" />
+            </a>
+            <a href="https://www.linkedin.com/in/shreyak19" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="text-foreground/70 hover:text-accent transition-colors">
+              <Linkedin className="h-4 w-4" />
+            </a>
+            <a href="https://github.com/shreya-sk" target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="text-foreground/70 hover:text-accent transition-colors">
+              <Github className="h-4 w-4" />
+            </a>
+          </div>
         </div>
       )}
     </header>
