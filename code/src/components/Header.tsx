@@ -20,7 +20,7 @@ const Header = () => {
       <div className="container flex h-16 items-center justify-between px-4">
         <Link to="/" className="flex items-center space-x-2 font-extrabold text-base uppercase tracking-tight">
           <span className="w-2 h-2 bg-accent inline-block" />
-          <span>digital diary</span>
+          <span>shreya k.</span>
         </Link>
 
         <div className="flex items-center gap-6">
@@ -46,7 +46,7 @@ const Header = () => {
             rel="noopener noreferrer"
             className="inline-flex items-center gap-1.5 px-3 py-1.5 font-bold text-xs uppercase tracking-wide bg-accent text-accent-foreground hover:bg-accent/85 transition-colors"
           >
-            <Download className="h-3.5 w-3.5" /> Resume PDF
+            <Download className="h-3.5 w-3.5" /> Resume
           </a>
 
           {/* Mobile Hamburger Button */}
