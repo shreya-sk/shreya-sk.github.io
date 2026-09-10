@@ -37,18 +37,18 @@ const Hero = () => {
 
               <div className="flex flex-wrap gap-4 justify-center md:justify-start items-center">
                 <Link
-                  to="/blog"
+                  to="/work"
                   className="glass-button sage inline-flex items-center justify-center px-5 py-2.5 text-sm font-extrabold uppercase"
                 >
-                  currently learning
+                  recent works
                   <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
                 </Link>
 
                 <Link
-                  to="/work"
+                  to="/blog"
                   className="inline-flex items-center justify-center px-5 py-2.5 text-sm font-extrabold uppercase border border-foreground/90 text-foreground hover:text-accent hover:border-accent transition-colors"
                 >
-                  my work
+                  currently learning
                 </Link>
               </div>
 
