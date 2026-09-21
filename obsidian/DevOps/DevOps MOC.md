@@ -1,5 +1,5 @@
 ---
-banner: Attachments/home.png
+banner: "Attachments/Banners/banner-2.jpeg"
 banner_y: 0.5
 cssclasses:
   - moc-page
@@ -10,7 +10,7 @@ tags:
   - devops
 ---
 
-← [[Nav/HOME|Home]] &nbsp;·&nbsp; [[Learning MOC|Learning]] &nbsp;&nbsp;|&nbsp;&nbsp; [[Learning/DevOps/Docker/Docker MOC|Docker]] &nbsp;·&nbsp; [[Learning/DevOps/Kubernetes/Kubernetes MOC|Kubernetes]] &nbsp;·&nbsp; [[Learning/DevOps/GoLang/GoLang MOC|GoLang]] &nbsp;·&nbsp; [[Learning/DevOps/Ansible/Ansible MOC|Ansible]] &nbsp;·&nbsp; [[Learning/DevOps/Pre-requisites Devops/Prerequisites MOC|Prerequisites]]
+← [[Nav/HOME|Home]] &nbsp;·&nbsp; [[Learning MOC|Learning]] &nbsp;&nbsp;|&nbsp;&nbsp; [[Learning/DevOps/Docker/Docker MOC|Docker]] &nbsp;·&nbsp; [[Learning/DevOps/Kubernetes/Kubernetes MOC|Kubernetes]] &nbsp;·&nbsp; [[Learning/DevOps/GoLang/GoLang MOC|GoLang]] &nbsp;·&nbsp; [[Learning/DevOps/Ansible/Ansible MOC|Ansible]] &nbsp;·&nbsp; [[Learning/DevOps/Terraform/Terraform MOC|Terraform]] &nbsp;·&nbsp; [[Learning/DevOps/Pre-requisites Devops/Prerequisites MOC|Prerequisites]]
 
 # DevOps
 

@@ -21,6 +21,7 @@ related:
   - "[[../Muscular System/Muscular System|Muscular System]]"
   - "[[../Nervous System/Nervous System|Nervous System]]"
   - "[[../Biomechanics & Kinesiology/Biomechanics & Kinesiology|Biomechanics & Kinesiology]]"
+AutoNoteMover: disable
 ---
 
 ← [[Nav/HOME|Home]] &nbsp;·&nbsp; [[Anatomy & Physiology MOC]]

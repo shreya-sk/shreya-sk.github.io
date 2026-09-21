@@ -59,7 +59,7 @@ To test:
 `ping 192.168.1.11`
 
 If everything is correct, System A will reach System B directly through the switch.
-![[../../Media - Archive/Pasted image 20251123184805.png]]
+![[linux-network-ip-link-ping.png]]
 
 ---
 ## Talking to Devices on a different subnet

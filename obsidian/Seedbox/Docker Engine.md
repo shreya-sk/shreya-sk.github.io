@@ -24,7 +24,7 @@ status: seed
 Docker Engine = a host with Docker installed. It's the runtime that actually runs containers.
 
 When you install Docker on a Linux host, you install **three distinct pieces**:
-![[Pasted image 20260512181602.png]]
+![[docker-engine-components.png]]
 ```
 ┌─────────────────────────────────────────┐
 │              Docker Engine              │
@@ -130,7 +130,7 @@ cat /var/log/app/error.log       # app-level logs
 ## How Docker Isolates Containers
 
 Docker uses two Linux kernel features:
-![[Pasted image 20260512181545.png]]
+![[docker-namespaces-cgroups.png]]
 
 ```mermaid
 flowchart TD

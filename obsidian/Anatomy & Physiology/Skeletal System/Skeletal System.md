@@ -22,6 +22,7 @@ related:
   - "[[../Kinetic Chain/Kinetic Chain|Kinetic Chain]]"
   - "[[../Muscular System/Muscular System|Muscular System]]"
   - "[[../Biomechanics & Kinesiology/Biomechanics & Kinesiology|Biomechanics & Kinesiology]]"
+AutoNoteMover: disable
 ---
 
 ← [[Nav/HOME|Home]] &nbsp;·&nbsp; [[Anatomy & Physiology MOC]]

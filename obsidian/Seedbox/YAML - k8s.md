@@ -45,7 +45,7 @@ spec:                   # "Here's exactly how I want it made:"
 
 The beauty of Kubernetes YAML is that it's **declarative** - you're not telling Kubernetes the step-by-step process (like "first do this, then do that"), but rather describing the **end result** you want ("I want 3 web servers running"). Kubernetes figures out how to make it happen.
 
-![[Pasted image 20260525155249.png]]
+![[k8s-kind-api-versions.png]]
 ---
 # Kubernetes YAML file **line by line** 
 > think of it as **dissecting a detailed instruction manual** that tells Kubernetes exactly what to build.

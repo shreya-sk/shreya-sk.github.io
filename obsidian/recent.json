@@ -1,13 +1,13 @@
 {
-  "generated": "2026-09-15T02:20:17.755472+00:00",
+  "generated": "2026-09-21T03:20:48.163485+00:00",
   "files": [
-    "NLP - ABSA/Documentation/FINAL PHASE.md",
-    "Kong/Kong overview.md",
-    "DevOps/Kubernetes/CKA - Cheat Sheet.md",
-    "Seedbox/Kernal.md",
-    "Seedbox/YAML.md",
-    "DevOps/Docker/FAQs.md",
-    "Seedbox/Docker Engine.md",
-    "Seedbox/Docker Storage.md"
+    "DevOps/Terraform/Terraform - What is?.md",
+    "Kong/Kong MOC.md",
+    "DevOps/Pre-requisites Devops/Prerequisites MOC.md",
+    "DevOps/Kubernetes/Kubernetes MOC.md",
+    "DevOps/Kubernetes/CKA Prep MOC.md",
+    "DevOps/GoLang/GoLang MOC.md",
+    "DevOps/Docker/Docker MOC.md",
+    "DevOps/Ansible/Ansible MOC.md"
   ]
 }

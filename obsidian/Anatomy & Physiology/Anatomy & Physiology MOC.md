@@ -12,6 +12,8 @@ tags:
   - rpl/sisffit047
 status: evergreen
 created: 2026-04-20
+banner: "Attachments/Banners/banner-1.png"
+banner_y: 0.5
 ---
 
 ← [[Nav/HOME|Home]] &nbsp;·&nbsp; [[Learning MOC|Learning]]

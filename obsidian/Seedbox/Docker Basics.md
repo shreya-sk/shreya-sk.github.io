@@ -25,7 +25,6 @@ flowchart LR
     B -->C[Push to a registry!]
     C --> D[Run it as a container]
 ```
-![[../assets/Pasted image 20250331155237.png]]
 ## Docker file
 - Set of build instructions for docker to follow to build the app and its dependencies into a container image
 - [[../../Glossary/Docker Glossary#Docker|Container Image]] definition
@@ -100,7 +99,6 @@ docker run myapp debug.py     # runs: python debug.py  (CMD overridden)
 # Build a Docker image and push to Docker Hub
 docker image build -t shreyak19/myapp:1.0 .
 ```
-![[../assets/Pasted image 20250331164154.png]]
 > [!info]  Command Breakdown
 > - `docker image build`: The base command to build a Docker image
 > - `-t shreyak19`: Tags the image with your username

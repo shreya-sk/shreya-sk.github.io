@@ -16,7 +16,7 @@ We then identify a server - either in cloud or VM - which can be accessed public
 So we also need to make sure the programming language, libraries, the packages etc also exist on that server to help run the code.
 > Nice. so Server also has an IP - so your code is accessible at the iP address! We can purchase a domain name, map it to that iP and share that DOMAIN PUBLICLY!
 
-![[../../Media - Archive/Pasted image 20251119154650.png]]
+![[devops-develop-build-deploy.png]]
 
 >OK. This makes sense, multiple people colaborate on a project, using GIT or smth, they develop the code, manually build the binary, and deploy on the server.
 
@@ -26,11 +26,11 @@ So we also need to make sure the programming language, libraries, the packages e
 > Isn't that super mannul?! ..YEP...DRUMROLL....FOR ***CI/CD TOOLS***!!!!
 
 So like, github actions, or jenkins or TFS build pipeline/release pipeline. Automated!
-![[../../Media - Archive/Pasted image 20251119174258.png]]
+![[devops-cicd-pipeline.png]]
 > Hang on, what if, we add a new package to the codebase. Won't we still have to manually, configure the Build, test and prod env?
 
 Introduciiiiing CONTAINERS! We can simply, build an image, during "build" phase. And copy that image over to test and prod - solved!
-![[../../Media - Archive/Pasted image 20251119174424.png]]
+![[devops-container-image-pipeline.png]]
 
 To manage containers - scale up or down, restart failed containers etc. w use a orchestration tool - also called as KUBERNETES! so KUBERNETES only comes in your prdouction environment to manage multiple containers on multiple servers.
 

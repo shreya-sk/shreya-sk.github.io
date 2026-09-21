@@ -64,7 +64,7 @@ This diagram combines the **Kubernetes structure** with the **university analogy
 - **Control plane = university admin → plans & delegates**
 - **Kubelet = classroom assistant → executes & monitors**
 - **Pods & container = students & groups → do the work**
-![[Pasted image 20250828161504.png]]
+![[k8s-cluster-node-pod.png]]
 # POD-2-POD Communication
 
 ---

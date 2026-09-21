@@ -1,3 +1,8 @@
+---
+up: "[[Learning/Kong/Kong MOC]]"
+tags: [type/note, topic/kong]
+AutoNoteMover: disable
+---
 ← [[Nav/HOME|Home]] &nbsp;·&nbsp; [[Learning MOC|Learning]]
 
 #devops #API 
@@ -31,7 +36,7 @@ Browser based UI for monitoring and configuring the Kong gateway.
     - Configuration management
     - Monitoring capabilities
 
-Related concepts: [[../Glossary/API Glossary#Kong-Specific Terminology|Kong Manager]], [[Kong API Gateway - Overview#Administrative Interfaces|Administrative Interfaces]]
+Related concepts: [[../Glossary/API Glossary#Kong-Specific Terminology|Kong Manager]], [[Kong API Gateway - Overview#Kong Admin API|Administrative Interfaces]]
 
 ### 3. Testing APIs with Insomnia
 

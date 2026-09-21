@@ -1,38 +1,37 @@
 ---
 type: moc
-up: "[[Learning/DevOps/DevOps MOC]]"
-tags: [moc, devops, topic/golang]
-AutoNoteMover: disable
-banner: "Attachments/Banners/banner-1.png"
+up: "[[Nav/Learning MOC]]"
+tags: [moc, topic/kong]
+banner: "Attachments/Banners/banner-3.jpeg"
 banner_y: 0.5
 ---
 
-← [[Nav/HOME|Home]] &nbsp;·&nbsp; [[Learning MOC|Learning]] &nbsp;·&nbsp; [[Learning/DevOps/DevOps MOC|DevOps]]
+← [[Nav/HOME|Home]] &nbsp;·&nbsp; `= this.up`
 
-# GoLang
+# Kong
 
-> Go programming notes — learned in a DevOps context.
+> All Kong API gateway notes — concepts, Kong Academy progress, and how it is set up at Sonic.
 
 ---
 
 ## Start Here — Reading Order
 
-> [!note] New to Go?
-> Assumes you can read basic code in any language. Go is used heavily in DevOps tooling (Docker, Kubernetes, Terraform are all written in Go).
+> [!note] New to Kong?
+> Start with the bird's-eye analogy, then the core concepts. Sonic-specific ingress notes come last.
 
 | Step | Note | Why |
 |---|---|---|
-| 1 | [[Go-Syntax]] | Language fundamentals — types, variables, functions, control flow |
-| 2 | [[Pointers]] | The concept most newcomers to Go find tricky — understand this early |
-| 3 | [[File IO]] | Reading and writing files — common in scripts and tooling |
-| 4 | [[Gin]] | Web framework for building APIs — needs all the above as foundation |
-
-> [!tip] After this → back to [[../Kubernetes/Kubernetes MOC|Kubernetes]] — the internals will make more sense now.
+| 1 | [[Kong Analogy]] | Bird's-eye view — Kong as an airport managing API traffic |
+| 2 | [[Kong API Gateway - Overview]] | Core concepts and architecture |
+| 3 | [[Kong Academy]] | Structured learning modules and progress |
+| 4 | [[Kong overview]] | How Kong is set up at Sonic — routes and ingress notes |
 
 ---
 
 ```dataviewjs
-const pages = dv.pages('"Learning/DevOps/GoLang"')
+// Lists every non-MOC note under this MOC's own folder — no path to edit.
+const folder = dv.current().file.folder;
+const pages = dv.pages('"' + folder + '"')
   .where(p => p.type !== "moc" && p.file.name !== "");
 
 const wrap = dv.container.createEl("div");
@@ -70,7 +69,8 @@ input.addEventListener("input", () => {
 > [!seed]
 > ```dataview
 > LIST
-> FROM "Learning/DevOps/GoLang"
-> WHERE status = "seed"
+> WHERE startswith(file.folder, this.file.folder)
+> AND status = "seed"
+> AND type != "moc"
 > SORT file.mtime ASC
 > ```

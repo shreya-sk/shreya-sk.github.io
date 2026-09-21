@@ -1,3 +1,7 @@
+---
+up: "[[Learning/Kong/Kong MOC]]"
+tags: [type/note, topic/kong]
+---
 ← [[Nav/HOME|Home]] &nbsp;·&nbsp; [[Learning MOC|Learning]]
 
 ## Resources

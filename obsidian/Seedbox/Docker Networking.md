@@ -95,7 +95,7 @@ docker run -p 8001:5000 kodekloud/webapp   # instance 3
 
 All three run on port 5000 internally. Reachable on 80, 8000, 8001 from outside. Like three apartments all numbered 5000 inside, but the building gives them different external numbers.
 
-![[Pasted image 20260506210444.png]]
+![[docker-port-mapping.png]]
 
 > This is **not** load balancing — users still have to manually pick a port. Real load balancing means one address, traffic split automatically. That's what Nginx in front (or Kubernetes) does.
 

@@ -1,7 +1,7 @@
 ---
 type: moc
 up: "[[Learning/DevOps/DevOps MOC]]"
-tags: [moc, devops, topic/docker]
+tags: [moc, devops, topic/terraform]
 AutoNoteMover: disable
 banner: "Attachments/Banners/banner-2.jpeg"
 banner_y: 0.5
@@ -9,38 +9,26 @@ banner_y: 0.5
 
 ← [[Nav/HOME|Home]] &nbsp;·&nbsp; [[Learning MOC|Learning]] &nbsp;·&nbsp; [[Learning/DevOps/DevOps MOC|DevOps]]
 
-# Docker
+# Terraform
 
-> All Docker and container notes.
+> All Terraform and infrastructure-as-code notes.
 
 ---
 
 ## Start Here — Reading Order
 
-> [!note] New to Docker? Start here.
-> Assumes you know basic Linux commands. Read [[../Containers - Overview|Containers - Overview]] first if you've never used containers.
+> [!note] New to Terraform?
+> Assumes basic Linux and cloud concepts. [[Learning/DevOps/Ansible/Ansible MOC|Ansible]] is a useful contrast — it configures servers, Terraform provisions them.
 
 | Step | Note | Why |
 |---|---|---|
-| 1 | [[Setup Docker]] | Get Docker running locally before anything else |
-| 2 | [[Docker Basics]] | Core workflow — images, containers, the run command |
-| 3 | [[Docker Engine]] | How Docker actually runs containers — daemon, CLI, namespaces, cgroups |
-| 3.5 | [[Docker Images]] | How images are built, layered, and stored |
-| 3.6 | [[Docker Storage]] | Layered architecture, copy-on-write, volumes vs bind mounts |
-| 4 | [[Compose file]] | Run multi-container apps locally with docker-compose |
-| 5 | [[Micro-services]] | Architectural pattern Docker is built for — context for why you'd use Compose |
-| 6 | [[Docker Swarm]] | Basic container orchestration — stepping stone to Kubernetes |
-| 7 | [[FAQs]] | Common issues and gotchas — useful once you've hit your first errors |
-| 8 | [[Docker Commands]] | Flags and commands explained from confusion — `-d`, `exec`, `-i`, `-p`, `-v`, `inspect`, `logs` |
-| 9 | [[Docker Networking]] | Networks, ports, bridge/host/none, DNS, port mapping, load balancing |
-| 10 | [[Docker Workflow]] | Where Docker Hub fits — build → ship → deploy, and what end users actually see |
-
-> [!tip] After this → [[../Ansible/Ansible MOC|Ansible]] or [[../Kubernetes/Kubernetes MOC|Kubernetes]]
+| 1 | [[Terraform - What is?]] | What Terraform is, and where IaC fits |
 
 ---
 
 ```dataviewjs
-const pages = dv.pages('"Learning/DevOps/Docker"')
+const folder = dv.current().file.folder;
+const pages = dv.pages('"' + folder + '"')
   .where(p => p.type !== "moc" && p.file.name !== "");
 
 const wrap = dv.container.createEl("div");
@@ -78,7 +66,8 @@ input.addEventListener("input", () => {
 > [!seed]
 > ```dataview
 > LIST
-> FROM "Learning/DevOps/Docker"
+> FROM "Learning/DevOps/Terraform"
 > WHERE status = "seed"
+> AND type != "moc"
 > SORT file.mtime ASC
 > ```

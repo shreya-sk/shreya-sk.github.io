@@ -23,6 +23,7 @@ related:
   - "[[../Nervous System/Nervous System|Nervous System]]"
   - "[[../Skeletal System/Skeletal System|Skeletal System]]"
   - "[[../Biomechanics & Kinesiology/Biomechanics & Kinesiology|Biomechanics & Kinesiology]]"
+AutoNoteMover: disable
 ---
 
 ← [[Nav/HOME|Home]] &nbsp;·&nbsp; [[Anatomy & Physiology MOC]]

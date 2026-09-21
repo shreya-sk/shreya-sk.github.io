@@ -2,6 +2,9 @@
 type: moc
 up: "[[Learning/DevOps/DevOps MOC]]"
 tags: [moc, devops]
+AutoNoteMover: disable
+banner: "Attachments/Banners/banner-2.jpeg"
+banner_y: 0.5
 ---
 
 ← [[Nav/HOME|Home]] &nbsp;·&nbsp; [[Learning MOC|Learning]] &nbsp;·&nbsp; [[Learning/DevOps/DevOps MOC|DevOps]]

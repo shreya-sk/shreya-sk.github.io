@@ -20,7 +20,6 @@ So each node, have docker installed, and they can communicate over reliable netw
 > Similarly, the non-majority side also knows it is not the majority so it will out itself in read only mode until the issue can be rectified
 >
 
-![[../assets/Pasted image 20250413170723.png]]
 
 ## Desired State in Docker Swarm
 

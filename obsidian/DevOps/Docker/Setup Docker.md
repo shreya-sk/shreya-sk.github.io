@@ -3,6 +3,7 @@ author: Shreya Kothari
 up: "[[Docker MOC]]"
 tags: [devops, topic/docker]
 status: evergreen
+AutoNoteMover: disable
 ---
 
 ← [[Nav/HOME|Home]] &nbsp;·&nbsp; [[Docker MOC]]

@@ -3,6 +3,7 @@ author: Shreya Kothari
 up: "[[Kubernetes MOC]]"
 tags: [devops, topic/kubernetes]
 status: evergreen
+AutoNoteMover: disable
 ---
 
 ← [[Nav/HOME|Home]] &nbsp;·&nbsp; [[Kubernetes MOC]]

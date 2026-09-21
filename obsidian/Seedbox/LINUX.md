@@ -71,7 +71,7 @@ echo 'alias ll="ls -l"' >> ~/.profile
 - Root = top level directory, nothing above it
 - Current directory = working directory = 
 
-![[../../Media - Archive/Pasted image 20251121140612.png]]
+![[linux-basic-commands.png]]
 
 To create a Directory Tree in on ecommand use the "p" flag:
 `mkdir -p /tmp/level-1/level-2/level-3`

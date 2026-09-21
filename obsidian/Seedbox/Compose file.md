@@ -157,7 +157,6 @@ This file does the following:
 	- "Everything inside the `./backend` folder on my computer should appear inside the container’s `/app` folder."
 	
 - Both containers are on the same internal network, so they can talk to each other using their service names (`nginx`, `backend`).
-![[../assets/ChatGPT Image Apr 13, 2025, 03_23_23 PM.png]]
 ### 🔹 **When do we need it?**
 
 You need a `compose.yaml` file when:
