@@ -22,7 +22,7 @@ banner_y: 0.5
 
 | Step | Note | Why |
 |---|---|---|
-| 1 | [[Terraform - What is?]] | What Terraform is, and where IaC fits |
+| 1 | [[Terraform - What is]] | What Terraform is, and where IaC fits |
 
 ---
 

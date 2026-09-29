@@ -1,13 +1,13 @@
 {
-  "generated": "2026-09-21T03:20:48.163485+00:00",
+  "generated": "2026-09-29T01:57:58.843599+00:00",
   "files": [
-    "DevOps/Terraform/Terraform - What is?.md",
+    "DevOps/Terraform/Terraform - What is.md",
+    "DevOps/AWS/What is.md",
+    "DevOps/Terraform/Terraform MOC.md",
     "Kong/Kong MOC.md",
     "DevOps/Pre-requisites Devops/Prerequisites MOC.md",
     "DevOps/Kubernetes/Kubernetes MOC.md",
     "DevOps/Kubernetes/CKA Prep MOC.md",
-    "DevOps/GoLang/GoLang MOC.md",
-    "DevOps/Docker/Docker MOC.md",
-    "DevOps/Ansible/Ansible MOC.md"
+    "DevOps/GoLang/GoLang MOC.md"
   ]
 }
