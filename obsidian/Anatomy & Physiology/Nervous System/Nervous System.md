@@ -2,7 +2,7 @@
 title: The Nervous System
 type: note
 course: NASM
-week: "1, 2"
+week: 1, 2
 topics:
   - nervous-system
   - CNS
@@ -14,14 +14,14 @@ topics:
 up: "[[../Anatomy & Physiology MOC|Anatomy & Physiology MOC]]"
 tags:
   - learning
-  - topic/anatomy-physiology
-  - topic/nervous-system
+  - anatomy-physiology
+  - nervous-system
   - course/nasm
   - pilates
 status: evergreen
 related:
-  - "[[../Kinetic Chain/Kinetic Chain|Kinetic Chain]]"
-  - "[[../Muscular System/Muscular System|Muscular System]]"
+  - "[[Kinetic Chain|Kinetic Chain]]"
+  - "[[Muscular System|Muscular System]]"
   - "[[../Cardiorespiratory System/Cardiorespiratory System|Cardiorespiratory System]]"
   - "[[../Pilates Applications|Pilates Applications]]"
 ---
@@ -212,8 +212,8 @@ Using nervous system knowledge in programming:
 
 ## Related Notes
 
-- [[../Kinetic Chain/Kinetic Chain|Kinetic Chain]] — nervous system as one of the three systems
-- [[../Muscular System/Muscular System|Muscular System]] — excitation-contraction coupling, motor units
+- [[Kinetic Chain|Kinetic Chain]] — nervous system as one of the three systems
+- [[Muscular System|Muscular System]] — excitation-contraction coupling, motor units
 - [[../Cardiorespiratory System/Cardiorespiratory System|Cardiorespiratory System]] — autonomic regulation during exercise
 - [[../Pilates Applications|Pilates Applications]] — cueing, motor learning, proprioception
 - [[../Glossary|Master Glossary]]

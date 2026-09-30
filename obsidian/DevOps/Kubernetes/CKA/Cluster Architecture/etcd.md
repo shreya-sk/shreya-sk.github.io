@@ -1,5 +1,5 @@
 ---
-tags: [topic/kubernetes, cka, etcd, cluster-architecture]
+tags: [kubernetes, cka, etcd, cluster-architecture]
 type: note
 status: in-progress
 domain: "Cluster Architecture, Installation & Configuration (25%)"

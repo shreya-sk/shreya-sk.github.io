@@ -15,8 +15,8 @@ topics:
 up: "[[../Anatomy & Physiology MOC|Anatomy & Physiology MOC]]"
 tags:
   - learning
-  - topic/anatomy-physiology
-  - topic/cardiorespiratory
+  - anatomy-physiology
+  - cardiorespiratory
   - course/nasm
   - pilates
 status: evergreen
@@ -375,7 +375,7 @@ See [[../Bioenergetics & Energy Systems/Bioenergetics & Energy Systems|Bioenerge
 
 - [[../Bioenergetics & Energy Systems/Bioenergetics & Energy Systems|Bioenergetics & Energy Systems]] — oxygen use in energy pathways
 - [[../Nervous System/Nervous System|Nervous System]] — autonomic regulation, sympathetic/parasympathetic
-- [[../Muscular System/Muscular System|Muscular System]] — cardiac muscle structure
+- [[Muscular System|Muscular System]] — cardiac muscle structure
 - [[../Pilates Applications|Pilates Applications]] — breathing in Pilates practice
 
 #cardiorespiratory #cardiovascular #respiratory #heart #lungs #breathing #nasm #pilates

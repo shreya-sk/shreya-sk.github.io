@@ -1,6 +1,7 @@
 ---
 up: "[[Learning/Kong/Kong MOC]]"
-tags: [type/note, topic/kong]
+tags: [type/note, kong]
+status: evergreen
 AutoNoteMover: disable
 ---
 ← [[Nav/HOME|Home]] &nbsp;·&nbsp; [[Learning MOC|Learning]]

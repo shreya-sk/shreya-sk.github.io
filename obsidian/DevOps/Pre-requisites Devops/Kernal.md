@@ -1,18 +1,15 @@
 ---
-created: 2026-09-21
-source: Steve Training Session
-up: "[[Terraform MOC]]"
+source: KodeKloud
+up: "[[DevOps MOC]]"
 tags:
-  - type/note
   - devops
-  - terraform
-status: seed
-AutoNoteMover: disable
+  - type/note
+status: evergreen
 ---
 
-← [[Nav/HOME|Home]] &nbsp;·&nbsp; [[Terraform MOC]]
+← [[Nav/HOME|Home]]
 
-# Terraform - What is?
+# Linux Kernel
 
 > [!abstract] Summary
 > *One sentence — what is this and why does it matter?*
@@ -20,7 +17,7 @@ AutoNoteMover: disable
 ---
 
 > [!example] Key Concepts
-> -
+> - 
 
 > [!tip] Examples & Use Cases
 >

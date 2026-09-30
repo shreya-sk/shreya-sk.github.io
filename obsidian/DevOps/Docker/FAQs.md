@@ -1,7 +1,7 @@
 ---
 author: Shreya Kothari
 up: "[[Docker MOC]]"
-tags: [devops, topic/docker]
+tags: [devops, docker]
 status: evergreen
 AutoNoteMover: disable
 ---

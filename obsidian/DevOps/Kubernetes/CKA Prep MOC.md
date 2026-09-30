@@ -1,13 +1,17 @@
 ---
 type: moc
 up: "[[Kubernetes MOC]]"
-tags: [moc, devops, topic/kubernetes]
-AutoNoteMover: disable
+tags: [moc, devops, kubernetes]
 banner: "Attachments/Banners/banner-4.jpg"
 banner_y: 0.5
+cssclasses:
+  - moc-page
+AutoNoteMover: disable
 ---
 
-← [[Nav/HOME|Home]] &nbsp;·&nbsp; [[Kubernetes MOC]]
+```dataviewjs
+await dv.view("Templates/_views/moc-nav")
+```
 
 # CKA Prep MOC
 
@@ -28,7 +32,7 @@ banner_y: 0.5
 ## Study Notes
 ```dataview
 TABLE file.mtime AS "Updated", status AS "Status"
-WHERE contains(tags, "topic/kubernetes")
+WHERE contains(tags, "kubernetes")
 AND type != "moc"
 SORT file.mtime DESC
 ```

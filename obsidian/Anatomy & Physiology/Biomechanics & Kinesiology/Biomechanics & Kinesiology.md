@@ -15,16 +15,16 @@ topics:
 up: "[[../Anatomy & Physiology MOC|Anatomy & Physiology MOC]]"
 tags:
   - learning
-  - topic/anatomy-physiology
-  - topic/biomechanics
-  - topic/kinesiology
+  - anatomy-physiology
+  - biomechanics
+  - kinesiology
   - course/nasm
   - pilates
 status: evergreen
 related:
-  - "[[../Kinetic Chain/Kinetic Chain|Kinetic Chain]]"
-  - "[[../Muscular System/Muscular System|Muscular System]]"
-  - "[[../Skeletal System/Skeletal System|Skeletal System]]"
+  - "[[Kinetic Chain|Kinetic Chain]]"
+  - "[[Muscular System|Muscular System]]"
+  - "[[Skeletal System|Skeletal System]]"
   - "[[../Nervous System/Nervous System|Nervous System]]"
 ---
 
@@ -277,7 +277,7 @@ Bicep curl illustrates all three:
 
 Some muscles (stabilisers especially) contract AUTOMATICALLY in anticipation of movement.
 
-**Example:** Core engages milliseconds before arm movement, protecting the spine preemptively. See [[../Muscular System/Muscular System#Feed Forward Activation|Muscular System]].
+**Example:** Core engages milliseconds before arm movement, protecting the spine preemptively. See [[Muscular System#Feed Forward Activation|Muscular System]].
 
 ---
 
@@ -411,15 +411,15 @@ A full kinetic chain integration example showing all body systems in a single mo
 In bodyweight squat: arms in shoulder flexion (sagittal plane), acting as counterbalance — anterior deltoid maintains this isometrically.
 
 > [!note] Kinetic Chain in Action
-> From a kinetic chain perspective: protracted scapulae or internally rotated humeri → thoracic flexion → increased lumbar stress. This perfectly illustrates how dysfunction in one kinetic chain component directly affects all others throughout a movement. See [[../Kinetic Chain/Kinetic Chain|Kinetic Chain]].
+> From a kinetic chain perspective: protracted scapulae or internally rotated humeri → thoracic flexion → increased lumbar stress. This perfectly illustrates how dysfunction in one kinetic chain component directly affects all others throughout a movement. See [[Kinetic Chain|Kinetic Chain]].
 
 ---
 
 ## Related Notes
 
-- [[../Kinetic Chain/Kinetic Chain|Kinetic Chain]] — imbalances, regional interdependence
-- [[../Muscular System/Muscular System|Muscular System]] — muscle roles, fibre types
-- [[../Skeletal System/Skeletal System|Skeletal System]] — joint types, arthrokinematics
+- [[Kinetic Chain|Kinetic Chain]] — imbalances, regional interdependence
+- [[Muscular System|Muscular System]] — muscle roles, fibre types
+- [[Skeletal System|Skeletal System]] — joint types, arthrokinematics
 - [[../Nervous System/Nervous System|Nervous System]] — motor control, proprioception
 - [[../Pilates Applications|Pilates Applications]]
 - [[../Glossary|Master Glossary]]

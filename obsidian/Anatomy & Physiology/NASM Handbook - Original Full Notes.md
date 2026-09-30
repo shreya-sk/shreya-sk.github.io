@@ -6,6 +6,7 @@
 
 > **Purpose:** Study notes for the NASM Coursera course, completed as formal A&P evidence for Tensegrity Cert IV RPL (equivalent to SISFFIT047: Use anatomy and physiology knowledge to support safe and effective exercise).
 
+status: evergreen
 ---
 
 ## 📚 Table of Contents

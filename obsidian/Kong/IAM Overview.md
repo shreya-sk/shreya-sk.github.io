@@ -3,6 +3,7 @@ tags: [sonic, devops, infrastructure, IAM, kubernetes, helm, ansible]
 aliases: [sonic infrastructure, IAM deployment, sonic networks]
 up: "[[Learning/Kong/Kong MOC]]"
 AutoNoteMover: disable
+status: evergreen
 ---
 
 ← [[Nav/HOME|Home]] &nbsp;·&nbsp; [[Learning MOC|Learning]]

@@ -1,7 +1,7 @@
 ---
 author: Shreya Kothari
 up: "[[Kubernetes MOC]]"
-tags: [devops, topic/kubernetes]
+tags: [devops, kubernetes]
 status: evergreen
 AutoNoteMover: disable
 ---

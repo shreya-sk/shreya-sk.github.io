@@ -15,14 +15,14 @@ topics:
 up: "[[../Anatomy & Physiology MOC|Anatomy & Physiology MOC]]"
 tags:
   - learning
-  - topic/anatomy-physiology
-  - topic/bioenergetics
+  - anatomy-physiology
+  - bioenergetics
   - course/nasm
   - pilates
 status: evergreen
 related:
   - "[[../Cardiorespiratory System/Cardiorespiratory System|Cardiorespiratory System]]"
-  - "[[../Muscular System/Muscular System|Muscular System]]"
+  - "[[Muscular System|Muscular System]]"
   - "[[../Pilates Applications|Pilates Applications]]"
 ---
 
@@ -206,7 +206,7 @@ See [[../Cardiorespiratory System/Cardiorespiratory System#Exercise Adaptations|
 ## Related Notes
 
 - [[../Cardiorespiratory System/Cardiorespiratory System|Cardiorespiratory System]] — O₂ delivery and ventilation
-- [[../Muscular System/Muscular System|Muscular System]] — ATP use in contraction, muscle fibre types
+- [[Muscular System|Muscular System]] — ATP use in contraction, muscle fibre types
 - [[../Pilates Applications|Pilates Applications]] — programming rest intervals
 - [[../Glossary|Master Glossary]] — ATP, PCr, glycolysis, oxidative definitions
 

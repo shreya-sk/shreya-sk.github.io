@@ -1,13 +1,13 @@
 {
-  "generated": "2026-09-29T01:57:58.843599+00:00",
+  "generated": "2026-09-30T11:39:25.188458+00:00",
   "files": [
-    "DevOps/Terraform/Terraform - What is.md",
-    "DevOps/AWS/What is.md",
-    "DevOps/Terraform/Terraform MOC.md",
-    "Kong/Kong MOC.md",
-    "DevOps/Pre-requisites Devops/Prerequisites MOC.md",
-    "DevOps/Kubernetes/Kubernetes MOC.md",
-    "DevOps/Kubernetes/CKA Prep MOC.md",
-    "DevOps/GoLang/GoLang MOC.md"
+    "DevOps/Pre-requisites Devops/Shell Scripting.md",
+    "DevOps/Pre-requisites Devops/Networking (ON LINUX).md",
+    "DevOps/Pre-requisites Devops/LINUX.md",
+    "DevOps/Pre-requisites Devops/Devops Tools.md",
+    "DevOps/Linux/Kernal.md",
+    "DevOps/Kubernetes/YAML - k8s.md",
+    "DevOps/Kubernetes/CKA prep.md",
+    "DevOps/GoLang/Pointers.md"
   ]
 }

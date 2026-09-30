@@ -5,16 +5,15 @@ course: NASM
 up: "[[Anatomy & Physiology MOC|Anatomy & Physiology MOC]]"
 tags:
   - learning
-  - topic/anatomy-physiology
-  - topic/pilates
-  - course/nasm
+  - anatomy-physiology
   - pilates
+  - course/nasm
   - rpl/sisffit047
 status: evergreen
 related:
-  - "[[Kinetic Chain/Kinetic Chain|Kinetic Chain]]"
+  - "[[Kinetic Chain|Kinetic Chain]]"
   - "[[Nervous System/Nervous System|Nervous System]]"
-  - "[[Muscular System/Muscular System|Muscular System]]"
+  - "[[Muscular System|Muscular System]]"
   - "[[Cardiorespiratory System/Cardiorespiratory System|Cardiorespiratory System]]"
   - "[[Bioenergetics & Energy Systems/Bioenergetics & Energy Systems|Bioenergetics & Energy Systems]]"
   - "[[Biomechanics & Kinesiology/Biomechanics & Kinesiology|Biomechanics & Kinesiology]]"
@@ -61,7 +60,7 @@ related:
 ## 3. Kinetic Chain = Foundation of Posture Assessment
 
 - Dysfunction at one joint causes cascading compensations
-- Collapsed arch → hip drop → shoulder tension (see [[Kinetic Chain/Kinetic Chain#Regional Interdependence — The Domino Effect|Regional Interdependence]])
+- Collapsed arch → hip drop → shoulder tension (see [[Kinetic Chain#Regional Interdependence — The Domino Effect|Regional Interdependence]])
 - This is WHY Pilates assesses whole-body posture, not isolated areas
 - Helps identify root cause, not just symptoms
 
@@ -139,7 +138,7 @@ Understanding [[Bioenergetics & Energy Systems/Bioenergetics & Energy Systems#Pr
 
 ## 9. Stabiliser Muscles Matter Most
 
-- Deep muscles ([[Muscular System/Muscular System#Feed Forward Activation|TVA, multifidus]], rotator cuff) = unsung heroes
+- Deep muscles ([[Muscular System#Feed Forward Activation|TVA, multifidus]], rotator cuff) = unsung heroes
 - Pilates emphasises these from Day 1
 - Feed-forward activation is trained with precise cueing — "engage your centre before you move"
 - Sets Pilates apart from pure cardio or weight training
@@ -157,7 +156,7 @@ Understanding [[Bioenergetics & Energy Systems/Bioenergetics & Energy Systems#Pr
 
 ## 10. Bone Health Through Weight-Bearing
 
-- [[Skeletal System/Skeletal System#Exercise & Bone Health|Weight-bearing exercise]] = best stimulus for bone density
+- [[Skeletal System#Exercise & Bone Health|Weight-bearing exercise]] = best stimulus for bone density
 - Reformer work IS weight-bearing (resistance against springs)
 - Mat Pilates = weight-bearing through gravity
 - Especially important for **female clients 40+** as osteoporosis risk rises after 50
@@ -208,9 +207,9 @@ Understanding [[Bioenergetics & Energy Systems/Bioenergetics & Energy Systems#Pr
 
 ## Related Notes
 
-- [[Kinetic Chain/Kinetic Chain|Kinetic Chain]] — postural assessment framework
+- [[Kinetic Chain|Kinetic Chain]] — postural assessment framework
 - [[Nervous System/Nervous System|Nervous System]] — motor learning, proprioception, autonomic NS
-- [[Muscular System/Muscular System|Muscular System]] — fibre types, feed-forward activation, powerhouse
+- [[Muscular System|Muscular System]] — fibre types, feed-forward activation, powerhouse
 - [[Cardiorespiratory System/Cardiorespiratory System|Cardiorespiratory System]] — breathing mechanics
 - [[Bioenergetics & Energy Systems/Bioenergetics & Energy Systems|Bioenergetics & Energy Systems]] — programming rest intervals
 - [[Biomechanics & Kinesiology/Biomechanics & Kinesiology|Biomechanics & Kinesiology]] — planes of motion, muscle actions

@@ -6,7 +6,7 @@ up: "[[Nav/Learning MOC|Learning]]"
 tags:
   - moc
   - learning
-  - topic/anatomy-physiology
+  - anatomy-physiology
   - course/nasm
   - pilates
   - rpl/sisffit047
@@ -14,9 +14,13 @@ status: evergreen
 created: 2026-04-20
 banner: "Attachments/Banners/banner-1.png"
 banner_y: 0.5
+cssclasses:
+  - moc-page
 ---
 
-← [[Nav/HOME|Home]] &nbsp;·&nbsp; [[Learning MOC|Learning]]
+```dataviewjs
+await dv.view("Templates/_views/moc-nav")
+```
 
 # Anatomy & Physiology — Map of Content
 
@@ -28,13 +32,13 @@ banner_y: 0.5
 
 ## Core Concept
 
-The human body operates as a single integrated **[[Kinetic Chain/Kinetic Chain|Kinetic Chain]]** — three interdependent systems that must work in harmony for efficient, injury-free movement:
+The human body operates as a single integrated **[[Kinetic Chain|Kinetic Chain]]** — three interdependent systems that must work in harmony for efficient, injury-free movement:
 
 | System | Role |
 |---|---|
 | [[Nervous System/Nervous System\|Nervous System]] | Control centre — sends and receives all signals |
-| [[Skeletal System/Skeletal System\|Skeletal System]] | Structural framework — bones, joints, ligaments |
-| [[Muscular System/Muscular System\|Muscular System]] | Force producers — movement and stabilisation |
+| [[Skeletal System\|Skeletal System]] | Structural framework — bones, joints, ligaments |
+| [[Muscular System\|Muscular System]] | Force producers — movement and stabilisation |
 
 > [!note] Key Principle
 > Dysfunction in ONE system affects the OTHER TWO. This is the foundation of postural assessment and corrective exercise in Pilates.
@@ -48,9 +52,9 @@ The human body operates as a single integrated **[[Kinetic Chain/Kinetic Chain|K
 
 | Step | Note | What you'll understand after |
 |---|---|---|
-| 1 | [[Kinetic Chain/Kinetic Chain\|Kinetic Chain]] | Why the body is one integrated system — the lens everything else is viewed through |
-| 2 | [[Skeletal System/Skeletal System\|Skeletal System]] | The structural framework: bones, joints, spine, and why ligaments matter |
-| 3 | [[Muscular System/Muscular System\|Muscular System]] | How muscles are built, how they contract, fibre types, and muscle roles |
+| 1 | [[Kinetic Chain\|Kinetic Chain]] | Why the body is one integrated system — the lens everything else is viewed through |
+| 2 | [[Skeletal System\|Skeletal System]] | The structural framework: bones, joints, spine, and why ligaments matter |
+| 3 | [[Muscular System\|Muscular System]] | How muscles are built, how they contract, fibre types, and muscle roles |
 | 4 | [[Nervous System/Nervous System\|Nervous System]] | What controls everything — CNS/PNS, proprioception, motor learning, stretch reflexes |
 | 5 | [[Cardiorespiratory System/Cardiorespiratory System\|Cardiorespiratory System]] | How oxygen gets in and waste gets out — heart, lungs, blood, breathing |
 | 6 | [[Bioenergetics & Energy Systems/Bioenergetics & Energy Systems\|Bioenergetics & Energy Systems]] | How food becomes movement — the three energy pathways and when each is used |
@@ -65,9 +69,9 @@ The human body operates as a single integrated **[[Kinetic Chain/Kinetic Chain|K
 ## Notes in This Section
 
 ### Foundation
-- [[Kinetic Chain/Kinetic Chain|Kinetic Chain]] — the integrated movement system, posture assessment, imbalance patterns
-- [[Skeletal System/Skeletal System|Skeletal System]] — bones, joints, spine, ligaments, arthrokinematics
-- [[Muscular System/Muscular System|Muscular System]] — muscle structure, contraction, fibre types, roles, ageing
+- [[Kinetic Chain|Kinetic Chain]] — the integrated movement system, posture assessment, imbalance patterns
+- [[Skeletal System|Skeletal System]] — bones, joints, spine, ligaments, arthrokinematics
+- [[Muscular System|Muscular System]] — muscle structure, contraction, fibre types, roles, ageing
 
 ### Systems
 - [[Nervous System/Nervous System|Nervous System]] — CNS/PNS, mechanoreceptors, proprioception, motor learning
@@ -87,7 +91,7 @@ The human body operates as a single integrated **[[Kinetic Chain/Kinetic Chain|K
 
 | Week | Focus | Notes |
 |---|---|---|
-| 1 | Kinetic Chain Foundations | [[Kinetic Chain/Kinetic Chain\|Kinetic Chain]], [[Skeletal System/Skeletal System\|Skeletal System]], [[Muscular System/Muscular System\|Muscular System]], [[Nervous System/Nervous System\|Nervous System]] |
+| 1 | Kinetic Chain Foundations | [[Kinetic Chain\|Kinetic Chain]], [[Skeletal System\|Skeletal System]], [[Muscular System\|Muscular System]], [[Nervous System/Nervous System\|Nervous System]] |
 | 2 | Nervous System & Cardiorespiratory | [[Nervous System/Nervous System\|Nervous System]], [[Cardiorespiratory System/Cardiorespiratory System\|Cardiorespiratory System]] |
 | 3 | Bioenergetics & Energy Systems | [[Bioenergetics & Energy Systems/Bioenergetics & Energy Systems\|Bioenergetics & Energy Systems]] |
 | 4 | Biomechanics, Kinesiology & Muscle Actions | [[Biomechanics & Kinesiology/Biomechanics & Kinesiology\|Biomechanics & Kinesiology]] |
@@ -107,7 +111,7 @@ Muscular System ──► moves ──► Skeletal System
 ```
 
 - [[Nervous System/Nervous System#Excitation-Contraction Coupling|How muscles contract]] (excitation-contraction coupling)
-- [[Skeletal System/Skeletal System#Six Types of Synovial Joints|Joint types]] and [[Skeletal System/Skeletal System#Arthrokinematics vs Osteokinematics|arthrokinematics]]
+- [[Skeletal System#Six Types of Synovial Joints|Joint types]] and [[Skeletal System#Arthrokinematics vs Osteokinematics|arthrokinematics]]
 - [[Bioenergetics & Energy Systems/Bioenergetics & Energy Systems#The Bioenergetic Continuum|Energy system continuum]]
 - [[Biomechanics & Kinesiology/Biomechanics & Kinesiology#Planes of Motion|Planes of motion]]
 

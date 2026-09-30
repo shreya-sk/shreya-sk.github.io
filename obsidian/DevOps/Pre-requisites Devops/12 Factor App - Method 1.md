@@ -7,7 +7,6 @@ up: "[[DevOps MOC]]"
 tags: [devops, cloud-native]
 type: note
 status: evergreen
-AutoNoteMover: disable
 ---
 
 ← [[Nav/HOME|Home]] &nbsp;·&nbsp; [[DevOps MOC]]

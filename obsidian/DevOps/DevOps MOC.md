@@ -10,7 +10,9 @@ tags:
   - devops
 ---
 
-← [[Nav/HOME|Home]] &nbsp;·&nbsp; [[Learning MOC|Learning]] &nbsp;&nbsp;|&nbsp;&nbsp; [[Learning/DevOps/Docker/Docker MOC|Docker]] &nbsp;·&nbsp; [[Learning/DevOps/Kubernetes/Kubernetes MOC|Kubernetes]] &nbsp;·&nbsp; [[Learning/DevOps/GoLang/GoLang MOC|GoLang]] &nbsp;·&nbsp; [[Learning/DevOps/Ansible/Ansible MOC|Ansible]] &nbsp;·&nbsp; [[Learning/DevOps/Terraform/Terraform MOC|Terraform]] &nbsp;·&nbsp; [[Learning/DevOps/Pre-requisites Devops/Prerequisites MOC|Prerequisites]]
+```dataviewjs
+await dv.view("Templates/_views/moc-nav")
+```
 
 # DevOps
 
@@ -18,47 +20,7 @@ tags:
 
 ---
 
-## Start Here — Reading Order
-
-> [!note] New to DevOps? Follow this path.
-> Each step builds on the last. Don't skip prerequisites — they're the reason things make sense later.
-
-| Step | Topic | Where to start | Why first |
-|---|---|---|---|
-| 1 | **Prerequisites** | [[Pre-requisites Devops/Prerequisites MOC\|Prerequisites MOC]] | Everything else assumes Linux + networking knowledge |
-| 2 | **Containers Overview** | [[Containers - Overview]] | Mental model for why containers exist before touching Docker |
-| 3 | **Docker** | [[Docker/Docker MOC\|Docker MOC]] | Containers in practice — the tool you'll use daily |
-| 4 | **12-Factor App** | [[12 Factor App - Method]] | Architecture principles that explain how to design containerised apps |
-| 5 | **Ansible** | [[Ansible/Ansible MOC\|Ansible MOC]] | Automate infrastructure once you understand what you're provisioning |
-| 6 | **GoLang** | [[GoLang/GoLang MOC\|GoLang MOC]] | Language used in Kubernetes internals + writing DevOps tooling |
-| 7 | **Kubernetes** | [[Kubernetes/Kubernetes MOC\|Kubernetes MOC]] | Orchestrate containers at scale — the hardest topic, needs all prior context |
-
-> [!tip] Already know Linux?
-> Skip to Step 2. If you know Docker too, jump straight to [[12 Factor App - Method]] then [[Ansible/Ansible MOC|Ansible]].
-
----
-
 ```dataviewjs
-// ── Dynamic Topics ──────────────────────────────────
-const mocs = dv.pages('"Learning/DevOps"')
-  .where(p => p.type === "moc" && p.file.name !== "DevOps MOC");
-
-const topicsEl = dv.container.createEl("div");
-topicsEl.style.cssText = "margin-bottom: 20px; font-size: 0.88em; color: var(--text-muted);";
-const boldEl = topicsEl.createEl("strong", { text: "Topics" });
-boldEl.style.cssText = "color: var(--text-normal);";
-topicsEl.createEl("span", { text: "\u00a0\u00a0" });
-
-mocs.array().forEach((p, i) => {
-  const a = topicsEl.createEl("a", { text: p.file.name.replace(/ MOC$/, ""), cls: "internal-link" });
-  a.setAttribute("data-href", p.file.path);
-  a.setAttribute("href", p.file.path);
-  a.style.cssText = "color: var(--text-muted); text-decoration: none;";
-  if (i < mocs.length - 1) {
-    topicsEl.createEl("span", { text: " | " }).style.cssText = "color: var(--text-faint);";
-  }
-});
-
 // ── Build tree ──────────────────────────────────────
 const pages = dv.pages('"Learning/DevOps"')
   .where(p => p.file.name !== "" && p.type !== "moc");
@@ -177,15 +139,14 @@ input.addEventListener("input", () => {
 });
 ```
 
----
-
-## Seeds — Needs Attention
-
-> [!seed]
-> ```dataview
-> LIST
-> FROM "Learning/DevOps"
-> WHERE status = "seed"
-> AND type != "moc"
-> SORT file.mtime ASC
-> ```
+```dataviewjs
+// Seeds section only appears when there are seed notes under this folder.
+const seeds = dv.pages('"' + dv.current().file.folder + '"')
+  .where(p => p.status === "seed" && p.type !== "moc")
+  .sort(p => p.file.mtime, "asc");
+if (seeds.length) {
+  dv.el("hr", "");
+  dv.header(2, "Seeds — Needs Attention");
+  dv.list(seeds.file.link);
+}
+```
