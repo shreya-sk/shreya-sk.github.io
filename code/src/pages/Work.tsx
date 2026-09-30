@@ -178,7 +178,7 @@ const CERTS: Cert[] = [
   {
     name: "AWS Certified Solutions Architect - Associate",
     issuer: "AWS",
-    date: "Scheduled Oct 2026",
+    date: "Scheduled Nov 2026",
     scheduled: true,
   },
 ];
