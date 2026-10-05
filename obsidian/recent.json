@@ -1,13 +1,13 @@
 {
-  "generated": "2026-09-30T11:39:25.188458+00:00",
+  "generated": "2026-10-05T11:48:32.894164+00:00",
   "files": [
-    "DevOps/Pre-requisites Devops/Shell Scripting.md",
-    "DevOps/Pre-requisites Devops/Networking (ON LINUX).md",
-    "DevOps/Pre-requisites Devops/LINUX.md",
-    "DevOps/Pre-requisites Devops/Devops Tools.md",
     "DevOps/Linux/Kernal.md",
-    "DevOps/Kubernetes/YAML - k8s.md",
-    "DevOps/Kubernetes/CKA prep.md",
-    "DevOps/GoLang/Pointers.md"
+    "DevOps/Docker/Setup Docker.md",
+    "DevOps/Containers - Overview.md",
+    "DevOps/AWS/What is.md",
+    "DevOps/12 Factor App - Method.md",
+    "Anatomy & Physiology/Skeletal System/Skeletal System.md",
+    "Anatomy & Physiology/Muscular System/Muscular System.md",
+    "Anatomy & Physiology/Kinetic Chain/Kinetic Chain.md"
   ]
 }
