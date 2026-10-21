@@ -79,7 +79,7 @@ export const convertWikiLinks = (content: string): string => {
     return '';
   }
 
-  // Match [[path/to/file|display text]] or [[file]] — but NOT image embeds ![[...]]
+  // Match [[path/to/file|display text]] or [[file]] - but NOT image embeds ![[...]]
   return content.replace(/(?<!!)\[\[([^\]|]+)(?:\|([^\]]+))?\]\]/g, (match, path, displayText) => {
     // Remove ../ and .md extension
     const cleanPath = path.replace(/^\.\.\//, '').replace(/\.md$/, '');

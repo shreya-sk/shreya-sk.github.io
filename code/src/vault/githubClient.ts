@@ -3,7 +3,7 @@
 // Why not raw isomorphic-git clone? github.com's smart-HTTP git endpoints do
 // not send CORS headers, so a browser clone requires routing your PAT through
 // a third-party CORS proxy. The Git Data API (refs/trees/blobs/commits) is
-// CORS-enabled, so this client implements the same git plumbing —
+// CORS-enabled, so this client implements the same git plumbing -
 // blob → tree → commit → ref update - with the PAT never leaving
 // browser → api.github.com.
 
