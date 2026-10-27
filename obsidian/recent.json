@@ -1,13 +1,13 @@
 {
-  "generated": "2026-10-23T02:11:23.809105+00:00",
+  "generated": "2026-10-27T00:55:36.486420+00:00",
   "files": [
+    "Data Dog/interview tidbits.md",
+    "Data Dog/Running Agent.md",
+    "Data Dog/What is Data Dog.md",
     "DevOps/Linux/Kernal.md",
     "DevOps/Docker/Setup Docker.md",
     "DevOps/Containers - Overview.md",
     "DevOps/AWS/What is.md",
-    "DevOps/12 Factor App - Method.md",
-    "Anatomy & Physiology/Skeletal System/Skeletal System.md",
-    "Anatomy & Physiology/Muscular System/Muscular System.md",
-    "Anatomy & Physiology/Kinetic Chain/Kinetic Chain.md"
+    "DevOps/12 Factor App - Method.md"
   ]
 }
