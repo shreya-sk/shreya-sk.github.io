@@ -1,4 +1,4 @@
-// CodeMirror 6 extension: live decoration of Obsidian syntax —
+// CodeMirror 6 extension: live decoration of Obsidian syntax -
 // [[wikilinks]], ![[embeds]], and > [!type] callout blocks.
 
 import {
